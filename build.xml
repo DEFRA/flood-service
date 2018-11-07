@@ -3,7 +3,7 @@
 <property file="build.properties"/>
 <!-- **************************ZIP_FLOOD_APP****************************** -->
         <target name="flood-service">
-                <zip destfile="flood-service.zip" basedir="" update="false"/>
+                <zip destfile="deploy/flood-service.zip" basedir="" update="false"/>
         </target>
 </project>
 
