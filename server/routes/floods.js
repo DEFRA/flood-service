@@ -35,4 +35,63 @@ module.exports = [{
       }
     }
   }
+}, {
+  method: 'GET',
+  path: '/outlook',
+  handler: async (request, h) => {
+    try {
+      const result = await floodsService.getFloods()
+      return result
+    } catch (err) {
+      return boom.badRequest('Failed to get outlook', err)
+    }
+  }
+}, {
+  method: 'GET',
+  path: '/flood-area/alert/{code}',
+  handler: async (request, h) => {
+    try {
+      const { code } = request.params
+      const area = await floodsService.getAlertArea(code)
+
+      if (!area) {
+        return boom.notFound('Alert area')
+      }
+
+      return area
+    } catch (err) {
+      return boom.badRequest('Failed to get alert area', err)
+    }
+  },
+  options: {
+    validate: {
+      params: {
+        code: joi.string().required()
+      }
+    }
+  }
+}, {
+  method: 'GET',
+  path: '/flood-area/warning/{code}',
+  handler: async (request, h) => {
+    try {
+      const { code } = request.params
+      const area = await floodsService.getWarningArea(code)
+
+      if (!area) {
+        return boom.notFound('Warning area')
+      }
+
+      return area
+    } catch (err) {
+      return boom.badRequest('Failed to get warning area', err)
+    }
+  },
+  options: {
+    validate: {
+      params: {
+        code: joi.string().required()
+      }
+    }
+  }
 }]
