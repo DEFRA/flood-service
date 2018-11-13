@@ -1,6 +1,7 @@
 const joi = require('joi')
 const boom = require('boom')
 const floodsService = require('../services/floods')
+const s3Service = require('../services/s3')
 
 module.exports = [{
   method: 'GET',
@@ -91,6 +92,88 @@ module.exports = [{
     validate: {
       params: {
         code: joi.string().required()
+      }
+    }
+  }
+}, {
+  method: 'GET',
+  path: '/station/{id}/{direction}',
+  handler: async (request, h) => {
+    try {
+      const { id, direction } = request.params
+      const result = await floodsService.getStation(id, direction)
+      return result
+    } catch (err) {
+      return boom.badRequest('Failed to get station data', err)
+    }
+  },
+  options: {
+    description: 'Get station by id',
+    validate: {
+      params: {
+        id: joi.number().required(),
+        direction: joi.string().valid('u', 'd')
+      }
+    }
+  }
+}, {
+  method: 'GET',
+  path: '/station/{id}/{direction}/telemetry',
+  options: {
+    description: 'Get telemetry by station id',
+    handler: async (request, h) => {
+      try {
+        const { id, direction } = request.params
+        const result = await floodsService.getStationTelemetry(id, direction)
+        return result
+      } catch (err) {
+        return boom.badRequest('Failed to get telemetry data', err)
+      }
+    },
+    validate: {
+      params: {
+        id: joi.number().required(),
+        direction: joi.string().valid('u', 'd')
+      }
+    }
+  }
+}, {
+  method: 'GET',
+  path: '/station/{id}/forecast/data',
+  options: {
+    description: 'Get forecast by station id',
+    handler: async (request, h) => {
+      try {
+        const { id } = request.params
+        const result = await s3Service.ffoi(id)
+        return result
+      } catch (err) {
+        return boom.badRequest('Failed to get forecast data', err)
+      }
+    },
+    validate: {
+      params: {
+        id: joi.string().required()
+      }
+    }
+  }
+}, {
+  method: 'GET',
+  path: '/station/{id}/forecast/thresholds',
+  handler: async (request, h) => {
+    try {
+      const { id } = request.params
+      const result = await floodsService.getFFOIThresholds(id)
+      return result
+    } catch (err) {
+      return boom.badRequest('Failed to get ffoi threshold data', err)
+    }
+  },
+  options: {
+    description: 'Get forecast thresholds by station id',
+    validate: {
+      params: {
+        id: joi.number().required()
       }
     }
   }

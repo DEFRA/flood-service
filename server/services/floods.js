@@ -58,6 +58,27 @@ const getWarningArea = `
 //   WHERE ST_Intersects(geom, envelope)
 // `
 
+const getStation = `
+  SELECT *
+  FROM u_flood.station_split_mview
+  WHERE rloi_id = $1
+  AND qualifier = $2
+`
+const getStationTelemetry = `
+  SELECT * FROM u_flood.get_telemetry($1, $2)
+`
+
+const getFFOIForecast = `
+  SELECT f.*
+  FROM u_flood.ffoi_forecast f
+  INNER JOIN u_flood.ffoi_station s ON f.rloi_id = s.rloi_id
+  WHERE f.rloi_id = $1
+  ORDER BY forecast_date DESC LIMIT 1
+`
+const getFFOIThresholds = `
+  SELECT u_flood.ffoi_get_thresholds($1)
+`
+
 module.exports = {
   async getFloods () {
     const result = await pool.query(getFloods)
@@ -86,6 +107,34 @@ module.exports = {
 
   async getWarningArea (code) {
     const result = await pool.query(getWarningArea, [code])
+    const [area] = result.rows
+
+    return area
+  },
+
+  async getStation (id, direction) {
+    const result = await pool.query(getStation, [id, direction])
+    const [station] = result.rows
+
+    return station
+  },
+
+  async getStationTelemetry (id, direction) {
+    const result = await pool.query(getStationTelemetry, [id, direction])
+    const [{ get_telemetry: telemetry }] = result.rows
+
+    return telemetry
+  },
+
+  async getFFOIThresholds (id) {
+    const result = await pool.query(getFFOIThresholds, [id])
+    const [{ ffoi_get_thresholds: thresholds }] = result.rows
+
+    return thresholds
+  },
+
+  async getFFOIForecast (id) {
+    const result = await pool.query(getFFOIForecast, [id])
     const [area] = result.rows
 
     return area
