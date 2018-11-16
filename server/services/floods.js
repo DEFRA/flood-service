@@ -64,6 +64,31 @@ const getStation = `
   WHERE rloi_id = $1
   AND qualifier = $2
 `
+
+const getStationsByRadius = `
+  SELECT rloi_id, telemetry_id, region, catchment, wiski_river_name,
+    agency_name, external_name, station_type, status, qualifier,
+    (lower(region) = 'wales' OR rloi_id IN (4162, 4170, 4173, 4174, 4176)) AS isWales 
+  FROM u_flood.station_split_mview
+  WHERE ST_DWithin(geography, ST_MakePoint($1, $2)::geography, $3)
+    AND lower(status) != 'closed'
+    AND (lower(region) != 'wales'
+    OR catchment IN ('Dee', 'Severn Uplands', 'Wye'))
+  ORDER BY wiski_river_name, agency_name;
+`
+
+const getStationsWithin = `
+  SELECT rloi_id, telemetry_id, region, catchment, wiski_river_name,
+    agency_name, external_name, station_type, status, qualifier,
+    (lower(region) = 'wales' OR rloi_id IN (4162, 4170, 4173, 4174, 4176)) AS isWales 
+  FROM u_flood.station_split_mview
+  WHERE ST_Contains(ST_Transform(ST_Buffer(ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, 4326), 27700), 2000), 4326), centroid)
+    AND lower(status) != 'closed'
+    AND (lower(region) != 'wales'
+    OR catchment IN ('Dee', 'Severn Uplands', 'Wye'))
+  ORDER BY wiski_river_name, agency_name;
+`
+
 const getStationTelemetry = `
   SELECT * FROM u_flood.get_telemetry($1, $2)
 `
@@ -117,6 +142,20 @@ module.exports = {
     const [station] = result.rows
 
     return station
+  },
+
+  async getStationsWithin (bbox) {
+    const result = await pool.query(getStationsWithin, bbox)
+    const stations = result.rows
+
+    return stations
+  },
+
+  async getStationsByRadius (lng, lat, radiusM) {
+    const result = await pool.query(getStationsByRadius, [lng, lat, radiusM])
+    const stations = result.rows
+
+    return stations
   },
 
   async getStationTelemetry (id, direction) {

@@ -38,17 +38,6 @@ module.exports = [{
   }
 }, {
   method: 'GET',
-  path: '/outlook',
-  handler: async (request, h) => {
-    try {
-      const result = await floodsService.getFloods()
-      return result
-    } catch (err) {
-      return boom.badRequest('Failed to get outlook', err)
-    }
-  }
-}, {
-  method: 'GET',
   path: '/flood-area/alert/{code}',
   handler: async (request, h) => {
     try {
@@ -118,18 +107,63 @@ module.exports = [{
   }
 }, {
   method: 'GET',
+  path: '/stations-within/{lng}/{lat}/{radiusM}',
+  handler: async (request, h) => {
+    try {
+      const { lng, lat, radiusM } = request.params
+      const result = await floodsService.getStationsByRadius(lng, lat, radiusM)
+      return result
+    } catch (err) {
+      return boom.badRequest('Failed to get stations by radius', err)
+    }
+  },
+  options: {
+    description: 'Get stations by radius',
+    validate: {
+      params: {
+        lng: joi.number().required(),
+        lat: joi.number().required(),
+        radiusM: joi.number().required()
+      }
+    }
+  }
+}, {
+  method: 'GET',
+  path: '/stations-within/{x1}/{y1}/{x2}/{y2}',
+  handler: async (request, h) => {
+    try {
+      const { x1, y1, x2, y2 } = request.params
+      const result = await floodsService.getStationsWithin([x1, y1, x2, y2])
+      return result
+    } catch (err) {
+      return boom.badRequest('Failed to get stations search', err)
+    }
+  },
+  options: {
+    description: 'Get stations with bbox',
+    validate: {
+      params: {
+        x1: joi.number().required(),
+        y1: joi.number().required(),
+        x2: joi.number().required(),
+        y2: joi.number().required()
+      }
+    }
+  }
+}, {
+  method: 'GET',
   path: '/station/{id}/{direction}/telemetry',
+  handler: async (request, h) => {
+    try {
+      const { id, direction } = request.params
+      const result = await floodsService.getStationTelemetry(id, direction)
+      return result
+    } catch (err) {
+      return boom.badRequest('Failed to get telemetry data', err)
+    }
+  },
   options: {
     description: 'Get telemetry by station id',
-    handler: async (request, h) => {
-      try {
-        const { id, direction } = request.params
-        const result = await floodsService.getStationTelemetry(id, direction)
-        return result
-      } catch (err) {
-        return boom.badRequest('Failed to get telemetry data', err)
-      }
-    },
     validate: {
       params: {
         id: joi.number().required(),
@@ -140,17 +174,17 @@ module.exports = [{
 }, {
   method: 'GET',
   path: '/station/{id}/forecast/data',
+  handler: async (request, h) => {
+    try {
+      const { id } = request.params
+      const result = await s3Service.ffoi(id)
+      return result
+    } catch (err) {
+      return boom.badRequest('Failed to get forecast data', err)
+    }
+  },
   options: {
     description: 'Get forecast by station id',
-    handler: async (request, h) => {
-      try {
-        const { id } = request.params
-        const result = await s3Service.ffoi(id)
-        return result
-      } catch (err) {
-        return boom.badRequest('Failed to get forecast data', err)
-      }
-    },
     validate: {
       params: {
         id: joi.string().required()
@@ -175,6 +209,16 @@ module.exports = [{
       params: {
         id: joi.number().required()
       }
+    }
+  }
+}, {
+  method: 'GET',
+  path: '/outlook',
+  handler: async (request, h) => {
+    try {
+      return new Error('Not implemented')
+    } catch (err) {
+      return boom.badRequest('Failed to get outlook', err)
     }
   }
 }]
