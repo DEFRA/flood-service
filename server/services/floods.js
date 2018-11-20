@@ -42,21 +42,6 @@ const getWarningArea = `
   FROM u_flood.flood_warning_area
   WHERE fws_tacode = $1
 `
-// ,
-// st_AsGeoJSON(geom) as geom, ST_AsGeoJSON(ST_centroid(geom)) as centroid
-
-// const getFloodsWithin = `
-//   SELECT *, st_asgeojson(envelope) as extent FROM
-//     (SELECT fwa_code as "code", fwa_key as "key", description,
-//       area_floodline_quickdial_id as "quickDialNumber",region, area,
-//       flood_type as "floodType", severity, severity_description as "severityDescription",
-//       warning_key as "warningKey", raised, severity_changed as "severityChanged",
-//       message_changed as "messageChanged", message, geom,
-//       ST_Transform(ST_Buffer(ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, 4326), 27700), 2000), 4326) as envelope
-//     FROM u_flood.current_flood_warning_alert_mview)
-//     AS tbl
-//   WHERE ST_Intersects(geom, envelope)
-// `
 
 const getStation = `
   SELECT *
@@ -74,7 +59,7 @@ const getStationsByRadius = `
     AND lower(status) != 'closed'
     AND (lower(region) != 'wales'
     OR catchment IN ('Dee', 'Severn Uplands', 'Wye'))
-  ORDER BY wiski_river_name, agency_name;
+  ORDER BY wiski_river_name, external_name;
 `
 
 const getStationsWithin = `
@@ -86,7 +71,7 @@ const getStationsWithin = `
     AND lower(status) != 'closed'
     AND (lower(region) != 'wales'
     OR catchment IN ('Dee', 'Severn Uplands', 'Wye'))
-  ORDER BY wiski_river_name, agency_name;
+  ORDER BY wiski_river_name, external_name;
 `
 
 const getStationTelemetry = `
