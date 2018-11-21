@@ -23,14 +23,15 @@ const getFloodsWithin = `
     message_changed as "messageChanged", message
   FROM u_flood.current_flood_warning_alert_mview
   WHERE ST_Intersects(geom, ST_Transform(ST_Buffer(ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, 4326), 27700), 2000), 4326))
+  ORDER BY severity, description;
 `
 
 const getAlertArea = `
-SELECT gid as "id", area, fws_tacode as "code", ta_name as "name",
-  descrip as "description", la_name as "localAuthorityName",
-  qdial as "quickDialNumber", river_sea as "riverOrSea"
-FROM u_flood.flood_alert_area
-WHERE fws_tacode = $1
+  SELECT gid as "id", area, fws_tacode as "code", ta_name as "name",
+    descrip as "description", la_name as "localAuthorityName",
+    qdial as "quickDialNumber", river_sea as "riverOrSea"
+  FROM u_flood.flood_alert_area
+  WHERE fws_tacode = $1
 `
 // ,
 // st_AsGeoJSON(geom) as geom, ST_AsGeoJSON(ST_centroid(geom)) as centroid
