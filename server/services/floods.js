@@ -29,7 +29,8 @@ const getFloodsWithin = `
 const getAlertArea = `
   SELECT gid as "id", area, fws_tacode as "code", ta_name as "name",
     descrip as "description", la_name as "localAuthorityName",
-    qdial as "quickDialNumber", river_sea as "riverOrSea"
+    qdial as "quickDialNumber", river_sea as "riverOrSea",
+    st_AsGeoJSON(geom) as geom, ST_AsGeoJSON(ST_centroid(geom)) as centroid
   FROM u_flood.flood_alert_area
   WHERE fws_tacode = $1
 `
@@ -39,7 +40,8 @@ const getAlertArea = `
 const getWarningArea = `
   SELECT gid as "id", area, fws_tacode as "code", ta_name as "name",
     descrip as "description", la_name as "localAuthorityName", parent,
-    qdial as "quickDialNumber", river_sea as "riverOrSea"
+    qdial as "quickDialNumber", river_sea as "riverOrSea",
+    st_AsGeoJSON(geom) as geom, ST_AsGeoJSON(ST_centroid(geom)) as centroid
   FROM u_flood.flood_warning_area
   WHERE fws_tacode = $1
 `
