@@ -12,6 +12,15 @@ const schema = {
     key: joi.string().required(),
     httpProxy: joi.string().uri(),
     httpTimeoutMs: joi.number().default(10000)
+  }),
+  errbit: joi.object().required().keys({
+    postErrors: joi.boolean().default(false),
+    options: joi.object().required().keys({
+      env: joi.string(),
+      key: joi.string(),
+      host: joi.string(),
+      proxy: joi.string()
+    })
   })
 }
 
@@ -27,6 +36,15 @@ const config = {
     key: process.env.FLOOD_SERVICE_S3_KEY,
     httpProxy: process.env.FLOOD_SERVICE_S3_PROXY,
     httpTimeoutMs: process.env.FLOOD_SERVICE_S3_TIMEOUT
+  },
+  errbit: {
+    postErrors: process.env.FLOOD_SERVICE_ERRBIT_POST_ERRORS,
+    options: {
+      env: process.env.FLOOD_SERVICE_ERRBIT_ENV,
+      key: process.env.FLOOD_SERVICE_ERRBIT_KEY,
+      host: process.env.FLOOD_SERVICE_ERRBIT_HOST,
+      proxy: process.env.FLOOD_SERVICE_ERRBIT_PROXY
+    }
   }
 }
 
