@@ -44,11 +44,7 @@ module.exports = [{
       const { code } = request.params
       const area = await floodsService.getAlertArea(code)
 
-      if (!area) {
-        return boom.notFound('Alert area')
-      }
-
-      return area
+      return area || boom.notFound(`Alert area ${code}`)
     } catch (err) {
       return boom.badRequest('Failed to get alert area', err)
     }
@@ -68,11 +64,7 @@ module.exports = [{
       const { code } = request.params
       const area = await floodsService.getWarningArea(code)
 
-      if (!area) {
-        return boom.notFound('Warning area')
-      }
-
-      return area
+      return area || boom.notFound(`Warning area ${code}`)
     } catch (err) {
       return boom.badRequest('Failed to get warning area', err)
     }
@@ -90,8 +82,9 @@ module.exports = [{
   handler: async (request, h) => {
     try {
       const { id, direction } = request.params
-      const result = await floodsService.getStation(id, direction)
-      return result
+      const station = await floodsService.getStation(id, direction)
+
+      return station || boom.notFound(`Station ${id} (${direction})`)
     } catch (err) {
       return boom.badRequest('Failed to get station data', err)
     }
