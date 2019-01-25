@@ -91,6 +91,13 @@ const getFFOIForecast = `
 const getFFOIThresholds = `
   SELECT u_flood.ffoi_get_thresholds($1)
 `
+const isEngland = `
+  SELECT ((SELECT count(1) FROM u_flood.england_010k e WHERE st_intersects(st_setsrid(st_makepoint($1, $2), 4326), e.geom)) > 0) AS is_england
+`
+
+// const isEnglandBbox = `
+//   SELECT ((SELECT count(1) FROM u_flood.england_010k e WHERE st_intersects(ST_MakeEnvelope($1, $2, $3, $4, 4326), e.geom)) > 0) AS is_england_bbox
+// `
 
 module.exports = {
   async getFloods () {
@@ -165,5 +172,12 @@ module.exports = {
     const [area] = result.rows
 
     return area
+  },
+
+  async isEngland (x, y) {
+    const result = await pool.query(isEngland, [x, y])
+    const [value] = result.rows
+
+    return value
   }
 }

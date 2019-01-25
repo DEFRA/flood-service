@@ -32,4 +32,14 @@ lab.experiment('API test', () => {
     Code.expect(response.statusCode).to.equal(200)
     Code.expect(response.result).to.equal({ ok: 200 })
   })
+
+  lab.test('GET /is-england/{x}/{y} works', async () => {
+    const options = {
+      method: 'GET',
+      url: '/is-england/-2.2370500564575195/53.4650993347168'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
 })
