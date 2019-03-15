@@ -146,6 +146,28 @@ module.exports = {
     return stations
   },
 
+  async getStationsUpstreamDownstream (id) {
+    // const result = await pool.query(getStationsWithin, bbox)
+    // const stations = result.rows
+
+    const stations = {
+      'upstream': [
+        {
+          'id': 'stations.5119',
+          'river': 'River Ribble (Ribchester School)'
+        }
+      ],
+      'downstream': [
+        {
+          'id': 'stations.5146',
+          'river': 'River Ribble (Walton-Le-Dale)'
+        }
+      ]
+    }
+
+    return stations
+  },
+
   async getStationsByRadius (lng, lat, radiusM) {
     const result = await pool.query(getStationsByRadius, [lng, lat, radiusM])
     const stations = result.rows
