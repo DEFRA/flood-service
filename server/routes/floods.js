@@ -148,10 +148,12 @@ module.exports = [{
   path: '/stations-upstream-downstream/{id}/{direction}',
   handler: async (request, h) => {
     try {
-      const { id, direction } = request.params
+      const { id } = request.params
+      // const { id, direction } = request.params
 
       const upDownData = await floodsService.getStationsUpstreamDownstream(id)
-      const stationData = await floodsService.getStation(id, direction)
+      // const stationData = await floodsService.getStation(id, direction)
+      const stationData = {}
       stationData.upDown = upDownData
       return stationData
     } catch (err) {
