@@ -1,8 +1,10 @@
+const boom = require('boom')
 const { Pool } = require('pg')
 const config = require('../config')
 const pool = new Pool({
   connectionString: config.connectionString
 })
+const riverStations = require('./river-stations.json')
 
 const getFloods = `
   SELECT fwa_code as "code", fwa_key as "key", description,
@@ -144,6 +146,17 @@ module.exports = {
     const stations = result.rows
 
     return stations
+  },
+
+  async getStationsUpstreamDownstream (id) {
+    // TODO: refactor to make truly asynchronous
+    //
+    try {
+      let station = riverStations.find(station => station.id === 'stations.' + id)
+      return station
+    } catch (err) {
+      return boom.badRequest('Failed to get river stations ', err)
+    }
   },
 
   async getStationsByRadius (lng, lat, radiusM) {
