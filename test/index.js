@@ -4,7 +4,6 @@ const lab = exports.lab = Lab.script()
 const createServer = require('../server')
 const sinon = require('sinon')
 const impactService = require('../server/services/floods.js')
-const Boom = require('boom')
 
 lab.experiment('API test', () => {
   let server
@@ -37,6 +36,11 @@ lab.experiment('API test', () => {
   })
 
   lab.test('2 - GET /impacts route works', async () => {
+    let result = { 'is_england': true }
+
+    let isEngland = sandbox.stub(impactService, 'isEngland')
+    isEngland.returns(result)
+
     const options = {
       method: 'GET',
       url: '/is-england/-2.2370500564575195/53.4650993347168'
@@ -44,6 +48,7 @@ lab.experiment('API test', () => {
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
+    Code.expect(response.payload).to.include('true')
   })
 
   lab.test('3 - GET / route works', async () => {
@@ -89,5 +94,18 @@ lab.experiment('API test', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get impact data')
+  })
+
+  lab.test('5 - error works on isEngland service', async () => {
+    sandbox.stub(impactService, 'isEngland').throws(new Error())
+
+    const options = {
+      method: 'GET',
+      url: '/is-england/-2.2370500564575195/53.4650993347168'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get isEngland')
   })
 })
