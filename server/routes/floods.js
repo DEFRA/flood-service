@@ -145,6 +145,30 @@ module.exports = [{
   }
 }, {
   method: 'GET',
+  path: '/impacts/{id}',
+  handler: async (request, h) => {
+    try {
+      const { id } = request.params
+      const impacts = await floodsService.getImpactData(id)
+      // // const stationData = await floodsService.getStation(id, direction)
+      // const stationData = {}
+      // stationData.impacts = impacts
+      // return stationData
+      return impacts
+    } catch (err) {
+      return boom.badRequest('Failed to get impact data', err)
+    }
+  },
+  options: {
+    description: 'Get impact data',
+    validate: {
+      params: {
+        id: joi.string().required()
+      }
+    }
+  }
+}, {
+  method: 'GET',
   path: '/stations-upstream-downstream/{id}/{direction}',
   handler: async (request, h) => {
     try {

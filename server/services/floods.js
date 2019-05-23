@@ -5,6 +5,7 @@ const pool = new Pool({
   connectionString: config.connectionString
 })
 const riverStations = require('./river-stations.json')
+const impactData = require('./impacts.json')
 
 const getFloods = `
   SELECT fwa_code as "code", fwa_key as "key", description,
@@ -192,5 +193,24 @@ module.exports = {
     const [value] = result.rows
 
     return value
+  },
+
+  async getImpactData (id) {
+    try {
+      let impact = impactData.find(impact => impact === id)
+      return impact
+    } catch (err) {
+      return boom.badRequest('Failed to get impact data ', err)
+    }
   }
 }
+// async getStationsUpstreamDownstream (id) {
+//   // TODO: refactor to make truly asynchronous
+//   //
+//   try {
+//     let station = riverStations.find(station => station.id === 'stations.' + id)
+//     return station
+//   } catch (err) {
+//     return boom.badRequest('Failed to get river stations ', err)
+//   }
+// },

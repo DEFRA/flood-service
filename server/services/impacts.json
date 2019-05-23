@@ -1,0 +1,15 @@
+{
+    "impactID": 1,
+    "gauge": "River Severn at Bewdley",
+    "rloiID": 2001,
+    "value": 3.98,
+    "Units": "mALD",
+    "location": "",
+    "ThresholdComment": "",
+    "shortName": "Level recorded <<ObsFloodMonth>> <<ObsFloodYear>>",
+    "description": "Level recorded here <<ObsFloodMonth>> <<ObsFloodYear>>",
+    "type": "Historic",
+    "obsFloodYear": 2007,
+    "obsFloodMonth": "July",
+    "source": "Flood Resiliance"
+  }
