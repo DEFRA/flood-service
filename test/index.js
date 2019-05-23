@@ -72,29 +72,21 @@ lab.experiment('API test', () => {
     }
 
     const response = await server.inject(options)
-    console.log('response: ', response.payload)
     let impactObj = JSON.parse(response.payload)
     Code.expect(response.statusCode).to.equal(200)
     Code.expect(impactObj).to.be.an.object()
     Code.expect(impactObj.source).to.equal('Flood Resiliance')
   })
 
-  lab.test('4 - error works on impacts', async () => {
-    const impacts = {
-      impactID: 'sdvsdvsdvsd',
-      gauge: 'River Severn at Bewdley',
-      rloiID: 2001
-    }
-
-    sandbox.stub(impactService, 'getImpactData').rejects(Boom.boomify(new Error()))
+  lab.test('4 - error works on getImpactData service', async () => {
+    sandbox.stub(impactService, 'getImpactData').throws(new Error())
 
     const options = {
       method: 'GET',
-      url: '/impacts/' + impacts.impactID
+      url: '/impacts/1'
     }
 
     const response = await server.inject(options)
-    console.log('NW: ', response.payload)
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get impact data')
   })

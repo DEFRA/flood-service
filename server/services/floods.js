@@ -197,20 +197,12 @@ module.exports = {
 
   async getImpactData (id) {
     try {
-      let impact = impactData.find(impact => impact === id)
+      console.log('NW: ', id)
+      let impact = impactData.find(impact => impact.impactID === id)
+      console.log('sdcsdcsdcsdcsdc', impact)
       return impact
     } catch (err) {
       return boom.badRequest('Failed to get impact data ', err)
     }
   }
 }
-// async getStationsUpstreamDownstream (id) {
-//   // TODO: refactor to make truly asynchronous
-//   //
-//   try {
-//     let station = riverStations.find(station => station.id === 'stations.' + id)
-//     return station
-//   } catch (err) {
-//     return boom.badRequest('Failed to get river stations ', err)
-//   }
-// },

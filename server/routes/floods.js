@@ -154,6 +154,7 @@ module.exports = [{
       // const stationData = {}
       // stationData.impacts = impacts
       // return stationData
+      // console.log(impacts)
       return impacts
     } catch (err) {
       return boom.badRequest('Failed to get impact data', err)
@@ -163,7 +164,7 @@ module.exports = [{
     description: 'Get impact data',
     validate: {
       params: {
-        id: joi.string().required()
+        id: joi.number().required()
       }
     }
   }
