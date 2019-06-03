@@ -197,9 +197,29 @@ module.exports = {
 
   async getImpactData (id) {
     try {
-      console.log('NW: ', id)
-      let impact = impactData.find(impact => impact.impactID === id)
-      console.log('sdcsdcsdcsdcsdc', impact)
+      let impacts = impactData.filter(impacts => parseInt(impacts.rloiId) === id)
+      if (!impacts) {
+        console.log('No impacts for id: ', id)
+        return []
+      }
+      return impacts
+    } catch (err) {
+      return boom.badRequest('Failed to get impact data ', err)
+    }
+  },
+
+  async getImpactDataWithin (bbox) {
+    try {
+      let impact = impactData.filter(impact =>
+        parseFloat(impact.longtitude) <= bbox[0] &&
+        parseFloat(impact.longtitude) >= bbox[2] &&
+        parseFloat(impact.latitude) >= bbox[3] &&
+        parseFloat(impact.latitude) <= bbox[1]
+      )
+      if (!impact) {
+        console.log('No impacts available within bbox: ', bbox)
+        return []
+      }
       return impact
     } catch (err) {
       return boom.badRequest('Failed to get impact data ', err)
