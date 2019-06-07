@@ -102,6 +102,25 @@ const isEngland = `
 //   SELECT ((SELECT count(1) FROM u_flood.england_010k e WHERE st_intersects(ST_MakeEnvelope($1, $2, $3, $4, 4326), e.geom)) > 0) AS is_england_bbox
 // `
 
+const getImpactsWithin = `
+  select i.id as impactid,
+  tc.wiski_river_name || ' at ' || tc.agency_name as gauge,
+  i.rloi_id as rloiid,
+  i.value,
+  i.units,
+  st_asgeojson(i.geom) as coordinates,
+  i.comment,
+  i.short_name as shortname,
+  i.description,
+  i.type,
+  i.obs_flood_year as obsfloodyear,
+  i.obs_flood_month as obsfloodmonth,
+  i.source
+  from u_flood.impact i
+  inner join u_flood.telemetry_context tc on i.rloi_id = tc.rloi_id
+  where ST_Contains(ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, 4326), 4326), i.geom)
+`
+
 module.exports = {
   async getFloods () {
     const result = await pool.query(getFloods)
@@ -210,17 +229,13 @@ module.exports = {
 
   async getImpactDataWithin (bbox) {
     try {
-      let impact = impactData.filter(impact =>
-        parseFloat(impact.longtitude) <= bbox[0] &&
-        parseFloat(impact.longtitude) >= bbox[2] &&
-        parseFloat(impact.latitude) >= bbox[3] &&
-        parseFloat(impact.latitude) <= bbox[1]
-      )
-      if (!impact) {
+      const result = await pool.query(getImpactsWithin, bbox)
+      
+      if (result.rows.length === -1) {
         console.log('No impacts available within bbox: ', bbox)
         return []
       }
-      return impact
+      return result.rows
     } catch (err) {
       return boom.badRequest('Failed to get impact data ', err)
     }
