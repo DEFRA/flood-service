@@ -103,41 +103,15 @@ const isEngland = `
 // `
 
 const getImpactsWithin = `
-  select i.id as impactid,
-  tc.wiski_river_name || ' at ' || tc.agency_name as gauge,
-  i.rloi_id as rloiid,
-  i.value,
-  i.units,
-  st_asgeojson(i.geom) as coordinates,
-  i.comment,
-  i.short_name as shortname,
-  i.description,
-  i.type,
-  i.obs_flood_year as obsfloodyear,
-  i.obs_flood_month as obsfloodmonth,
-  i.source
-  from u_flood.impact i
-  inner join u_flood.telemetry_context tc on i.rloi_id = tc.rloi_id
+  select *
+  from u_flood.impact_mview i
   where ST_Contains(ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, 4326), 4326), i.geom)
 `
 
 const getImpactsByRloiId = `
-select i.id as impactid,
-tc.wiski_river_name || ' at ' || tc.agency_name as gauge,
-i.rloi_id as rloiid,
-i.value,
-i.units,
-st_asgeojson(i.geom) as coordinates,
-i.comment,
-i.short_name as shortname,
-i.description,
-i.type,
-i.obs_flood_year as obsfloodyear,
-i.obs_flood_month as obsfloodmonth,
-i.source
-from u_flood.impact i
-inner join u_flood.telemetry_context tc on i.rloi_id = tc.rloi_id
-where i.rloi_id = $1
+  select *
+  from u_flood.impact_mview i
+  where i.rloiid = $1
 `
 
 module.exports = {
