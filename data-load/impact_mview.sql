@@ -1,8 +1,8 @@
--- View: u_flood.import_mview
+-- View: u_flood.impact_mview
 
-DROP MATERIALIZED VIEW u_flood.import_mview;
+DROP MATERIALIZED VIEW u_flood.impact_mview;
 
-CREATE MATERIALIZED VIEW u_flood.import_mview
+CREATE MATERIALIZED VIEW u_flood.impact_mview
 TABLESPACE flood_tables
 AS
 
@@ -11,6 +11,7 @@ tc.wiski_river_name || ' at ' || tc.agency_name as gauge,
 i.rloi_id as rloiid,
 i.value,
 i.units,
+i.geom,
 st_asgeojson(i.geom) as coordinates,
 i.comment,
 i.short_name as shortname,
@@ -30,5 +31,5 @@ left join u_flood.ffoi_max ffoi on ffoi.telemetry_id = s.telemetry_id
 
 WITH DATA;
 
-ALTER TABLE u_flood.import_mview
+ALTER TABLE u_flood.impact_mview
     OWNER TO u_flood;
