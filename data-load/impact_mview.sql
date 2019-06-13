@@ -29,6 +29,7 @@ inner join u_flood.telemetry_context tc on i.rloi_id = tc.rloi_id
 left join u_flood.stations_overview_mview s on s.rloi_id = i.rloi_id and s.direction = 'u'
 left join u_flood.ffoi_max ffoi on ffoi.telemetry_id = s.telemetry_id
 left join u_flood.ffoi_station fs on i.rloi_id = fs.rloi_id
+where tc.status = 'Active'
 
 WITH DATA;
 
