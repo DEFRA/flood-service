@@ -32,7 +32,7 @@ ALTER TABLE u_flood.impact
 
 
 ########## Import the impacts-clean.csv to the impacts table
-psql {FLOOD_SERVICE_CONNECTION_STRING} -c "\copy impact(rloi_id, value, units, lng, lat, comment, short_name, description, type, obs_flood_year, obs_flood_month, source) from /home/tedd/Downloads/impacts-clean.csv with delimiter as '|' CSV HEADER"
+psql ${FLOOD_SERVICE_CONNECTION_STRING} -c "\copy impact(rloi_id, value, units, lng, lat, comment, short_name, description, type, obs_flood_year, obs_flood_month, source) from /home/tedd/flood-service/data-load/impacts-clean-v3.csv with delimiter as '|' CSV HEADER"
 
 ########## Update the geom field with a point created from the coordinates
-psql {FLOOD_SERVICE_CONNECTION_STRING} -c "UPDATE u_flood.impact SET geom = ST_GeomFromText('POINT(' || lng || ' ' || lat || ')',4326);"
+psql ${FLOOD_SERVICE_CONNECTION_STRING} -c "UPDATE u_flood.impact SET geom = ST_GeomFromText('POINT(' || lng || ' ' || lat || ')',4326);"
