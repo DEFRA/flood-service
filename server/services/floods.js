@@ -5,7 +5,6 @@ const pool = new Pool({
   connectionString: config.connectionString
 })
 const riverStations = require('./river-stations.json')
-const impactData = require('./impacts.json')
 
 const getFloods = `
   SELECT fwa_code as "code", fwa_key as "key", description,
@@ -69,15 +68,21 @@ const getStationsByRadius = `
 `
 
 const getStationsWithin = `
-  SELECT rloi_id, telemetry_id, region, catchment, wiski_river_name,
-    agency_name, external_name, station_type, status, qualifier,
-    (lower(region) = 'wales' OR rloi_id IN (4162, 4170, 4173, 4174, 4176)) AS isWales 
-  FROM u_flood.station_split_mview
-  WHERE ST_Contains(ST_Transform(ST_Buffer(ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, 4326), 27700), 2000), 4326), centroid)
-    AND lower(status) != 'closed'
-    AND (lower(region) != 'wales'
-    OR catchment IN ('Dee', 'Severn Uplands', 'Wye'))
-  ORDER BY wiski_river_name, external_name;
+  SELECT ss.rloi_id, ss.telemetry_id, ss.region, ss.catchment, ss.wiski_river_name,
+    ss.agency_name, ss.external_name, ss.station_type, ss.status, ss.qualifier,
+    (lower(ss.region) = 'wales' OR ss.rloi_id IN (4162, 4170, 4173, 4174, 4176)) AS isWales,
+    so.processed_value as value,
+    so.value_timestamp,
+    so.error as value_erred,
+    so.percentile_5,
+    so.percentile_95
+  FROM u_flood.station_split_mview ss
+  inner join u_flood.stations_overview_mview so on ss.rloi_id = so.rloi_id and ss.qualifier = so.direction
+  WHERE ST_Contains(ST_Transform(ST_Buffer(ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, 4326), 27700), 2000), 4326), ss.centroid)
+    AND lower(ss.status) != 'closed'
+    AND (lower(ss.region) != 'wales'
+    OR ss.catchment IN ('Dee', 'Severn Uplands', 'Wye'))
+  ORDER BY ss.wiski_river_name, ss.external_name;
 `
 
 const getStationTelemetry = `

@@ -51,48 +51,64 @@ lab.experiment('API test', () => {
     Code.expect(response.payload).to.include('true')
   })
 
-  lab.test('3 - GET / route works', async () => {
-    const impacts = {
-      impactID: 1,
+  lab.test('3 - Get impacts on a station', async () => {
+    const impacts =
+    [{ impactid: 484,
       gauge: 'River Severn at Bewdley',
-      rloiID: 2001,
-      value: 3.98,
-      Units: 'mALD',
-      location: '',
-      ThresholdComment: '',
-      shortName: 'Level recorded <<ObsFloodMonth>> <<ObsFloodYear>>',
-      description: 'Level recorded here <<ObsFloodMonth>> <<ObsFloodYear>>',
-      type: 'Historic',
-      obsFloodYear: 2007,
-      obsFloodMonth: 'July',
-      source: 'Flood Resiliance'
-    }
+      rloiid: 2001,
+      value: '5',
+      units: 'mALD',
+      coordinates: '{"type":"Point","coordinates":[-2.312055,52.376705]}',
+      comment: 'Water spills into Pewterers Alley & properties on Riverside North flooded',
+      shortname: 'Flooding to Pewterers Alley',
+      description: 'Flooding at Pewterers Alley',
+      type: 'Road Impact',
+      obsfloodyear: null,
+      obsfloodmonth: null,
+      source: 'Flood Resiliance' },
+    { impactid: 484,
+      gauge: 'River Severn at Bewdley',
+      rloiid: 2001,
+      value: '5',
+      units: 'mALD',
+      coordinates: '{"type":"Point","coordinates":[-2.312055,52.376705]}',
+      comment: 'Water spills into Pewterers Alley & properties on Riverside North flooded',
+      shortname: 'Flooding to Pewterers Alley',
+      description: 'Flooding at Pewterers Alley',
+      type: 'Road Impact',
+      obsfloodyear: null,
+      obsfloodmonth: null,
+      source: 'Flood Resiliance' }]
 
     let impactStub = sandbox.stub(impactService, 'getImpactData')
     impactStub.returns(impacts)
 
     const options = {
       method: 'GET',
-      url: '/impacts/' + impacts.impactID
+      url: '/impacts/2001'
     }
 
     const response = await server.inject(options)
     let impactObj = JSON.parse(response.payload)
     Code.expect(response.statusCode).to.equal(200)
-    Code.expect(impactObj).to.be.an.object()
-    Code.expect(impactObj.source).to.equal('Flood Resiliance')
+    Code.expect(impactObj).to.be.an.array()
+    Code.expect(impactObj[0].rloiid).to.equal(2001)
   })
 
   lab.test('4 - error works on getImpactData service', async () => {
-    sandbox.stub(impactService, 'getImpactData').throws(new Error())
+    let impactStub = sandbox.stub(impactService, 'getImpactData')
+
+    impactStub.throws(new Error())
 
     const options = {
       method: 'GET',
-      url: '/impacts/1'
+      url: '/impacts/2001'
     }
 
     const response = await server.inject(options)
+
     Code.expect(response.statusCode).to.equal(400)
+    console.log(response.payload)
     Code.expect(response.payload).to.include('Failed to get impact data')
   })
 
@@ -109,3 +125,30 @@ lab.experiment('API test', () => {
     Code.expect(response.payload).to.include('Failed to get isEngland')
   })
 })
+
+// [{ impactid: 485,
+//   gauge: 'River Severn at Bewdley',
+//   rloiid: 2001,
+//   value: '5',
+//   units: 'mALD',
+//   coordinates: '{"type":"Point","coordinates":[-2.314835,52.377867]}',
+//   comment: 'Water spills into Pewterers Alley & properties on Riverside North flooded',
+//   shortname: 'Property flooding Riverside North',
+//   description: 'Flooding to properties on Riverside North',
+//   type: 'Property Impact',
+//   obsfloodyear: null,
+//   obsfloodmonth: null,
+//   source: 'Flood Resiliance' },
+// { impactid: 484,
+//   gauge: 'River Severn at Bewdley',
+//   rloiid: 2001,
+//   value: '5',
+//   units: 'mALD',
+//   coordinates: '{"type":"Point","coordinates":[-2.312055,52.376705]}',
+//   comment: 'Water spills into Pewterers Alley & properties on Riverside North flooded',
+//   shortname: 'Flooding to Pewterers Alley',
+//   description: 'Flooding at Pewterers Alley',
+//   type: 'Road Impact',
+//   obsfloodyear: null,
+//   obsfloodmonth: null,
+//   source: 'Flood Resiliance' }]
