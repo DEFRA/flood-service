@@ -166,15 +166,10 @@ module.exports = {
     return stations
   },
 
-  async getStationsUpstreamDownstream (id) {
-    // TODO: refactor to make truly asynchronous
-    //
-    try {
-      let station = riverStations.find(station => station.id === 'stations.' + id)
-      return station
-    } catch (err) {
-      return boom.badRequest('Failed to get river stations ', err)
-    }
+  getStationsUpstreamDownstream (id) {
+    return new Promise((resolve) => {
+      resolve(riverStations.find(station => station.id === 'stations.' + id))
+    })
   },
 
   async getStationsByRadius (lng, lat, radiusM) {
