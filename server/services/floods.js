@@ -68,15 +68,21 @@ const getStationsByRadius = `
 `
 
 const getStationsWithin = `
-  SELECT rloi_id, telemetry_id, region, catchment, wiski_river_name,
-    agency_name, external_name, station_type, status, qualifier,
-    (lower(region) = 'wales' OR rloi_id IN (4162, 4170, 4173, 4174, 4176)) AS isWales 
-  FROM u_flood.station_split_mview
-  WHERE ST_Contains(ST_Transform(ST_Buffer(ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, 4326), 27700), 2000), 4326), centroid)
-    AND lower(status) != 'closed'
-    AND (lower(region) != 'wales'
-    OR catchment IN ('Dee', 'Severn Uplands', 'Wye'))
-  ORDER BY wiski_river_name, external_name;
+  SELECT ss.rloi_id, ss.telemetry_id, ss.region, ss.catchment, ss.wiski_river_name,
+    ss.agency_name, ss.external_name, ss.station_type, ss.status, ss.qualifier,
+    (lower(ss.region) = 'wales' OR ss.rloi_id IN (4162, 4170, 4173, 4174, 4176)) AS isWales,
+    so.processed_value as value,
+    so.value_timestamp,
+    so.error as value_erred,
+    so.percentile_5,
+    so.percentile_95
+  FROM u_flood.station_split_mview ss
+  inner join u_flood.stations_overview_mview so on ss.rloi_id = so.rloi_id and ss.qualifier = so.direction
+  WHERE ST_Contains(ST_Transform(ST_Buffer(ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, 4326), 27700), 2000), 4326), ss.centroid)
+    AND lower(ss.status) != 'closed'
+    AND (lower(ss.region) != 'wales'
+    OR ss.catchment IN ('Dee', 'Severn Uplands', 'Wye'))
+  ORDER BY ss.wiski_river_name, ss.external_name;
 `
 
 const getStationTelemetry = `
@@ -100,6 +106,18 @@ const isEngland = `
 // const isEnglandBbox = `
 //   SELECT ((SELECT count(1) FROM u_flood.england_010k e WHERE st_intersects(ST_MakeEnvelope($1, $2, $3, $4, 4326), e.geom)) > 0) AS is_england_bbox
 // `
+
+const getImpactsWithin = `
+  select *
+  from u_flood.impact_mview i
+  where ST_Contains(ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, 4326), 4326), i.geom)
+`
+
+const getImpactsByRloiId = `
+  select *
+  from u_flood.impact_mview i
+  where i.rloiid = $1
+`
 
 module.exports = {
   async getFloods () {
@@ -148,15 +166,10 @@ module.exports = {
     return stations
   },
 
-  async getStationsUpstreamDownstream (id) {
-    // TODO: refactor to make truly asynchronous
-    //
-    try {
-      let station = riverStations.find(station => station.id === 'stations.' + id)
-      return station
-    } catch (err) {
-      return boom.badRequest('Failed to get river stations ', err)
-    }
+  getStationsUpstreamDownstream (id) {
+    return new Promise((resolve) => {
+      resolve(riverStations.find(station => station.id === 'stations.' + id))
+    })
   },
 
   async getStationsByRadius (lng, lat, radiusM) {
@@ -192,5 +205,23 @@ module.exports = {
     const [value] = result.rows
 
     return value
+  },
+
+  async getImpactData (id) {
+    try {
+      const result = await pool.query(getImpactsByRloiId, [id])
+      return result.rows
+    } catch (err) {
+      return boom.badRequest('Failed to get impact data ', err)
+    }
+  },
+
+  async getImpactDataWithin (bbox) {
+    try {
+      const result = await pool.query(getImpactsWithin, bbox)
+      return result.rows
+    } catch (err) {
+      return boom.badRequest('Failed to get impact data ', err)
+    }
   }
 }
