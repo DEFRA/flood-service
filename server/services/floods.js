@@ -11,7 +11,7 @@ const getFloods = `
     area_floodline_quickdial_id as "quickDialNumber",region, area, 
     flood_type as "floodType", severity, severity_description as "severityDescription", 
     warning_key as "warningKey", raised, severity_changed as "severityChanged",
-    message_changed as "messageChanged", message
+    message_changed as "messageChanged", message, ST_AsGeoJSON(ST_Centroid) as geometry
   FROM u_flood.current_flood_warning_alert_mview
   ORDER BY severity, description;
   SELECT load_timestamp as timestamp FROM u_flood.current_load_timestamp where id = 1;
