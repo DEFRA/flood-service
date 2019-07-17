@@ -36,9 +36,9 @@ lab.experiment('API test', () => {
   })
 
   lab.test('2 - GET /impacts route works', async () => {
-    let result = { 'is_england': true }
+    const result = { is_england: true }
 
-    let isEngland = sandbox.stub(impactService, 'isEngland')
+    const isEngland = sandbox.stub(impactService, 'isEngland')
     isEngland.returns(result)
 
     const options = {
@@ -80,7 +80,7 @@ lab.experiment('API test', () => {
       obsfloodmonth: null,
       source: 'Flood Resiliance' }]
 
-    let impactStub = sandbox.stub(impactService, 'getImpactData')
+    const impactStub = sandbox.stub(impactService, 'getImpactData')
     impactStub.returns(impacts)
 
     const options = {
@@ -89,14 +89,14 @@ lab.experiment('API test', () => {
     }
 
     const response = await server.inject(options)
-    let impactObj = JSON.parse(response.payload)
+    const impactObj = JSON.parse(response.payload)
     Code.expect(response.statusCode).to.equal(200)
     Code.expect(impactObj).to.be.an.array()
     Code.expect(impactObj[0].rloiid).to.equal(2001)
   })
 
   lab.test('4 - error works on getImpactData service', async () => {
-    let impactStub = sandbox.stub(impactService, 'getImpactData')
+    const impactStub = sandbox.stub(impactService, 'getImpactData')
 
     impactStub.throws(new Error())
 
