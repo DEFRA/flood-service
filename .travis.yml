@@ -3,7 +3,7 @@ node_js:
   - "8"
 addons:
   code_climate:
-    repo_token: 87feacd05a49c0f710303701e7802f2edd591321104d2ad3aeef12005905f316 
+    repo_token: b23a6639933c25b0298a88d328a1cb143b8061866ba5943c5efde59a30a0d53d 
 before_script:
 after_script:
   - codeclimate-test-reporter < lcov.info
