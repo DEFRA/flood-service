@@ -2,8 +2,7 @@ const joi = require('joi')
 const boom = require('boom')
 const floodsService = require('../services/index')
 
-module.exports =
-{
+module.exports = {
   method: 'GET',
   path: '/flood-area/alert/{code}',
   handler: async (request, h) => {

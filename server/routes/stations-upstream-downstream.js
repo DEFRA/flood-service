@@ -7,14 +7,10 @@ module.exports = {
   path: '/stations-upstream-downstream/{id}/{direction}',
   handler: async (request, h) => {
     try {
-      const { id } = request.params
-      // const { id, direction } = request.params
-
-      const upDownData = await floodsService.getStationsUpstreamDownstream(id)
-      // const stationData = await floodsService.getStation(id, direction)
-      const stationData = {}
-      stationData.upDown = upDownData
-      return stationData
+      const upDownData = await floodsService.getStationsUpstreamDownstream(request.params.id)
+      return {
+        upDown: upDownData
+      }
     } catch (err) {
       return boom.badRequest('Failed to get upstream - downstream stations', err)
     }

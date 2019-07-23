@@ -1,4 +1,4 @@
-const routes = [].concat(
+const routes = [
   require('../routes/floods'),
   require('../routes/flood-area-alert'),
   require('../routes/flood-area-warning'),
@@ -14,7 +14,7 @@ const routes = [].concat(
   require('../routes/stations-within'),
   require('../routes/stations-within-radius'),
   require('../routes/thresholds-data')
-)
+]
 
 module.exports = {
   plugin: {

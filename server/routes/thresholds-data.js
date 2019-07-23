@@ -7,8 +7,7 @@ module.exports = {
   path: '/station/{id}/forecast/thresholds',
   handler: async (request, h) => {
     try {
-      const { id } = request.params
-      const result = await floodsService.getFFOIThresholds(id)
+      const result = await floodsService.getFFOIThresholds(request.params.id)
       return result
     } catch (err) {
       return boom.badRequest('Failed to get ffoi threshold data', err)

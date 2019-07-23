@@ -8,9 +8,8 @@ module.exports = {
   options: {
     description: 'Check if coordinates are in england',
     handler: async (request, h) => {
-      const params = request.params
-
       try {
+        const params = request.params
         const result = await floodsService.isEngland(params.x, params.y)
         return result
       } catch (err) {
