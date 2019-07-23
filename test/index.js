@@ -3,7 +3,7 @@ const Code = require('code')
 const lab = exports.lab = Lab.script()
 const createServer = require('../server')
 const sinon = require('sinon')
-const impactService = require('../server/services/floods.js')
+const impactService = require('../server/services/index.js')
 
 lab.experiment('API test', () => {
   let server
