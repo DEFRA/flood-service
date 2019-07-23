@@ -3,7 +3,7 @@ const routes = [
   require('../routes/flood-area-alert'),
   require('../routes/flood-area-warning'),
   require('../routes/floods-within'),
-  require('../routes/forcast-data'),
+  require('../routes/forecast-data'),
   require('../routes/impacts-within'),
   require('../routes/impacts'),
   require('../routes/is-england'),
