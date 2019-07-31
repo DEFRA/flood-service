@@ -4,21 +4,20 @@ const s3Service = require('../services/s3')
 
 module.exports = {
   method: 'GET',
-  path: '/station/{id}/forecast/data',
+  path: '/station/{telemetryId}/forecast/data',
   handler: async (request, h) => {
     try {
-      const { id } = request.params
-      const result = await s3Service.ffoi(id)
+      const result = await s3Service.ffoi(request.params.telemetryId)
       return result
     } catch (err) {
       return boom.badRequest('Failed to get forecast data', err)
     }
   },
   options: {
-    description: 'Get forecast by station id',
+    description: 'Get forecast by telemetry id',
     validate: {
       params: {
-        id: joi.string().required()
+        telemetryId: joi.string().required()
       }
     }
   }
