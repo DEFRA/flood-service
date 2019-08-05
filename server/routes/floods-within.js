@@ -1,5 +1,5 @@
 const joi = require('joi')
-const boom = require('boom')
+const boom = require('@hapi/boom')
 const floodsService = require('../services/index')
 
 module.exports = {

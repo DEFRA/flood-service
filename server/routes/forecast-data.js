@@ -1,5 +1,5 @@
 const joi = require('joi')
-const boom = require('boom')
+const boom = require('@hapi/boom')
 const s3Service = require('../services/s3')
 
 module.exports = {
