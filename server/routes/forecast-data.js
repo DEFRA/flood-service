@@ -1,4 +1,4 @@
-const joi = require('joi')
+const joi = require('@hapi/joi')
 const boom = require('@hapi/boom')
 const s3Service = require('../services/s3')
 
