@@ -1,14 +1,14 @@
-const joi = require('joi')
-const boom = require('boom')
+const joi = require('@hapi/joi')
+const boom = require('@hapi/boom')
 const floodsService = require('../services/index')
 
 module.exports = {
   method: 'GET',
-  path: '/station/{id}/{direction}/telemetry',
+  path: '/station/{rloiId}/{direction}/telemetry',
   handler: async (request, h) => {
     try {
-      const { id, direction } = request.params
-      const result = await floodsService.getStationTelemetry(id, direction)
+      const { rloiId, direction } = request.params
+      const result = await floodsService.getStationTelemetry(rloiId, direction)
       return result
     } catch (err) {
       return boom.badRequest('Failed to get telemetry data', err)
@@ -18,7 +18,7 @@ module.exports = {
     description: 'Get telemetry by station id',
     validate: {
       params: {
-        id: joi.number().required(),
+        rloiId: joi.number().required(),
         direction: joi.string().valid('u', 'd')
       }
     }
