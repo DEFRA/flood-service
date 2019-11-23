@@ -17,12 +17,12 @@ module.exports = {
   options: {
     description: 'Get stations with bbox',
     validate: {
-      params: {
+      params: joi.object({
         x1: joi.number().required(),
         y1: joi.number().required(),
         x2: joi.number().required(),
         y2: joi.number().required()
-      }
+      })
     }
   }
 }

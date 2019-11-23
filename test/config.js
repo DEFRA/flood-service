@@ -1,6 +1,6 @@
 const Lab = require('@hapi/lab')
 const lab = exports.lab = Lab.script()
-const Code = require('code')
+const Code = require('@hapi/code')
 let connectionString
 
 lab.experiment('Config test', () => {

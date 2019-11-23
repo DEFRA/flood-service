@@ -17,9 +17,9 @@ module.exports = {
   },
   options: {
     validate: {
-      params: {
+      params: joi.object({
         code: joi.string().required()
-      }
+      })
     }
   }
 }

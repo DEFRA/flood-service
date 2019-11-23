@@ -18,10 +18,10 @@ module.exports = {
   options: {
     description: 'Get upstream - downstream stations',
     validate: {
-      params: {
+      params: joi.object({
         id: joi.string().required(),
         direction: joi.string().required()
-      }
+      })
     }
   }
 }

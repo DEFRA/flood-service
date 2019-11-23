@@ -17,11 +17,11 @@ module.exports = {
   options: {
     description: 'Get stations by radius',
     validate: {
-      params: {
+      params: joi.object({
         lng: joi.number().required(),
         lat: joi.number().required(),
         radiusM: joi.number().required()
-      }
+      })
     }
   }
 }

@@ -17,10 +17,10 @@ module.exports = {
   options: {
     description: 'Get station by id',
     validate: {
-      params: {
+      params: joi.object({
         rloiId: joi.number().required(),
         direction: joi.string().valid('u', 'd')
-      }
+      })
     }
   }
 }

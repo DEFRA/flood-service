@@ -17,10 +17,10 @@ module.exports = {
       }
     },
     validate: {
-      params: {
+      params: joi.object({
         x: joi.number().required(),
         y: joi.number().required()
-      }
+      })
     }
   }
 }

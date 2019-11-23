@@ -17,9 +17,9 @@ module.exports = {
   options: {
     description: 'Get impact data',
     validate: {
-      params: {
+      params: joi.object({
         id: joi.number().required()
-      }
+      })
     }
   }
 }

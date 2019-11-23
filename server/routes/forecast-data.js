@@ -16,9 +16,9 @@ module.exports = {
   options: {
     description: 'Get forecast by telemetry id',
     validate: {
-      params: {
+      params: joi.object({
         telemetryId: joi.string().required()
-      }
+      })
     }
   }
 }

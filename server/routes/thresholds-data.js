@@ -16,9 +16,9 @@ module.exports = {
   options: {
     description: 'Get forecast thresholds by station id',
     validate: {
-      params: {
+      params: joi.object({
         id: joi.number().required()
-      }
+      })
     }
   }
 }
