@@ -3,7 +3,7 @@ const joi = require('@hapi/joi')
 // Define config schema
 const schema = joi.object({
   port: joi.number().default(8050),
-  env: joi.string().valid('development', 'test', 'production').default('development'),
+  env: joi.string().valid('dev', 'tst', 'test', 'prd').default('prd'),
   connectionString: joi.string().required(),
   s3: joi.object().required().keys({
     accessKey: joi.string().required(),
@@ -62,7 +62,7 @@ if (result.error) {
 const value = result.value
 
 // Add some helper props
-value.isDev = value.env === 'development'
-value.isProd = value.env === 'production'
+value.isDev = value.env === 'dev'
+value.isProd = value.env === 'prd'
 
 module.exports = value
