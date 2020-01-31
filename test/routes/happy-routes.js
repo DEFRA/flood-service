@@ -486,4 +486,72 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
     stub.revert()
   })
+  lab.test('15 - GET / route works for /river-stations/{river} ', async () => {
+    const options = {
+      method: 'GET',
+      url: '/river-stations/River Granta'
+
+    }
+
+    const stub = mock.replace(services, 'getStationsByRiver', mock.makePromise(null, [
+      {
+        rloi_id: 6194,
+        telemetry_id: 'E21005',
+        region: 'Anglian',
+        catchment: 'Cam and Ely Ouse (Including South Level)',
+        wiski_river_name: 'River Granta',
+        agency_name: 'Babraham',
+        external_name: 'Babraham',
+        station_type: 'S',
+        status: 'Active',
+        qualifier: 'u',
+        iswales: false,
+        value: '0.122',
+        value_timestamp: '2020-01-31T04:30:00.000Z',
+        value_erred: false,
+        percentile_5: '0.234999999999999',
+        percentile_95: '0.0440000000000005'
+      },
+      {
+        rloi_id: 6074,
+        telemetry_id: 'E21724',
+        region: 'Anglian',
+        catchment: 'Cam and Ely Ouse (Including South Level)',
+        wiski_river_name: 'River Granta',
+        agency_name: 'Linton',
+        external_name: 'Linton',
+        station_type: 'S',
+        status: 'Active',
+        qualifier: 'u',
+        iswales: false,
+        value: '0.109',
+        value_timestamp: '2020-01-31T06:30:00.000Z',
+        value_erred: false,
+        percentile_5: '0.739999999999999',
+        percentile_95: '0.0700000000000003'
+      },
+      {
+        rloi_id: 6195,
+        telemetry_id: 'E22041',
+        region: 'Anglian',
+        catchment: 'Cam and Ely Ouse (Including South Level)',
+        wiski_river_name: 'River Granta',
+        agency_name: 'Stapleford',
+        external_name: 'Stapleford',
+        station_type: 'S',
+        status: 'Active',
+        qualifier: 'u',
+        iswales: false,
+        value: '0.176',
+        value_timestamp: '2020-01-31T06:00:00.000Z',
+        value_erred: false,
+        percentile_5: '1.02',
+        percentile_95: '0.0499999999999989'
+      }
+    ]))
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+    stub.revert()
+  })
 })

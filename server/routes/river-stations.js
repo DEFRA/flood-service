@@ -4,10 +4,10 @@ const floodsService = require('../services/index')
 
 module.exports = {
   method: 'GET',
-  path: '/river-stations/{id}',
+  path: '/river-stations/{river}',
   handler: async (request, h) => {
     try {
-      const stationsData = await floodsService.getStationsByRiver(request.params.id)
+      const stationsData = await floodsService.getStationsByRiver(request.params.river)
       return stationsData
     } catch (err) {
       return boom.badRequest('Failed to get River Stations', err)
@@ -17,7 +17,7 @@ module.exports = {
     description: 'Get River stations',
     validate: {
       params: joi.object({
-        id: joi.string().required()
+        river: joi.string().required()
       })
     }
   }
