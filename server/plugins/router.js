@@ -7,6 +7,7 @@ const routes = [
   require('../routes/impacts-within'),
   require('../routes/impacts'),
   require('../routes/is-england'),
+  require('../routes/river-stations'),
   require('../routes/station'),
   require('../routes/stations-upstream-downstream'),
   require('../routes/station-telemetry'),
