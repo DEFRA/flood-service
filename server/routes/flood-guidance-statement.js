@@ -5,7 +5,7 @@ module.exports = {
   method: 'GET',
   path: '/flood-guidance-statement',
   options: {
-    description: 'Get the flood guidance statement',
+    description: 'Get the flood guidance statement'
   },
   handler: async (request, h) => {
     try {
