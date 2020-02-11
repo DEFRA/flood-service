@@ -24,8 +24,6 @@ module.exports = {
       Bucket: config.bucket
     }
 
-    console.log(params)
-
     return s3.getObject(params)
       .promise()
       .then(data => JSON.parse(data.Body))
