@@ -2,6 +2,7 @@ const routes = [
   require('../routes/floods'),
   require('../routes/flood-area-alert'),
   require('../routes/flood-area-warning'),
+  require('../routes/flood-guidance-statement'),
   require('../routes/floods-within'),
   require('../routes/forecast-data'),
   require('../routes/impacts-within'),

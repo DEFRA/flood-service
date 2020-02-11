@@ -486,4 +486,30 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
     stub.revert()
   })
+
+  lab.test('15 - GET /flood-guidance-statement ', async () => {
+    const options = {
+      method: 'GET',
+      url: '/flood-guidance-statement'
+    }
+
+    const stub = mock.replace(s3Service, 'floodGuidanceStatement', mock.makePromise(null, {}))
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+    stub.revert()
+  })
+
+  lab.test('15 - GET /flood-guidance-statement error', async () => {
+    const options = {
+      method: 'GET',
+      url: '/flood-guidance-statement'
+    }
+
+    const stub = mock.replace(s3Service, 'floodGuidanceStatement', mock.makePromise(new Error('test error')))
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    stub.revert()
+  })
 })

@@ -9,7 +9,6 @@ const schema = joi.object({
     accessKey: joi.string().required(),
     secretAccessKey: joi.string().required(),
     bucket: joi.string().required(),
-    key: joi.string().required(),
     httpProxy: joi.string().uri(),
     httpTimeoutMs: joi.number().default(10000)
   }),
@@ -33,7 +32,6 @@ const config = {
     accessKey: process.env.FLOOD_SERVICE_S3_ACCESS_KEY,
     secretAccessKey: process.env.FLOOD_SERVICE_S3_SECRET_ACCESS_KEY,
     bucket: process.env.FLOOD_SERVICE_S3_BUCKET,
-    key: process.env.FLOOD_SERVICE_S3_KEY,
     httpProxy: process.env.FLOOD_SERVICE_S3_PROXY,
     httpTimeoutMs: process.env.FLOOD_SERVICE_S3_TIMEOUT
   },
