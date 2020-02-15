@@ -20,3 +20,32 @@ WITH DATA;
 
 ALTER TABLE u_flood.fwa_mview
     OWNER TO u_flood;
+
+-- Index: idx_fwa_mview_geom_gist
+
+-- DROP INDEX u_flood.idx_fwa_mview_geom_gist;
+
+CREATE INDEX idx_fwa_mview_geom_gist
+    ON u_flood.fwa_mview USING gist
+    (geom)
+    TABLESPACE flood_indexes;
+
+-- Index: idx_fwa_mview_severity_value
+
+-- DROP INDEX u_flood.idx_fwa_mview_severity_value;
+
+CREATE INDEX idx_fwa_mview_severity_value
+    ON u_flood.fwa_mview USING btree
+    (severity_value ASC NULLS LAST)
+    TABLESPACE flood_indexes;
+
+
+-- Index: idx_fwa_mview_ta_code
+
+-- DROP INDEX u_flood.idx_fwa_mview_ta_code;
+
+CREATE INDEX idx_fwa_mview_ta_code
+    ON u_flood.fwa_mview USING btree
+    (ta_code COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE flood_indexes;
+

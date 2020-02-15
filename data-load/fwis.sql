@@ -45,3 +45,13 @@ TABLESPACE flood_tables;
 
 ALTER TABLE u_flood.fwis
     OWNER to u_flood;
+
+-- Index: idx_fwis_fwa_code
+
+-- DROP INDEX u_flood.idx_fwis_fwa_code;
+
+CREATE INDEX idx_fwis_fwa_code
+    ON u_flood.fwis USING btree
+    (ta_code COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE flood_indexes;
+
