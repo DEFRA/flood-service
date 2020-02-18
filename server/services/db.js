@@ -1,6 +1,6 @@
 const { Pool } = require('pg')
-const config = require('../config')
-const pool = new Pool({ connectionString: config.connectionString })
+const { connectionString } = require('../config')
+const pool = new Pool({ connectionString: connectionString })
 module.exports = {
   query: pool.query.bind(pool)
 }
