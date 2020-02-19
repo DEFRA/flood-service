@@ -1,5 +1,6 @@
 const boom = require('@hapi/boom')
 const riverStations = require('./river-stations.json')
+const rivers = require('./rivers.json')
 const queries = require('./queries')
 const db = require('./db')
 
@@ -52,6 +53,20 @@ module.exports = {
     return new Promise((resolve) => {
       resolve(riverStations.find(station => station.id === 'stations.' + id))
     })
+  },
+
+  // getRiver (riverName) {
+  //   return rivers.filter(river => river.name === riverName)
+  // },
+
+  getRivers () {
+    // return rivers.map(river => {
+    //   return {
+    //     id: river.id,
+    //     name: river.name
+    //   }
+    // })
+    return rivers
   },
 
   async getStationsByRadius (lng, lat, radiusM) {

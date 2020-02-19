@@ -4,7 +4,7 @@ const floodsService = require('../services/index')
 
 module.exports = {
   method: 'GET',
-  path: '/stations-upstream-downstream/{id}/{direction}',
+  path: '/stations-upstream-downstream/{id}',
   handler: async (request, h) => {
     try {
       const upDownData = await floodsService.getStationsUpstreamDownstream(request.params.id)
@@ -19,8 +19,7 @@ module.exports = {
     description: 'Get upstream - downstream stations',
     validate: {
       params: joi.object({
-        id: joi.string().required(),
-        direction: joi.string().required()
+        id: joi.string().required()
       })
     }
   }
