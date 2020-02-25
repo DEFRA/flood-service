@@ -11,7 +11,6 @@ const routes = [].concat(
   require('../routes/rivers'),
   require('../routes/station'),
   require('../routes/stations-by-river'),
-  require('../routes/stations-upstream-downstream'),
   require('../routes/station-telemetry'),
   require('../routes/stations-within'),
   require('../routes/stations-within-radius'),

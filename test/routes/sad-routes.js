@@ -167,18 +167,6 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get ffoi threshold data')
   })
 
-  lab.test('12 - GET erroring works for /stations-upstream-downstream/{id}/{direction} ', async () => {
-    sandbox.stub(services, 'getStationsUpstreamDownstream').throws(new Error())
-    const options = {
-      method: 'GET',
-      url: '/stations-upstream-downstream/7333/u'
-    }
-
-    const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(400)
-    Code.expect(response.payload).to.include('Failed to get upstream - downstream stations')
-  })
-
   lab.test('13 - GET erroring works for /stations-within-radius/{lng}/{lat}/{radiusM} ', async () => {
     sandbox.stub(services, 'getStationsByRadius').throws(new Error())
     const options = {

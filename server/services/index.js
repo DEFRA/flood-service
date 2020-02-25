@@ -1,5 +1,4 @@
 const boom = require('@hapi/boom')
-const riverStations = require('./river-stations.json')
 const rivers = require('./rivers.json')
 const queries = require('./queries')
 const db = require('./db')
@@ -49,23 +48,7 @@ module.exports = {
     return stations
   },
 
-  getStationsUpstreamDownstream (id) {
-    return new Promise((resolve) => {
-      resolve(riverStations.find(station => station.id === 'stations.' + id))
-    })
-  },
-
-  // getRiver (riverName) {
-  //   return rivers.filter(river => river.name === riverName)
-  // },
-
   getRivers () {
-    // return rivers.map(river => {
-    //   return {
-    //     id: river.id,
-    //     name: river.name
-    //   }
-    // })
     return rivers
   },
 
@@ -89,13 +72,6 @@ module.exports = {
 
     return thresholds
   },
-
-  // async getFFOIForecast (id) {
-  //   const result = await db.query(queries.getFFOIForecast, [id])
-  //   const [area] = result.rows
-
-  //   return area
-  // },
 
   async isEngland (x, y) {
     const result = await db.query(queries.isEngland, [x, y])

@@ -364,37 +364,6 @@ lab.experiment('Happy Route tests', () => {
     stub.revert()
   })
 
-  lab.test('12 - GET / route works for /stations-upstream-downstream/{id}/{direction} ', async () => {
-    const options = {
-      method: 'GET',
-      url: '/stations-upstream-downstream/7333/u'
-
-    }
-
-    const stub = mock.replace(services, 'getStationsUpstreamDownstream', mock.makePromise(null, {
-      upDown: {
-        id: 'stations.7333',
-        upstream: [
-          {
-            id: 'stations.7332',
-            river: 'River Lee',
-            isTrib: false
-          }
-        ],
-        downstream: [
-          {
-            id: 'stations.7357',
-            river: 'River Lee'
-          }
-        ]
-      }
-    }))
-
-    const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
-    stub.revert()
-  })
-
   lab.test('13 - GET / route works for /stations-within-radius/{lng}/{lat}/{radiusM} ', async () => {
     const options = {
       method: 'GET',

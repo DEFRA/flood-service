@@ -269,19 +269,6 @@ lab.experiment('Services tests', () => {
     await Code.expect(result[0].rloi_id).to.equal(5050)
   })
 
-  // This test is currently bringing data back from ./river-stations.json, code needs to be migrated to the db and the test refactored to new endpoint
-  lab.test('07 - Check getStationsUpstreamDownstream service', async () => {
-    const id = '7333'
-
-    const result = await services.getStationsUpstreamDownstream(id).then((resolvedValue) => {
-      return resolvedValue
-    }, (error) => {
-      return error
-    })
-
-    await Code.expect(result.id).to.equal('stations.7333')
-  })
-
   lab.test('08 - Check getStationsByRadius service', async () => {
     const getStationsByRadiusData = () => {
       return {
