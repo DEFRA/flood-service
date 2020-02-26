@@ -2,97 +2,163 @@
     {
         "id": "alconbury-brook",
         "name": "Alconbury Brook",
-        "levelIds": [
+        "stations": [
+            "stations.6075",
             "stations.6161",
             "stations.6150"
         ]
     },
     {
+        "id": "aldford-brook",
+        "name": "Aldford Brook",
+        "stations": [
+            "stations.4174"
+        ]
+    },
+    {
+        "id": "alwen",
+        "name": "Alwen",
+        "stations": [
+            "stations.4166"
+        ]
+    },
+    {
+        "id": "amwell-loop",
+        "name": "Amwell Loop",
+        "stations": [
+            "stations.9047"
+        ]
+    },
+    {
+        "id": "ash-brook",
+        "name": "Ash Brook",
+        "stations": [
+            "stations.2199"
+        ]
+    },
+    {
+        "id": "alyn",
+        "name": "Alyn",
+        "stations": [
+            "stations.4186",
+            "stations.4242",
+            "stations.4243",
+            "stations.4182",
+            "stations.4244"
+        ]
+    },
+    {
+        "id": "badsey-brook",
+        "name": "Badsey Brook",
+        "stations": [
+            "stations.2015"
+        ]
+    },
+    {
+        "id": "barton-haven",
+        "name": "Barton Haven",
+        "stations": [
+            "stations.6242"
+        ]
+    },
+    {
+        "id": "barnham-rife",
+        "name": "Barnham Rife",
+        "stations": [
+            "stations.9251"
+        ]
+    },
+    {
         "id": "babingley-river",
         "name": "Babingley River",
-        "levelIds": [
+        "stations": [
             "stations.6248"
         ]
     },
     {
         "id": "bin-brook",
         "name": "Bin Brook",
-        "levelIds": [
+        "stations": [
             "stations.6246"
         ]
     },
     {
         "id": "bourn-brook",
         "name": "Bourn Brook",
-        "levelIds": [
+        "stations": [
+            "stations.6262",
             "stations.6197"
         ]
     },
     {
         "id": "clipstone-brook",
         "name": "Clipstone Brook",
-        "levelIds": [
+        "stations": [
             "stations.6156"
+        ]
+    },
+    {
+        "id": "river-crake",
+        "name": "River Crake",
+        "stations": [
+            "stations.5165",
+            "stations.5092"
         ]
     },
     {
         "id": "heacham-river",
         "name": "Heacham River",
-        "levelIds": [
+        "stations": [
             "stations.6268"
-        ]
-    },
-    {
-        "id": "river-kennett",
-        "name": "River Kennett",
-        "levelIds": [
-            "stations.6253"
         ]
     },
     {
         "id": "river-little-ouse",
         "name": "River Little Ouse",
-        "levelIds": [
+        "stations": [
             "stations.6270",
-            "stations.6247"
+            "stations.6247",
+            "stations.6257"
         ]
     },
     {
         "id": "twin",
         "name": "Twin",
-        "levelIds": [
+        "stations": [
             "stations.6263"
         ]
     },
     {
         "id": "river-cam-cambridgeshire",
         "name": "River Cam",
-        "levelIds": [
+        "stations": [
             "stations.6189",
             "stations.6190",
             "stations.6192",
-            "stations.6193"
+            "stations.6193",
+            "stations.6198"
         ]
     },
     {
         "id": "river-rhee",
         "name": "River Rhee",
-        "levelIds": [
+        "stations": [
             "stations.6196",
-            "stations.6199"
+            "stations.6199",
+            "stations.6191"
         ]
     },
     {
         "id": "river-flit",
         "name": "River Flit",
-        "levelIds": [
+        "stations": [
             "stations.6077"
         ]
     },
     {
         "id": "river-granta",
         "name": "River Granta",
-        "levelIds": [
+        "stations": [
             "stations.6074",
             "stations.6194",
             "stations.6195"
@@ -101,7 +167,7 @@
     {
         "id": "river-great-ouse",
         "name": "River Great Ouse",
-        "levelIds": [
+        "stations": [
             "stations.6158",
             "stations.6183",
             "stations.6159",
@@ -114,6 +180,7 @@
             "stations.6166",
             "stations.6167",
             "stations.6168",
+            "stations.6291",
             "stations.6169",
             "stations.6289",
             "stations.6171",
@@ -137,14 +204,14 @@
     {
         "id": "river-hiz",
         "name": "River Hiz",
-        "levelIds": [
+        "stations": [
             "stations.6076"
         ]
     },
     {
         "id": "river-ivel",
         "name": "River Ivel",
-        "levelIds": [
+        "stations": [
             "stations.6182",
             "stations.6181"
         ]
@@ -152,21 +219,23 @@
     {
         "id": "river-kennett",
         "name": "River Kennett",
-        "levelIds": [
-            "stations.6249"
+        "stations": [
+            "stations.6249",
+            "stations.6253"
         ]
     },
     {
         "id": "river-kym",
         "name": "River Kym",
-        "levelIds": [
+        "stations": [
+            "stations.6153",
             "stations.6155"
         ]
     },
     {
         "id": "river-lark",
         "name": "River Lark",
-        "levelIds": [
+        "stations": [
             "stations.6251",
             "stations.6255",
             "stations.6279",
@@ -177,7 +246,7 @@
     {
         "id": "river-nar",
         "name": "River Nar",
-        "levelIds": [
+        "stations": [
             "stations.6288",
             "stations.6277"
         ]
@@ -185,7 +254,7 @@
     {
         "id": "river-ouzel",
         "name": "River Ouzel",
-        "levelIds": [
+        "stations": [
             "stations.6152",
             "stations.6154",
             "stations.6165",
@@ -195,7 +264,7 @@
     {
         "id": "river-thet",
         "name": "River Thet",
-        "levelIds": [
+        "stations": [
             "stations.6250",
             "stations.6265",
             "stations.6273",
@@ -205,7 +274,7 @@
     {
         "id": "river-tove",
         "name": "River Tove",
-        "levelIds": [
+        "stations": [
             "stations.6157",
             "stations.6151"
         ]
@@ -213,119 +282,112 @@
     {
         "id": "river-wissey",
         "name": "River Wissey",
-        "levelIds": [
+        "stations": [
             "stations.6259"
         ]
     },
     {
         "id": "river-whittle",
         "name": "River Whittle",
-        "levelIds": [
+        "stations": [
             "stations.6275"
         ]
     },
     {
         "id": "swavesey-drain",
         "name": "Swavesey Drain",
-        "levelIds": [
+        "stations": [
             "stations.6186"
         ]
     },
     {
         "id": "washpit-brook",
         "name": "Washpit Brook",
-        "levelIds": [
+        "stations": [
             "stations.6294"
         ]
     },
     {
         "id": "whaddon-brook-cambridgeshire",
         "name": "Whaddon Brook",
-        "levelIds": [
+        "stations": [
             "stations.6281"
         ]
     },
     {
         "id": "river-wallington-cambridgeshire",
         "name": "River Wallington",
-        "levelIds": [
+        "stations": [
             "stations.6269"
-        ]
-    },
-    {
-        "id": "bassenthwaite-lake",
-        "name": "Bassenthwaite Lake",
-        "levelIds": [
-            "stations.5179"
         ]
     },
     {
         "id": "broad-fleet",
         "name": "Broad Fleet",
-        "levelIds": [
+        "stations": [
             "stations.5110"
         ]
     },
     {
         "id": "cockers-dyke",
         "name": "Cockers Dyke",
-        "levelIds": [
+        "stations": [
             "stations.5113"
         ]
     },
     {
         "id": "colne-water",
         "name": "Colne Water",
-        "levelIds": [
+        "stations": [
             "stations.5188"
         ]
     },
     {
         "id": "cunsey-beck",
         "name": "Cunsey Beck",
-        "levelIds": [
+        "stations": [
             "stations.5209"
         ]
     },
     {
         "id": "dacre-beck",
         "name": "Dacre Beck",
-        "levelIds": [
+        "stations": [
             "stations.5040"
         ]
     },
     {
         "id": "dovers-brook",
         "name": "Dovers Brook",
-        "levelIds": [
+        "stations": [
             "stations.5227"
         ]
     },
     {
         "id": "river-irt",
         "name": "River Irt",
-        "levelIds": [
+        "stations": [
             "stations.5182"
         ]
     },
     {
         "id": "glenridding-beck",
         "name": "Glenridding Beck",
-        "levelIds": [
+        "stations": [
             "stations.9113"
         ]
     },
     {
         "id": "shaw-brook-tributary",
         "name": "Shaw Brook Tributary",
-        "levelIds": [
+        "stations": [
             "stations.5043"
         ]
     },
     {
         "id": "haweswater-beck",
         "name": "Haweswater Beck",
-        "levelIds": [
+        "stations": [
             "stations.5025",
             "stations.5211"
         ]
@@ -333,35 +395,35 @@
     {
         "id": "hellifield-beck",
         "name": "Hellifield Beck",
-        "levelIds": [
+        "stations": [
             "stations.5191"
         ]
     },
     {
         "id": "sandy-brook",
         "name": "Sandy Brook",
-        "levelIds": [
+        "stations": [
             "stations.9116"
         ]
     },
     {
         "id": "town-beck",
         "name": "Town Beck",
-        "levelIds": [
+        "stations": [
             "stations.9242"
         ]
     },
     {
         "id": "dragley-beck",
         "name": "Dragley Beck",
-        "levelIds": [
+        "stations": [
             "stations.9241"
         ]
     },
     {
         "id": "pendle-water",
         "name": "Pendle Water",
-        "levelIds": [
+        "stations": [
             "stations.5118",
             "stations.5087",
             "stations.5011"
@@ -370,7 +432,7 @@
     {
         "id": "river-brock",
         "name": "River Brock",
-        "levelIds": [
+        "stations": [
             "stations.5022",
             "stations.5120"
         ]
@@ -378,14 +440,14 @@
     {
         "id": "river-calder-cumbria",
         "name": "River Calder",
-        "levelIds": [
+        "stations": [
             "stations.5027"
         ]
     },
     {
         "id": "river-calder-lancashire",
         "name": "River Calder",
-        "levelIds": [
+        "stations": [
             "stations.5104",
             "stations.5189",
             "stations.5105",
@@ -395,7 +457,7 @@
     {
         "id": "river-caldew",
         "name": "River Caldew",
-        "levelIds": [
+        "stations": [
             "stations.5125",
             "stations.5039",
             "stations.5042",
@@ -405,7 +467,7 @@
     {
         "id": "river-cocker",
         "name": "River Cocker",
-        "levelIds": [
+        "stations": [
             "stations.5123",
             "stations.5129",
             "stations.5128"
@@ -414,7 +476,7 @@
     {
         "id": "river-darwen",
         "name": "River Darwen",
-        "levelIds": [
+        "stations": [
             "stations.5061",
             "stations.5048",
             "stations.5015"
@@ -423,7 +485,10 @@
     {
         "id": "river-derwent-cumbria",
         "name": "River Derwent",
-        "levelIds": [
+        "stations": [
+            "stations.5178",
+            "stations.5174",
+            "stations.5179",
             "stations.5103",
             "stations.5181",
             "stations.5180",
@@ -433,7 +498,7 @@
     {
         "id": "river-douglas",
         "name": "River Douglas",
-        "levelIds": [
+        "stations": [
             "stations.5117",
             "stations.5152",
             "stations.5006",
@@ -444,7 +509,7 @@
     {
         "id": "river-duddon",
         "name": "River Duddon",
-        "levelIds": [
+        "stations": [
             "stations.5142",
             "stations.5044"
         ]
@@ -452,7 +517,7 @@
     {
         "id": "river-eamont",
         "name": "River Eamont",
-        "levelIds": [
+        "stations": [
             "stations.5206",
             "stations.5168",
             "stations.5046",
@@ -462,7 +527,7 @@
     {
         "id": "river-eden",
         "name": "River Eden",
-        "levelIds": [
+        "stations": [
             "stations.5157",
             "stations.5059",
             "stations.5005",
@@ -476,7 +541,7 @@
     {
         "id": "river-ehen",
         "name": "River Ehen",
-        "levelIds": [
+        "stations": [
             "stations.5014",
             "stations.5047",
             "stations.5018"
@@ -485,21 +550,21 @@
     {
         "id": "river-esk-cumbria-west",
         "name": "River Esk",
-        "levelIds": [
+        "stations": [
             "stations.5037"
         ]
     },
     {
         "id": "river-esk-cumbria-north",
         "name": "River Esk",
-        "levelIds": [
+        "stations": [
             "stations.5207"
         ]
     },
     {
         "id": "river-greta-cumbria",
         "name": "River Greta",
-        "levelIds": [
+        "stations": [
             "stations.5090",
             "stations.5060",
             "stations.5175"
@@ -508,7 +573,7 @@
     {
         "id": "river-kent",
         "name": "River Kent",
-        "levelIds": [
+        "stations": [
             "stations.5017",
             "stations.5225",
             "stations.5126"
@@ -517,14 +582,14 @@
     {
         "id": "river-leven-cumbria",
         "name": "River Leven",
-        "levelIds": [
+        "stations": [
             "stations.5160"
         ]
     },
     {
         "id": "river-lostock",
         "name": "River Lostock",
-        "levelIds": [
+        "stations": [
             "stations.5010",
             "stations.5083"
         ]
@@ -532,7 +597,7 @@
     {
         "id": "river-lune",
         "name": "River Lune",
-        "levelIds": [
+        "stations": [
             "stations.5094",
             "stations.5077",
             "stations.5029",
@@ -543,7 +608,7 @@
     {
         "id": "river-petteril",
         "name": "River Petteril",
-        "levelIds": [
+        "stations": [
             "stations.5100",
             "stations.5159",
             "stations.5172",
@@ -553,7 +618,7 @@
     {
         "id": "river-ribble",
         "name": "River Ribble",
-        "levelIds": [
+        "stations": [
             "stations.5086",
             "stations.5109",
             "stations.5056",
@@ -568,7 +633,7 @@
     {
         "id": "river-wenning",
         "name": "River Wenning",
-        "levelIds": [
+        "stations": [
             "stations.5012",
             "stations.5184",
             "stations.5148",
@@ -578,7 +643,7 @@
     {
         "id": "river-wyre",
         "name": "River Wyre",
-        "levelIds": [
+        "stations": [
             "stations.5001",
             "stations.5186",
             "stations.5055",
@@ -590,7 +655,7 @@
     {
         "id": "river-yarrow",
         "name": "River Yarrow",
-        "levelIds": [
+        "stations": [
             "stations.5111",
             "stations.9114",
             "stations.5038",
@@ -600,7 +665,8 @@
     {
         "id": "thacka-beck",
         "name": "Thacka Beck",
-        "levelIds": [
+        "stations": [
+            "stations.5212",
             "stations.5204",
             "stations.5208"
         ]
@@ -608,14 +674,14 @@
     {
         "id": "ullswater",
         "name": "Ullswater",
-        "levelIds": [
+        "stations": [
             "stations.5166"
         ]
     },
     {
         "id": "wiza-beck",
         "name": "Wiza Beck",
-        "levelIds": [
+        "stations": [
             "stations.5216",
             "stations.5221"
         ]
@@ -623,63 +689,63 @@
     {
         "id": "trout-beck-cumbria",
         "name": "Trout Beck",
-        "levelIds": [
+        "stations": [
             "stations.5220"
         ]
     },
     {
         "id": "black-brook",
         "name": "Black Brook",
-        "levelIds": [
+        "stations": [
             "stations.2161"
         ]
     },
     {
         "id": "bottle-brook",
         "name": "Bottle Brook",
-        "levelIds": [
+        "stations": [
             "stations.2191"
         ]
     },
     {
         "id": "cocker-beck",
         "name": "Cocker Beck",
-        "levelIds": [
+        "stations": [
             "stations.2215"
         ]
     },
     {
         "id": "day-brook",
         "name": "Day Brook",
-        "levelIds": [
+        "stations": [
             "stations.2231"
         ]
     },
     {
         "id": "dover-beck",
         "name": "Dover Beck",
-        "levelIds": [
+        "stations": [
             "stations.2232"
         ]
     },
     {
         "id": "grace-dieu-brook",
         "name": "Grace Dieu Brook",
-        "levelIds": [
+        "stations": [
             "stations.2233"
         ]
     },
     {
         "id": "river-amber",
         "name": "River Amber",
-        "levelIds": [
+        "stations": [
             "stations.2120"
         ]
     },
     {
         "id": "river-derwent-derbyshire",
         "name": "River Derwent",
-        "levelIds": [
+        "stations": [
             "stations.2097",
             "stations.2230",
             "stations.2118",
@@ -691,28 +757,28 @@
     {
         "id": "river-devon",
         "name": "River Devon",
-        "levelIds": [
+        "stations": [
             "stations.2190"
         ]
     },
     {
         "id": "river-eau",
         "name": "River Eau",
-        "levelIds": [
+        "stations": [
             "stations.2211"
         ]
     },
     {
         "id": "river-ecclesbourne",
         "name": "River Ecclesbourne",
-        "levelIds": [
+        "stations": [
             "stations.2124"
         ]
     },
     {
         "id": "river-erewash",
         "name": "River Erewash",
-        "levelIds": [
+        "stations": [
             "stations.2155",
             "stations.2159",
             "stations.2164"
@@ -721,7 +787,7 @@
     {
         "id": "river-greet",
         "name": "River Greet",
-        "levelIds": [
+        "stations": [
             "stations.2216",
             "stations.2156",
             "stations.2106"
@@ -730,7 +796,7 @@
     {
         "id": "river-leen",
         "name": "River Leen",
-        "levelIds": [
+        "stations": [
             "stations.2165",
             "stations.2163"
         ]
@@ -738,7 +804,7 @@
     {
         "id": "river-maun",
         "name": "River Maun",
-        "levelIds": [
+        "stations": [
             "stations.2212",
             "stations.2146",
             "stations.2147"
@@ -747,21 +813,22 @@
     {
         "id": "river-meden",
         "name": "River Meden",
-        "levelIds": [
-            "stations.2186"
+        "stations": [
+            "stations.2186",
+            "stations.2148"
         ]
     },
     {
         "id": "river-poulter",
         "name": "River Poulter",
-        "levelIds": [
+        "stations": [
             "stations.2114"
         ]
     },
     {
         "id": "river-ryton",
         "name": "River Ryton",
-        "levelIds": [
+        "stations": [
             "stations.2121",
             "stations.2141"
         ]
@@ -769,7 +836,7 @@
     {
         "id": "river-sence-leicestershire",
         "name": "River Sence",
-        "levelIds": [
+        "stations": [
             "stations.2139",
             "stations.2188"
         ]
@@ -777,21 +844,21 @@
     {
         "id": "river-sence-leicestershire-west",
         "name": "River Sence",
-        "levelIds": [
+        "stations": [
             "stations.9080"
         ]
     },
     {
         "id": "river-smite",
         "name": "River Smite",
-        "levelIds": [
+        "stations": [
             "stations.2213"
         ]
     },
     {
         "id": "river-soar",
         "name": "River Soar",
-        "levelIds": [
+        "stations": [
             "stations.2187",
             "stations.2136",
             "stations.2158",
@@ -802,7 +869,7 @@
     {
         "id": "river-trent",
         "name": "River Trent",
-        "levelIds": [
+        "stations": [
             "stations.9068",
             "stations.2116",
             "stations.9077",
@@ -824,7 +891,7 @@
     {
         "id": "river-wreake",
         "name": "River Wreake",
-        "levelIds": [
+        "stations": [
             "stations.2192",
             "stations.2218",
             "stations.2111"
@@ -833,7 +900,7 @@
     {
         "id": "river-wye-derbyshire",
         "name": "River Wye",
-        "levelIds": [
+        "stations": [
             "stations.2162",
             "stations.2110"
         ]
@@ -841,49 +908,50 @@
     {
         "id": "rothley-brook",
         "name": "Rothley Brook",
-        "levelIds": [
-            "stations.2189"
+        "stations": [
+            "stations.2189",
+            "stations.2125"
         ]
     },
     {
         "id": "whetstone-brook",
         "name": "Whetstone Brook",
-        "levelIds": [
+        "stations": [
             "stations.2160"
         ]
     },
     {
         "id": "wood-brook",
         "name": "Wood Brook",
-        "levelIds": [
+        "stations": [
             "stations.2168"
         ]
     },
     {
         "id": "aller-brook",
         "name": "Aller Brook",
-        "levelIds": [
+        "stations": [
             "stations.3204"
         ]
     },
     {
         "id": "bodmin-town-leat",
         "name": "Bodmin Town Leat",
-        "levelIds": [
+        "stations": [
             "stations.3395"
         ]
     },
     {
         "id": "bradiford-water",
         "name": "Bradiford Water",
-        "levelIds": [
+        "stations": [
             "stations.3109"
         ]
     },
     {
         "id": "budleigh-brook",
         "name": "Budleigh Brook",
-        "levelIds": [
+        "stations": [
             "stations.3348",
             "stations.3236"
         ]
@@ -891,14 +959,14 @@
     {
         "id": "carnon-river",
         "name": "Carnon River",
-        "levelIds": [
+        "stations": [
             "stations.3161"
         ]
     },
     {
         "id": "coney-gut",
         "name": "Coney Gut",
-        "levelIds": [
+        "stations": [
             "stations.3117",
             "stations.3108"
         ]
@@ -906,49 +974,49 @@
     {
         "id": "dawlish-water",
         "name": "Dawlish Water",
-        "levelIds": [
+        "stations": [
             "stations.3404"
         ]
     },
     {
         "id": "de-lank-river",
         "name": "De Lank River",
-        "levelIds": [
+        "stations": [
             "stations.3136"
         ]
     },
     {
         "id": "east-dart-river",
         "name": "East Dart River",
-        "levelIds": [
+        "stations": [
             "stations.3215"
         ]
     },
     {
         "id": "east-lyn-river",
         "name": "East Lyn River",
-        "levelIds": [
+        "stations": [
             "stations.3099"
         ]
     },
     {
         "id": "east-okement-river",
         "name": "East Okement River",
-        "levelIds": [
+        "stations": [
             "stations.3407"
         ]
     },
     {
         "id": "east-wilder-brook",
         "name": "East Wilder Brook",
-        "levelIds": [
+        "stations": [
             "stations.3359"
         ]
     },
     {
         "id": "exminster-marshes",
         "name": "Exminster Marshes",
-        "levelIds": [
+        "stations": [
             "stations.3253",
             "stations.3241"
         ]
@@ -956,7 +1024,7 @@
     {
         "id": "river-harbourne",
         "name": "River Harbourne",
-        "levelIds": [
+        "stations": [
             "stations.3210",
             "stations.3217",
             "stations.3360"
@@ -965,42 +1033,42 @@
     {
         "id": "lariggan-river",
         "name": "Lariggan River",
-        "levelIds": [
+        "stations": [
             "stations.3390"
         ]
     },
     {
         "id": "little-dart-river",
         "name": "Little Dart River",
-        "levelIds": [
+        "stations": [
             "stations.3118"
         ]
     },
     {
         "id": "long-brook",
         "name": "Long brook",
-        "levelIds": [
+        "stations": [
             "stations.3198"
         ]
     },
     {
         "id": "mevagissey-stream",
         "name": "Mevagissey Stream",
-        "levelIds": [
+        "stations": [
             "stations.3393"
         ]
     },
     {
         "id": "penberth-stream",
         "name": "Penberth Stream",
-        "levelIds": [
+        "stations": [
             "stations.3339"
         ]
     },
     {
         "id": "st-austell-river",
         "name": "St Austell River",
-        "levelIds": [
+        "stations": [
             "stations.3155",
             "stations.3157"
         ]
@@ -1008,14 +1076,14 @@
     {
         "id": "bolingey-stream",
         "name": "Bolingey Stream",
-        "levelIds": [
+        "stations": [
             "stations.3173"
         ]
     },
     {
         "id": "perrancombe-stream",
         "name": "Perrancombe Stream",
-        "levelIds": [
+        "stations": [
             "stations.3175",
             "stations.3168",
             "stations.3391"
@@ -1024,28 +1092,28 @@
     {
         "id": "river-allen-cornwall-north",
         "name": "River Allen",
-        "levelIds": [
+        "stations": [
             "stations.3145"
         ]
     },
     {
         "id": "river-allen-cornwall-south",
         "name": "River Allen",
-        "levelIds": [
+        "stations": [
             "stations.3171"
         ]
     },
     {
         "id": "red-cornwall",
         "name": "Red",
-        "levelIds": [
+        "stations": [
             "stations.3389"
         ]
     },
     {
         "id": "river-ashburn",
         "name": "River Ashburn",
-        "levelIds": [
+        "stations": [
             "stations.3221",
             "stations.3222"
         ]
@@ -1053,7 +1121,7 @@
     {
         "id": "river-avon-devon",
         "name": "River Avon",
-        "levelIds": [
+        "stations": [
             "stations.3220",
             "stations.3218"
         ]
@@ -1061,7 +1129,7 @@
     {
         "id": "river-axe-devon",
         "name": "River Axe",
-        "levelIds": [
+        "stations": [
             "stations.3227",
             "stations.3350",
             "stations.3229",
@@ -1071,7 +1139,7 @@
     {
         "id": "river-barle",
         "name": "River Barle",
-        "levelIds": [
+        "stations": [
             "stations.3242",
             "stations.3257"
         ]
@@ -1079,14 +1147,14 @@
     {
         "id": "river-batherm",
         "name": "River Batherm",
-        "levelIds": [
+        "stations": [
             "stations.3345"
         ]
     },
     {
         "id": "river-bovey",
         "name": "River Bovey",
-        "levelIds": [
+        "stations": [
             "stations.3225",
             "stations.3207"
         ]
@@ -1094,14 +1162,14 @@
     {
         "id": "river-bray",
         "name": "River Bray",
-        "levelIds": [
+        "stations": [
             "stations.3112"
         ]
     },
     {
         "id": "river-caen",
         "name": "River Caen",
-        "levelIds": [
+        "stations": [
             "stations.3351",
             "stations.3346",
             "stations.3119"
@@ -1110,7 +1178,7 @@
     {
         "id": "river-camel",
         "name": "River Camel",
-        "levelIds": [
+        "stations": [
             "stations.3134",
             "stations.9149",
             "stations.3153",
@@ -1120,7 +1188,7 @@
     {
         "id": "river-clyst",
         "name": "River Clyst",
-        "levelIds": [
+        "stations": [
             "stations.3249",
             "stations.3355",
             "stations.3250"
@@ -1129,7 +1197,7 @@
     {
         "id": "river-cober",
         "name": "River Cober",
-        "levelIds": [
+        "stations": [
             "stations.3392",
             "stations.3160",
             "stations.3338",
@@ -1139,14 +1207,14 @@
     {
         "id": "river-coly",
         "name": "River Coly",
-        "levelIds": [
+        "stations": [
             "stations.3232"
         ]
     },
     {
         "id": "river-creedy",
         "name": "River Creedy",
-        "levelIds": [
+        "stations": [
             "stations.3245",
             "stations.3261"
         ]
@@ -1154,7 +1222,7 @@
     {
         "id": "river-culm",
         "name": "River Culm",
-        "levelIds": [
+        "stations": [
             "stations.3347",
             "stations.3259",
             "stations.3247"
@@ -1163,7 +1231,7 @@
     {
         "id": "river-dart",
         "name": "River Dart",
-        "levelIds": [
+        "stations": [
             "stations.3216",
             "stations.3406",
             "stations.3363"
@@ -1172,7 +1240,7 @@
     {
         "id": "river-erme",
         "name": "River Erme",
-        "levelIds": [
+        "stations": [
             "stations.3208",
             "stations.3219"
         ]
@@ -1180,7 +1248,7 @@
     {
         "id": "river-exe",
         "name": "River Exe",
-        "levelIds": [
+        "stations": [
             "stations.3254",
             "stations.3256",
             "stations.3258",
@@ -1195,7 +1263,7 @@
     {
         "id": "river-fal",
         "name": "River Fal",
-        "levelIds": [
+        "stations": [
             "stations.3174",
             "stations.3164"
         ]
@@ -1203,7 +1271,7 @@
     {
         "id": "river-fowey",
         "name": "River Fowey",
-        "levelIds": [
+        "stations": [
             "stations.3142",
             "stations.3139",
             "stations.3152",
@@ -1213,14 +1281,14 @@
     {
         "id": "river-gannel",
         "name": "River Gannel",
-        "levelIds": [
+        "stations": [
             "stations.3135"
         ]
     },
     {
         "id": "river-hayle",
         "name": "River Hayle",
-        "levelIds": [
+        "stations": [
             "stations.3166",
             "stations.3165",
             "stations.3172"
@@ -1229,28 +1297,28 @@
     {
         "id": "river-inny",
         "name": "River Inny",
-        "levelIds": [
+        "stations": [
             "stations.3181"
         ]
     },
     {
         "id": "river-kenn-tributary",
         "name": "River Kenn Tributary",
-        "levelIds": [
+        "stations": [
             "stations.3356"
         ]
     },
     {
         "id": "river-kennall",
         "name": "River Kennall",
-        "levelIds": [
+        "stations": [
             "stations.3385"
         ]
     },
     {
         "id": "river-kensey",
         "name": "River Kensey",
-        "levelIds": [
+        "stations": [
             "stations.3192",
             "stations.3337"
         ]
@@ -1258,14 +1326,14 @@
     {
         "id": "river-kenwyn",
         "name": "River Kenwyn",
-        "levelIds": [
+        "stations": [
             "stations.3163"
         ]
     },
     {
         "id": "river-lemon",
         "name": "River Lemon",
-        "levelIds": [
+        "stations": [
             "stations.3209",
             "stations.3223",
             "stations.3205",
@@ -1276,14 +1344,14 @@
     {
         "id": "river-lew",
         "name": "River Lew",
-        "levelIds": [
+        "stations": [
             "stations.3121"
         ]
     },
     {
         "id": "river-lowman",
         "name": "River Lowman",
-        "levelIds": [
+        "stations": [
             "stations.3248",
             "stations.9008"
         ]
@@ -1291,28 +1359,28 @@
     {
         "id": "river-lyd-devon",
         "name": "River Lyd",
-        "levelIds": [
+        "stations": [
             "stations.3202"
         ]
     },
     {
         "id": "river-lynher",
         "name": "River Lynher",
-        "levelIds": [
+        "stations": [
             "stations.3184"
         ]
     },
     {
         "id": "river-mardle",
         "name": "River Mardle",
-        "levelIds": [
+        "stations": [
             "stations.9015"
         ]
     },
     {
         "id": "river-mole-devon",
         "name": "River Mole",
-        "levelIds": [
+        "stations": [
             "stations.3110",
             "stations.3096",
             "stations.3127"
@@ -1321,7 +1389,7 @@
     {
         "id": "river-neet",
         "name": "River Neet",
-        "levelIds": [
+        "stations": [
             "stations.3131",
             "stations.3151"
         ]
@@ -1329,14 +1397,14 @@
     {
         "id": "river-okement",
         "name": "River Okement",
-        "levelIds": [
+        "stations": [
             "stations.3122"
         ]
     },
     {
         "id": "river-otter",
         "name": "River Otter",
-        "levelIds": [
+        "stations": [
             "stations.3239",
             "stations.3237"
         ]
@@ -1344,15 +1412,16 @@
     {
         "id": "river-ottery",
         "name": "River Ottery",
-        "levelIds": [
+        "stations": [
             "stations.3384",
-            "stations.3191"
+            "stations.3191",
+            "stations.3341"
         ]
     },
     {
         "id": "par-river",
         "name": "Par River",
-        "levelIds": [
+        "stations": [
             "stations.3159",
             "stations.3167"
         ]
@@ -1360,28 +1429,28 @@
     {
         "id": "river-plym",
         "name": "River Plym",
-        "levelIds": [
+        "stations": [
             "stations.3197"
         ]
     },
     {
         "id": "river-pol",
         "name": "River Pol",
-        "levelIds": [
+        "stations": [
             "stations.3144"
         ]
     },
     {
         "id": "river-seaton",
         "name": "River Seaton",
-        "levelIds": [
+        "stations": [
             "stations.3133"
         ]
     },
     {
         "id": "river-sid",
         "name": "River Sid",
-        "levelIds": [
+        "stations": [
             "stations.3240",
             "stations.3233"
         ]
@@ -1389,21 +1458,21 @@
     {
         "id": "river-strat",
         "name": "River Strat",
-        "levelIds": [
+        "stations": [
             "stations.3149"
         ]
     },
     {
         "id": "river-tale",
         "name": "River Tale",
-        "levelIds": [
+        "stations": [
             "stations.3235"
         ]
     },
     {
         "id": "river-tamar",
         "name": "River Tamar",
-        "levelIds": [
+        "stations": [
             "stations.3334",
             "stations.3336",
             "stations.3187",
@@ -1415,7 +1484,7 @@
     {
         "id": "river-tavy",
         "name": "River Tavy",
-        "levelIds": [
+        "stations": [
             "stations.3185",
             "stations.3340",
             "stations.3196"
@@ -1424,7 +1493,7 @@
     {
         "id": "river-taw",
         "name": "River Taw",
-        "levelIds": [
+        "stations": [
             "stations.3100",
             "stations.3123",
             "stations.3113",
@@ -1434,7 +1503,8 @@
     {
         "id": "river-teign",
         "name": "River Teign",
-        "levelIds": [
+        "stations": [
+            "stations.3214",
             "stations.3206",
             "stations.3226",
             "stations.3361"
@@ -1443,21 +1513,22 @@
     {
         "id": "river-thrushel",
         "name": "River Thrushel",
-        "levelIds": [
+        "stations": [
+            "stations.3194",
             "stations.3178"
         ]
     },
     {
         "id": "river-tiddy",
         "name": "River Tiddy",
-        "levelIds": [
+        "stations": [
             "stations.3179"
         ]
     },
     {
         "id": "river-torridge",
         "name": "River Torridge",
-        "levelIds": [
+        "stations": [
             "stations.3124",
             "stations.3125",
             "stations.3126",
@@ -1467,14 +1538,14 @@
     {
         "id": "river-umber",
         "name": "River Umber",
-        "levelIds": [
+        "stations": [
             "stations.3357"
         ]
     },
     {
         "id": "river-valency",
         "name": "River Valency",
-        "levelIds": [
+        "stations": [
             "stations.3401",
             "stations.3402",
             "stations.3138"
@@ -1483,35 +1554,35 @@
     {
         "id": "river-waldon",
         "name": "River Waldon",
-        "levelIds": [
+        "stations": [
             "stations.3102"
         ]
     },
     {
         "id": "river-walkham",
         "name": "River Walkham",
-        "levelIds": [
+        "stations": [
             "stations.3200"
         ]
     },
     {
         "id": "river-wolf",
         "name": "River Wolf",
-        "levelIds": [
+        "stations": [
             "stations.3343"
         ]
     },
     {
         "id": "river-yarty",
         "name": "River Yarty",
-        "levelIds": [
+        "stations": [
             "stations.3231"
         ]
     },
     {
         "id": "river-yealm",
         "name": "River Yealm",
-        "levelIds": [
+        "stations": [
             "stations.3188",
             "stations.3193"
         ]
@@ -1519,7 +1590,7 @@
     {
         "id": "river-yeo-lapford",
         "name": "River Yeo",
-        "levelIds": [
+        "stations": [
             "stations.3128",
             "stations.3104",
             "stations.3098"
@@ -1528,112 +1599,112 @@
     {
         "id": "river-yeo-creedy",
         "name": "River Yeo",
-        "levelIds": [
+        "stations": [
             "stations.3244"
         ]
     },
     {
         "id": "spratford-stream",
         "name": "Spratford Stream",
-        "levelIds": [
+        "stations": [
             "stations.9014"
         ]
     },
     {
         "id": "st-neot-river",
         "name": "St Neot River",
-        "levelIds": [
+        "stations": [
             "stations.3147"
         ]
     },
     {
         "id": "st-blazey-stream",
         "name": "St Blazey Stream",
-        "levelIds": [
+        "stations": [
             "stations.3394"
         ]
     },
     {
         "id": "river-stennack",
         "name": "River Stennack",
-        "levelIds": [
+        "stations": [
             "stations.3418"
         ]
     },
     {
         "id": "the-gissage",
         "name": "The Gissage",
-        "levelIds": [
+        "stations": [
             "stations.3349"
         ]
     },
     {
         "id": "tory-brook",
         "name": "Tory Brook",
-        "levelIds": [
+        "stations": [
             "stations.3199"
         ]
     },
     {
         "id": "tresillian-river",
         "name": "Tresillian River",
-        "levelIds": [
+        "stations": [
             "stations.3170"
         ]
     },
     {
         "id": "umborne-brook",
         "name": "Umborne Brook",
-        "levelIds": [
+        "stations": [
             "stations.3228"
         ]
     },
     {
         "id": "coastal-stream",
         "name": "Coastal Stream",
-        "levelIds": [
+        "stations": [
             "stations.3387"
         ]
     },
     {
         "id": "warleggan-river",
         "name": "Warleggan River",
-        "levelIds": [
+        "stations": [
             "stations.3141"
         ]
     },
     {
         "id": "west-dart-river",
         "name": "West Dart River",
-        "levelIds": [
+        "stations": [
             "stations.3212"
         ]
     },
     {
         "id": "river-north-lew",
         "name": "River North Lew",
-        "levelIds": [
+        "stations": [
             "stations.3111"
         ]
     },
     {
         "id": "west-lyn-river",
         "name": "West Lyn River",
-        "levelIds": [
+        "stations": [
             "stations.3358"
         ]
     },
     {
         "id": "withy-brook",
         "name": "Withy Brook",
-        "levelIds": [
+        "stations": [
             "stations.3190"
         ]
     },
     {
         "id": "kingsbridge-estuary",
         "name": "Kingsbridge Estuary",
-        "levelIds": [
+        "stations": [
             "stations.9012",
             "stations.9011"
         ]
@@ -1641,42 +1712,28 @@
     {
         "id": "river-ant",
         "name": "River Ant",
-        "levelIds": [
+        "stations": [
             "stations.6216"
-        ]
-    },
-    {
-        "id": "river-yare",
-        "name": "River Yare",
-        "levelIds": [
-            "stations.6095"
         ]
     },
     {
         "id": "chad-brook",
         "name": "Chad Brook",
-        "levelIds": [
+        "stations": [
             "stations.6136"
-        ]
-    },
-    {
-        "id": "river-thurne",
-        "name": "River Thurne",
-        "levelIds": [
-            "stations.6210"
         ]
     },
     {
         "id": "rattlesden-river",
         "name": "Rattlesden River",
-        "levelIds": [
+        "stations": [
             "stations.6091"
         ]
     },
     {
         "id": "river-alde",
         "name": "River Alde",
-        "levelIds": [
+        "stations": [
             "stations.6085",
             "stations.6298",
             "stations.6296"
@@ -1685,7 +1742,7 @@
     {
         "id": "river-blackwater-essex",
         "name": "River Blackwater",
-        "levelIds": [
+        "stations": [
             "stations.6142",
             "stations.6143"
         ]
@@ -1693,7 +1750,7 @@
     {
         "id": "river-box",
         "name": "River Box",
-        "levelIds": [
+        "stations": [
             "stations.6080",
             "stations.6081"
         ]
@@ -1701,21 +1758,22 @@
     {
         "id": "river-brain",
         "name": "River Brain",
-        "levelIds": [
+        "stations": [
             "stations.6144"
         ]
     },
     {
         "id": "river-brett",
         "name": "River Brett",
-        "levelIds": [
+        "stations": [
+            "stations.6079",
             "stations.6082"
         ]
     },
     {
         "id": "river-bure",
         "name": "River Bure",
-        "levelIds": [
+        "stations": [
             "stations.6094",
             "stations.6099",
             "stations.6211",
@@ -1727,21 +1785,21 @@
     {
         "id": "river-burn",
         "name": "River Burn",
-        "levelIds": [
+        "stations": [
             "stations.6093"
         ]
     },
     {
         "id": "river-can",
         "name": "River Can",
-        "levelIds": [
+        "stations": [
             "stations.6149"
         ]
     },
     {
         "id": "river-chelmer",
         "name": "River Chelmer",
-        "levelIds": [
+        "stations": [
             "stations.6145",
             "stations.6146",
             "stations.6147"
@@ -1750,7 +1808,7 @@
     {
         "id": "river-colne-essex",
         "name": "River Colne",
-        "levelIds": [
+        "stations": [
             "stations.6138",
             "stations.6139",
             "stations.6140",
@@ -1760,35 +1818,36 @@
     {
         "id": "river-crouch",
         "name": "River Crouch",
-        "levelIds": [
+        "stations": [
+            "stations.6129",
             "stations.6127"
         ]
     },
     {
         "id": "river-gipping",
         "name": "River Gipping",
-        "levelIds": [
+        "stations": [
             "stations.6086"
         ]
     },
     {
         "id": "river-glem",
         "name": "River Glem",
-        "levelIds": [
+        "stations": [
             "stations.6135"
         ]
     },
     {
         "id": "river-ore",
         "name": "River Ore",
-        "levelIds": [
+        "stations": [
             "stations.6089"
         ]
     },
     {
         "id": "river-pant",
         "name": "River Pant",
-        "levelIds": [
+        "stations": [
             "stations.6141",
             "stations.6130"
         ]
@@ -1796,14 +1855,14 @@
     {
         "id": "river-stiffkey",
         "name": "River Stiffkey",
-        "levelIds": [
+        "stations": [
             "stations.6100"
         ]
     },
     {
         "id": "river-stour-essex",
         "name": "River Stour",
-        "levelIds": [
+        "stations": [
             "stations.6131",
             "stations.6134",
             "stations.6126",
@@ -1812,16 +1871,23 @@
         ]
     },
     {
+        "id": "hickling-broad",
+        "name": "Hickling Broad",
+        "stations": [
+            "stations.6210"
+        ]
+    },
+    {
         "id": "river-thurne",
         "name": "River Thurne",
-        "levelIds": [
+        "stations": [
             "stations.6217"
         ]
     },
     {
         "id": "river-waveney",
         "name": "River Waveney",
-        "levelIds": [
+        "stations": [
             "stations.6088",
             "stations.6083",
             "stations.6204",
@@ -1834,14 +1900,15 @@
     {
         "id": "river-wensum",
         "name": "River Wensum",
-        "levelIds": [
+        "stations": [
+            "stations.6098",
             "stations.6125"
         ]
     },
     {
         "id": "river-wid",
         "name": "River Wid",
-        "levelIds": [
+        "stations": [
             "stations.6148",
             "stations.6201",
             "stations.6200"
@@ -1850,7 +1917,8 @@
     {
         "id": "river-yare",
         "name": "River Yare",
-        "levelIds": [
+        "stations": [
+            "stations.6095",
             "stations.6205",
             "stations.6214",
             "stations.6208",
@@ -1860,21 +1928,21 @@
     {
         "id": "sandon-brook",
         "name": "Sandon Brook",
-        "levelIds": [
+        "stations": [
             "stations.6188"
         ]
     },
     {
         "id": "stour-brook",
         "name": "Stour Brook",
-        "levelIds": [
+        "stations": [
             "stations.6132"
         ]
     },
     {
         "id": "river-deben",
         "name": "River Deben",
-        "levelIds": [
+        "stations": [
             "stations.6087",
             "stations.6297"
         ]
@@ -1882,77 +1950,77 @@
     {
         "id": "ogden-brook",
         "name": "Ogden Brook",
-        "levelIds": [
+        "stations": [
             "stations.5082"
         ]
     },
     {
         "id": "arrowe-brook",
         "name": "Arrowe Brook",
-        "levelIds": [
+        "stations": [
             "stations.5002"
         ]
     },
     {
         "id": "baguley-brook",
         "name": "Baguley Brook",
-        "levelIds": [
+        "stations": [
             "stations.5197"
         ]
     },
     {
         "id": "sinderland-brook",
         "name": "Sinderland Brook",
-        "levelIds": [
+        "stations": [
             "stations.5107"
         ]
     },
     {
         "id": "eagley-brook",
         "name": "Eagley Brook",
-        "levelIds": [
+        "stations": [
             "stations.5200"
         ]
     },
     {
         "id": "glaze-brook",
         "name": "Glaze Brook",
-        "levelIds": [
+        "stations": [
             "stations.5228"
         ]
     },
     {
         "id": "glossop-brook",
         "name": "Glossop Brook",
-        "levelIds": [
+        "stations": [
             "stations.5079"
         ]
     },
     {
         "id": "limey-water",
         "name": "Limey Water",
-        "levelIds": [
+        "stations": [
             "stations.5116"
         ]
     },
     {
         "id": "netherley-brook",
         "name": "Netherley Brook",
-        "levelIds": [
+        "stations": [
             "stations.5203"
         ]
     },
     {
         "id": "poynton-brook",
         "name": "Poynton Brook",
-        "levelIds": [
+        "stations": [
             "stations.5201"
         ]
     },
     {
         "id": "river-beal",
         "name": "River Beal",
-        "levelIds": [
+        "stations": [
             "stations.5229",
             "stations.5134"
         ]
@@ -1960,7 +2028,7 @@
     {
         "id": "river-bollin",
         "name": "River Bollin",
-        "levelIds": [
+        "stations": [
             "stations.5102",
             "stations.5114",
             "stations.5153",
@@ -1970,14 +2038,14 @@
     {
         "id": "river-croal",
         "name": "River Croal",
-        "levelIds": [
+        "stations": [
             "stations.5049"
         ]
     },
     {
         "id": "river-dane",
         "name": "River Dane",
-        "levelIds": [
+        "stations": [
             "stations.5073",
             "stations.5036",
             "stations.5121"
@@ -1986,14 +2054,14 @@
     {
         "id": "dean",
         "name": "Dean",
-        "levelIds": [
+        "stations": [
             "stations.5133"
         ]
     },
     {
         "id": "river-etherow",
         "name": "River Etherow",
-        "levelIds": [
+        "stations": [
             "stations.5154",
             "stations.5035"
         ]
@@ -2001,14 +2069,14 @@
     {
         "id": "river-gowy",
         "name": "River Gowy",
-        "levelIds": [
+        "stations": [
             "stations.5019"
         ]
     },
     {
         "id": "river-goyt",
         "name": "River Goyt",
-        "levelIds": [
+        "stations": [
             "stations.5232",
             "stations.5096"
         ]
@@ -2016,14 +2084,14 @@
     {
         "id": "river-irk",
         "name": "River Irk",
-        "levelIds": [
+        "stations": [
             "stations.5034"
         ]
     },
     {
         "id": "river-irwell",
         "name": "River Irwell",
-        "levelIds": [
+        "stations": [
             "stations.5195",
             "stations.5075",
             "stations.5136",
@@ -2038,7 +2106,7 @@
     {
         "id": "river-medlock",
         "name": "River Medlock",
-        "levelIds": [
+        "stations": [
             "stations.5194",
             "stations.5088"
         ]
@@ -2046,7 +2114,7 @@
     {
         "id": "river-mersey",
         "name": "River Mersey",
-        "levelIds": [
+        "stations": [
             "stations.5021",
             "stations.5101",
             "stations.5008",
@@ -2059,7 +2127,7 @@
     {
         "id": "river-roch",
         "name": "River Roch",
-        "levelIds": [
+        "stations": [
             "stations.5199",
             "stations.5004",
             "stations.5231",
@@ -2069,7 +2137,7 @@
     {
         "id": "river-tame-greater-manchester",
         "name": "River Tame",
-        "levelIds": [
+        "stations": [
             "stations.5196",
             "stations.5143",
             "stations.5145",
@@ -2080,17 +2148,18 @@
     {
         "id": "river-weaver",
         "name": "River Weaver",
-        "levelIds": [
+        "stations": [
             "stations.5009",
             "stations.5202",
             "stations.5007",
+            "stations.5065",
             "stations.5198"
         ]
     },
     {
         "id": "sankey-brook",
         "name": "Sankey Brook",
-        "levelIds": [
+        "stations": [
             "stations.5031",
             "stations.5069",
             "stations.5085"
@@ -2099,7 +2168,7 @@
     {
         "id": "river-birket",
         "name": "River Birket",
-        "levelIds": [
+        "stations": [
             "stations.5041",
             "stations.5053"
         ]
@@ -2107,42 +2176,42 @@
     {
         "id": "valley-brook",
         "name": "Valley Brook",
-        "levelIds": [
+        "stations": [
             "stations.5097"
         ]
     },
     {
         "id": "wincham-brook",
         "name": "Wincham Brook",
-        "levelIds": [
+        "stations": [
             "stations.5089"
         ]
     },
     {
         "id": "worsley-brook",
         "name": "Worsley Brook",
-        "levelIds": [
+        "stations": [
             "stations.5193"
         ]
     },
     {
         "id": "river-beam",
         "name": "River Beam",
-        "levelIds": [
+        "stations": [
             "stations.7383"
         ]
     },
     {
         "id": "canons-brook",
         "name": "Canons Brook",
-        "levelIds": [
+        "stations": [
             "stations.7355"
         ]
     },
     {
         "id": "cobbins-brook",
         "name": "Cobbins Brook",
-        "levelIds": [
+        "stations": [
             "stations.7363",
             "stations.7364"
         ]
@@ -2150,16 +2219,17 @@
     {
         "id": "colne-brook",
         "name": "Colne Brook",
-        "levelIds": [
+        "stations": [
             "stations.7199",
-            "stations.7208",
-            "stations.7212"
+            "stations.9297",
+            "stations.7212",
+            "stations.7208"
         ]
     },
     {
         "id": "cripsey-brook",
         "name": "Cripsey Brook",
-        "levelIds": [
+        "stations": [
             "stations.7377",
             "stations.7378"
         ]
@@ -2167,14 +2237,14 @@
     {
         "id": "deans-brook",
         "name": "Deans Brook",
-        "levelIds": [
+        "stations": [
             "stations.7283"
         ]
     },
     {
         "id": "dollis-brook",
         "name": "Dollis Brook",
-        "levelIds": [
+        "stations": [
             "stations.7278",
             "stations.7279"
         ]
@@ -2182,14 +2252,14 @@
     {
         "id": "edgware-brook",
         "name": "Edgware Brook",
-        "levelIds": [
+        "stations": [
             "stations.7284"
         ]
     },
     {
         "id": "frays-river",
         "name": "Frays River",
-        "levelIds": [
+        "stations": [
             "stations.7197",
             "stations.7205"
         ]
@@ -2197,21 +2267,14 @@
     {
         "id": "river-ingrebourne",
         "name": "River Ingrebourne",
-        "levelIds": [
+        "stations": [
             "stations.7384"
-        ]
-    },
-    {
-        "id": "river-lee",
-        "name": "River Lee",
-        "levelIds": [
-            "stations.7374"
         ]
     },
     {
         "id": "mimmshall-brook",
         "name": "Mimmshall Brook",
-        "levelIds": [
+        "stations": [
             "stations.7176",
             "stations.7177"
         ]
@@ -2219,28 +2282,28 @@
     {
         "id": "mutton-brook",
         "name": "Mutton Brook",
-        "levelIds": [
+        "stations": [
             "stations.7281"
         ]
     },
     {
         "id": "pincey-brook",
         "name": "Pincey Brook",
-        "levelIds": [
+        "stations": [
             "stations.7352"
         ]
     },
     {
         "id": "poyle-channel",
         "name": "Poyle Channel",
-        "levelIds": [
+        "stations": [
             "stations.7206"
         ]
     },
     {
         "id": "pymmes-brook",
         "name": "Pymmes Brook",
-        "levelIds": [
+        "stations": [
             "stations.7370",
             "stations.7371",
             "stations.7372"
@@ -2249,14 +2312,14 @@
     {
         "id": "rags-brook",
         "name": "Rags Brook",
-        "levelIds": [
+        "stations": [
             "stations.7359"
         ]
     },
     {
         "id": "river-ash-hertfordshire",
         "name": "River Ash",
-        "levelIds": [
+        "stations": [
             "stations.7345",
             "stations.7346",
             "stations.7347"
@@ -2265,7 +2328,7 @@
     {
         "id": "river-ash-middlesex",
         "name": "River Ash",
-        "levelIds": [
+        "stations": [
             "stations.7247",
             "stations.7248"
         ]
@@ -2273,7 +2336,7 @@
     {
         "id": "river-beane",
         "name": "River Beane",
-        "levelIds": [
+        "stations": [
             "stations.7337",
             "stations.7340",
             "stations.7339",
@@ -2283,7 +2346,7 @@
     {
         "id": "river-brent",
         "name": "River Brent",
-        "levelIds": [
+        "stations": [
             "stations.7282",
             "stations.7289",
             "stations.7290",
@@ -2294,7 +2357,7 @@
     {
         "id": "river-bulbourne",
         "name": "River Bulbourne",
-        "levelIds": [
+        "stations": [
             "stations.7186",
             "stations.7187"
         ]
@@ -2302,7 +2365,7 @@
     {
         "id": "river-chess",
         "name": "River Chess",
-        "levelIds": [
+        "stations": [
             "stations.7189",
             "stations.7190"
         ]
@@ -2310,12 +2373,14 @@
     {
         "id": "river-colne-hertfordshire",
         "name": "River Colne",
-        "levelIds": [
+        "stations": [
             "stations.7179",
             "stations.7184",
+            "stations.9296",
             "stations.7192",
             "stations.7196",
             "stations.7198",
+            "stations.9298",
             "stations.7200",
             "stations.7207",
             "stations.7211"
@@ -2324,7 +2389,7 @@
     {
         "id": "river-crane",
         "name": "River Crane",
-        "levelIds": [
+        "stations": [
             "stations.7276",
             "stations.7277"
         ]
@@ -2332,7 +2397,7 @@
     {
         "id": "river-gade",
         "name": "River Gade",
-        "levelIds": [
+        "stations": [
             "stations.7185",
             "stations.7188"
         ]
@@ -2340,19 +2405,23 @@
     {
         "id": "river-lee",
         "name": "River Lee",
-        "levelIds": [
+        "stations": [
             "stations.7329",
             "stations.7330",
+            "stations.9289",
             "stations.7332",
             "stations.7333",
             "stations.7357",
+            "stations.7361",
+            "stations.7365",
+            "stations.7374",
             "stations.7375"
         ]
     },
     {
         "id": "river-mimram",
         "name": "River Mimram",
-        "levelIds": [
+        "stations": [
             "stations.7334",
             "stations.7335",
             "stations.7336"
@@ -2361,7 +2430,7 @@
     {
         "id": "river-misbourne",
         "name": "River Misbourne",
-        "levelIds": [
+        "stations": [
             "stations.7194",
             "stations.7407"
         ]
@@ -2369,7 +2438,7 @@
     {
         "id": "river-pinn",
         "name": "River Pinn",
-        "levelIds": [
+        "stations": [
             "stations.7397",
             "stations.7201",
             "stations.7173",
@@ -2384,21 +2453,21 @@
     {
         "id": "river-quin",
         "name": "River Quin",
-        "levelIds": [
+        "stations": [
             "stations.7343"
         ]
     },
     {
         "id": "red-hertfordshire",
         "name": "Red",
-        "levelIds": [
+        "stations": [
             "stations.7181"
         ]
     },
     {
         "id": "river-rib",
         "name": "River Rib",
-        "levelIds": [
+        "stations": [
             "stations.7342",
             "stations.7344"
         ]
@@ -2406,7 +2475,7 @@
     {
         "id": "river-roding",
         "name": "River Roding",
-        "levelIds": [
+        "stations": [
             "stations.7376",
             "stations.7379",
             "stations.7009",
@@ -2417,14 +2486,15 @@
     {
         "id": "river-rom",
         "name": "River Rom",
-        "levelIds": [
+        "stations": [
+            "stations.9282",
             "stations.7382"
         ]
     },
     {
         "id": "river-stort",
         "name": "River Stort",
-        "levelIds": [
+        "stations": [
             "stations.7348",
             "stations.7350",
             "stations.7351",
@@ -2434,14 +2504,14 @@
     {
         "id": "pishiobury-brook",
         "name": "Pishiobury Brook",
-        "levelIds": [
+        "stations": [
             "stations.7354"
         ]
     },
     {
         "id": "rye-meads-effluent-channel",
         "name": "Rye Meads Effluent Channel",
-        "levelIds": [
+        "stations": [
             "stations.7358",
             "stations.7356"
         ]
@@ -2449,7 +2519,7 @@
     {
         "id": "river-ver",
         "name": "River Ver",
-        "levelIds": [
+        "stations": [
             "stations.7178",
             "stations.7180",
             "stations.7182"
@@ -2458,14 +2528,14 @@
     {
         "id": "the-roxbourne",
         "name": "The Roxbourne",
-        "levelIds": [
+        "stations": [
             "stations.7272"
         ]
     },
     {
         "id": "salmon-brook",
         "name": "Salmon Brook",
-        "levelIds": [
+        "stations": [
             "stations.7368",
             "stations.7369"
         ]
@@ -2473,37 +2543,29 @@
     {
         "id": "silk-stream",
         "name": "Silk Stream",
-        "levelIds": [
+        "stations": [
             "stations.7285",
             "stations.7286"
         ]
     },
     {
-        "id": "small-river-lee",
-        "name": "Small River Lee",
-        "levelIds": [
-            "stations.7361",
-            "stations.7365"
-        ]
-    },
-    {
         "id": "stansted-brook",
         "name": "Stansted Brook",
-        "levelIds": [
+        "stations": [
             "stations.7349"
         ]
     },
     {
         "id": "stevenage-brook",
         "name": "Stevenage Brook",
-        "levelIds": [
+        "stations": [
             "stations.7338"
         ]
     },
     {
         "id": "ching-brook",
         "name": "Ching Brook",
-        "levelIds": [
+        "stations": [
             "stations.7008",
             "stations.7373"
         ]
@@ -2511,21 +2573,21 @@
     {
         "id": "theobalds-brook",
         "name": "Theobalds Brook",
-        "levelIds": [
+        "stations": [
             "stations.7362"
         ]
     },
     {
         "id": "turkey-brook",
         "name": "Turkey Brook",
-        "levelIds": [
+        "stations": [
             "stations.7367"
         ]
     },
     {
         "id": "radlett-brook",
         "name": "Radlett Brook",
-        "levelIds": [
+        "stations": [
             "stations.7175",
             "stations.7006"
         ]
@@ -2533,7 +2595,7 @@
     {
         "id": "wealdstone-brook",
         "name": "Wealdstone Brook",
-        "levelIds": [
+        "stations": [
             "stations.7287",
             "stations.7288"
         ]
@@ -2541,7 +2603,7 @@
     {
         "id": "wraysbury-river",
         "name": "Wraysbury River",
-        "levelIds": [
+        "stations": [
             "stations.7210",
             "stations.7209"
         ]
@@ -2549,7 +2611,7 @@
     {
         "id": "yeading-brook",
         "name": "Yeading Brook",
-        "levelIds": [
+        "stations": [
             "stations.7270",
             "stations.7271",
             "stations.7274",
@@ -2559,14 +2621,14 @@
     {
         "id": "yeading-brook-eastern-arm",
         "name": "Yeading Brook (Eastern Arm)",
-        "levelIds": [
+        "stations": [
             "stations.7273"
         ]
     },
     {
         "id": "beverley-brook",
         "name": "Beverley Brook",
-        "levelIds": [
+        "stations": [
             "stations.7292",
             "stations.7293",
             "stations.7297",
@@ -2577,7 +2639,7 @@
     {
         "id": "burstow-stream",
         "name": "Burstow Stream",
-        "levelIds": [
+        "stations": [
             "stations.7255",
             "stations.7256"
         ]
@@ -2585,14 +2647,14 @@
     {
         "id": "river-dudwell-kent",
         "name": "River Dudwell",
-        "levelIds": [
+        "stations": [
             "stations.1121"
         ]
     },
     {
         "id": "east-stour-kent",
         "name": "East Stour",
-        "levelIds": [
+        "stations": [
             "stations.1129",
             "stations.9140"
         ]
@@ -2600,7 +2662,7 @@
     {
         "id": "gatwick-stream",
         "name": "Gatwick Stream",
-        "levelIds": [
+        "stations": [
             "stations.7251",
             "stations.7252",
             "stations.7253"
@@ -2609,22 +2671,24 @@
     {
         "id": "great-stour-kent",
         "name": "Great Stour",
-        "levelIds": [
+        "stations": [
             "stations.1132",
             "stations.1137",
             "stations.1133",
             "stations.1145",
             "stations.1135",
+            "stations.9274",
             "stations.1143",
             "stations.9148",
             "stations.1134",
+            "stations.9130",
             "stations.9083"
         ]
     },
     {
         "id": "hogsmill-river",
         "name": "Hogsmill River",
-        "levelIds": [
+        "stations": [
             "stations.7264",
             "stations.7265",
             "stations.7266"
@@ -2633,21 +2697,21 @@
     {
         "id": "ifield-brook",
         "name": "Ifield Brook",
-        "levelIds": [
+        "stations": [
             "stations.7249"
         ]
     },
     {
         "id": "kyd-brook-east-branch",
         "name": "Kyd Brook (East Branch)",
-        "levelIds": [
+        "stations": [
             "stations.7321"
         ]
     },
     {
         "id": "kyd-brook",
         "name": "Kyd Brook",
-        "levelIds": [
+        "stations": [
             "stations.7322",
             "stations.7323",
             "stations.7324",
@@ -2658,49 +2722,49 @@
     {
         "id": "little-stour",
         "name": "Little Stour",
-        "levelIds": [
+        "stations": [
             "stations.1139"
         ]
     },
     {
         "id": "nailbourne",
         "name": "Nailbourne",
-        "levelIds": [
+        "stations": [
             "stations.1131"
         ]
     },
     {
         "id": "norbury-brook",
         "name": "Norbury Brook",
-        "levelIds": [
+        "stations": [
             "stations.7306"
         ]
     },
     {
         "id": "old-mill-stream",
         "name": "Old Mill Stream",
-        "levelIds": [
+        "stations": [
             "stations.1130"
         ]
     },
     {
         "id": "pent-stream",
         "name": "Pent Stream",
-        "levelIds": [
+        "stations": [
             "stations.9022"
         ]
     },
     {
         "id": "river-pool",
         "name": "River Pool",
-        "levelIds": [
+        "stations": [
             "stations.7319"
         ]
     },
     {
         "id": "pyl-brook",
         "name": "Pyl Brook",
-        "levelIds": [
+        "stations": [
             "stations.7294",
             "stations.7295",
             "stations.7296"
@@ -2709,7 +2773,7 @@
     {
         "id": "river-quaggy",
         "name": "River Quaggy",
-        "levelIds": [
+        "stations": [
             "stations.7327",
             "stations.7328"
         ]
@@ -2717,7 +2781,7 @@
     {
         "id": "river-ravensbourne",
         "name": "River Ravensbourne",
-        "levelIds": [
+        "stations": [
             "stations.7311",
             "stations.7310",
             "stations.7314",
@@ -2728,7 +2792,7 @@
     {
         "id": "river-ravensbourne-east-branch",
         "name": "River Ravensbourne (East branch)",
-        "levelIds": [
+        "stations": [
             "stations.7312",
             "stations.7313"
         ]
@@ -2736,14 +2800,14 @@
     {
         "id": "redhill-brook",
         "name": "Redhill Brook",
-        "levelIds": [
+        "stations": [
             "stations.7258"
         ]
     },
     {
         "id": "river-beault",
         "name": "River Beault",
-        "levelIds": [
+        "stations": [
             "stations.1086",
             "stations.1085"
         ]
@@ -2751,14 +2815,14 @@
     {
         "id": "river-bourne-kent",
         "name": "River Bourne",
-        "levelIds": [
+        "stations": [
             "stations.1073"
         ]
     },
     {
         "id": "river-brede",
         "name": "River Brede",
-        "levelIds": [
+        "stations": [
             "stations.1127",
             "stations.1120"
         ]
@@ -2766,7 +2830,7 @@
     {
         "id": "river-cray",
         "name": "River Cray",
-        "levelIds": [
+        "stations": [
             "stations.1037",
             "stations.1036"
         ]
@@ -2774,23 +2838,26 @@
     {
         "id": "river-darent",
         "name": "River Darent",
-        "levelIds": [
-            "stations.9137",
+        "stations": [
+            "stations.9300",
+            "stations.9301",
+            "stations.9136",
             "stations.1040",
+            "stations.9137",
             "stations.1038"
         ]
     },
     {
         "id": "river-dour",
         "name": "River Dour",
-        "levelIds": [
+        "stations": [
             "stations.9019"
         ]
     },
     {
         "id": "river-eden-kent",
         "name": "River Eden",
-        "levelIds": [
+        "stations": [
             "stations.1081",
             "stations.1071",
             "stations.1091",
@@ -2800,7 +2867,7 @@
     {
         "id": "river-graveney",
         "name": "River Graveney",
-        "levelIds": [
+        "stations": [
             "stations.7307",
             "stations.7308"
         ]
@@ -2808,7 +2875,7 @@
     {
         "id": "river-medway",
         "name": "River Medway",
-        "levelIds": [
+        "stations": [
             "stations.1072",
             "stations.1088",
             "stations.1066",
@@ -2828,14 +2895,14 @@
     {
         "id": "thames-medway-canal",
         "name": "Thames Medway Canal",
-        "levelIds": [
+        "stations": [
             "stations.1023"
         ]
     },
     {
         "id": "river-mole",
         "name": "River Mole",
-        "levelIds": [
+        "stations": [
             "stations.7399",
             "stations.7250",
             "stations.7254",
@@ -2849,14 +2916,14 @@
     {
         "id": "river-burwash-kent",
         "name": "River Burwash",
-        "levelIds": [
+        "stations": [
             "stations.1122"
         ]
     },
     {
         "id": "river-rother-kent",
         "name": "River Rother",
-        "levelIds": [
+        "stations": [
             "stations.1126",
             "stations.1030"
         ]
@@ -2864,14 +2931,14 @@
     {
         "id": "river-shuttle-kent",
         "name": "River Shuttle",
-        "levelIds": [
+        "stations": [
             "stations.1039"
         ]
     },
     {
         "id": "river-teise",
         "name": "River Teise",
-        "levelIds": [
+        "stations": [
             "stations.1170",
             "stations.1078",
             "stations.1087"
@@ -2880,14 +2947,16 @@
     {
         "id": "river-tillingham-kent",
         "name": "River Tillingham",
-        "levelIds": [
-            "stations.1125"
+        "stations": [
+            "stations.9277",
+            "stations.9278",
+            "stations.8290"
         ]
     },
     {
         "id": "river-wandle-kent",
         "name": "River Wandle",
-        "levelIds": [
+        "stations": [
             "stations.7300",
             "stations.7301",
             "stations.7303",
@@ -2899,35 +2968,35 @@
     {
         "id": "river-wrythe-kent",
         "name": "River Wrythe",
-        "levelIds": [
+        "stations": [
             "stations.7302"
         ]
     },
     {
         "id": "salfords-stream-kent",
         "name": "Salfords Stream",
-        "levelIds": [
+        "stations": [
             "stations.7259"
         ]
     },
     {
         "id": "the-beck",
         "name": "The Beck",
-        "levelIds": [
+        "stations": [
             "stations.7318"
         ]
     },
     {
         "id": "barlings-eau",
         "name": "Barlings Eau",
-        "levelIds": [
+        "stations": [
             "stations.6052"
         ]
     },
     {
         "id": "billinghay-skirth",
         "name": "Billinghay Skirth",
-        "levelIds": [
+        "stations": [
             "stations.6071",
             "stations.6227"
         ]
@@ -2935,14 +3004,14 @@
     {
         "id": "west-fen-catchwater-drain",
         "name": "West Fen Catchwater Drain",
-        "levelIds": [
+        "stations": [
             "stations.6228"
         ]
     },
     {
         "id": "east-glen-river",
         "name": "East Glen River",
-        "levelIds": [
+        "stations": [
             "stations.6033",
             "stations.6040"
         ]
@@ -2950,58 +3019,52 @@
     {
         "id": "hagnaby-beck",
         "name": "Hagnaby Beck",
-        "levelIds": [
+        "stations": [
             "stations.6231"
         ]
     },
     {
         "id": "harpers-brook",
         "name": "Harpers Brook",
-        "levelIds": [
+        "stations": [
             "stations.6105"
-        ]
-    },
-    {
-        "id": "laceby-beck",
-        "name": "Laceby Beck",
-        "levelIds": [
-            "stations.6243"
         ]
     },
     {
         "id": "medbourne-brook",
         "name": "Medbourne Brook",
-        "levelIds": [
-            "stations.6038"
+        "stations": [
+            "stations.6038",
+            "stations.6032"
         ]
     },
     {
         "id": "river-ancholme",
         "name": "River Ancholme",
-        "levelIds": [
+        "stations": [
             "stations.6239",
             "stations.6241",
             "stations.6016"
         ]
     },
     {
-        "id": "south-forty-foot-drain",
-        "name": "South Forty Foot Drain",
-        "levelIds": [
+        "id": "ousemere-lode",
+        "name": "Ousemere Lode",
+        "stations": [
             "stations.6224"
         ]
     },
     {
         "id": "pointon-lode",
         "name": "Pointon Lode",
-        "levelIds": [
+        "stations": [
             "stations.6222"
         ]
     },
     {
         "id": "river-bain",
         "name": "River Bain",
-        "levelIds": [
+        "stations": [
             "stations.6063",
             "stations.6060",
             "stations.6041"
@@ -3010,7 +3073,7 @@
     {
         "id": "river-brant",
         "name": "River Brant",
-        "levelIds": [
+        "stations": [
             "stations.6053",
             "stations.6221"
         ]
@@ -3018,36 +3081,30 @@
     {
         "id": "river-chater",
         "name": "River Chater",
-        "levelIds": [
+        "stations": [
             "stations.6034"
         ]
     },
     {
         "id": "laceby-beck",
         "name": "Laceby Beck",
-        "levelIds": [
+        "stations": [
+            "stations.6243",
             "stations.6244"
         ]
     },
     {
         "id": "river-glen",
         "name": "River Glen",
-        "levelIds": [
+        "stations": [
             "stations.6035",
             "stations.6022"
         ]
     },
     {
-        "id": "river-ise",
-        "name": "River Ise",
-        "levelIds": [
-            "stations.6109"
-        ]
-    },
-    {
         "id": "river-jordan",
         "name": "River Jordan",
-        "levelIds": [
+        "stations": [
             "stations.6021",
             "stations.6019"
         ]
@@ -3055,30 +3112,26 @@
     {
         "id": "river-lud",
         "name": "River Lud",
-        "levelIds": [
+        "stations": [
             "stations.6017"
         ]
     },
     {
         "id": "river-lymn",
         "name": "River Lymn",
-        "levelIds": [
+        "stations": [
             "stations.6112"
         ]
     },
     {
         "id": "river-nene",
         "name": "River Nene",
-        "levelIds": [
-            "stations.6218",
-            "stations.6120",
+        "stations": [
             "stations.6101",
-            "stations.6118",
-            "stations.6122",
-            "stations.6102",
+            "stations.6120",
             "stations.6108",
-            "stations.6116",
             "stations.6115",
+            "stations.6116",
             "stations.6110",
             "stations.6111",
             "stations.6107",
@@ -3088,16 +3141,27 @@
         ]
     },
     {
+        "id": "brampton-branch",
+        "name": "Brampton Branch",
+        "stations": [
+            "stations.6037",
+            "stations.6218",
+            "stations.6118",
+            "stations.6122",
+            "stations.6102"
+        ]
+    },
+    {
         "id": "river-rase",
         "name": "River Rase",
-        "levelIds": [
+        "stations": [
             "stations.6238"
         ]
     },
     {
         "id": "river-slea",
         "name": "River Slea",
-        "levelIds": [
+        "stations": [
             "stations.6069",
             "stations.6070",
             "stations.6064"
@@ -3106,14 +3170,14 @@
     {
         "id": "river-waring",
         "name": "River Waring",
-        "levelIds": [
+        "stations": [
             "stations.6046"
         ]
     },
     {
         "id": "river-welland",
         "name": "River Welland",
-        "levelIds": [
+        "stations": [
             "stations.6023",
             "stations.6025",
             "stations.6024",
@@ -3128,7 +3192,7 @@
     {
         "id": "river-witham",
         "name": "River Witham",
-        "levelIds": [
+        "stations": [
             "stations.6219",
             "stations.6051",
             "stations.6055",
@@ -3149,28 +3213,30 @@
     {
         "id": "river-till-lincolnshire",
         "name": "River Till",
-        "levelIds": [
+        "stations": [
             "stations.6114"
         ]
     },
     {
         "id": "fosdyke-canal",
         "name": "Fosdyke Canal",
-        "levelIds": [
+        "stations": [
             "stations.6047"
         ]
     },
     {
         "id": "river-ise",
         "name": "River Ise",
-        "levelIds": [
-            "stations.6113"
+        "stations": [
+            "stations.6109",
+            "stations.6113",
+            "stations.6104"
         ]
     },
     {
         "id": "south-forty-foot-drain",
         "name": "South Forty Foot Drain",
-        "levelIds": [
+        "stations": [
             "stations.6223",
             "stations.6226",
             "stations.6293"
@@ -3179,35 +3245,35 @@
     {
         "id": "stainfield-beck",
         "name": "Stainfield Beck",
-        "levelIds": [
+        "stations": [
             "stations.6062"
         ]
     },
     {
         "id": "east-fen-catchwater",
         "name": "East Fen Catchwater",
-        "levelIds": [
+        "stations": [
             "stations.6229"
         ]
     },
     {
         "id": "waithe-beck",
         "name": "Waithe Beck",
-        "levelIds": [
+        "stations": [
             "stations.6233"
         ]
     },
     {
         "id": "weedon-beck",
         "name": "Weedon Beck",
-        "levelIds": [
+        "stations": [
             "stations.6123"
         ]
     },
     {
         "id": "west-glen-river",
         "name": "West Glen River",
-        "levelIds": [
+        "stations": [
             "stations.6026",
             "stations.6036",
             "stations.6031",
@@ -3217,127 +3283,130 @@
     {
         "id": "willow-brook",
         "name": "Willow Brook",
-        "levelIds": [
+        "stations": [
+            "stations.6124",
             "stations.6106"
         ]
     },
     {
         "id": "wootton-brook",
         "name": "Wootton Brook",
-        "levelIds": [
+        "stations": [
+            "stations.6103",
             "stations.6117"
         ]
     },
     {
         "id": "bedburn-beck",
         "name": "Bedburn Beck",
-        "levelIds": [
+        "stations": [
             "stations.8018"
         ]
     },
     {
         "id": "bowmont-water",
         "name": "Bowmont Water",
-        "levelIds": [
+        "stations": [
             "stations.8375"
         ]
     },
     {
         "id": "clow-beck",
         "name": "Clow Beck",
-        "levelIds": [
+        "stations": [
             "stations.8362"
         ]
     },
     {
         "id": "cockshaw-burn",
         "name": "Cockshaw Burn",
-        "levelIds": [
+        "stations": [
             "stations.8270",
-            "stations.8271"
+            "stations.8271",
+            "stations.8273"
         ]
     },
     {
         "id": "river-hartburn",
         "name": "River Hartburn",
-        "levelIds": [
+        "stations": [
             "stations.8092"
         ]
     },
     {
         "id": "hartburn-beck",
         "name": "Hartburn Beck",
-        "levelIds": [
+        "stations": [
             "stations.8363"
         ]
     },
     {
         "id": "harwood-beck",
         "name": "Harwood Beck",
-        "levelIds": [
+        "stations": [
             "stations.8093"
         ]
     },
     {
         "id": "kielder-burn",
         "name": "Kielder Burn",
-        "levelIds": [
+        "stations": [
             "stations.8111"
         ]
     },
     {
         "id": "killhope-burn",
         "name": "Killhope Burn",
-        "levelIds": [
+        "stations": [
             "stations.8212"
         ]
     },
     {
         "id": "kilton-beck",
         "name": "Kilton Beck",
-        "levelIds": [
+        "stations": [
             "stations.8185"
         ]
     },
     {
         "id": "lustrum-beck",
         "name": "Lustrum Beck",
-        "levelIds": [
+        "stations": [
             "stations.8275"
         ]
     },
     {
         "id": "marton-west-beck",
         "name": "Marton West Beck",
-        "levelIds": [
+        "stations": [
             "stations.9018"
         ]
     },
     {
         "id": "moors-burn",
         "name": "Moors Burn",
-        "levelIds": [
+        "stations": [
             "stations.8274"
         ]
     },
     {
         "id": "oakley-cross-beck",
         "name": "Oakley Cross Beck",
-        "levelIds": [
+        "stations": [
             "stations.8155"
         ]
     },
     {
         "id": "ormesby-beck",
         "name": "Ormesby Beck",
-        "levelIds": [
+        "stations": [
             "stations.8374"
         ]
     },
     {
         "id": "ouse-burn",
         "name": "Ouse Burn",
-        "levelIds": [
+        "stations": [
             "stations.8222",
             "stations.8085",
             "stations.8058"
@@ -3346,21 +3415,21 @@
     {
         "id": "river-blyth",
         "name": "River Blyth",
-        "levelIds": [
+        "stations": [
             "stations.8291"
         ]
     },
     {
         "id": "river-browney",
         "name": "River Browney",
-        "levelIds": [
+        "stations": [
             "stations.8038"
         ]
     },
     {
         "id": "river-coquet",
         "name": "River Coquet",
-        "levelIds": [
+        "stations": [
             "stations.8008",
             "stations.8173",
             "stations.8143",
@@ -3370,7 +3439,7 @@
     {
         "id": "river-derwent-northumberland",
         "name": "River Derwent",
-        "levelIds": [
+        "stations": [
             "stations.8376",
             "stations.8272",
             "stations.8292"
@@ -3379,21 +3448,21 @@
     {
         "id": "river-east-allen",
         "name": "River East Allen",
-        "levelIds": [
+        "stations": [
             "stations.8005"
         ]
     },
     {
         "id": "river-font",
         "name": "River Font",
-        "levelIds": [
+        "stations": [
             "stations.8154"
         ]
     },
     {
         "id": "river-gaunless",
         "name": "River Gaunless",
-        "levelIds": [
+        "stations": [
             "stations.8055",
             "stations.8128",
             "stations.8361",
@@ -3406,14 +3475,14 @@
     {
         "id": "river-greta-durham",
         "name": "River Greta",
-        "levelIds": [
+        "stations": [
             "stations.8177"
         ]
     },
     {
         "id": "river-leven-yorkshire",
         "name": "River Leven",
-        "levelIds": [
+        "stations": [
             "stations.8071",
             "stations.8088",
             "stations.8364",
@@ -3425,7 +3494,7 @@
     {
         "id": "river-north-tyne",
         "name": "River North Tyne",
-        "levelIds": [
+        "stations": [
             "stations.8368",
             "stations.8262",
             "stations.8370",
@@ -3437,7 +3506,7 @@
     {
         "id": "river-pont",
         "name": "River Pont",
-        "levelIds": [
+        "stations": [
             "stations.8195",
             "stations.8098",
             "stations.8162"
@@ -3446,7 +3515,7 @@
     {
         "id": "river-rede",
         "name": "River Rede",
-        "levelIds": [
+        "stations": [
             "stations.8158",
             "stations.8157",
             "stations.8167"
@@ -3455,7 +3524,7 @@
     {
         "id": "river-skerne",
         "name": "River Skerne",
-        "levelIds": [
+        "stations": [
             "stations.8030",
             "stations.8164",
             "stations.8108",
@@ -3465,16 +3534,18 @@
     {
         "id": "river-south-tyne",
         "name": "River South Tyne",
-        "levelIds": [
+        "stations": [
             "stations.8007",
             "stations.8076",
+            "stations.8356",
+            "stations.9283",
             "stations.8095"
         ]
     },
     {
         "id": "river-team",
         "name": "River Team",
-        "levelIds": [
+        "stations": [
             "stations.8359",
             "stations.8203"
         ]
@@ -3482,7 +3553,7 @@
     {
         "id": "river-tees",
         "name": "River Tees",
-        "levelIds": [
+        "stations": [
             "stations.8138",
             "stations.8014",
             "stations.8034",
@@ -3496,22 +3567,23 @@
     {
         "id": "river-till-northumberland",
         "name": "River Till",
-        "levelIds": [
+        "stations": [
             "stations.8290"
         ]
     },
     {
         "id": "river-tweed",
         "name": "River Tweed",
-        "levelIds": [
-            "stations.8263"
+        "stations": [
+            "stations.8264",
+            "stations.8263",
+            "stations.8020"
         ]
     },
     {
         "id": "river-tyne",
         "name": "River Tyne",
-        "levelIds": [
-            "stations.8356",
+        "stations": [
             "stations.8357",
             "stations.9006",
             "stations.8354",
@@ -3523,7 +3595,7 @@
     {
         "id": "river-wansbeck",
         "name": "River Wansbeck",
-        "levelIds": [
+        "stations": [
             "stations.8137",
             "stations.8139",
             "stations.8293"
@@ -3532,7 +3604,7 @@
     {
         "id": "river-wear",
         "name": "River Wear",
-        "levelIds": [
+        "stations": [
             "stations.8196",
             "stations.8219",
             "stations.8201",
@@ -3543,42 +3615,42 @@
     {
         "id": "river-west-allen",
         "name": "River West Allen",
-        "levelIds": [
+        "stations": [
             "stations.8367"
         ]
     },
     {
         "id": "rookhope-burn",
         "name": "Rookhope Burn",
-        "levelIds": [
+        "stations": [
             "stations.8072"
         ]
     },
     {
         "id": "smallhope-burn",
         "name": "Smallhope Burn",
-        "levelIds": [
+        "stations": [
             "stations.8123"
         ]
     },
     {
         "id": "trout-beck-northumberland",
         "name": "Trout Beck",
-        "levelIds": [
+        "stations": [
             "stations.8141"
         ]
     },
     {
         "id": "usway-burn",
         "name": "Usway Burn",
-        "levelIds": [
+        "stations": [
             "stations.8182"
         ]
     },
     {
         "id": "waren-burn",
         "name": "Waren Burn",
-        "levelIds": [
+        "stations": [
             "stations.8267",
             "stations.8268"
         ]
@@ -3586,7 +3658,7 @@
     {
         "id": "wooler-water",
         "name": "Wooler Water",
-        "levelIds": [
+        "stations": [
             "stations.8051",
             "stations.8221"
         ]
@@ -3594,21 +3666,21 @@
     {
         "id": "river-tanat",
         "name": "River Tanat",
-        "levelIds": [
+        "stations": [
             "stations.2025"
         ]
     },
     {
         "id": "bagley-brook",
         "name": "Bagley Brook",
-        "levelIds": [
+        "stations": [
             "stations.2210"
         ]
     },
     {
         "id": "barbourne-brook",
         "name": "Barbourne Brook",
-        "levelIds": [
+        "stations": [
             "stations.2235",
             "stations.2236"
         ]
@@ -3616,7 +3688,7 @@
     {
         "id": "bow-brook",
         "name": "Bow Brook",
-        "levelIds": [
+        "stations": [
             "stations.2224",
             "stations.2010"
         ]
@@ -3624,21 +3696,22 @@
     {
         "id": "hatherley-brook",
         "name": "Hatherley Brook",
-        "levelIds": [
+        "stations": [
+            "stations.2207",
             "stations.2208"
         ]
     },
     {
         "id": "daniels-brook",
         "name": "Daniels Brook",
-        "levelIds": [
+        "stations": [
             "stations.2183"
         ]
     },
     {
         "id": "dimore-brook",
         "name": "Dimore Brook",
-        "levelIds": [
+        "stations": [
             "stations.2229",
             "stations.2221"
         ]
@@ -3646,24 +3719,25 @@
     {
         "id": "dowles-brook",
         "name": "Dowles Brook",
-        "levelIds": [
+        "stations": [
             "stations.2023"
         ]
     },
     {
         "id": "horsbere-brook",
         "name": "Horsbere Brook",
-        "levelIds": [
+        "stations": [
             "stations.2179",
             "stations.9028",
             "stations.2222",
+            "stations.9294",
             "stations.2180"
         ]
     },
     {
         "id": "kyre-brook",
         "name": "Kyre Brook",
-        "levelIds": [
+        "stations": [
             "stations.2198",
             "stations.2197"
         ]
@@ -3671,61 +3745,51 @@
     {
         "id": "ledwyche-brook",
         "name": "Ledwyche Brook",
-        "levelIds": [
+        "stations": [
             "stations.2088"
         ]
     },
     {
         "id": "leigh-brook",
         "name": "Leigh Brook",
-        "levelIds": [
+        "stations": [
             "stations.2070"
         ]
     },
     {
         "id": "lilley-brook",
         "name": "Lilley Brook",
-        "levelIds": [
+        "stations": [
             "stations.2209"
         ]
     },
     {
         "id": "piddle-brook",
         "name": "Piddle Brook",
-        "levelIds": [
+        "stations": [
             "stations.2223"
         ]
     },
     {
         "id": "rea-brook",
         "name": "Rea Brook",
-        "levelIds": [
+        "stations": [
             "stations.2013"
         ]
     },
     {
         "id": "river-arrow-herefordshire",
         "name": "River Arrow",
-        "levelIds": [
+        "stations": [
+            "stations.4020",
             "stations.4035",
             "stations.2195"
         ]
     },
     {
-        "id": "river-avon",
-        "name": "River Avon",
-        "levelIds": [
-            "stations.2002",
-            "stations.2049",
-            "stations.9025",
-            "stations.2056",
-            "stations.2050"
-        ]
-    },
-    {
         "id": "river-cam-severn",
         "name": "River Cam",
-        "levelIds": [
+        "stations": [
             "stations.2074",
             "stations.2077"
         ]
@@ -3733,7 +3797,7 @@
     {
         "id": "river-chelt",
         "name": "River Chelt",
-        "levelIds": [
+        "stations": [
             "stations.2170",
             "stations.2172",
             "stations.2171",
@@ -3744,14 +3808,14 @@
     {
         "id": "river-corve",
         "name": "River Corve",
-        "levelIds": [
+        "stations": [
             "stations.2065"
         ]
     },
     {
         "id": "river-frome-severn",
         "name": "River Frome (Severn)",
-        "levelIds": [
+        "stations": [
             "stations.2175",
             "stations.2176",
             "stations.2019",
@@ -3761,7 +3825,7 @@
     {
         "id": "river-frome-wye",
         "name": "River Frome (Wye)",
-        "levelIds": [
+        "stations": [
             "stations.4223",
             "stations.4003",
             "stations.4036"
@@ -3770,7 +3834,7 @@
     {
         "id": "river-isbourne",
         "name": "River Isbourne",
-        "levelIds": [
+        "stations": [
             "stations.2193",
             "stations.2194",
             "stations.2024"
@@ -3779,7 +3843,7 @@
     {
         "id": "river-leadon",
         "name": "River Leadon",
-        "levelIds": [
+        "stations": [
             "stations.2205",
             "stations.2012"
         ]
@@ -3787,7 +3851,8 @@
     {
         "id": "river-lugg",
         "name": "River Lugg",
-        "levelIds": [
+        "stations": [
+            "stations.4022",
             "stations.4007",
             "stations.4006",
             "stations.4019"
@@ -3796,42 +3861,51 @@
     {
         "id": "river-meese",
         "name": "River Meese",
-        "levelIds": [
+        "stations": [
             "stations.2027"
         ]
     },
     {
         "id": "river-onny",
         "name": "River Onny",
-        "levelIds": [
+        "stations": [
             "stations.2030"
         ]
     },
     {
         "id": "river-perry",
         "name": "River Perry",
-        "levelIds": [
+        "stations": [
             "stations.2014"
         ]
     },
     {
         "id": "river-reashropshire",
         "name": "River Rea",
-        "levelIds": [
+        "stations": [
             "stations.2026"
         ]
     },
     {
         "id": "river-roden",
         "name": "River Roden",
-        "levelIds": [
+        "stations": [
             "stations.2011"
+        ]
+    },
+    {
+        "id": "st-johns-beck",
+        "name": "St Johns Beck",
+        "stations": [
+            "stations.5210",
+            "stations.5139"
         ]
     },
     {
         "id": "river-salwarpe",
         "name": "River Salwarpe",
-        "levelIds": [
+        "stations": [
+            "stations.9295",
             "stations.2075",
             "stations.2007"
         ]
@@ -3839,7 +3913,15 @@
     {
         "id": "river-severn",
         "name": "River Severn",
-        "levelIds": [
+        "stations": [
+            "stations.2033",
+            "stations.4260",
+            "stations.2034",
+            "stations.4235",
+            "stations.2009",
+            "stations.2072",
+            "stations.2068",
+            "stations.2061",
             "stations.2067",
             "stations.2095",
             "stations.2004",
@@ -3866,14 +3948,14 @@
     {
         "id": "river-strine",
         "name": "River Strine",
-        "levelIds": [
+        "stations": [
             "stations.2066"
         ]
     },
     {
         "id": "river-teme",
         "name": "River Teme",
-        "levelIds": [
+        "stations": [
             "stations.2090",
             "stations.2053",
             "stations.2057",
@@ -3887,14 +3969,14 @@
     {
         "id": "river-tern",
         "name": "River Tern",
-        "levelIds": [
+        "stations": [
             "stations.2008"
         ]
     },
     {
         "id": "river-twyver",
         "name": "River Twyver",
-        "levelIds": [
+        "stations": [
             "stations.9024",
             "stations.2181",
             "stations.2219",
@@ -3904,33 +3986,41 @@
     {
         "id": "river-worfe",
         "name": "River Worfe",
-        "levelIds": [
+        "stations": [
             "stations.2016"
         ]
     },
     {
         "id": "river-wye",
         "name": "River Wye",
-        "levelIds": [
+        "stations": [
+            "stations.4026",
+            "stations.4011",
+            "stations.4005",
+            "stations.4013",
+            "stations.4014",
+            "stations.4016",
             "stations.4004",
             "stations.4002",
             "stations.4017",
             "stations.4025",
             "stations.4029",
-            "stations.2196"
+            "stations.2196",
+            "stations.4023",
+            "stations.4028"
         ]
     },
     {
         "id": "rudhall-brook",
         "name": "Rudhall Brook",
-        "levelIds": [
+        "stations": [
             "stations.2225"
         ]
     },
     {
         "id": "slad-brook",
         "name": "Slad Brook",
-        "levelIds": [
+        "stations": [
             "stations.2203",
             "stations.2204"
         ]
@@ -3938,7 +4028,7 @@
     {
         "id": "sud-brook",
         "name": "Sud Brook",
-        "levelIds": [
+        "stations": [
             "stations.9026",
             "stations.2182"
         ]
@@ -3946,7 +4036,7 @@
     {
         "id": "river-lyd-gloucestershire",
         "name": "River Lyd",
-        "levelIds": [
+        "stations": [
             "stations.2055",
             "stations.2087"
         ]
@@ -3954,21 +4044,21 @@
     {
         "id": "wesley-brook",
         "name": "Wesley Brook",
-        "levelIds": [
+        "stations": [
             "stations.2169"
         ]
     },
     {
         "id": "whaddon-brook-gloucestershire",
         "name": "Whaddon Brook",
-        "levelIds": [
+        "stations": [
             "stations.2228"
         ]
     },
     {
         "id": "wotton-brook",
         "name": "Wotton Brook",
-        "levelIds": [
+        "stations": [
             "stations.2226",
             "stations.2227"
         ]
@@ -3976,7 +4066,7 @@
     {
         "id": "wymans-brook",
         "name": "Wymans Brook",
-        "levelIds": [
+        "stations": [
             "stations.2201",
             "stations.2200"
         ]
@@ -3984,28 +4074,28 @@
     {
         "id": "yazor-brook",
         "name": "Yazor Brook",
-        "levelIds": [
+        "stations": [
             "stations.4033"
         ]
     },
     {
         "id": "aldingbourne-rife",
         "name": "Aldingbourne Rife",
-        "levelIds": [
+        "stations": [
             "stations.9254"
         ]
     },
     {
         "id": "atherfield-brook",
         "name": "Atherfield Brook",
-        "levelIds": [
+        "stations": [
             "stations.9171"
         ]
     },
     {
         "id": "bartley-water",
         "name": "Bartley Water",
-        "levelIds": [
+        "stations": [
             "stations.9170",
             "stations.9221",
             "stations.9264",
@@ -4015,7 +4105,7 @@
     {
         "id": "beaulieu-river",
         "name": "Beaulieu River",
-        "levelIds": [
+        "stations": [
             "stations.9201",
             "stations.9239",
             "stations.9238"
@@ -4024,14 +4114,14 @@
     {
         "id": "bosham-stream",
         "name": "Bosham Stream",
-        "levelIds": [
+        "stations": [
             "stations.9255"
         ]
     },
     {
         "id": "bourne-rivulet",
         "name": "Bourne Rivulet",
-        "levelIds": [
+        "stations": [
             "stations.9231",
             "stations.9205"
         ]
@@ -4039,14 +4129,14 @@
     {
         "id": "cuckmere-&-pevensey-levels",
         "name": "Cuckmere & Pevensey Levels",
-        "levelIds": [
+        "stations": [
             "stations.1167"
         ]
     },
     {
         "id": "danes-stream",
         "name": "Danes Stream",
-        "levelIds": [
+        "stations": [
             "stations.9210",
             "stations.9208"
         ]
@@ -4054,14 +4144,14 @@
     {
         "id": "gurnard-luck",
         "name": "Gurnard Luck",
-        "levelIds": [
+        "stations": [
             "stations.1046"
         ]
     },
     {
         "id": "lukely-brook",
         "name": "Lukely Brook",
-        "levelIds": [
+        "stations": [
             "stations.9186",
             "stations.9204"
         ]
@@ -4069,7 +4159,7 @@
     {
         "id": "lymington",
         "name": "Lymington",
-        "levelIds": [
+        "stations": [
             "stations.1062",
             "stations.1060",
             "stations.9262",
@@ -4079,7 +4169,7 @@
     {
         "id": "monks-brook",
         "name": "Monks Brook",
-        "levelIds": [
+        "stations": [
             "stations.1051",
             "stations.1058"
         ]
@@ -4087,7 +4177,7 @@
     {
         "id": "monkton-mead",
         "name": "Monkton Mead",
-        "levelIds": [
+        "stations": [
             "stations.9217",
             "stations.9209"
         ]
@@ -4095,21 +4185,21 @@
     {
         "id": "pillhill-brook",
         "name": "Pillhill Brook",
-        "levelIds": [
+        "stations": [
             "stations.9222"
         ]
     },
     {
         "id": "combe-haven",
         "name": "Combe Haven",
-        "levelIds": [
+        "stations": [
             "stations.1166"
         ]
     },
     {
         "id": "river-adur",
         "name": "River Adur",
-        "levelIds": [
+        "stations": [
             "stations.1006",
             "stations.1001",
             "stations.1032"
@@ -4118,14 +4208,14 @@
     {
         "id": "river-alver-hampshire",
         "name": "River Alver",
-        "levelIds": [
+        "stations": [
             "stations.9175"
         ]
     },
     {
         "id": "river-anton",
         "name": "River Anton",
-        "levelIds": [
+        "stations": [
             "stations.9169",
             "stations.9198",
             "stations.9199"
@@ -4134,7 +4224,9 @@
     {
         "id": "river-arun",
         "name": "River Arun",
-        "levelIds": [
+        "stations": [
+            "stations.1168",
+            "stations.1165",
             "stations.9243",
             "stations.9245",
             "stations.1014",
@@ -4147,50 +4239,52 @@
     {
         "id": "river-blackwater-new-forest",
         "name": "River Blackwater",
-        "levelIds": [
+        "stations": [
             "stations.9212"
         ]
     },
     {
         "id": "river-cuckmere",
         "name": "River Cuckmere",
-        "levelIds": [
+        "stations": [
             "stations.1153"
         ]
     },
     {
         "id": "river-dever",
         "name": "River Dever",
-        "levelIds": [
+        "stations": [
             "stations.9173"
         ]
     },
     {
         "id": "river-dun-hampshire",
         "name": "River Dun",
-        "levelIds": [
+        "stations": [
             "stations.9232"
         ]
     },
     {
         "id": "river-ems",
         "name": "River Ems",
-        "levelIds": [
+        "stations": [
             "stations.1155"
         ]
     },
     {
         "id": "river-hamble",
         "name": "River Hamble",
-        "levelIds": [
+        "stations": [
+            "stations.9211",
             "stations.9197",
+            "stations.9203",
             "stations.9200"
         ]
     },
     {
         "id": "river-alre",
         "name": "River Alre",
-        "levelIds": [
+        "stations": [
             "stations.1053",
             "stations.9193"
         ]
@@ -4198,27 +4292,28 @@
     {
         "id": "cheriton-stream",
         "name": "Cheriton Stream",
-        "levelIds": [
+        "stations": [
             "stations.1057"
         ]
     },
     {
         "id": "candover-stream",
         "name": "Candover Stream",
-        "levelIds": [
+        "stations": [
             "stations.1050"
         ]
     },
     {
         "id": "river-itchen-hampshire",
         "name": "River Itchen",
-        "levelIds": [
+        "stations": [
             "stations.1054",
             "stations.9194",
             "stations.1052",
             "stations.1059",
             "stations.1055",
             "stations.1048",
+            "stations.9220",
             "stations.1049",
             "stations.1056",
             "stations.1034"
@@ -4227,14 +4322,14 @@
     {
         "id": "river-swift-hampshire",
         "name": "River Swift",
-        "levelIds": [
+        "stations": [
             "stations.9216"
         ]
     },
     {
         "id": "river-lavant-sussex",
         "name": "River Lavant",
-        "levelIds": [
+        "stations": [
             "stations.1163",
             "stations.9244"
         ]
@@ -4242,7 +4337,7 @@
     {
         "id": "river-lavant-hampshire",
         "name": "River Lavant",
-        "levelIds": [
+        "stations": [
             "stations.9191",
             "stations.9223"
         ]
@@ -4250,14 +4345,14 @@
     {
         "id": "hermitage-stream",
         "name": "Hermitage Stream",
-        "levelIds": [
+        "stations": [
             "stations.9202"
         ]
     },
     {
         "id": "river-lox",
         "name": "River Lox",
-        "levelIds": [
+        "stations": [
             "stations.9256",
             "stations.9259"
         ]
@@ -4265,7 +4360,7 @@
     {
         "id": "river-medina",
         "name": "River Medina",
-        "levelIds": [
+        "stations": [
             "stations.1047",
             "stations.1020"
         ]
@@ -4273,7 +4368,7 @@
     {
         "id": "river-meon",
         "name": "River Meon",
-        "levelIds": [
+        "stations": [
             "stations.9177",
             "stations.9181",
             "stations.9178",
@@ -4285,14 +4380,14 @@
     {
         "id": "salfords-stream-sussex",
         "name": "Salfords Stream",
-        "levelIds": [
+        "stations": [
             "stations.1118"
         ]
     },
     {
-        "id": "river-ouse",
+        "id": "river-ouse-sussex",
         "name": "River Ouse",
-        "levelIds": [
+        "stations": [
             "stations.1152",
             "stations.1110",
             "stations.1106",
@@ -4308,7 +4403,7 @@
     {
         "id": "river-rother-west-sussex",
         "name": "River Rother",
-        "levelIds": [
+        "stations": [
             "stations.1164",
             "stations.1169",
             "stations.1013",
@@ -4318,7 +4413,7 @@
     {
         "id": "river-test",
         "name": "River Test",
-        "levelIds": [
+        "stations": [
             "stations.9229",
             "stations.9230",
             "stations.1161",
@@ -4335,28 +4430,28 @@
     {
         "id": "fishlake-stream",
         "name": "Fishlake Stream",
-        "levelIds": [
+        "stations": [
             "stations.9195"
         ]
     },
     {
         "id": "barge-canal",
         "name": "Barge Canal",
-        "levelIds": [
+        "stations": [
             "stations.9235"
         ]
     },
     {
         "id": "oxlease-drain",
         "name": "Oxlease Drain",
-        "levelIds": [
+        "stations": [
             "stations.9174"
         ]
     },
     {
         "id": "eastern-yar",
         "name": "Eastern Yar",
-        "levelIds": [
+        "stations": [
             "stations.9184",
             "stations.9168",
             "stations.9185",
@@ -4367,7 +4462,7 @@
     {
         "id": "river-uck",
         "name": "River Uck",
-        "levelIds": [
+        "stations": [
             "stations.9257",
             "stations.1119",
             "stations.1108"
@@ -4376,14 +4471,14 @@
     {
         "id": "tadburn-lake",
         "name": "Tadburn Lake",
-        "levelIds": [
+        "stations": [
             "stations.1151"
         ]
     },
     {
         "id": "tanners-brook",
         "name": "Tanners Brook",
-        "levelIds": [
+        "stations": [
             "stations.9240",
             "stations.1149"
         ]
@@ -4391,70 +4486,78 @@
     {
         "id": "walkford-brook",
         "name": "Walkford Brook",
-        "levelIds": [
+        "stations": [
             "stations.9187"
         ]
     },
     {
         "id": "river-wallington-hampshire",
         "name": "River Wallington",
-        "levelIds": [
+        "stations": [
+            "stations.9192",
             "stations.1044"
         ]
     },
     {
         "id": "wallop-brook",
         "name": "Wallop Brook",
-        "levelIds": [
+        "stations": [
             "stations.9172"
         ]
     },
     {
         "id": "western-yar",
         "name": "Western Yar",
-        "levelIds": [
+        "stations": [
             "stations.9196"
         ]
     },
     {
         "id": "west-brook-hampshire",
         "name": "West Brook",
-        "levelIds": [
+        "stations": [
             "stations.9224"
+        ]
+    },
+    {
+        "id": "west-brook-kent",
+        "name": "West Brook",
+        "stations": [
+            "stations.9275"
         ]
     },
     {
         "id": "winterbourne-stream-sussex",
         "name": "Winterbourne Stream",
-        "levelIds": [
+        "stations": [
             "stations.9253"
         ]
     },
     {
         "id": "salt-haven",
         "name": "Salt Haven",
-        "levelIds": [
+        "stations": [
             "stations.1027"
         ]
     },
     {
         "id": "ferring-rife",
         "name": "Ferring Rife",
-        "levelIds": [
+        "stations": [
             "stations.9260"
         ]
     },
     {
         "id": "endon-brook",
         "name": "Endon Brook",
-        "levelIds": [
+        "stations": [
             "stations.9105"
         ]
     },
     {
         "id": "henmore-brook",
         "name": "Henmore Brook",
-        "levelIds": [
+        "stations": [
             "stations.9069",
             "stations.2126"
         ]
@@ -4462,7 +4565,7 @@
     {
         "id": "river-churnet",
         "name": "River Churnet",
-        "levelIds": [
+        "stations": [
             "stations.2154",
             "stations.9073",
             "stations.2127",
@@ -4473,21 +4576,21 @@
     {
         "id": "river-hamps",
         "name": "River Hamps",
-        "levelIds": [
+        "stations": [
             "stations.2117"
         ]
     },
     {
         "id": "river-manifold",
         "name": "River Manifold",
-        "levelIds": [
+        "stations": [
             "stations.2113"
         ]
     },
     {
         "id": "river-dove-staffordshire",
         "name": "River Dove",
-        "levelIds": [
+        "stations": [
             "stations.2119",
             "stations.9070",
             "stations.2101",
@@ -4500,7 +4603,7 @@
     {
         "id": "river-tean",
         "name": "River Tean",
-        "levelIds": [
+        "stations": [
             "stations.2149",
             "stations.9075"
         ]
@@ -4508,84 +4611,84 @@
     {
         "id": "picknall-brook",
         "name": "Picknall Brook",
-        "levelIds": [
+        "stations": [
             "stations.9104"
         ]
     },
     {
         "id": "foston-brook",
         "name": "Foston Brook",
-        "levelIds": [
+        "stations": [
             "stations.9088"
         ]
     },
     {
         "id": "marchington-brook",
         "name": "Marchington Brook",
-        "levelIds": [
+        "stations": [
             "stations.9103"
         ]
     },
     {
         "id": "rolleston-brook",
         "name": "Rolleston Brook",
-        "levelIds": [
+        "stations": [
             "stations.9102"
         ]
     },
     {
         "id": "egginton-brook",
         "name": "Egginton Brook",
-        "levelIds": [
+        "stations": [
             "stations.9079"
         ]
     },
     {
         "id": "hilton-brook",
         "name": "Hilton Brook",
-        "levelIds": [
+        "stations": [
             "stations.9101"
         ]
     },
     {
         "id": "fowlea-brook",
         "name": "Fowlea Brook",
-        "levelIds": [
+        "stations": [
             "stations.9086"
         ]
     },
     {
         "id": "lyme-brook",
         "name": "Lyme Brook",
-        "levelIds": [
+        "stations": [
             "stations.9099"
         ]
     },
     {
         "id": "meece-brook",
         "name": "Meece Brook",
-        "levelIds": [
+        "stations": [
             "stations.9112"
         ]
     },
     {
         "id": "ridings-brook",
         "name": "Ridings Brook",
-        "levelIds": [
+        "stations": [
             "stations.9107"
         ]
     },
     {
         "id": "rising-brook",
         "name": "Rising Brook",
-        "levelIds": [
+        "stations": [
             "stations.9084"
         ]
     },
     {
         "id": "river-blithe",
         "name": "River Blithe",
-        "levelIds": [
+        "stations": [
             "stations.9089",
             "stations.9090",
             "stations.9081"
@@ -4594,7 +4697,7 @@
     {
         "id": "river-penk",
         "name": "River Penk",
-        "levelIds": [
+        "stations": [
             "stations.9067",
             "stations.2123"
         ]
@@ -4602,7 +4705,7 @@
     {
         "id": "river-sow",
         "name": "River Sow",
-        "levelIds": [
+        "stations": [
             "stations.2122",
             "stations.9076",
             "stations.2105"
@@ -4611,56 +4714,56 @@
     {
         "id": "river-swarbourne",
         "name": "River Swarbourne",
-        "levelIds": [
+        "stations": [
             "stations.9091"
         ]
     },
     {
         "id": "sandyford-brook",
         "name": "Sandyford Brook",
-        "levelIds": [
+        "stations": [
             "stations.9093"
         ]
     },
     {
         "id": "saredon-brook",
         "name": "Saredon Brook",
-        "levelIds": [
+        "stations": [
             "stations.9108"
         ]
     },
     {
         "id": "gilwiskaw-brook",
         "name": "Gilwiskaw Brook",
-        "levelIds": [
+        "stations": [
             "stations.9092"
         ]
     },
     {
         "id": "river-mease",
         "name": "River Mease",
-        "levelIds": [
+        "stations": [
             "stations.9106"
         ]
     },
     {
         "id": "bourne-brook",
         "name": "Bourne Brook",
-        "levelIds": [
+        "stations": [
             "stations.9111"
         ]
     },
     {
         "id": "ford-brook",
         "name": "Ford Brook",
-        "levelIds": [
+        "stations": [
             "stations.9087"
         ]
     },
     {
         "id": "river-anker",
         "name": "River Anker",
-        "levelIds": [
+        "stations": [
             "stations.9064",
             "stations.9063",
             "stations.2112"
@@ -4669,14 +4772,14 @@
     {
         "id": "river-sence",
         "name": "River Sence",
-        "levelIds": [
+        "stations": [
             "stations.9080"
         ]
     },
     {
         "id": "river-blythe",
         "name": "River Blythe",
-        "levelIds": [
+        "stations": [
             "stations.2151",
             "stations.2143"
         ]
@@ -4684,7 +4787,7 @@
     {
         "id": "river-cole-staffordshire",
         "name": "River Cole",
-        "levelIds": [
+        "stations": [
             "stations.2157",
             "stations.2129",
             "stations.9065"
@@ -4693,7 +4796,7 @@
     {
         "id": "river-reawest-midlands",
         "name": "River Rea",
-        "levelIds": [
+        "stations": [
             "stations.9066",
             "stations.9055",
             "stations.2115"
@@ -4702,7 +4805,7 @@
     {
         "id": "river-tame-west-midlands",
         "name": "River Tame",
-        "levelIds": [
+        "stations": [
             "stations.9071",
             "stations.9062",
             "stations.2135",
@@ -4717,7 +4820,7 @@
     {
         "id": "river-alne",
         "name": "River Alne",
-        "levelIds": [
+        "stations": [
             "stations.2083",
             "stations.2048"
         ]
@@ -4725,7 +4828,7 @@
     {
         "id": "river-arrow-warwickshire",
         "name": "River Arrow",
-        "levelIds": [
+        "stations": [
             "stations.2047",
             "stations.2052"
         ]
@@ -4733,34 +4836,45 @@
     {
         "id": "clay-coton-brook",
         "name": "Clay Coton Brook",
-        "levelIds": [
+        "stations": [
             "stations.9057"
         ]
     },
     {
         "id": "river-swift-warwickshire",
         "name": "River Swift",
-        "levelIds": [
+        "stations": [
             "stations.9100"
         ]
     },
     {
-        "id": "river-avon",
+        "id": "river-avon-corsham",
         "name": "River Avon",
-        "levelIds": [
+        "stations": [
+            "stations.9123"
+        ]
+    },
+    {
+        "id": "river-avon-warwickshire",
+        "name": "River Avon",
+        "stations": [
             "stations.2042",
             "stations.2043",
             "stations.9072",
             "stations.2044",
             "stations.2046",
             "stations.2234",
-            "stations.2002"
+            "stations.2002",
+            "stations.2049",
+            "stations.9025",
+            "stations.2056",
+            "stations.2050"
         ]
     },
     {
         "id": "river-sowe",
         "name": "River Sowe",
-        "levelIds": [
+        "stations": [
             "stations.9094",
             "stations.9095"
         ]
@@ -4768,30 +4882,37 @@
     {
         "id": "river-leam",
         "name": "River Leam",
-        "levelIds": [
+        "stations": [
             "stations.2079",
             "stations.2184"
         ]
     },
     {
-        "id": "river-dene",
+        "id": "river-dene-warwickshire",
         "name": "River Dene",
-        "levelIds": [
+        "stations": [
             "stations.9078",
+            "stations.2029"
+        ]
+    },
+    {
+        "id": "river-dene-gloucestershire",
+        "name": "River Dene",
+        "stations": [
             "stations.9029"
         ]
     },
     {
         "id": "finham-brook",
         "name": "Finham Brook",
-        "levelIds": [
+        "stations": [
             "stations.9056"
         ]
     },
     {
         "id": "canley-brook",
         "name": "Canley Brook",
-        "levelIds": [
+        "stations": [
             "stations.9110",
             "stations.9097"
         ]
@@ -4799,14 +4920,14 @@
     {
         "id": "river-itchen-warwickshire",
         "name": "River Itchen",
-        "levelIds": [
+        "stations": [
             "stations.2080"
         ]
     },
     {
         "id": "river-sherbourne",
         "name": "River Sherbourne",
-        "levelIds": [
+        "stations": [
             "stations.9085",
             "stations.9096",
             "stations.9109"
@@ -4815,7 +4936,7 @@
     {
         "id": "river-stour-warwickshire",
         "name": "River Stour",
-        "levelIds": [
+        "stations": [
             "stations.2045",
             "stations.2006"
         ]
@@ -4823,7 +4944,7 @@
     {
         "id": "river-stour-worcestershire",
         "name": "River Stour",
-        "levelIds": [
+        "stations": [
             "stations.2076",
             "stations.2037",
             "stations.2038",
@@ -4834,7 +4955,7 @@
     {
         "id": "smestow-brook",
         "name": "Smestow Brook",
-        "levelIds": [
+        "stations": [
             "stations.2091",
             "stations.2032"
         ]
@@ -4842,28 +4963,29 @@
     {
         "id": "bradley-brook",
         "name": "Bradley Brook",
-        "levelIds": [
+        "stations": [
             "stations.3411"
         ]
     },
     {
         "id": "brinkworth-brook",
         "name": "Brinkworth Brook",
-        "levelIds": [
+        "stations": [
+            "stations.9122",
             "stations.3419"
         ]
     },
     {
         "id": "brislington-brook",
         "name": "Brislington Brook",
-        "levelIds": [
+        "stations": [
             "stations.3032"
         ]
     },
     {
         "id": "by-brook",
         "name": "By Brook",
-        "levelIds": [
+        "stations": [
             "stations.3022",
             "stations.3040"
         ]
@@ -4871,42 +4993,43 @@
     {
         "id": "cannington-brook",
         "name": "Cannington Brook",
-        "levelIds": [
+        "stations": [
             "stations.3378"
         ]
     },
     {
         "id": "cheddar-yeo",
         "name": "Cheddar Yeo",
-        "levelIds": [
+        "stations": [
             "stations.3410"
         ]
     },
     {
         "id": "winford-brook",
         "name": "Winford Brook",
-        "levelIds": [
+        "stations": [
             "stations.3409"
         ]
     },
     {
         "id": "congresbury-yeo",
         "name": "Congresbury Yeo",
-        "levelIds": [
+        "stations": [
             "stations.3060"
         ]
     },
     {
         "id": "dauntsey-brook",
         "name": "Dauntsey Brook",
-        "levelIds": [
+        "stations": [
             "stations.3030"
         ]
     },
     {
         "id": "doniford-stream",
         "name": "Doniford Stream",
-        "levelIds": [
+        "stations": [
+            "stations.9261",
             "stations.3087",
             "stations.3090"
         ]
@@ -4914,84 +5037,85 @@
     {
         "id": "gauze-brook",
         "name": "Gauze Brook",
-        "levelIds": [
+        "stations": [
             "stations.3018"
         ]
     },
     {
         "id": "gwyle",
         "name": "Gwyle",
-        "levelIds": [
+        "stations": [
             "stations.3421"
         ]
     },
     {
         "id": "hawkcombe-stream",
         "name": "Hawkcombe Stream",
-        "levelIds": [
+        "stations": [
             "stations.3396"
         ]
     },
     {
         "id": "hillfarrance-brook",
         "name": "Hillfarrance Brook",
-        "levelIds": [
+        "stations": [
             "stations.3084"
         ]
     },
     {
         "id": "horner-water",
         "name": "Horner Water",
-        "levelIds": [
+        "stations": [
             "stations.3091"
         ]
     },
     {
         "id": "huish-level-rhyne",
         "name": "Huish Level Rhyne",
-        "levelIds": [
+        "stations": [
             "stations.3065"
         ]
     },
     {
         "id": "witcombe-bottom-main-drain",
         "name": "Witcombe Bottom Main Drain",
-        "levelIds": [
+        "stations": [
             "stations.3398"
         ]
     },
     {
         "id": "litton-cheney-stream",
         "name": "Litton Cheney Stream",
-        "levelIds": [
+        "stations": [
             "stations.3288"
         ]
     },
     {
         "id": "mells-river",
         "name": "Mells River",
-        "levelIds": [
+        "stations": [
+            "stations.3024",
             "stations.3050"
         ]
     },
     {
         "id": "midford-brook",
         "name": "Midford Brook",
-        "levelIds": [
+        "stations": [
             "stations.3045"
         ]
     },
     {
         "id": "north-drain",
         "name": "North Drain",
-        "levelIds": [
+        "stations": [
             "stations.3053"
         ]
     },
     {
         "id": "northmoor-main-drain",
         "name": "Northmoor Main Drain",
-        "levelIds": [
+        "stations": [
             "stations.3415",
             "stations.3061"
         ]
@@ -4999,21 +5123,14 @@
     {
         "id": "halse-water",
         "name": "Halse Water",
-        "levelIds": [
+        "stations": [
             "stations.3081"
-        ]
-    },
-    {
-        "id": "penberth-stream",
-        "name": "Penberth Stream",
-        "levelIds": [
-            "stations.3339"
         ]
     },
     {
         "id": "river-allen-dorset",
         "name": "River Allen",
-        "levelIds": [
+        "stations": [
             "stations.9007",
             "stations.3299"
         ]
@@ -5021,14 +5138,14 @@
     {
         "id": "river-aller",
         "name": "River Aller",
-        "levelIds": [
+        "stations": [
             "stations.3092"
         ]
     },
     {
         "id": "river-asker",
         "name": "River Asker",
-        "levelIds": [
+        "stations": [
             "stations.3290",
             "stations.3283"
         ]
@@ -5036,11 +5153,14 @@
     {
         "id": "river-avon-bristol",
         "name": "River Avon",
-        "levelIds": [
+        "stations": [
+            "stations.3027",
             "stations.3016",
             "stations.3041",
             "stations.3042",
             "stations.3043",
+            "stations.3416",
+            "stations.3414",
             "stations.3037",
             "stations.3013",
             "stations.3014"
@@ -5049,7 +5169,7 @@
     {
         "id": "sherston-avon",
         "name": "Sherston Avon",
-        "levelIds": [
+        "stations": [
             "stations.3035",
             "stations.3408"
         ]
@@ -5057,34 +5177,36 @@
     {
         "id": "tetbury-avon",
         "name": "Tetbury Avon",
-        "levelIds": [
+        "stations": [
             "stations.3034"
         ]
     },
     {
         "id": "river-avon-hampshire",
         "name": "River Avon",
-        "levelIds": [
+        "stations": [
             "stations.3323",
+            "stations.3324",
             "stations.3325",
             "stations.3374",
             "stations.3375",
             "stations.3370",
             "stations.3315",
+            "stations.3314",
             "stations.3320"
         ]
     },
     {
         "id": "river-axe-somerset",
         "name": "River Axe",
-        "levelIds": [
+        "stations": [
             "stations.3059"
         ]
     },
     {
         "id": "river-brit-dorset",
         "name": "River Brit",
-        "levelIds": [
+        "stations": [
             "stations.3281",
             "stations.3293",
             "stations.3294"
@@ -5093,21 +5215,21 @@
     {
         "id": "river-biss",
         "name": "River Biss",
-        "levelIds": [
+        "stations": [
             "stations.3047"
         ]
     },
     {
         "id": "river-bride",
         "name": "River Bride",
-        "levelIds": [
+        "stations": [
             "stations.3285"
         ]
     },
     {
         "id": "river-boyd",
         "name": "River Boyd",
-        "levelIds": [
+        "stations": [
             "stations.3021",
             "stations.3039"
         ]
@@ -5115,7 +5237,7 @@
     {
         "id": "river-brue",
         "name": "River Brue",
-        "levelIds": [
+        "stations": [
             "stations.3056",
             "stations.3055",
             "stations.3057",
@@ -5125,28 +5247,28 @@
     {
         "id": "river-cam-somerset",
         "name": "River Cam",
-        "levelIds": [
+        "stations": [
             "stations.3078"
         ]
     },
     {
         "id": "river-chew",
         "name": "River Chew",
-        "levelIds": [
+        "stations": [
             "stations.3044"
         ]
     },
     {
         "id": "river-char",
         "name": "River Char",
-        "levelIds": [
+        "stations": [
             "stations.3286"
         ]
     },
     {
         "id": "somerset-frome",
         "name": "Somerset Frome",
-        "levelIds": [
+        "stations": [
             "stations.3004",
             "stations.3382",
             "stations.3049"
@@ -5155,18 +5277,19 @@
     {
         "id": "bristol-frome",
         "name": "Bristol Frome",
-        "levelIds": [
+        "stations": [
             "stations.3009",
             "stations.3023",
             "stations.3029",
             "stations.3036",
-            "stations.3413"
+            "stations.3413",
+            "stations.3412"
         ]
     },
     {
         "id": "dorset-frome",
         "name": "Dorset Frome",
-        "levelIds": [
+        "stations": [
             "stations.3278",
             "stations.3277",
             "stations.3272",
@@ -5177,7 +5300,7 @@
     {
         "id": "river-isle",
         "name": "River Isle",
-        "levelIds": [
+        "stations": [
             "stations.3076",
             "stations.3077",
             "stations.3380"
@@ -5186,14 +5309,14 @@
     {
         "id": "river-lim-dorset",
         "name": "River Lim",
-        "levelIds": [
+        "stations": [
             "stations.3420"
         ]
     },
     {
         "id": "river-marden",
         "name": "River Marden",
-        "levelIds": [
+        "stations": [
             "stations.3383",
             "stations.3038"
         ]
@@ -5201,7 +5324,7 @@
     {
         "id": "river-parrett",
         "name": "River Parrett",
-        "levelIds": [
+        "stations": [
             "stations.3075",
             "stations.3072",
             "stations.3397"
@@ -5210,32 +5333,40 @@
     {
         "id": "river-sheppey",
         "name": "River Sheppey",
-        "levelIds": [
+        "stations": [
             "stations.3054"
         ]
     },
     {
         "id": "river-stour-dorset",
         "name": "River Stour",
-        "levelIds": [
-            "stations.3302"
+        "stations": [
+            "stations.3297",
+            "stations.3296",
+            "stations.3306",
+            "stations.3305",
+            "stations.3302",
+            "stations.3295",
+            "stations.3303",
+            "stations.3300"
         ]
     },
     {
         "id": "river-tone",
         "name": "River Tone",
-        "levelIds": [
+        "stations": [
             "stations.3083",
             "stations.3082",
             "stations.3364",
             "stations.9126",
+            "stations.9125",
             "stations.3073"
         ]
     },
     {
         "id": "river-yeo-somerset",
         "name": "River Yeo",
-        "levelIds": [
+        "stations": [
             "stations.3070",
             "stations.3074",
             "stations.3079",
@@ -5245,28 +5376,28 @@
     {
         "id": "semington-brook",
         "name": "Semington Brook",
-        "levelIds": [
+        "stations": [
             "stations.3046"
         ]
     },
     {
         "id": "river-sowy",
         "name": "River Sowy",
-        "levelIds": [
+        "stations": [
             "stations.3399"
         ]
     },
     {
         "id": "washford-river",
         "name": "Washford River",
-        "levelIds": [
+        "stations": [
             "stations.3089"
         ]
     },
     {
         "id": "wellow-brook",
         "name": "Wellow Brook",
-        "levelIds": [
+        "stations": [
             "stations.3002",
             "stations.3048"
         ]
@@ -5274,37 +5405,39 @@
     {
         "id": "west-sedgemoor-drain",
         "name": "West Sedgemoor Drain",
-        "levelIds": [
+        "stations": [
             "stations.3066"
         ]
     },
     {
         "id": "woodbridge-brook",
         "name": "Woodbridge Brook",
-        "levelIds": [
+        "stations": [
             "stations.3017"
         ]
     },
     {
         "id": "river-wriggle",
         "name": "River Wriggle",
-        "levelIds": [
+        "stations": [
             "stations.3063"
         ]
     },
     {
         "id": "river-wey-dorset",
         "name": "River Wey",
-        "levelIds": [
+        "stations": [
             "stations.3377",
+            "stations.3287",
             "stations.3291",
             "stations.3353"
+
         ]
     },
     {
         "id": "ampney-brook",
         "name": "Ampney Brook",
-        "levelIds": [
+        "stations": [
             "stations.7021",
             "stations.7022"
         ]
@@ -5312,14 +5445,14 @@
     {
         "id": "bear-brook",
         "name": "Bear Brook",
-        "levelIds": [
+        "stations": [
             "stations.7091"
         ]
     },
     {
         "id": "river-blackwater-loddon",
         "name": "River Blackwater",
-        "levelIds": [
+        "stations": [
             "stations.7150",
             "stations.7149",
             "stations.7143",
@@ -5331,98 +5464,99 @@
     {
         "id": "bulstake-stream",
         "name": "Bulstake Stream",
-        "levelIds": [
+        "stations": [
             "stations.7075"
         ]
     },
     {
         "id": "caker-stream",
         "name": "Caker Stream",
-        "levelIds": [
+        "stations": [
             "stations.7228"
         ]
     },
     {
         "id": "clanfield-brook",
         "name": "Clanfield Brook",
-        "levelIds": [
+        "stations": [
             "stations.7039"
         ]
     },
     {
         "id": "cove-brook",
         "name": "Cove Brook",
-        "levelIds": [
+        "stations": [
             "stations.7400"
         ]
     },
     {
         "id": "dorcan-brook",
         "name": "Dorcan Brook",
-        "levelIds": [
+        "stations": [
             "stations.7029"
         ]
     },
     {
         "id": "emm-brook",
         "name": "Emm Brook",
-        "levelIds": [
+        "stations": [
             "stations.7153"
         ]
     },
     {
         "id": "maidenhead-ditch",
         "name": "Maidenhead Ditch",
-        "levelIds": [
+        "stations": [
             "stations.7168"
         ]
     },
     {
         "id": "foudry-brook",
         "name": "Foudry Brook",
-        "levelIds": [
+        "stations": [
             "stations.7130"
         ]
     },
     {
         "id": "ginge-brook",
         "name": "Ginge Brook",
-        "levelIds": [
+        "stations": [
             "stations.7082"
         ]
     },
     {
         "id": "hinksey-stream",
         "name": "Hinksey Stream",
-        "levelIds": [
+        "stations": [
+            "stations.9120",
             "stations.7076"
         ]
     },
     {
         "id": "hoe-stream",
         "name": "Hoe Stream",
-        "levelIds": [
+        "stations": [
             "stations.7241"
         ]
     },
     {
         "id": "jubilee-river",
         "name": "Jubilee River",
-        "levelIds": [
+        "stations": [
             "stations.7164"
         ]
     },
     {
         "id": "law-brook",
         "name": "Law Brook",
-        "levelIds": [
+        "stations": [
             "stations.7237"
         ]
     },
     {
         "id": "letcombe-brook",
         "name": "Letcombe Brook",
-        "levelIds": [
+        "stations": [
             "stations.7004",
             "stations.7080",
             "stations.7079"
@@ -5431,27 +5565,28 @@
     {
         "id": "mill-bourne",
         "name": "Mill Bourne",
-        "levelIds": [
+        "stations": [
             "stations.7223"
         ]
     },
     {
         "id": "petty's-brook",
         "name": "Petty's Brook",
-        "levelIds": [
+        "stations": [
             "stations.7135"
         ]
     },
     {
         "id": "river-cherwell",
         "name": "River Cherwell",
-        "levelIds": [
+        "stations": [
             "stations.7058",
             "stations.7059",
             "stations.7060",
             "stations.7063",
             "stations.7064",
             "stations.7066",
+            "stations.9082",
             "stations.7071",
             "stations.9119"
         ]
@@ -5459,7 +5594,7 @@
     {
         "id": "river-churn",
         "name": "River Churn",
-        "levelIds": [
+        "stations": [
             "stations.7015",
             "stations.7016",
             "stations.7017"
@@ -5468,7 +5603,7 @@
     {
         "id": "river-cole-wiltshire",
         "name": "River Cole",
-        "levelIds": [
+        "stations": [
             "stations.7028",
             "stations.7030",
             "stations.7031"
@@ -5477,7 +5612,7 @@
     {
         "id": "river-coln",
         "name": "River Coln",
-        "levelIds": [
+        "stations": [
             "stations.7025",
             "stations.7026",
             "stations.7406"
@@ -5486,29 +5621,31 @@
     {
         "id": "river-dikler",
         "name": "River Dikler",
-        "levelIds": [
+        "stations": [
             "stations.7041"
         ]
     },
     {
         "id": "river-dun-berkshire",
         "name": "River Dun",
-        "levelIds": [
+        "stations": [
             "stations.7120"
         ]
     },
     {
         "id": "river-enborne",
         "name": "River Enborne",
-        "levelIds": [
+        "stations": [
             "stations.7128"
         ]
     },
     {
         "id": "river-evenlode",
         "name": "River Evenlode",
-        "levelIds": [
+        "stations": [
+            "stations.7002",
             "stations.7050",
+            "stations.9050",
             "stations.7051",
             "stations.7053",
             "stations.7054"
@@ -5517,14 +5654,14 @@
     {
         "id": "river-glyme",
         "name": "River Glyme",
-        "levelIds": [
+        "stations": [
             "stations.7052"
         ]
     },
     {
         "id": "river-hart",
         "name": "River Hart",
-        "levelIds": [
+        "stations": [
             "stations.7148",
             "stations.7147",
             "stations.7146",
@@ -5534,7 +5671,8 @@
     {
         "id": "river-kennet",
         "name": "River Kennet",
-        "levelIds": [
+        "stations": [
+            "stations.7112",
             "stations.7113",
             "stations.7118",
             "stations.7117",
@@ -5546,29 +5684,31 @@
     {
         "id": "river-key",
         "name": "River Key",
-        "levelIds": [
+        "stations": [
             "stations.7013"
         ]
     },
     {
         "id": "river-lambourn",
         "name": "River Lambourn",
-        "levelIds": [
+        "stations": [
+            "stations.7123",
             "stations.9020",
-            "stations.7126"
+            "stations.7126",
+            "stations.9292"
         ]
     },
     {
         "id": "river-leach",
         "name": "River Leach",
-        "levelIds": [
+        "stations": [
             "stations.7033"
         ]
     },
     {
         "id": "river-loddon",
         "name": "River Loddon",
-        "levelIds": [
+        "stations": [
             "stations.7154",
             "stations.7152",
             "stations.7151",
@@ -5581,23 +5721,24 @@
     {
         "id": "river-ock",
         "name": "River Ock",
-        "levelIds": [
+        "stations": [
             "stations.7077",
             "stations.7078",
-            "stations.7081"
+            "stations.7081",
+            "stations.7402"
         ]
     },
     {
         "id": "river-og",
         "name": "River Og",
-        "levelIds": [
+        "stations": [
             "stations.7114"
         ]
     },
     {
         "id": "river-pang",
         "name": "River Pang",
-        "levelIds": [
+        "stations": [
             "stations.7104",
             "stations.7105",
             "stations.7106",
@@ -5607,7 +5748,7 @@
     {
         "id": "river-ray",
         "name": "River Ray",
-        "levelIds": [
+        "stations": [
             "stations.7067",
             "stations.7068",
             "stations.7018",
@@ -5618,14 +5759,14 @@
     {
         "id": "river-stert",
         "name": "River Stert",
-        "levelIds": [
+        "stations": [
             "stations.7003"
         ]
     },
     {
         "id": "river-thame",
         "name": "River Thame",
-        "levelIds": [
+        "stations": [
             "stations.7087",
             "stations.7089",
             "stations.7092",
@@ -5638,7 +5779,7 @@
     {
         "id": "river-thames",
         "name": "River Thames",
-        "levelIds": [
+        "stations": [
             "stations.7010",
             "stations.7011",
             "stations.7014",
@@ -5708,7 +5849,7 @@
     {
         "id": "river-wey-surrey",
         "name": "River Wey",
-        "levelIds": [
+        "stations": [
             "stations.7226",
             "stations.7227",
             "stations.7230",
@@ -5725,14 +5866,14 @@
     {
         "id": "river-whitewater",
         "name": "River Whitewater",
-        "levelIds": [
+        "stations": [
             "stations.7144"
         ]
     },
     {
         "id": "river-windrush",
         "name": "River Windrush",
-        "levelIds": [
+        "stations": [
             "stations.7040",
             "stations.7042",
             "stations.7043",
@@ -5743,7 +5884,7 @@
     {
         "id": "river-wye-buckinghamshire",
         "name": "River Wye",
-        "levelIds": [
+        "stations": [
             "stations.7158",
             "stations.7161"
         ]
@@ -5751,42 +5892,42 @@
     {
         "id": "seacourt-stream",
         "name": "Seacourt Stream",
-        "levelIds": [
+        "stations": [
             "stations.7074"
         ]
     },
     {
         "id": "shill-brook",
         "name": "Shill Brook",
-        "levelIds": [
+        "stations": [
             "stations.7001"
         ]
     },
     {
         "id": "sor-brook",
         "name": "Sor Brook",
-        "levelIds": [
+        "stations": [
             "stations.7062"
         ]
     },
     {
         "id": "southcourt-brook",
         "name": "Southcourt Brook",
-        "levelIds": [
+        "stations": [
             "stations.7093"
         ]
     },
     {
         "id": "swill-brook",
         "name": "Swill Brook",
-        "levelIds": [
+        "stations": [
             "stations.7012"
         ]
     },
     {
         "id": "addlestone-bourne",
         "name": "Addlestone Bourne",
-        "levelIds": [
+        "stations": [
             "stations.7224",
             "stations.7225"
         ]
@@ -5794,7 +5935,7 @@
     {
         "id": "chertsey-bourne",
         "name": "Chertsey Bourne",
-        "levelIds": [
+        "stations": [
             "stations.7220",
             "stations.7219",
             "stations.7218",
@@ -5804,7 +5945,7 @@
     {
         "id": "the-cut",
         "name": "The Cut",
-        "levelIds": [
+        "stations": [
             "stations.7167",
             "stations.9118",
             "stations.7398"
@@ -5813,35 +5954,36 @@
     {
         "id": "river-tillingbourne",
         "name": "River Tillingbourne",
-        "levelIds": [
+        "stations": [
             "stations.7239"
         ]
     },
     {
         "id": "cranleigh-waters",
         "name": "Cranleigh Waters",
-        "levelIds": [
-            "stations.7233"
+        "stations": [
+            "stations.7233",
+            "stations.7235"
         ]
     },
     {
         "id": "windle-brook",
         "name": "Windle Brook",
-        "levelIds": [
+        "stations": [
             "stations.7222"
         ]
     },
     {
         "id": "winterbourne-stream-berkshire",
         "name": "Winterbourne Stream",
-        "levelIds": [
+        "stations": [
             "stations.7125"
         ]
     },
     {
         "id": "alverthorpe-beck",
         "name": "Alverthorpe Beck",
-        "levelIds": [
+        "stations": [
             "stations.8311",
             "stations.8353"
         ]
@@ -5849,35 +5991,35 @@
     {
         "id": "arkle-beck",
         "name": "Arkle Beck",
-        "levelIds": [
+        "stations": [
             "stations.8168"
         ]
     },
     {
         "id": "back-delfin",
         "name": "Back Delfin",
-        "levelIds": [
+        "stations": [
             "stations.9147"
         ]
     },
     {
         "id": "balne-beck",
         "name": "Balne Beck",
-        "levelIds": [
+        "stations": [
             "stations.9046"
         ]
     },
     {
         "id": "bardsey-beck",
         "name": "Bardsey Beck",
-        "levelIds": [
+        "stations": [
             "stations.8236"
         ]
     },
     {
         "id": "batley-beck",
         "name": "Batley Beck",
-        "levelIds": [
+        "stations": [
             "stations.9032",
             "stations.8348",
             "stations.8347"
@@ -5886,21 +6028,21 @@
     {
         "id": "bedale-beck",
         "name": "Bedale Beck",
-        "levelIds": [
+        "stations": [
             "stations.9142"
         ]
     },
     {
         "id": "bishop-monkton-beck",
         "name": "Bishop Monkton Beck",
-        "levelIds": [
+        "stations": [
             "stations.8229"
         ]
     },
     {
         "id": "blackburn-brook",
         "name": "Blackburn Brook",
-        "levelIds": [
+        "stations": [
             "stations.8341",
             "stations.8261"
         ]
@@ -5908,91 +6050,91 @@
     {
         "id": "blackfoss-beck",
         "name": "Blackfoss Beck",
-        "levelIds": [
+        "stations": [
             "stations.9144"
         ]
     },
     {
         "id": "blue-beck",
         "name": "Blue Beck",
-        "levelIds": [
+        "stations": [
             "stations.8332"
         ]
     },
     {
         "id": "dean-bottom-beck",
         "name": "Dean Bottom Beck",
-        "levelIds": [
+        "stations": [
             "stations.8301"
         ]
     },
     {
         "id": "bradford-beck",
         "name": "Bradford Beck",
-        "levelIds": [
+        "stations": [
             "stations.9048"
         ]
     },
     {
         "id": "bramham-beck",
         "name": "Bramham Beck",
-        "levelIds": [
+        "stations": [
             "stations.8329"
         ]
     },
     {
         "id": "brompton-beck-hambleton",
         "name": "Brompton Beck",
-        "levelIds": [
+        "stations": [
             "stations.8224"
         ]
     },
     {
         "id": "brompton-beck-derwent",
         "name": "Brompton Beck",
-        "levelIds": [
+        "stations": [
             "stations.8188"
         ]
     },
     {
         "id": "brook-dike",
         "name": "Brook Dike",
-        "levelIds": [
+        "stations": [
             "stations.8254"
         ]
     },
     {
         "id": "brough-beck",
         "name": "Brough Beck",
-        "levelIds": [
+        "stations": [
             "stations.8284"
         ]
     },
     {
         "id": "broughton-beck",
         "name": "Broughton Beck",
-        "levelIds": [
+        "stations": [
             "stations.8035"
         ]
     },
     {
         "id": "burstwick-drain",
         "name": "Burstwick Drain",
-        "levelIds": [
+        "stations": [
             "stations.8239"
         ]
     },
     {
         "id": "charlton-brook",
         "name": "Charlton Brook",
-        "levelIds": [
+        "stations": [
             "stations.8318"
         ]
     },
     {
         "id": "cod-beck",
         "name": "Cod Beck",
-        "levelIds": [
+        "stations": [
             "stations.8286",
             "stations.8287",
             "stations.8063"
@@ -6001,161 +6143,164 @@
     {
         "id": "river-crimple",
         "name": "River Crimple",
-        "levelIds": [
+        "stations": [
             "stations.8023"
         ]
     },
     {
         "id": "cundall-beck",
         "name": "Cundall Beck",
-        "levelIds": [
+        "stations": [
             "stations.8016"
         ]
     },
     {
         "id": "earby-beck",
         "name": "Earby Beck",
-        "levelIds": [
+        "stations": [
+            "stations.8070",
             "stations.8250"
         ]
     },
     {
         "id": "eastburn-beck",
         "name": "Eastburn Beck",
-        "levelIds": [
+        "stations": [
             "stations.8060"
+        ]
+    },
+    {
+        "id": "glusburn-bridge",
+        "name": "Glusburn Bridge",
+        "stations": [
+            "stations.8252"
         ]
     },
     {
         "id": "eller-beck",
         "name": "Eller Beck",
-        "levelIds": [
+        "stations": [
             "stations.8187"
         ]
     },
     {
         "id": "farnley-beck",
         "name": "Farnley Beck",
-        "levelIds": [
+        "stations": [
             "stations.8306"
         ]
     },
     {
         "id": "fenay-beck",
         "name": "Fenay Beck",
-        "levelIds": [
+        "stations": [
             "stations.8260"
         ]
     },
     {
         "id": "fleet-drain",
         "name": "Fleet Drain",
-        "levelIds": [
+        "stations": [
+            "stations.8373",
             "stations.8338"
-        ]
-    },
-    {
-        "id": "eastburn-beck",
-        "name": "Eastburn Beck",
-        "levelIds": [
-            "stations.8252"
         ]
     },
     {
         "id": "gypsey-race",
         "name": "Gypsey Race",
-        "levelIds": [
+        "stations": [
             "stations.8029"
         ]
     },
     {
         "id": "hebden-water",
         "name": "Hebden Water",
-        "levelIds": [
+        "stations": [
             "stations.8152"
         ]
     },
     {
         "id": "hodge-beck",
         "name": "Hodge Beck",
-        "levelIds": [
+        "stations": [
             "stations.8045"
         ]
     },
     {
         "id": "hol-beck",
         "name": "Hol Beck",
-        "levelIds": [
+        "stations": [
             "stations.9153"
         ]
     },
     {
         "id": "holgate-beck",
         "name": "Holgate Beck",
-        "levelIds": [
+        "stations": [
             "stations.8234"
         ]
     },
     {
         "id": "holme-brook",
         "name": "Holme Brook",
-        "levelIds": [
+        "stations": [
             "stations.9033"
         ]
     },
     {
         "id": "ings-beck",
         "name": "Ings Beck",
-        "levelIds": [
+        "stations": [
+            "stations.8312",
             "stations.8065"
         ]
     },
     {
         "id": "gowdall-ings",
         "name": "Gowdall Ings",
-        "levelIds": [
+        "stations": [
             "stations.8344"
         ]
     },
     {
         "id": "levisham-beck",
         "name": "Levisham Beck",
-        "levelIds": [
+        "stations": [
             "stations.8125"
         ]
     },
     {
         "id": "meanwood-beck",
         "name": "Meanwood Beck",
-        "levelIds": [
+        "stations": [
             "stations.8327"
         ]
     },
     {
         "id": "mires-beck",
         "name": "Mires Beck",
-        "levelIds": [
+        "stations": [
             "stations.8238"
         ]
     },
     {
         "id": "oakenshaw-beck",
         "name": "Oakenshaw Beck",
-        "levelIds": [
+        "stations": [
             "stations.8255"
         ]
     },
     {
         "id": "oulton-beck",
         "name": "Oulton Beck",
-        "levelIds": [
+        "stations": [
             "stations.8075"
         ]
     },
     {
         "id": "pickering-beck",
         "name": "Pickering Beck",
-        "levelIds": [
+        "stations": [
             "stations.8126",
             "stations.9005",
             "stations.8161",
@@ -6165,14 +6310,14 @@
     {
         "id": "pocklington-beck",
         "name": "Pocklington Beck",
-        "levelIds": [
+        "stations": [
             "stations.8279"
         ]
     },
     {
         "id": "porter-brook",
         "name": "Porter Brook",
-        "levelIds": [
+        "stations": [
             "stations.8339",
             "stations.8340"
         ]
@@ -6180,7 +6325,7 @@
     {
         "id": "river-aire",
         "name": "River Aire",
-        "levelIds": [
+        "stations": [
             "stations.8083",
             "stations.8189",
             "stations.8054",
@@ -6211,26 +6356,27 @@
     {
         "id": "snaith-ings",
         "name": "Snaith Ings",
-        "levelIds": [
+        "stations": [
             "stations.8351"
         ]
     },
     {
         "id": "wheelan-dyke",
         "name": "Wheelan Dyke",
-        "levelIds": [
+        "stations": [
             "stations.9036"
         ]
     },
     {
         "id": "river-calder-yorkshire",
         "name": "River Calder",
-        "levelIds": [
+        "stations": [
             "stations.8305",
             "stations.8205",
             "stations.8343",
             "stations.8097",
             "stations.9167",
+            "stations.8048",
             "stations.9031",
             "stations.8191",
             "stations.8298",
@@ -6247,7 +6393,7 @@
     {
         "id": "river-colne-yorkshire",
         "name": "River Colne",
-        "levelIds": [
+        "stations": [
             "stations.8258",
             "stations.8317",
             "stations.8105",
@@ -6257,7 +6403,7 @@
     {
         "id": "river-dearne",
         "name": "River Dearne",
-        "levelIds": [
+        "stations": [
             "stations.8240",
             "stations.8062",
             "stations.8015",
@@ -6270,7 +6416,7 @@
     {
         "id": "river-derwent-yorkshire",
         "name": "River Derwent",
-        "levelIds": [
+        "stations": [
             "stations.8214",
             "stations.8132",
             "stations.8131",
@@ -6284,14 +6430,14 @@
     {
         "id": "river-doe-lea",
         "name": "River Doe Lea",
-        "levelIds": [
+        "stations": [
             "stations.8197"
         ]
     },
     {
         "id": "river-don",
         "name": "River Don",
-        "levelIds": [
+        "stations": [
             "stations.8247",
             "stations.8323",
             "stations.8248",
@@ -6309,28 +6455,28 @@
     {
         "id": "river-dove-south-yorkshire",
         "name": "River Dove",
-        "levelIds": [
+        "stations": [
             "stations.8241"
         ]
     },
     {
         "id": "river-dove-north-yorkshire",
         "name": "River Dove",
-        "levelIds": [
+        "stations": [
             "stations.8117"
         ]
     },
     {
         "id": "river-drone",
         "name": "River Drone",
-        "levelIds": [
+        "stations": [
             "stations.8069"
         ]
     },
     {
         "id": "river-esk-yorkshire",
         "name": "River Esk",
-        "levelIds": [
+        "stations": [
             "stations.8331",
             "stations.8232",
             "stations.8233",
@@ -6340,14 +6486,14 @@
     {
         "id": "river-foss",
         "name": "River Foss",
-        "levelIds": [
+        "stations": [
             "stations.8235"
         ]
     },
     {
         "id": "river-foulness",
         "name": "River Foulness",
-        "levelIds": [
+        "stations": [
             "stations.9141",
             "stations.8282"
         ]
@@ -6355,7 +6501,7 @@
     {
         "id": "river-hipper",
         "name": "River Hipper",
-        "levelIds": [
+        "stations": [
             "stations.8300",
             "stations.8047",
             "stations.8295"
@@ -6364,7 +6510,7 @@
     {
         "id": "river-holme",
         "name": "River Holme",
-        "levelIds": [
+        "stations": [
             "stations.8342",
             "stations.8165"
         ]
@@ -6372,14 +6518,14 @@
     {
         "id": "west-beck",
         "name": "West Beck",
-        "levelIds": [
+        "stations": [
             "stations.9146"
         ]
     },
     {
         "id": "river-hull",
         "name": "River Hull",
-        "levelIds": [
+        "stations": [
             "stations.8385",
             "stations.8381",
             "stations.8281",
@@ -6390,21 +6536,21 @@
     {
         "id": "river-kyle",
         "name": "River Kyle",
-        "levelIds": [
+        "stations": [
             "stations.9143"
         ]
     },
     {
         "id": "river-laver",
         "name": "River Laver",
-        "levelIds": [
+        "stations": [
             "stations.8171"
         ]
     },
     {
         "id": "river-loxley",
         "name": "River Loxley",
-        "levelIds": [
+        "stations": [
             "stations.8249",
             "stations.9038"
         ]
@@ -6412,7 +6558,7 @@
     {
         "id": "river-nidd",
         "name": "River Nidd",
-        "levelIds": [
+        "stations": [
             "stations.8086",
             "stations.8160",
             "stations.8021",
@@ -6422,9 +6568,9 @@
         ]
     },
     {
-        "id": "river-ouse",
+        "id": "river-ouse-yorkshire",
         "name": "River Ouse",
-        "levelIds": [
+        "stations": [
             "stations.8140",
             "stations.8184",
             "stations.8208",
@@ -6440,14 +6586,14 @@
     {
         "id": "river-riccal",
         "name": "River Riccal",
-        "levelIds": [
+        "stations": [
             "stations.8153"
         ]
     },
     {
         "id": "river-rother-yorkshire",
         "name": "River Rother",
-        "levelIds": [
+        "stations": [
             "stations.9034",
             "stations.8091",
             "stations.8296",
@@ -6461,7 +6607,7 @@
     {
         "id": "river-ryburn",
         "name": "River Ryburn",
-        "levelIds": [
+        "stations": [
             "stations.8172",
             "stations.8309"
         ]
@@ -6469,14 +6615,14 @@
     {
         "id": "catcliffe-drain",
         "name": "Catcliffe Drain",
-        "levelIds": [
+        "stations": [
             "stations.8322"
         ]
     },
     {
         "id": "river-rye",
         "name": "River Rye",
-        "levelIds": [
+        "stations": [
             "stations.8033",
             "stations.8147",
             "stations.8102"
@@ -6485,7 +6631,7 @@
     {
         "id": "river-seven-yorkshire",
         "name": "River Seven",
-        "levelIds": [
+        "stations": [
             "stations.8183",
             "stations.8148"
         ]
@@ -6493,7 +6639,7 @@
     {
         "id": "river-sheaf",
         "name": "River Sheaf",
-        "levelIds": [
+        "stations": [
             "stations.8299",
             "stations.8308",
             "stations.8099",
@@ -6503,14 +6649,14 @@
     {
         "id": "river-skell",
         "name": "River Skell",
-        "levelIds": [
+        "stations": [
             "stations.8006"
         ]
     },
     {
         "id": "river-swale-yorkshire",
         "name": "River Swale",
-        "levelIds": [
+        "stations": [
             "stations.8159",
             "stations.8089",
             "stations.8169",
@@ -6523,14 +6669,14 @@
     {
         "id": "river-tutt",
         "name": "River Tutt",
-        "levelIds": [
+        "stations": [
             "stations.8227"
         ]
     },
     {
         "id": "river-ure",
         "name": "River Ure",
-        "levelIds": [
+        "stations": [
             "stations.8011",
             "stations.8113",
             "stations.8133",
@@ -6543,7 +6689,7 @@
     {
         "id": "river-went",
         "name": "River Went",
-        "levelIds": [
+        "stations": [
             "stations.8245",
             "stations.8210",
             "stations.9041",
@@ -6553,7 +6699,7 @@
     {
         "id": "river-wharfe",
         "name": "River Wharfe",
-        "levelIds": [
+        "stations": [
             "stations.8110",
             "stations.8276",
             "stations.8277",
@@ -6574,14 +6720,14 @@
     {
         "id": "river-whitting",
         "name": "River Whitting",
-        "levelIds": [
+        "stations": [
             "stations.8181"
         ]
     },
     {
         "id": "river-wiske",
         "name": "River Wiske",
-        "levelIds": [
+        "stations": [
             "stations.8207",
             "stations.8116"
         ]
@@ -6589,7 +6735,7 @@
     {
         "id": "river-worth",
         "name": "River Worth",
-        "levelIds": [
+        "stations": [
             "stations.8303",
             "stations.8109",
             "stations.9037"
@@ -6598,28 +6744,28 @@
     {
         "id": "sea-cut",
         "name": "Sea Cut",
-        "levelIds": [
+        "stations": [
             "stations.8178"
         ]
     },
     {
         "id": "silsden-beck",
         "name": "Silsden Beck",
-        "levelIds": [
+        "stations": [
             "stations.8326"
         ]
     },
     {
         "id": "sour-beck",
         "name": "Sour Beck",
-        "levelIds": [
+        "stations": [
             "stations.8283"
         ]
     },
     {
         "id": "spen-beck",
         "name": "Spen Beck",
-        "levelIds": [
+        "stations": [
             "stations.8256",
             "stations.8149"
         ]
@@ -6627,28 +6773,28 @@
     {
         "id": "tang-hall-beck",
         "name": "Tang Hall Beck",
-        "levelIds": [
+        "stations": [
             "stations.8328"
         ]
     },
     {
         "id": "bielby-beck",
         "name": "Bielby Beck",
-        "levelIds": [
+        "stations": [
             "stations.9145"
         ]
     },
     {
         "id": "thornton-beck",
         "name": "Thornton Beck",
-        "levelIds": [
+        "stations": [
             "stations.8231"
         ]
     },
     {
         "id": "walsden-water",
         "name": "Walsden Water",
-        "levelIds": [
+        "stations": [
             "stations.8211",
             "stations.8310"
         ]
@@ -6656,7 +6802,7 @@
     {
         "id": "wash-dike",
         "name": "Wash Dike",
-        "levelIds": [
+        "stations": [
             "stations.8304",
             "stations.8257"
         ]
@@ -6664,14 +6810,14 @@
     {
         "id": "whiston-brook",
         "name": "Whiston Brook",
-        "levelIds": [
+        "stations": [
             "stations.9043"
         ]
     },
     {
         "id": "willow-beck",
         "name": "Willow Beck",
-        "levelIds": [
+        "stations": [
             "stations.8225",
             "stations.8285"
         ]
@@ -6679,16 +6825,1157 @@
     {
         "id": "wortley-beck",
         "name": "Wortley Beck",
-        "levelIds": [
+        "stations": [
             "stations.9117"
         ]
     },
     {
         "id": "wyke-beck",
         "name": "Wyke Beck",
-        "levelIds": [
+        "stations": [
             "stations.8251",
             "stations.8316"
+        ]
+    },
+    {
+        "id": "bechan-brook",
+        "name": "Bechan Brook",
+        "stations": [
+            "stations.4259"
+        ]
+    },
+    {
+        "id": "bickerly-mill-stream",
+        "name": "Bickerly Mill Stream",
+        "stations": [
+            "stations.9227"
+        ]
+    },
+    {
+        "id": "blacup-beck",
+        "name": "Blacup Beck",
+        "stations": [
+            "stations.8297"
+        ]
+    },
+    {
+        "id": "bloxham-brook",
+        "name": "Bloxham Brook",
+        "stations": [
+            "stations.7061"
+        ]
+    },
+    {
+        "id": "bridgehouse-beck",
+        "name": "Bridgehouse Beck",
+        "stations": [
+            "stations.9039"
+        ]
+    },
+    {
+        "id": "broughton-brook",
+        "name": "Broughton Brook",
+        "stations": [
+            "stations.6164"
+        ]
+    },
+    {
+        "id": "brownwich-stream",
+        "name": "Brownwich Stream",
+        "stations": [
+            "stations.9176"
+        ]
+    },
+    {
+        "id": "bumpstead-brook",
+        "name": "Bumpstead Brook",
+        "stations": [
+            "stations.6133"
+        ]
+    },
+    {
+        "id": "burrow-beck",
+        "name": "Burrow Beck",
+        "stations": [
+            "stations.5185"
+        ]
+    },
+    {
+        "id": "bury-brook",
+        "name": "Bury Brook",
+        "stations": [
+            "stations.6256"
+        ]
+    },
+    {
+        "id": "camlad",
+        "name": "Camlad",
+        "stations": [
+            "stations.4263"
+        ]
+    },
+    {
+        "id": "ceiriog",
+        "name": "Ceiriog",
+        "stations": [
+            "stations.4162"
+        ]
+    },
+    {
+        "id": "chalgrove-brook",
+        "name": "Chalgrove Brook",
+        "stations": [
+            "stations.7404"
+        ]
+    },
+    {
+        "id": "chew-stoke-brook",
+        "name": "Chew Stoke Brook",
+        "stations": [
+            "stations.3031"
+        ]
+    },
+    {
+        "id": "chitterne-brook",
+        "name": "Chitterne Brook",
+        "stations": [
+            "stations.3321"
+        ]
+    },
+    {
+        "id": "clackers-brook",
+        "name": "Clackers Brook",
+        "stations": [
+            "stations.9279"
+        ]
+    },
+    {
+        "id": "coal-burn",
+        "name": "Coal Burn",
+        "stations": [
+            "stations.5033"
+        ]
+    },
+    {
+        "id": "colliters-brook",
+        "name": "Colliters Brook",
+        "stations": [
+            "stations.3033"
+        ]
+    },
+    {
+        "id": "counter-drain",
+        "name": "Counter Drain",
+        "stations": [
+            "stations.6261"
+        ]
+    },
+    {
+        "id": "cragg-brook",
+        "name": "Cragg Brook",
+        "stations": [
+            "stations.8321"
+        ]
+    },
+    {
+        "id": "currymoor-drain",
+        "name": "Currymoor Drain",
+        "stations": [
+            "stations.3064"
+        ]
+    },
+    {
+        "id": "docken's-water",
+        "name": "Docken's Water",
+        "stations": [
+            "stations.3313"
+        ]
+    },
+    {
+        "id": "ea-beck",
+        "name": "Ea Beck",
+        "stations": [
+            "stations.8243",
+            "stations.8244",
+            "stations.8151"
+        ]
+    },
+    {
+        "id": "east-clandon-stream",
+        "name": "East Clandon Stream",
+        "stations": [
+            "stations.7238"
+        ]
+    },
+    {
+        "id": "emral-brook",
+        "name": "Emral Brook",
+        "stations": [
+            "stations.4168"
+        ]
+    },
+    {
+        "id": "eridge-stream",
+        "name": "Eridge Stream",
+        "stations": [
+            "stations.1076"
+        ]
+    },
+    {
+        "id": "ewelme-brook",
+        "name": "Ewelme Brook",
+        "stations": [
+            "stations.7098"
+        ]
+    },
+    {
+        "id": "field-drain",
+        "name": "Field Drain",
+        "stations": [
+            "stations.2094"
+        ]
+    },
+    {
+        "id": "flood-channel",
+        "name": "Flood Channel",
+        "stations": [
+            "stations.2096"
+        ]
+    },
+    {
+        "id": "ford-green-brook",
+        "name": "Ford Green Brook",
+        "stations": [
+            "stations.9098"
+        ]
+    },
+    {
+        "id": "foston-beck",
+        "name": "Foston Beck",
+        "stations": [
+            "stations.6066"
+        ]
+    },
+    {
+        "id": "fowler-bridge-drain",
+        "name": "Fowler Bridge Drain",
+        "stations": [
+            "stations.9288"
+        ]
+    },
+    {
+        "id": "gaddesby-brook",
+        "name": "Gaddesby Brook",
+        "stations": [
+            "stations.2214"
+        ]
+    },
+    {
+        "id": "gelyn",
+        "name": "Gelyn",
+        "stations": [
+            "stations.4164"
+        ]
+    },
+    {
+        "id": "glen-stream",
+        "name": "Glen Stream",
+        "stations": [
+            "stations.3234"
+        ]
+    },
+    {
+        "id": "haw-beck",
+        "name": "Haw Beck",
+        "stations": [
+            "stations.8094"
+        ]
+    },
+    {
+        "id": "heighington-beck",
+        "name": "Heighington Beck",
+        "stations": [
+            "stations.6061"
+        ]
+    },
+    {
+        "id": "honddu",
+        "name": "Honddu",
+        "stations": [
+            "stations.4031"
+        ]
+    },
+    {
+        "id": "hovingham-beck",
+        "name": "Hovingham Beck",
+        "stations": [
+            "stations.8230"
+        ]
+    },
+    {
+        "id": "hughenden-stream",
+        "name": "Hughenden Stream",
+        "stations": [
+            "stations.7159"
+        ]
+    },
+    {
+        "id": "huntingfield-watercourse",
+        "name": "Huntingfield Watercourse",
+        "stations": [
+            "stations.6090"
+        ]
+    },
+    {
+        "id": "irfon",
+        "name": "Irfon",
+        "stations": [
+            "stations.4001",
+            "stations.4010"
+        ]
+    },
+    {
+        "id": "ithon",
+        "name": "Ithon",
+        "stations": [
+            "stations.4018",
+            "stations.4012"
+        ]
+    },
+    {
+        "id": "kenwith-stream",
+        "name": "Kenwith Stream",
+        "stations": [
+            "stations.3405"
+        ]
+    },
+    {
+        "id": "kingsclere-brook",
+        "name": "Kingsclere Brook",
+        "stations": [
+            "stations.7127"
+        ]
+    },
+    {
+        "id": "landkey-brook",
+        "name": "Landkey Brook",
+        "stations": [
+            "stations.3107"
+        ]
+    },
+    {
+        "id": "lands-beck",
+        "name": "Lands Beck",
+        "stations": [
+            "stations.8302"
+        ]
+    },
+    {
+        "id": "langford-brook",
+        "name": "Langford Brook",
+        "stations": [
+            "stations.7069"
+        ]
+    },
+    {
+        "id": "little-salt-moor-rhyne",
+        "name": "Little Salt Moor Rhyne",
+        "stations": [
+            "stations.3400"
+        ]
+    },
+    {
+        "id": "littlemead-brook",
+        "name": "Littlemead Brook",
+        "stations": [
+            "stations.7234"
+        ]
+    },
+    {
+        "id": "lledan-brook",
+        "name": "Lledan Brook",
+        "stations": [
+            "stations.2089"
+        ]
+    },
+    {
+        "id": "llynfi",
+        "name": "Llynfi",
+        "stations": [
+            "stations.4032"
+        ]
+    },
+    {
+        "id": "lochinver-beck",
+        "name": "Lochinver Beck",
+        "stations": [
+            "stations.5213"
+        ]
+    },
+    {
+        "id": "longload-main-drain",
+        "name": "Longload Main Drain",
+        "stations": [
+            "stations.3379"
+        ]
+    },
+    {
+        "id": "manacan-river",
+        "name": "Manacan River",
+        "stations": [
+            "stations.3388"
+        ]
+    },
+    {
+        "id": "mangerton-brook",
+        "name": "Mangerton Brook",
+        "stations": [
+            "stations.3284"
+        ]
+    },
+    {
+        "id": "marston-meysey-brook",
+        "name": "Marston Meysey Brook",
+        "stations": [
+            "stations.7023"
+        ]
+    },
+    {
+        "id": "maud-foster/stonebridge-drain",
+        "name": "Maud Foster/Stonebridge Drain",
+        "stations": [
+            "stations.6230"
+        ]
+    },
+    {
+        "id": "meadlake-ditch",
+        "name": "Meadlake Ditch",
+        "stations": [
+            "stations.7408"
+        ]
+    },
+    {
+        "id": "mearley-brook",
+        "name": "Mearley Brook",
+        "stations": [
+            "stations.5222"
+        ]
+    },
+    {
+        "id": "merrow-common-stream",
+        "name": "Merrow Common Stream",
+        "stations": [
+            "stations.7236"
+        ]
+    },
+    {
+        "id": "mill-brook",
+        "name": "Mill Brook",
+        "stations": [
+            "stations.7103"
+        ]
+    },
+    {
+        "id": "monksilver-stream",
+        "name": "Monksilver Stream",
+        "stations": [
+            "stations.3086"
+        ]
+    },
+    {
+        "id": "monnow",
+        "name": "Monnow",
+        "stations": [
+            "stations.4015",
+            "stations.4049",
+            "stations.4024"
+        ]
+    },
+    {
+        "id": "moors-river",
+        "name": "Moors River",
+        "stations": [
+            "stations.3301"
+        ]
+    },
+    {
+        "id": "nazeing-brook",
+        "name": "Nazeing Brook",
+        "stations": [
+            "stations.7360"
+        ]
+    },
+    {
+        "id": "nettleham-beck",
+        "name": "Nettleham Beck",
+        "stations": [
+            "stations.9287"
+        ]
+    },
+    {
+        "id": "nunney-brook",
+        "name": "Nunney Brook",
+        "stations": [
+            "stations.3005"
+        ]
+    },
+    {
+        "id": "oakington-brook",
+        "name": "Oakington Brook",
+        "stations": [
+            "stations.6295"
+        ]
+    },
+    {
+        "id": "oldbury-naite-rhyne",
+        "name": "Oldbury Naite Rhyne",
+        "stations": [
+            "stations.9291"
+        ]
+    },
+    {
+        "id": "petersfield-stream",
+        "name": "Petersfield Stream",
+        "stations": [
+            "stations.9234",
+            "stations.9233"
+        ]
+    },
+    {
+        "id": "pimlico-brook",
+        "name": "Pimlico Brook",
+        "stations": [
+            "stations.5192"
+        ]
+    },
+    {
+        "id": "praze-stream",
+        "name": "Praze Stream",
+        "stations": [
+            "stations.3158"
+        ]
+    },
+    {
+        "id": "quy-water",
+        "name": "Quy Water",
+        "stations": [
+            "stations.6272"
+        ]
+    },
+    {
+        "id": "river-alt",
+        "name": "River Alt",
+        "stations": [
+            "stations.5078"
+        ]
+    },
+    {
+        "id": "river-banwy",
+        "name": "River Banwy",
+        "stations": [
+            "stations.2062"
+        ]
+    },
+    {
+        "id": "river-bela",
+        "name": "River Bela",
+        "stations": [
+            "stations.5163"
+        ]
+    },
+    {
+        "id": "river-biss",
+        "name": "River Biss",
+        "stations": [
+            "stations.9121"
+        ]
+    },
+    {
+        "id": "river-blakewater",
+        "name": "River Blakewater",
+        "stations": [
+            "stations.5064"
+        ]
+    },
+    {
+        "id": "river-bourne-wiltshire",
+        "name": "River Bourne",
+        "stations": [
+            "stations.3311",
+            "stations.3310",
+            "stations.3319",
+            "stations.3309"
+        ]
+    },
+    {
+        "id": "river-brathay",
+        "name": "River Brathay",
+        "stations": [
+            "stations.5161"
+        ]
+    },
+    {
+        "id": "river-brun",
+        "name": "River Brun",
+        "stations": [
+            "stations.5224"
+        ]
+    },
+    {
+        "id": "river-bull",
+        "name": "River Bull",
+        "stations": [
+            "stations.1156",
+            "stations.1154"
+        ]
+    },
+    {
+        "id": "river-cain",
+        "name": "River Cain",
+        "stations": [
+            "stations.4261",
+            "stations.4262"
+        ]
+    },
+    {
+        "id": "river-cale",
+        "name": "River Cale",
+        "stations": [
+            "stations.3298"
+        ]
+    },
+    {
+        "id": "river-clywedog",
+        "name": "River Clywedog",
+        "stations": [
+            "stations.2054"
+        ]
+    },
+    {
+        "id": "river-conder",
+        "name": "River Conder",
+        "stations": [
+            "stations.5054"
+        ]
+    },
+    {
+        "id": "river-dee",
+        "name": "River Dee",
+        "stations": [
+            "stations.4152",
+            "stations.4241",
+            "stations.4163",
+            "stations.4165",
+            "stations.4170",
+            "stations.4173",
+            "stations.4176",
+            "stations.4178"
+        ]
+    },
+    {
+        "id": "river-dore",
+        "name": "River Dore",
+        "stations": [
+            "stations.4027"
+        ]
+    },
+    {
+        "id": "river-dulas",
+        "name": "River Dulas",
+        "stations": [
+            "stations.2017"
+        ]
+    },
+    {
+        "id": "river-ebble",
+        "name": "River Ebble",
+        "stations": [
+            "stations.3371",
+            "stations.3318"
+        ]
+    },
+    {
+        "id": "river-elan",
+        "name": "River Elan",
+        "stations": [
+            "stations.4008"
+        ]
+    },
+    {
+        "id": "river-ellen",
+        "name": "River Ellen",
+        "stations": [
+            "stations.5024"
+        ]
+    },
+    {
+        "id": "river-fromus",
+        "name": "River Fromus",
+        "stations": [
+            "stations.6092"
+        ]
+    },
+    {
+        "id": "river-gelt",
+        "name": "River Gelt",
+        "stations": [
+            "stations.5074"
+        ]
+    },
+    {
+        "id": "river-glenderamackin",
+        "name": "River Glenderamackin",
+        "stations": [
+            "stations.5140"
+        ]
+    },
+    {
+        "id": "river-gowan",
+        "name": "River Gowan",
+        "stations": [
+            "stations.9131"
+        ]
+    },
+    {
+        "id": "new-bedford-river",
+        "name": "New Bedford River",
+        "stations": [
+            "stations.6252",
+            "stations.6245",
+            "stations.9203"
+        ]
+    },
+    {
+        "id": "river-hindburn",
+        "name": "River Hindburn",
+        "stations": [
+            "stations.5156"
+        ]
+    },
+    {
+        "id": "river-hodder",
+        "name": "River Hodder",
+        "stations": [
+            "stations.5071"
+        ]
+    },
+    {
+        "id": "river-hooke",
+        "name": "River Hooke",
+        "stations": [
+            "stations.3271"
+        ]
+    },
+    {
+        "id": "river-hyndburn",
+        "name": "River Hyndburn",
+        "stations": [
+            "stations.5223"
+        ]
+    },
+    {
+        "id": "river-irthing",
+        "name": "River Irthing",
+        "stations": [
+            "stations.5183"
+        ]
+    },
+    {
+        "id": "river-keekle",
+        "name": "River Keekle",
+        "stations": [
+            "stations.5131"
+        ]
+    },
+    {
+        "id": "river-keer",
+        "name": "River Keer",
+        "stations": [
+            "stations.5068"
+        ]
+    },
+    {
+        "id": "riseley-brook",
+        "name": "Riseley Brook",
+        "stations": [
+            "stations.6160"
+        ]
+    },
+    {
+        "id": "river-lin",
+        "name": "River Lin",
+        "stations": [
+            "stations.9016"
+        ]
+    },
+    {
+        "id": "river-lod",
+        "name": "River Lod",
+        "stations": [
+            "stations.1009"
+        ]
+    },
+    {
+        "id": "river-lydden",
+        "name": "River Lydden",
+        "stations": [
+            "stations.3307"
+        ]
+    },
+    {
+        "id": "river-lowther",
+        "name": "River Lowther",
+        "stations": [
+            "stations.5170",
+            "stations.5169"
+        ]
+    },
+    {
+        "id": "river-mint",
+        "name": "River Mint",
+        "stations": [
+            "stations.5098"
+        ]
+    },
+    {
+        "id": "river-nadder",
+        "name": "River Nadder",
+        "stations": [
+            "stations.3330",
+            "stations.3329"
+        ]
+    },
+    {
+        "id": "river-piddle",
+        "name": "River Piddle",
+        "stations": [
+            "stations.3276",
+            "stations.3270",
+            "stations.3269"
+        ]
+    },
+    {
+        "id": "river-rawthey",
+        "name": "River Rawthey",
+        "stations": [
+            "stations.5020"
+        ]
+    },
+    {
+        "id": "river-rothay",
+        "name": "River Rothay",
+        "stations": [
+            "stations.5162"
+        ]
+    },
+    {
+        "id": "river-shalbourne",
+        "name": "River Shalbourne",
+        "stations": [
+            "stations.7121"
+        ]
+    },
+    {
+        "id": "river-snail",
+        "name": "River Snail",
+        "stations": [
+            "stations.6267"
+        ]
+    },
+    {
+        "id": "river-sprint",
+        "name": "River Sprint",
+        "stations": [
+            "stations.5130"
+        ]
+    },
+    {
+        "id": "river-tud",
+        "name": "River Tud",
+        "stations": [
+            "stations.6096"
+        ]
+    },
+    {
+        "id": "river-vyrnwy",
+        "name": "River Vyrnwy",
+        "stations": [
+            "stations.2020",
+            "stations.2035",
+            "stations.2060",
+            "stations.2003"
+        ]
+    },
+    {
+        "id": "river-winterbourne",
+        "name": "River Winterbourne",
+        "stations": [
+            "stations.3376"
+        ]
+    },
+    {
+        "id": "river-wylye",
+        "name": "River Wylye",
+        "stations": [
+            "stations.3322",
+            "stations.3326",
+            "stations.3327"
+        ]
+    },
+    {
+        "id": "roall-dyke",
+        "name": "Roall Dyke",
+        "stations": [
+            "stations.8352"
+        ]
+    },
+    {
+        "id": "roe-beck",
+        "name": "Roe Beck",
+        "stations": [
+            "stations.5135"
+        ]
+    },
+    {
+        "id": "rothley-brook",
+        "name": "Rothley Brook",
+        "stations": [
+            "stations.2125"
+        ]
+    },
+    {
+        "id": "ruskington-beck",
+        "name": "Ruskington Beck",
+        "stations": [
+            "stations.6299"
+        ]
+    },
+    {
+        "id": "sampford-brett-stream",
+        "name": "Sampford Brett Stream",
+        "stations": [
+            "stations.9273"
+        ]
+    },
+    {
+        "id": "shreen-water",
+        "name": "Shreen Water",
+        "stations": [
+            "stations.3308",
+            "stations.3372"
+        ]
+    },
+    {
+        "id": "sincil-dyke",
+        "name": "Sincil Dyke",
+        "stations": [
+            "stations.6054"
+        ]
+    },
+    {
+        "id": "snaizeholme-beck",
+        "name": "Snaizeholme Beck",
+        "stations": [
+            "stations.8127"
+        ]
+    },
+    {
+        "id": "somborne-stream",
+        "name": "Somborne Stream",
+        "stations": [
+            "stations.9228"
+        ]
+    },
+    {
+        "id": "south-brook",
+        "name": "South Brook",
+        "stations": [
+            "stations.9280"
+        ]
+    },
+    {
+        "id": "spring-brook",
+        "name": "Spring Brook",
+        "stations": [
+            "stations.7316"
+        ]
+    },
+    {
+        "id": "st-james-stream",
+        "name": "St James Stream",
+        "stations": [
+            "stations.7317"
+        ]
+    },
+    {
+        "id": "stock-beck",
+        "name": "Stock Beck",
+        "stations": [
+            "stations.5226",
+            "stations.5215",
+            "stations.5233"
+        ]
+    },
+    {
+        "id": "stonham-watercourse",
+        "name": "Stonham Watercourse",
+        "stations": [
+            "stations.6084"
+        ]
+    },
+    {
+        "id": "sulham-brook",
+        "name": "Sulham Brook",
+        "stations": [
+            "stations.7108"
+        ]
+    },
+    {
+        "id": "sutton-beck",
+        "name": "Sutton Beck",
+        "stations": [
+            "stations.9268"
+        ]
+    },
+    {
+        "id": "swalecliffe-brook",
+        "name": "Swalecliffe Brook",
+        "stations": [
+            "stations.9276"
+        ]
+    },
+    {
+        "id": "swan-brook",
+        "name": "Swan Brook",
+        "stations": [
+            "stations.3263",
+            "stations.3333"
+        ]
+    },
+    {
+        "id": "swinney-beck",
+        "name": "Swinney Beck",
+        "stations": [
+            "stations.8228"
+        ]
+    },
+    {
+        "id": "sydling-water",
+        "name": "Sydling Water",
+        "stations": [
+            "stations.3273"
+        ]
+    },
+    {
+        "id": "trawden-brook",
+        "name": "Trawden Brook",
+        "stations": [
+            "stations.5187"
+        ]
+    },
+    {
+        "id": "trothy",
+        "name": "Trothy",
+        "stations": [
+            "stations.4021"
+        ]
+    },
+    {
+        "id": "tryweryn",
+        "name": "Tryweryn",
+        "stations": [
+            "stations.4153"
+        ]
+    },
+    {
+        "id": "wendlebury-brook",
+        "name": "Wendlebury Brook",
+        "stations": [
+            "stations.7070"
+        ]
+    },
+    {
+        "id": "wendling-beck",
+        "name": "Wendling Beck",
+        "stations": [
+            "stations.6097"
+        ]
+    },
+    {
+        "id": "wendover-springs",
+        "name": "Wendover Springs",
+        "stations": [
+            "stations.7090"
+        ]
+    },
+    {
+        "id": "west-bank-pond",
+        "name": "West Bank Pond",
+        "stations": [
+            "stations.8324"
+        ]
+    },
+    {
+        "id": "west-moor-drain",
+        "name": "West Moor Drain",
+        "stations": [
+            "stations.3381"
+        ]
+    },
+    {
+        "id": "west-okement-river",
+        "name": "West Okement River",
+        "stations": [
+            "stations.3105"
+        ]
+    },
+    {
+        "id": "white-water-dyke",
+        "name": "White Water Dyke",
+        "stations": [
+            "stations.1144"
+        ]
+    },
+    {
+        "id": "whitley-beck",
+        "name": "Whitley Beck",
+        "stations": [
+            "stations.9285"
+        ]
+    },
+    {
+        "id": "whitley-brook",
+        "name": "Whitley Brook",
+        "stations": [
+            "stations.9035"
+        ]
+    },
+    {
+        "id": "willow-brook",
+        "name": "Willow Brook",
+        "stations": [
+            "stations.6124"
+        ]
+    },
+    {
+        "id": "windermere",
+        "name": "Windermere",
+        "stations": [
+            "stations.5164"
+        ]
+    },
+    {
+        "id": "wootton-brook",
+        "name": "Wootton Brook",
+        "stations": [
+            "stations.6103"
+        ]
+    },
+    {
+        "id": "wych-brook",
+        "name": "Wych Brook",
+        "stations": [
+            "stations.4192"
         ]
     }
 ]
