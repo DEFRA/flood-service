@@ -48,6 +48,11 @@ module.exports = {
     return stations
   },
 
+  async getStationsWithin2 (bbox) {
+    const result = await db.query(queries.getStationsWithin2, bbox)
+    return result.rows
+  },
+
   getRivers () {
     return rivers
   },
