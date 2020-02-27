@@ -167,19 +167,6 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get ffoi threshold data')
   })
 
-  lab.test('13 - GET erroring works for /stations-within-radius/{lng}/{lat}/{radiusM} ', async () => {
-    sandbox.stub(services, 'getStationsByRadius').throws(new Error())
-    const options = {
-      method: 'GET',
-      url: '/stations-within-radius/-1.77555/51.7218/10000'
-
-    }
-
-    const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(400)
-    Code.expect(response.payload).to.include('Failed to get stations by radius')
-  })
-
   lab.test('14 - GET erroring works for /stations-within/{x1}/{y1}/{x2}/{y2} ', async () => {
     sandbox.stub(services, 'getStationsWithin').throws(new Error())
     const options = {
@@ -191,17 +178,5 @@ lab.experiment('Sad Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get stations search')
-  })
-  lab.test('15 - GET erroring works for /river-stations/{river} ', async () => {
-    sandbox.stub(services, 'getStationsByRiver').throws(new Error())
-    const options = {
-      method: 'GET',
-      url: '/river-stations/River Niki'
-
-    }
-
-    const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(400)
-    Code.expect(response.payload).to.include('Failed to get River Stations')
   })
 })

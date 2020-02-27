@@ -269,44 +269,6 @@ lab.experiment('Services tests', () => {
     await Code.expect(result[0].rloi_id).to.equal(5050)
   })
 
-  lab.test('08 - Check getStationsByRadius service', async () => {
-    const getStationsByRadiusData = () => {
-      return {
-        command: 'SELECT',
-        rowCount: 1,
-        oid: null,
-        rows:
-          [{
-            rloi_id: 7021,
-            telemetry_id: '0470TH',
-            region: 'Thames',
-            catchment: 'Cotswolds',
-            wiski_river_name: 'Ampney Brook',
-            agency_name: 'Ampney St Peter',
-            external_name: 'Ampney St Peter',
-            station_type: 'S',
-            status: 'Active',
-            qualifier: 'u',
-            iswales: false
-          }],
-        fields: [],
-        _parsers: [],
-        RowCtor: null,
-        rowAsArray: false
-      }
-    }
-
-    sandbox.stub(db, 'query').callsFake(getStationsByRadiusData)
-
-    const lng = '-1.77555'
-    const lat = '51.7218'
-    const radiusM = '10000'
-
-    const result = await services.getStationsByRadius(lng, lat, radiusM)
-
-    await Code.expect(result).to.be.an.array()
-    await Code.expect(result[0].rloi_id).to.equal(7021)
-  })
   lab.test('09 - Check getStationTelemetry service', async () => {
     const getStationTelemetryData = () => {
       return {

@@ -1,5 +1,4 @@
 const boom = require('@hapi/boom')
-const rivers = require('./rivers.json')
 const queries = require('./queries')
 const db = require('./db')
 
