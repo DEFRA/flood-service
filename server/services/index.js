@@ -88,5 +88,15 @@ module.exports = {
     } catch (err) {
       return boom.badRequest('Failed to get impact data ', err)
     }
+  },
+
+  async getStationsByRiver (river) {
+    try {
+      const result = await db.query(queries.getStationsByRiver, [river])
+      const stations = result.rows
+      return stations
+    } catch (err) {
+      return boom.badRequest('Failed to get River Stations', err)
+    }
   }
 }

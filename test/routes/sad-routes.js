@@ -192,4 +192,16 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get stations search')
   })
+  lab.test('15 - GET erroring works for /river-stations/{river} ', async () => {
+    sandbox.stub(services, 'getStationsByRiver').throws(new Error())
+    const options = {
+      method: 'GET',
+      url: '/river-stations/River Niki'
+
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get River Stations')
+  })
 })
