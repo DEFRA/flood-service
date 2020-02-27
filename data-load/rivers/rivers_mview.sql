@@ -27,6 +27,14 @@ SELECT
 			WHEN rs.name is not null THEN true
 			ELSE false
 		END as navigable,
+		CASE
+			WHEN rs.id is not null THEN 3
+			ELSE CASE
+					WHEN ss.station_type = 'C' THEN 1
+					WHEN ss.station_type = 'G' THEN 2
+					ELSE 4
+				END
+		END as view_rank,
 		rs.rank,
 		ss.rloi_id, 
 		ss.telemetry_id, 
@@ -51,7 +59,7 @@ SELECT
 		inner join u_flood.stations_overview_mview so on ss.rloi_id = so.rloi_id and ss.qualifier = so.direction
 		left join u_flood.river_stations rs on rs.rloi_id = ss.rloi_id
 		WHERE lower(ss.status) != 'closed' AND (lower(ss.region) != 'wales' OR ss.catchment IN ('Dee', 'Severn Uplands', 'Wye'))
-		order by river_id, rs.rank, ss.rloi_id, ss.qualifier desc 
+		order by view_rank, river_id, rs.rank, ss.external_name, ss.qualifier desc 
 
 WITH DATA;
 
