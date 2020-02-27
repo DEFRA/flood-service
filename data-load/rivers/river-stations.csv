@@ -820,9 +820,9 @@ river-shuttle-kent,River Shuttle,1039,1
 river-teise,River Teise,1170,1
 river-teise,River Teise,1078,2
 river-teise,River Teise,1087,3
-river-till,River Till,9277,1
-river-till,River Till,9278,2
-river-till,River Till,8290,3
+river-till-northumberland,River Till,9277,1
+river-till-northumberland,River Till,9278,2
+river-till-northumberland,River Till,8290,3
 river-tillingham,River Tillingham,1125,1
 river-wandle-kent,River Wandle,7300,1
 river-wandle-kent,River Wandle,7301,2
@@ -864,15 +864,16 @@ river-lud,River Lud,6017,1
 river-lymn,River Lymn,6112,1
 river-nene,River Nene,6101,1
 river-nene,River Nene,6120,2
-river-nene,River Nene,6108,3
-river-nene,River Nene,6115,4
-river-nene,River Nene,6116,5
-river-nene,River Nene,6110,6
-river-nene,River Nene,6111,7
-river-nene,River Nene,6107,8
-river-nene,River Nene,6286,9
-river-nene,River Nene,6121,10
-river-nene,River Nene,6014,11
+river-nene,River Nene,6117,3
+river-nene,River Nene,6108,4
+river-nene,River Nene,6115,5
+river-nene,River Nene,6116,6
+river-nene,River Nene,6110,7
+river-nene,River Nene,6111,8
+river-nene,River Nene,6107,9
+river-nene,River Nene,6286,10
+river-nene,River Nene,6121,11
+river-nene,River Nene,6014,12
 brampton-branch,Brampton Branch,6037,1
 brampton-branch,Brampton Branch,6218,2
 brampton-branch,Brampton Branch,6118,3
@@ -926,7 +927,6 @@ west-glen-river,West Glen River,6027,4
 willow-brook,Willow Brook,6124,1
 willow-brook,Willow Brook,6106,2
 wootton-brook,Wootton Brook,6103,1
-wootton-brook,Wootton Brook,6117,2
 bedburn-beck,Bedburn Beck,8018,1
 bowmont-water,Bowmont Water,8375,1
 clow-beck,Clow Beck,8362,1
@@ -1004,7 +1004,6 @@ river-tees,River Tees,8129,5
 river-tees,River Tees,8223,6
 river-tees,River Tees,8366,7
 river-tees,River Tees,8372,8
-river-till-northumberland,River Till,8290,1
 river-tweed,River Tweed,8264,1
 river-tweed,River Tweed,8263,2
 river-tweed,River Tweed,8020,3
@@ -1345,7 +1344,6 @@ ford-brook,Ford Brook,9087,1
 river-anker,River Anker,9064,1
 river-anker,River Anker,9063,2
 river-anker,River Anker,2112,3
-river-sence,River Sence,9080,1
 river-blythe,River Blythe,2151,1
 river-blythe,River Blythe,2143,2
 river-cole-staffordshire,River Cole,2157,1
@@ -2008,7 +2006,6 @@ chitterne-brook,Chitterne Brook,3321,1
 clackers-brook,Clackers Brook,9279,1
 coal-burn,Coal Burn,5033,1
 colliters-brook,Colliters Brook,3033,1
-counter-drain,Counter Drain,6261,1
 cragg-brook,Cragg Brook,8321,1
 currymoor-drain,Currymoor Drain,3064,1
 docken's-water,Docken's Water,3313,1
@@ -2107,9 +2104,9 @@ river-fromus,River Fromus,6092,1
 river-gelt,River Gelt,5074,1
 river-glenderamackin,River Glenderamackin,5140,1
 river-gowan,River Gowan,9131,1
-new-bedford-river,New Bedford River,6252,1
-new-bedford-river,New Bedford River,6245,2
-new-bedford-river,New Bedford River,9203,3
+old-bedford-river,Old Bedford River,6252,1
+old-bedford-river,Old Bedford River,6261,2
+old-bedford-river,Old Bedford River,6245,3
 river-hindburn,River Hindburn,5156,1
 river-hodder,River Hodder,5071,1
 river-hooke,River Hooke,3271,1
@@ -2145,7 +2142,6 @@ river-wylye,River Wylye,3326,2
 river-wylye,River Wylye,3327,3
 roall-dyke,Roall Dyke,8352,1
 roe-beck,Roe Beck,5135,1
-rothley-brook,Rothley Brook,2125,1
 ruskington-beck,Ruskington Beck,6299,1
 sampford-brett-stream,Sampford Brett Stream,9273,1
 shreen-water,Shreen Water,3308,1
@@ -2179,7 +2175,5 @@ west-okement-river,West Okement River,3105,1
 white-water-dyke,White Water Dyke,1144,1
 whitley-beck,Whitley Beck,9285,1
 whitley-brook,Whitley Brook,9035,1
-willow-brook,Willow Brook,6124,1
 windermere,Windermere,5164,1
-wootton-brook,Wootton Brook,6103,1
 wych-brook,Wych Brook,4192,1
