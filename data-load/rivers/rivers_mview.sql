@@ -36,7 +36,9 @@ SELECT
 				END
 		END as view_rank,
 		rs.rank,
-		ss.rloi_id, 
+		ss.rloi_id,
+		up.rloi_id as up,
+		down.rloi_id as down,
 		ss.telemetry_id, 
 		ss.region, 
 		ss.catchment, 
@@ -58,8 +60,10 @@ SELECT
 		FROM u_flood.station_split_mview ss 
 		inner join u_flood.stations_overview_mview so on ss.rloi_id = so.rloi_id and ss.qualifier = so.direction
 		left join u_flood.river_stations rs on rs.rloi_id = ss.rloi_id
+		left join u_flood.river_stations up on rs.id = up.id and up.rank = rs.rank - 1
+		left join u_flood.river_stations down on rs.id = down.id and down.rank = rs.rank + 1
 		WHERE lower(ss.status) != 'closed' AND (lower(ss.region) != 'wales' OR ss.catchment IN ('Dee', 'Severn Uplands', 'Wye'))
-		order by view_rank, river_id, rs.rank, ss.external_name, ss.qualifier desc 
+		order by view_rank, river_id, rs.rank, ss.external_name, ss.qualifier desc
 
 WITH DATA;
 
