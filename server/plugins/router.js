@@ -10,11 +10,9 @@ const routes = [].concat(
   require('../routes/is-england'),
   require('../routes/rivers'),
   require('../routes/station'),
-  require('../routes/stations-by-river'),
+  require('../routes/river'),
   require('../routes/station-telemetry'),
   require('../routes/stations-within'),
-  require('../routes/stations-within-2'),
-  require('../routes/stations-within-radius'),
   require('../routes/thresholds-data')
 )
 

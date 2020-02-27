@@ -42,26 +42,13 @@ module.exports = {
   },
 
   async getStationsWithin (bbox) {
-    const result = await db.query(queries.getStationsWithin, bbox)
-    const stations = result.rows
-
-    return stations
+    const { rows } = await db.query(queries.getStationsWithin, bbox)
+    return rows
   },
 
-  async getStationsWithin2 (bbox) {
-    const result = await db.query(queries.getStationsWithin2, bbox)
-    return result.rows
-  },
-
-  getRivers () {
-    return rivers
-  },
-
-  async getStationsByRadius (lng, lat, radiusM) {
-    const result = await db.query(queries.getStationsByRadius, [lng, lat, radiusM])
-    const stations = result.rows
-
-    return stations
+  async getRiverById (riverId) {
+    const { rows } = await db.query(queries.getRiverById, [riverId])
+    return rows
   },
 
   async getStationTelemetry (id, direction) {

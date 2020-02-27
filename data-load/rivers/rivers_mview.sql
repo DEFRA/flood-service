@@ -1,6 +1,6 @@
 -- View: u_flood.rivers_mview
 -- select * from u_flood.rivers_mview where river_id = 'addlestone-bourne' --ST_Contains(ST_MakeEnvelope(-2.84, 52.664, -2.675, 52.77, 4326), centroid)
--- DROP MATERIALIZED VIEW u_flood.rivers_mview;
+-- DROP MATERIALIZED VIEW u_flood.rivers_mview CASCADE;
 
 CREATE MATERIALIZED VIEW u_flood.rivers_mview
 TABLESPACE flood_tables
@@ -23,6 +23,10 @@ SELECT
 					ELSE 'orphaned-' || ss.wiski_river_name
 				END
 		END as river_name,
+		CASE
+			WHEN rs.name is not null THEN true
+			ELSE false
+		END as navigable,
 		rs.rank,
 		ss.rloi_id, 
 		ss.telemetry_id, 
@@ -40,7 +44,9 @@ SELECT
 		so.error as value_erred, 
 		so.percentile_5, 
 		so.percentile_95, 
-		ss.centroid
+		ss.centroid,
+		st_x(ss.centroid) as lon,
+		st_y(ss.centroid) as lat
 		FROM u_flood.station_split_mview ss 
 		inner join u_flood.stations_overview_mview so on ss.rloi_id = so.rloi_id and ss.qualifier = so.direction
 		left join u_flood.river_stations rs on rs.rloi_id = ss.rloi_id
@@ -52,7 +58,6 @@ WITH DATA;
 ALTER TABLE u_flood.rivers_mview
     OWNER TO u_flood;
 
-
 -- Index: idx_rivers_mview_geom_gist
 
 -- DROP INDEX u_flood.idx_rivers_mview_geom_gist;
@@ -61,4 +66,14 @@ CREATE INDEX idx_rivers_mview_geom_gist
     ON u_flood.rivers_mview USING gist
     (centroid)
     TABLESPACE flood_indexes;
+	
+-- Index: idx_rivers_mview_river_id
+
+-- DROP INDEX u_flood.idx_rivers_mview_river_id;
+
+CREATE INDEX idx_rivers_mview_river_id
+    ON u_flood.rivers_mview USING btree
+    (river_id COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE flood_indexes;
+
 	
