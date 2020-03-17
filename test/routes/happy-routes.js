@@ -389,4 +389,14 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     stub.revert()
   })
+
+  lab.test('16 - GET / webops health check', async () => {
+    const options = {
+      method: 'GET',
+      url: '/'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
 })

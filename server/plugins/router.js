@@ -1,4 +1,5 @@
 const routes = [].concat(
+  require('../routes/index'),
   require('../routes/floods'),
   require('../routes/flood-area-alert'),
   require('../routes/flood-area-warning'),
