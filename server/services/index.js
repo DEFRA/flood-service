@@ -1,4 +1,3 @@
-const boom = require('@hapi/boom')
 const queries = require('./queries')
 const db = require('./db')
 
@@ -42,12 +41,12 @@ module.exports = {
 
   async getStationsWithin (bbox) {
     const { rows } = await db.query(queries.getStationsWithin, bbox)
-    return rows
+    return rows || []
   },
 
   async getRiverById (riverId) {
     const { rows } = await db.query(queries.getRiverById, [riverId])
-    return rows
+    return rows || []
   },
 
   async getRiverStationByStationId (stationId) {
@@ -59,14 +58,14 @@ module.exports = {
     const result = await db.query(queries.getStationTelemetry, [id, direction])
     const [{ get_telemetry: telemetry }] = result.rows
 
-    return telemetry
+    return telemetry || []
   },
 
   async getFFOIThresholds (id) {
     const result = await db.query(queries.getFFOIThresholds, [id])
     const [{ ffoi_get_thresholds: thresholds }] = result.rows
 
-    return thresholds
+    return thresholds || []
   },
 
   async isEngland (x, y) {
@@ -77,30 +76,18 @@ module.exports = {
   },
 
   async getImpactData (id) {
-    try {
-      const result = await db.query(queries.getImpactsByRloiId, [id])
-      return result.rows
-    } catch (err) {
-      return boom.badRequest('Failed to get impact data ', err)
-    }
+    const result = await db.query(queries.getImpactsByRloiId, [id])
+    return result.rows || []
   },
 
   async getImpactDataWithin (bbox) {
-    try {
-      const result = await db.query(queries.getImpactsWithin, bbox)
-      return result.rows
-    } catch (err) {
-      return boom.badRequest('Failed to get impact data ', err)
-    }
+    const result = await db.query(queries.getImpactsWithin, bbox)
+    return result.rows || []
   },
 
   async getStationsByRiver (river) {
-    try {
-      const result = await db.query(queries.getStationsByRiver, [river])
-      const stations = result.rows
-      return stations
-    } catch (err) {
-      return boom.badRequest('Failed to get River Stations', err)
-    }
+    const result = await db.query(queries.getStationsByRiver, [river])
+    const stations = result.rows
+    return stations || []
   }
 }

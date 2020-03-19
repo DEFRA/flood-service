@@ -525,19 +525,13 @@ lab.experiment('Services tests', () => {
 
     const id = 7333
 
-    const result = await services.getImpactData(id)
-
-    Code.expect(result.output.payload.message).to.equal('Failed to get impact data ')
-    Code.expect(result.output.payload.statusCode).to.equal(400)
+    await Code.expect(services.getImpactData(id)).to.reject()
   })
   lab.test('16 - erroring works for getImpactDataWithin ', async () => {
     sandbox.stub(db, 'query').throws(new Error())
 
     const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
 
-    const result = await services.getImpactDataWithin(bbox)
-
-    Code.expect(result.output.payload.message).to.equal('Failed to get impact data ')
-    Code.expect(result.output.payload.statusCode).to.equal(400)
+    await Code.expect(services.getImpactDataWithin(bbox)).to.reject()
   })
 })
