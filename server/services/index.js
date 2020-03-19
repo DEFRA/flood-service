@@ -89,5 +89,18 @@ module.exports = {
     const result = await db.query(queries.getStationsByRiver, [river])
     const stations = result.rows
     return stations || []
+  },
+
+  async getStationsHealth () {
+    const result = await db.query(queries.getStationsHealth)
+    return {
+      count: parseInt(result[0].rows[0].count),
+      timestamp: parseInt(result[1].rows[0].load_timestamp)
+    }
+  },
+
+  async getTelemetryHealth () {
+    const result = await db.query(queries.getTelemetryHealth)
+    return result.rows
   }
 }

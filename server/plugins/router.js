@@ -14,7 +14,9 @@ const routes = [].concat(
   require('../routes/river-station-by-station-id.js'),
   require('../routes/station-telemetry'),
   require('../routes/stations-within'),
-  require('../routes/thresholds-data')
+  require('../routes/thresholds-data'),
+  require('../routes/stations-health'),
+  require('../routes/telemetry-health')
 )
 
 module.exports = {
