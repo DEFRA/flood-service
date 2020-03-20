@@ -406,8 +406,13 @@ lab.experiment('Happy Route tests', () => {
       url: '/stations-health'
     }
 
+    const stub = mock.replace(services, 'getStationsHealth', mock.makePromise(null, {
+      rows: []
+    }))
+
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
+    stub.revert()
   })
 
   lab.test('17 - GET /telemetry-health health check', async () => {
@@ -416,8 +421,13 @@ lab.experiment('Happy Route tests', () => {
       url: '/telemetry-health'
     }
 
+    const stub = mock.replace(services, 'getTelemetryHealth', mock.makePromise(null, {
+      rows: []
+    }))
+
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
+    stub.revert()
   })
 
   lab.test('18 - GET /ffoi-health health check', async () => {
@@ -426,7 +436,12 @@ lab.experiment('Happy Route tests', () => {
       url: '/ffoi-health'
     }
 
+    const stub = mock.replace(services, 'getFfoiHealth', mock.makePromise(null, {
+      rows: []
+    }))
+
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
+    stub.revert()
   })
 })
