@@ -399,4 +399,34 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
+
+  lab.test('17 - GET /stations-health webops health check', async () => {
+    const options = {
+      method: 'GET',
+      url: '/stations-health'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+
+  lab.test('17 - GET /telemetry-health health check', async () => {
+    const options = {
+      method: 'GET',
+      url: '/telemetry-health'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+
+  lab.test('18 - GET /ffoi-health health check', async () => {
+    const options = {
+      method: 'GET',
+      url: '/ffoi-health'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
 })

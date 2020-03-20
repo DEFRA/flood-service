@@ -179,4 +179,43 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get stations search')
   })
+
+  lab.test('15 - GET erroring works for /stations-health ', async () => {
+    sandbox.stub(services, 'getStationsHealth').throws(new Error())
+    const options = {
+      method: 'GET',
+      url: '/stations-health'
+
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get station health')
+  })
+
+  lab.test('16 - GET erroring works for /ffoi-health ', async () => {
+    sandbox.stub(services, 'getFfoiHealth').throws(new Error())
+    const options = {
+      method: 'GET',
+      url: '/ffoi-health'
+
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get ffoi health')
+  })
+
+  lab.test('17 - GET erroring works for /telemetry-health ', async () => {
+    sandbox.stub(services, 'getTelemetryHealth').throws(new Error())
+    const options = {
+      method: 'GET',
+      url: '/telemetry-health'
+
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get telemetry health')
+  })
 })
