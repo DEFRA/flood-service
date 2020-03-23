@@ -7,8 +7,7 @@ module.exports = {
   path: '/river-stations/{river}',
   handler: async (request, h) => {
     try {
-      const stationsData = await floodsService.getStationsByRiver(request.params.river)
-      return stationsData
+      return await floodsService.getStationsByRiver(request.params.river)
     } catch (err) {
       return boom.badRequest('Failed to get River Stations', err)
     }

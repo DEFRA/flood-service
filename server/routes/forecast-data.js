@@ -7,8 +7,7 @@ module.exports = {
   path: '/station/{telemetryId}/forecast/data',
   handler: async (request, h) => {
     try {
-      const result = await s3Service.ffoi(request.params.telemetryId)
-      return result
+      return await s3Service.ffoi(request.params.telemetryId)
     } catch (err) {
       return boom.badRequest('Failed to get forecast data', err)
     }

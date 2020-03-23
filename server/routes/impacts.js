@@ -7,9 +7,7 @@ module.exports = {
   path: '/impacts/{id}',
   handler: async (request, h) => {
     try {
-      const { id } = request.params
-      const impacts = await floodsService.getImpactData(id)
-      return impacts
+      return await floodsService.getImpactData(request.params.id)
     } catch (err) {
       return boom.badRequest('Failed to get impact data', err)
     }

@@ -8,8 +8,7 @@ module.exports = {
   handler: async (request, h) => {
     try {
       const { x1, y1, x2, y2 } = request.params
-      const impacts = await floodsService.getImpactDataWithin([x1, y1, x2, y2])
-      return impacts
+      return await floodsService.getImpactDataWithin([x1, y1, x2, y2])
     } catch (err) {
       return boom.badRequest('Failed to get impact data', err)
     }

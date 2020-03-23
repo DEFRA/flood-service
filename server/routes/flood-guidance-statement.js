@@ -9,8 +9,7 @@ module.exports = {
   },
   handler: async (request, h) => {
     try {
-      const result = await s3Service.floodGuidanceStatement()
-      return result
+      return await s3Service.floodGuidanceStatement()
     } catch (err) {
       console.log(err)
       return boom.badRequest('Failed to get the flood guidance statement', err)

@@ -6,8 +6,7 @@ module.exports = {
   path: '/floods',
   handler: async (request, h) => {
     try {
-      const result = await floodsService.getFloods()
-      return result
+      return await floodsService.getFloods()
     } catch (err) {
       return boom.badRequest('Failed to get floods', err)
     }

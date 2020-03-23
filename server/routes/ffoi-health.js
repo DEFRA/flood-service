@@ -6,8 +6,7 @@ module.exports = {
   path: '/ffoi-health',
   handler: async (request, h) => {
     try {
-      const result = await floodsService.getFfoiHealth()
-      return result
+      return await floodsService.getFfoiHealth()
     } catch (err) {
       return boom.badRequest('Failed to get ffoi health', err)
     }

@@ -8,8 +8,7 @@ module.exports = {
   handler: async (request, h) => {
     try {
       const { x1, y1, x2, y2 } = request.params
-      const result = await floodsService.getFloodsWithin([x1, y1, x2, y2])
-      return result
+      return await floodsService.getFloodsWithin([x1, y1, x2, y2])
     } catch (err) {
       return boom.badRequest('Failed to get floods search', err)
     }

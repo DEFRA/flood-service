@@ -8,8 +8,7 @@ module.exports = {
   handler: async (request, h) => {
     try {
       const { rloiId, direction } = request.params
-      const result = await floodsService.getStationTelemetry(rloiId, direction)
-      return result
+      return await floodsService.getStationTelemetry(rloiId, direction)
     } catch (err) {
       return boom.badRequest('Failed to get telemetry data', err)
     }

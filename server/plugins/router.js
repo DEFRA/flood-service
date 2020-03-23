@@ -17,7 +17,8 @@ const routes = [].concat(
   require('../routes/thresholds-data'),
   require('../routes/stations-health'),
   require('../routes/telemetry-health'),
-  require('../routes/ffoi-health')
+  require('../routes/ffoi-health'),
+  require('../routes/stations-overview')
 )
 
 module.exports = {

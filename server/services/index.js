@@ -107,5 +107,10 @@ module.exports = {
   async getFfoiHealth () {
     const result = await db.query(queries.getFfoiHealth)
     return result.rows
+  },
+
+  async getStationsOverview () {
+    const result = await db.query(queries.getStationsOverview)
+    return result.rows
   }
 }
