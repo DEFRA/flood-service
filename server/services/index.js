@@ -111,6 +111,6 @@ module.exports = {
 
   async getStationsOverview () {
     const result = await db.query(queries.getStationsOverview)
-    return result.rows
+    return result.rows[0].get_stations_overview || []
   }
 }
