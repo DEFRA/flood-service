@@ -51,7 +51,7 @@ module.exports = {
 
   async getRiverStationByStationId (stationId) {
     const { rows } = await db.query(queries.getRiverStationByStationId, [stationId])
-    return rows[0]
+    return rows[0] || {}
   },
 
   async getStationTelemetry (id, direction) {
