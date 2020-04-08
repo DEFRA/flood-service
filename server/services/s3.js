@@ -1,7 +1,5 @@
 const AWS = require('aws-sdk')
-const agent = require('proxy-agent')
 const config = require('../config').s3
-const proxy = config.httpProxy
 
 AWS.config.credentials = {
   accessKeyId: config.accessKey,
@@ -9,7 +7,6 @@ AWS.config.credentials = {
 }
 
 AWS.config.httpOptions = {
-  agent: proxy ? agent(proxy) : AWS.config.httpOptions.agent,
   timeout: config.httpTimeoutMs
 }
 
