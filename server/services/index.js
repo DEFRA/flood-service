@@ -44,6 +44,11 @@ module.exports = {
     return rows || []
   },
 
+  async getStationsWithinTargetArea (taCode) {
+    const { rows } = await db.query(queries.getStationsWithinTargetArea, taCode)
+    return rows || []
+  },
+
   async getRiverById (riverId) {
     const { rows } = await db.query(queries.getRiverById, [riverId])
     return rows || []
