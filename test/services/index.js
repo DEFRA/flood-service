@@ -534,4 +534,24 @@ lab.experiment('Services tests', () => {
 
     await Code.expect(services.getImpactDataWithin(bbox)).to.reject()
   })
+  lab.test('17 - Check getStationsWithinTargetArea service', async () => {
+    const getStationsWithinTargetArea = () => {
+      return {
+        command: 'SELECT',
+        rowCount: 0,
+        oid: null,
+        rows: [{ ta_name: 'Name' }],
+        fields:
+          [],
+        _parsers: []
+      }
+    }
+
+    sandbox.stub(db, 'query').callsFake(getStationsWithinTargetArea)
+
+    const result = await services.getStationsWithinTargetArea()
+
+    await Code.expect(result).to.be.an.array()
+    await Code.expect(result[0].ta_name).to.equal('Name')
+  })
 })
