@@ -540,7 +540,34 @@ lab.experiment('Services tests', () => {
         command: 'SELECT',
         rowCount: 0,
         oid: null,
-        rows: [{ ta_name: 'Name' }],
+        rows: [{
+          river_id: 'ampney-brook',
+          river_name: 'Ampney Brook',
+          navigable: true,
+          view_rank: 3,
+          rank: 1,
+          rloi_id: 7021,
+          up: null,
+          down: 7022,
+          telemetry_id: '0470TH',
+          region: 'Thames',
+          catchment: 'Cotswolds',
+          wiski_river_name: 'Ampney Brook',
+          agency_name: 'Ampney St Peter',
+          external_name: 'Ampney St Peter',
+          station_type: 'S',
+          status: 'Active',
+          qualifier: 'u',
+          iswales: false,
+          value: '0.166',
+          value_timestamp: '2020-06-05T12:15:00.000Z',
+          value_erred: false,
+          percentile_5: '0.93',
+          percentile_95: '0.044',
+          centroid: '0101000020E6100000F1C8D16C443DFEBFCC1544ABF6DA4940',
+          lon: -1.88995783336264,
+          lat: 51.7106527407119
+        }],
         fields:
           [],
         _parsers: []
@@ -552,6 +579,6 @@ lab.experiment('Services tests', () => {
     const result = await services.getStationsWithinTargetArea()
 
     await Code.expect(result).to.be.an.array()
-    await Code.expect(result[0].ta_name).to.equal('Name')
+    await Code.expect(result[0].rloi_id).to.equal(7021)
   })
 })
