@@ -534,12 +534,28 @@ lab.experiment('Services tests', () => {
 
     await Code.expect(services.getImpactDataWithin(bbox)).to.reject()
   })
-  lab.test('17 - Check getStationsWithinTargetArea service', async () => {
+  lab.test('17 - Check getTargetArea call', async () => {
+    const getTargetArea = () => {
+      return {
+        rows: [
+          {
+            fws_tacode: '054WAFSF4FG',
+            ta_name: 'The River Gipping, from downstream of Needham Market, to upstream of London Road Bridge, Ipswich'
+          }
+        ]
+      }
+    }
+
+    sandbox.stub(db, 'query').callsFake(getTargetArea)
+
+    const result = await services.getTargetArea()
+    await Code.expect(result).to.be.an.object()
+    await Code.expect(result.ta_name).to.contain('The River Gipping')
+    await Code.expect(result.fws_tacode).to.equal('054WAFSF4FG')
+  })
+  lab.test('18 - Check getStationsWithinTargetArea service', async () => {
     const getStationsWithinTargetArea = () => {
       return {
-        command: 'SELECT',
-        rowCount: 0,
-        oid: null,
         rows: [{
           river_id: 'ampney-brook',
           river_name: 'Ampney Brook',
@@ -567,18 +583,14 @@ lab.experiment('Services tests', () => {
           centroid: '0101000020E6100000F1C8D16C443DFEBFCC1544ABF6DA4940',
           lon: -1.88995783336264,
           lat: 51.7106527407119
-        }],
-        fields:
-          [],
-        _parsers: []
+        }]
       }
     }
 
     sandbox.stub(db, 'query').callsFake(getStationsWithinTargetArea)
 
     const result = await services.getStationsWithinTargetArea()
-
-    await Code.expect(result).to.be.an.array()
-    await Code.expect(result[0].rloi_id).to.equal(7021)
+    await Code.expect(result).to.be.an.object()
+    await Code.expect(result.stations[0].rloi_id).to.equal(7021)
   })
 })

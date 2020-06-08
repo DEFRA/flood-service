@@ -45,12 +45,16 @@ module.exports = {
   },
 
   async getStationsWithinTargetArea (taCode) {
-    const stationRes = await db.query(queries.getStationsWithinTargetArea, taCode)
-    const stations = stationRes.rows
+    const res = await db.query(queries.getStationsWithinTargetArea, taCode)
+    const stations = res.rows
+    const targetArea = await this.getTargetArea(taCode)
+    return { stations, targetArea }
+  },
+
+  async getTargetArea (taCode) {
     const targetAreaRes = await db.query(queries.getTargetArea, taCode)
     const [targetArea] = targetAreaRes.rows
-
-    return { stations, targetArea }
+    return targetArea
   },
 
   async getRiverById (riverId) {
