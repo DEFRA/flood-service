@@ -444,4 +444,19 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
     stub.revert()
   })
+
+  lab.test('19 - GET / route works for /stations-within-target-area', async () => {
+    const options = {
+      method: 'GET',
+      url: '/stations-within-target-area/053WAF117BED'
+    }
+
+    const stub = mock.replace(services, 'getStationsWithinTargetArea', mock.makePromise(null, {
+      rows: []
+    }))
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+    stub.revert()
+  })
 })

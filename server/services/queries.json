@@ -6,6 +6,8 @@
   "getStation": "SELECT * FROM u_flood.station_split_mview WHERE rloi_id = $1 AND qualifier = $2;",
   "getStationTelemetry": "SELECT * FROM u_flood.get_telemetry($1, $2);",
   "getStationsWithin": "select * from u_flood.rivers_mview where ST_Contains(ST_MakeEnvelope($1, $2, $3, $4, 4326), centroid);",
+  "getStationsWithinTargetArea": "select * from u_flood.rivers_mview where ST_Contains((SELECT ST_BUFFER(ST_ENVELOPE(geom)::geography, 8000)::geometry as geom FROM flood_alert_area WHERE fws_tacode = $1 union SELECT ST_BUFFER(ST_ENVELOPE(geom)::geography, 8000)::geometry as geom FROM flood_warning_area WHERE fws_tacode = $1), centroid);",
+  "getTargetArea": "select fws_tacode, ta_name from u_flood.flood_alert_area where fws_tacode = $1 union select fws_tacode, ta_name from u_flood.flood_warning_area where fws_tacode = $1;",
   "getRiversByStation": "select rm2.* from rivers_mview rm1 inner join rivers_mview rm2 on rm1.river_id = rm2.river_id where rm1.rloi_id = $1",
   "getRiverById": "select * from u_flood.rivers_mview where river_id = $1;",
   "getRiverStationByStationId": "select * from u_flood.rivers_mview where rloi_id = $1",
