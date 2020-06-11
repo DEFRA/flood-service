@@ -15,7 +15,7 @@ const routes = [].concat(
   require('../routes/station-telemetry'),
   require('../routes/stations-within'),
   require('../routes/stations-within-target-area'),
-  require('../routes/target-areas-within-station-buffer'),
+  require('../routes/warnings-alerts-within-station-buffer'),
   require('../routes/thresholds-data'),
   require('../routes/stations-health'),
   require('../routes/telemetry-health'),

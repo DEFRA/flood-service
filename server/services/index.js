@@ -57,10 +57,10 @@ module.exports = {
     return targetArea
   },
 
-  async getTargetAreasWithinStationBuffer (long, lat) {
-    const targetAreaRes = await db.query(queries.getTargetAreasWithinStationBuffer, [long, lat])
-    const targetAreas = targetAreaRes.rows
-    return targetAreas
+  async getWarningsAlertsWithinStationBuffer (long, lat) {
+    const WarningsAlertsRes = await db.query(queries.getWarningsAlertsWithinStationBuffer, [long, lat])
+    const warningsAlerts = WarningsAlertsRes.rows
+    return warningsAlerts
   },
 
   async getRiverById (riverId) {

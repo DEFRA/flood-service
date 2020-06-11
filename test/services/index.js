@@ -593,4 +593,24 @@ lab.experiment('Services tests', () => {
     await Code.expect(result).to.be.an.object()
     await Code.expect(result.stations[0].rloi_id).to.equal(7021)
   })
+  lab.test('19 - Check getWarningsAlertsWithinStationBuffer service', async () => {
+    const getWarningsAlertsWithinStationBuffer = () => {
+      return {
+        rows: [
+          {
+            ta_code: '061WAF06Coln',
+            ta_name: 'River Coln and its tributaries',
+            severity: 'Flood alert',
+            severity_value: 1
+          }
+        ]
+      }
+    }
+
+    sandbox.stub(db, 'query').callsFake(getWarningsAlertsWithinStationBuffer)
+
+    const result = await services.getWarningsAlertsWithinStationBuffer()
+    await Code.expect(result).to.be.an.array()
+    await Code.expect(result[0].ta_code).to.equal('061WAF06Coln')
+  })
 })
