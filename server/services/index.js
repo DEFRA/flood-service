@@ -44,6 +44,25 @@ module.exports = {
     return rows || []
   },
 
+  async getStationsWithinTargetArea (taCode) {
+    const res = await db.query(queries.getStationsWithinTargetArea, taCode)
+    const stations = res.rows
+    const targetArea = await this.getTargetArea(taCode)
+    return { stations, targetArea }
+  },
+
+  async getTargetArea (taCode) {
+    const targetAreaRes = await db.query(queries.getTargetArea, taCode)
+    const [targetArea] = targetAreaRes.rows
+    return targetArea
+  },
+
+  async getWarningsAlertsWithinStationBuffer (long, lat) {
+    const WarningsAlertsRes = await db.query(queries.getWarningsAlertsWithinStationBuffer, [long, lat])
+    const warningsAlerts = WarningsAlertsRes.rows
+    return warningsAlerts
+  },
+
   async getRiverById (riverId) {
     const { rows } = await db.query(queries.getRiverById, [riverId])
     return rows || []
