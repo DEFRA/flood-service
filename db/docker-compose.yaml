@@ -1,0 +1,18 @@
+version: "3"
+services:
+  postgres:
+    build:
+      context: .
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./setup.sql:/docker-entrypoint-initdb.d/setup.sql
+      - flood-tables-volume:/data/flood_tables
+      - flood-indexes-volume:/data/flood_indexes
+
+volumes:
+  flood-tables-volume:
+  flood-indexes-volume:
