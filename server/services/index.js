@@ -40,7 +40,7 @@ module.exports = {
 
   async getStationsWithin (bbox) {
     const { rows } = await db.query(queries.getStationsWithin, bbox)
-    return rows || []
+    return rows
   },
 
   async getStationsWithinTargetArea (taCode) {
@@ -64,7 +64,7 @@ module.exports = {
 
   async getRiverById (riverId) {
     const { rows } = await db.query(queries.getRiverById, [riverId])
-    return rows || []
+    return rows
   },
 
   async getRiverStationByStationId (stationId) {
@@ -95,18 +95,17 @@ module.exports = {
 
   async getImpactData (id) {
     const { rows } = await db.query(queries.getImpactsByRloiId, [id])
-    return rows || []
+    return rows
   },
 
   async getImpactDataWithin (bbox) {
     const { rows } = await db.query(queries.getImpactsWithin, bbox)
-    return rows || []
+    return rows
   },
 
   async getStationsByRiver (river) {
     const { rows } = await db.query(queries.getStationsByRiver, [river])
-    const stations = rows
-    return stations || []
+    return rows
   },
 
   async getStationsHealth () {
