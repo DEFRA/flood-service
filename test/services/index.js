@@ -11,7 +11,7 @@ lab.experiment('Services tests', () => {
   lab.afterEach(async () => {
     await sinon.restore()
   })
-  lab.test('01 - Check getfloods service', async () => {
+  lab.test('Check getfloods service', async () => {
     const getFloodsData = () => {
       return [
         {
@@ -69,7 +69,7 @@ lab.experiment('Services tests', () => {
     await Code.expect(result).to.be.an.object()
     await Code.expect(result.floods[0].code).to.equal('JFS013FWFD5')
   })
-  lab.test('02 - Check getfloodsWithin service', async () => {
+  lab.test('Check getfloodsWithin service', async () => {
     const getFloodsWithinData = () => {
       return {
         command: 'SELECT',
@@ -90,7 +90,7 @@ lab.experiment('Services tests', () => {
 
     await Code.expect(result.floods).to.be.an.array()
   })
-  lab.test('03 - Check getAlertArea service', async () => {
+  lab.test('Check getAlertArea service', async () => {
     const getAlertAreaData = () => {
       return {
         command: 'SELECT',
@@ -124,7 +124,7 @@ lab.experiment('Services tests', () => {
 
     await Code.expect(result.id).to.equal(5038)
   })
-  lab.test('04 - Check getWarningArea service', async () => {
+  lab.test('Check getWarningArea service', async () => {
     const getWarningAreaData = () => {
       return {
         command: 'SELECT',
@@ -186,7 +186,7 @@ lab.experiment('Services tests', () => {
     await Code.expect(result).to.be.an.object()
     await Code.expect(result.id).to.equal(22517)
   })
-  lab.test('05 - Check getStation service', async () => {
+  lab.test('Check getStation service', async () => {
     const getStationData = () => {
       return {
         command: 'SELECT',
@@ -222,7 +222,7 @@ lab.experiment('Services tests', () => {
     await Code.expect(result).to.be.an.object()
     await Code.expect(result.id).to.equal(5038)
   })
-  lab.test('06 - Check getStationsWithin service', async () => {
+  lab.test('Check getStationsWithin service', async () => {
     const getStationsWithinData = () => {
       return {
         command: 'SELECT',
@@ -264,7 +264,7 @@ lab.experiment('Services tests', () => {
     await Code.expect(result[0].rloi_id).to.equal(5050)
   })
 
-  lab.test('09 - Check getStationTelemetry service', async () => {
+  lab.test('Check getStationTelemetry service', async () => {
     const getStationTelemetryData = () => {
       return {
         command: 'SELECT',
@@ -296,7 +296,7 @@ lab.experiment('Services tests', () => {
     await Code.expect(result).to.be.an.array()
     await Code.expect(result[0]._).to.equal(0.096)
   })
-  lab.test('10 - Check getFFOIThresholds service', async () => {
+  lab.test('Check getFFOIThresholds service', async () => {
     const getFFOIThresholdsData = () => {
       return {
         command: 'SELECT',
@@ -324,7 +324,7 @@ lab.experiment('Services tests', () => {
 
   // place holder for 11 getFFOIForecast ------------------------------------
 
-  lab.test('12 - Check isEngland service', async () => {
+  lab.test('Check isEngland service', async () => {
     const isEnglandData = () => {
       return {
         command: 'SELECT',
@@ -356,7 +356,7 @@ lab.experiment('Services tests', () => {
     await Code.expect(result).to.be.an.object()
     await Code.expect(result.is_england).to.equal(true)
   })
-  lab.test('13 - Check getImpactData service', async () => {
+  lab.test('Check getImpactData service', async () => {
     const getImpactDataFake = () => {
       return {
         command: 'SELECT',
@@ -493,7 +493,7 @@ lab.experiment('Services tests', () => {
     await Code.expect(result).to.be.an.array()
     await Code.expect(result[0].impactid).to.equal(2614)
   })
-  lab.test('14 - Check getImpactDataWithin service', async () => {
+  lab.test('Check getImpactDataWithin service', async () => {
     const getImpactDataWithinFake = () => {
       return {
         command: 'SELECT',
@@ -515,21 +515,21 @@ lab.experiment('Services tests', () => {
 
     await Code.expect(result).to.be.an.array()
   })
-  lab.test('15 - erroring works for getImpactData ', async () => {
+  lab.test('erroring works for getImpactData ', async () => {
     sinon.stub(db, 'query').throws(new Error())
 
     const id = 7333
 
     await Code.expect(services.getImpactData(id)).to.reject()
   })
-  lab.test('16 - erroring works for getImpactDataWithin ', async () => {
+  lab.test('erroring works for getImpactDataWithin ', async () => {
     sinon.stub(db, 'query').throws(new Error())
 
     const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
 
     await Code.expect(services.getImpactDataWithin(bbox)).to.reject()
   })
-  lab.test('17 - Check getTargetArea call', async () => {
+  lab.test('Check getTargetArea call', async () => {
     const getTargetArea = () => {
       return {
         rows: [
@@ -548,7 +548,7 @@ lab.experiment('Services tests', () => {
     await Code.expect(result.ta_name).to.contain('The River Gipping')
     await Code.expect(result.fws_tacode).to.equal('054WAFSF4FG')
   })
-  lab.test('18 - Check getStationsWithinTargetArea service', async () => {
+  lab.test('Check getStationsWithinTargetArea service', async () => {
     const getStationsWithinTargetArea = () => {
       return {
         rows: [{
@@ -588,7 +588,7 @@ lab.experiment('Services tests', () => {
     await Code.expect(result).to.be.an.object()
     await Code.expect(result.stations[0].rloi_id).to.equal(7021)
   })
-  lab.test('19 - Check getWarningsAlertsWithinStationBuffer service', async () => {
+  lab.test('Check getWarningsAlertsWithinStationBuffer service', async () => {
     const getWarningsAlertsWithinStationBuffer = () => {
       return {
         rows: [
