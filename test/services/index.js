@@ -8,13 +8,8 @@ const db = require('../../server/services/db')
 const services = require('../../server/services/index.js')
 
 lab.experiment('Services tests', () => {
-  let sandbox
-  // Use a Sinon sandbox to manage spies, stubs and mocks for each test.
-  lab.beforeEach(async () => {
-    sandbox = await sinon.createSandbox()
-  })
   lab.afterEach(async () => {
-    await sandbox.restore()
+    await sinon.restore()
   })
   lab.test('01 - Check getfloods service', async () => {
     const getFloodsData = () => {
@@ -67,7 +62,7 @@ lab.experiment('Services tests', () => {
       ]
     }
 
-    sandbox.stub(db, 'query').callsFake(getFloodsData)
+    sinon.stub(db, 'query').callsFake(getFloodsData)
 
     const result = await services.getFloods()
 
@@ -87,7 +82,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getFloodsWithinData)
+    sinon.stub(db, 'query').callsFake(getFloodsWithinData)
 
     const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
 
@@ -121,7 +116,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getAlertAreaData)
+    sinon.stub(db, 'query').callsFake(getAlertAreaData)
 
     const code = '061WAF07Cole'
 
@@ -183,7 +178,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getWarningAreaData)
+    sinon.stub(db, 'query').callsFake(getWarningAreaData)
 
     const code = '034FWFDECHURCHW'
 
@@ -217,7 +212,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getStationData)
+    sinon.stub(db, 'query').callsFake(getStationData)
 
     const id = 7333
     const direction = 'u'
@@ -259,7 +254,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getStationsWithinData)
+    sinon.stub(db, 'query').callsFake(getStationsWithinData)
 
     const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
 
@@ -291,7 +286,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getStationTelemetryData)
+    sinon.stub(db, 'query').callsFake(getStationTelemetryData)
 
     const id = '7333'
     const direction = 'u'
@@ -318,7 +313,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getFFOIThresholdsData)
+    sinon.stub(db, 'query').callsFake(getFFOIThresholdsData)
 
     const id = '7333'
 
@@ -351,7 +346,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(isEnglandData)
+    sinon.stub(db, 'query').callsFake(isEnglandData)
 
     const x = '-2.2370500564575195'
     const y = '53.4650993347168'
@@ -489,7 +484,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getImpactDataFake)
+    sinon.stub(db, 'query').callsFake(getImpactDataFake)
 
     const id = '7333'
 
@@ -512,7 +507,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getImpactDataWithinFake)
+    sinon.stub(db, 'query').callsFake(getImpactDataWithinFake)
 
     const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
 
@@ -521,14 +516,14 @@ lab.experiment('Services tests', () => {
     await Code.expect(result).to.be.an.array()
   })
   lab.test('15 - erroring works for getImpactData ', async () => {
-    sandbox.stub(db, 'query').throws(new Error())
+    sinon.stub(db, 'query').throws(new Error())
 
     const id = 7333
 
     await Code.expect(services.getImpactData(id)).to.reject()
   })
   lab.test('16 - erroring works for getImpactDataWithin ', async () => {
-    sandbox.stub(db, 'query').throws(new Error())
+    sinon.stub(db, 'query').throws(new Error())
 
     const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
 
@@ -546,7 +541,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getTargetArea)
+    sinon.stub(db, 'query').callsFake(getTargetArea)
 
     const result = await services.getTargetArea()
     await Code.expect(result).to.be.an.object()
@@ -587,7 +582,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getStationsWithinTargetArea)
+    sinon.stub(db, 'query').callsFake(getStationsWithinTargetArea)
 
     const result = await services.getStationsWithinTargetArea()
     await Code.expect(result).to.be.an.object()
@@ -607,7 +602,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getWarningsAlertsWithinStationBuffer)
+    sinon.stub(db, 'query').callsFake(getWarningsAlertsWithinStationBuffer)
 
     const result = await services.getWarningsAlertsWithinStationBuffer()
     await Code.expect(result).to.be.an.array()
