@@ -296,6 +296,33 @@ lab.experiment('Services tests', () => {
     await Code.expect(result).to.be.an.array()
     await Code.expect(result[0]._).to.equal(0.096)
   })
+  lab.test('Check getStationTelemetry service handle empty results', async () => {
+    const getStationTelemetryData = () => {
+      return {
+        command: 'SELECT',
+        rowCount: 1,
+        oid: null,
+        rows:
+          [{
+            get_telemetry: []
+          }],
+        fields: [],
+        _parsers: [],
+        RowCtor: null,
+        rowAsArray: false
+      }
+    }
+
+    sinon.stub(db, 'query').callsFake(getStationTelemetryData)
+
+    const id = '7333'
+    const direction = 'u'
+
+    const result = await services.getStationTelemetry(id, direction)
+
+    await Code.expect(result).to.be.an.array()
+    await Code.expect(result.length).to.equal(0)
+  })
   lab.test('Check getFFOIThresholds service', async () => {
     const getFFOIThresholdsData = () => {
       return {
@@ -607,5 +634,151 @@ lab.experiment('Services tests', () => {
     const result = await services.getWarningsAlertsWithinStationBuffer()
     await Code.expect(result).to.be.an.array()
     await Code.expect(result[0].ta_code).to.equal('061WAF06Coln')
+  })
+  lab.experiment('getRiverById', async () => {
+    lab.test('should return empty rows array', async () => {
+      sinon.stub(db, 'query').returns({ rows: [] })
+      const result = await services.getRiverById()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([])
+    })
+    lab.test('should return populated rows array', async () => {
+      sinon.stub(db, 'query').returns({ rows: [{ f1: 'v1' }] })
+      const result = await services.getRiverById()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([{ f1: 'v1' }])
+    })
+    lab.test('should pass query and river id', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs(sinon.match.string, [1])
+        .once()
+        .returns({ rows: [] })
+      await services.getRiverById(1)
+      mock.verify()
+    })
+  })
+  lab.experiment('getRiverStationByStationId', async () => {
+    lab.test('should return empty object for empty array', async () => {
+      sinon.stub(db, 'query').returns({ rows: [] })
+      const result = await services.getRiverStationByStationId()
+      await Code.expect(result).to.be.an.object()
+      await Code.expect(result).to.equal({})
+    })
+    lab.test('should return populated object for non-empty results', async () => {
+      sinon.stub(db, 'query').returns({ rows: [{ f1: 'v1' }] })
+      const result = await services.getRiverStationByStationId()
+      await Code.expect(result).to.be.an.object()
+      await Code.expect(result).to.equal({ f1: 'v1' })
+    })
+    lab.test('should pass query and river id', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs(sinon.match.string, [1])
+        .once()
+        .returns({ rows: [{ f1: 'v1' }] })
+      await services.getRiverStationByStationId(1)
+      mock.verify()
+    })
+  })
+  lab.experiment('getStationsByRiver', async () => {
+    lab.test('should return empty rows array', async () => {
+      sinon.stub(db, 'query').returns({ rows: [] })
+      const result = await services.getStationsByRiver()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([])
+    })
+    lab.test('should return populated rows array', async () => {
+      sinon.stub(db, 'query').returns({ rows: [{ f1: 'v1' }] })
+      const result = await services.getStationsByRiver()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([{ f1: 'v1' }])
+    })
+    lab.test('should pass query and river id', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs(sinon.match.string, [1])
+        .once()
+        .returns({ rows: [] })
+      await services.getStationsByRiver(1)
+      mock.verify()
+    })
+  })
+  lab.experiment('getStationsHealth', async () => {
+    lab.test('should return count and timestamp', async () => {
+      sinon.stub(db, 'query').returns([{ rows: [{ count: 123 }] }, { rows: [{ load_timestamp: 1594824684 }] }])
+      const result = await services.getStationsHealth()
+      await Code.expect(result).to.be.an.object()
+      await Code.expect(result).to.equal({ count: 123, timestamp: 1594824684 })
+    })
+    lab.test('should pass query', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .once()
+        .returns([{ rows: [{ count: 123 }] }, { rows: [{ load_timestamp: 1594824684 }] }])
+      await services.getStationsHealth()
+      mock.verify()
+    })
+  })
+  lab.experiment('getTelemetryHealth', async () => {
+    lab.test('should return empty rows array', async () => {
+      sinon.stub(db, 'query').returns({ rows: [] })
+      const result = await services.getTelemetryHealth()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([])
+    })
+    lab.test('should return populated rows array', async () => {
+      sinon.stub(db, 'query').returns({ rows: [{ f1: 'v1' }] })
+      const result = await services.getTelemetryHealth()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([{ f1: 'v1' }])
+    })
+    lab.test('should pass query', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs(sinon.match.string)
+        .once()
+        .returns({ rows: [] })
+      await services.getTelemetryHealth()
+      mock.verify()
+    })
+  })
+  lab.experiment('getFfoiHealth', async () => {
+    lab.test('should return empty rows array', async () => {
+      sinon.stub(db, 'query').returns({ rows: [] })
+      const result = await services.getFfoiHealth()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([])
+    })
+    lab.test('should return populated rows array', async () => {
+      sinon.stub(db, 'query').returns({ rows: [{ f1: 'v1' }] })
+      const result = await services.getFfoiHealth()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([{ f1: 'v1' }])
+    })
+    lab.test('should pass query', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .once()
+        .returns({ rows: [] })
+      await services.getFfoiHealth()
+      mock.verify()
+    })
+  })
+  lab.experiment('getStationsOverview', async () => {
+    lab.test('should return an overview', async () => {
+      sinon.stub(db, 'query').returns({ rows: [{ get_stations_overview: [{ f1: 'v1' }] }] })
+      const result = await services.getStationsOverview()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([{ f1: 'v1' }])
+    })
+    lab.test('should pass query', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .once()
+        .returns({ rows: [{ get_stations_overview: [{ f1: 'v1' }] }] })
+      await services.getStationsOverview()
+      mock.verify()
+    })
   })
 })
