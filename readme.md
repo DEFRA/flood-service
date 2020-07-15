@@ -2,28 +2,43 @@
 
 # flood-service
 
-# Environment variables
+This is the service tier node application supporting the Check for flooding service https://github.com/DEFRA/flood-app
+
+## Environment variables
+
+For team members these can be found in the lfwconfig repository
+
 | name     | description      | required | default |            valid            | notes |
 |----------|------------------|:--------:|---------|:---------------------------:|-------|
-| NODE_ENV | Node environment |    no    |development| development,test,production |       |
+| NODE_ENV | Node environment |    no    |dev| dev,tst,test,prd |       |
 | PORT     | Port number      |    no    | 3000    |                             |       |
 | FLOOD_SERVICE_CONNECTION_STRING | PG Connection String |    yes    |         |  |       |
 | FLOOD_SERVICE_S3_ACCESS_KEY     | S3 Access Key      |    yes    |     | |       |
 | FLOOD_SERVICE_S3_SECRET_ACCESS_KEY | S3 Secret Key |    yes    |         |  |       |
 | FLOOD_SERVICE_S3_BUCKET     | S3 Bucket      |    yes    |     ||       |
-| FLOOD_SERVICE_S3_KEY | S3 Key |    yes    |         |  |       |
-| FLOOD_SERVICE_S3_PROXY     | S3 Proxy      |    yes    |     ||       |
 | FLOOD_SERVICE_S3_TIMEOUT     | S3 Http Timeout      |    no    | 10000 (10s)    ||       |
-| FLOOD_SERVICE_ERRBIT_POST_ERRORS | Errbit activation |    no    |   true, false   |  |       |
-| FLOOD_SERVICE_ERRBIT_ENV     | Errbit env      |    no    |     ||       |
-| FLOOD_SERVICE_ERRBIT_KEY | Errbit key |    no    |         |  |       |
-| FLOOD_SERVICE_ERRBIT_HOST     | Errbit host      |    no    |     ||       |
-| FLOOD_SERVICE_ERRBIT_PROXY  | Errbit proxy |    no    | ''    ||       |
 
-# Prerequisites
+
+## Prerequisites
+
+Local or remote Postgres/Postgis database installed from: https://github.com/DEFRA/flood-db, connection string `FLOOD_SERVICE_CONNECTION_STRING`
+
+AWS serverless lfw-data tier processing telemetry, forecast, 5DF, fwis data and storing in the database: https://github.com/DEFRA/lfw-data
+
+S3 Bucket storing some of the processed data files, referred to as `FLOOD_SERVICE_S3_BUCKET` in the env vars
 
 Node v8+
 
-# Running the application
+## Testing the application
 
-`$ node index.js`
+```
+$ npm i
+$ npm run test
+```
+
+## Running the application
+
+```
+$ npm i
+$ node index.js
+```
