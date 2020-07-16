@@ -1,9 +1,8 @@
-const queries = require('./queries')
 const db = require('./db')
 
 module.exports = {
   async getFloods () {
-    const result = await db.query(queries.getFloods)
+    const result = await db.query('getFloods')
     const floods = result[0].rows
     const timestamp = result[1].rows[0].timestamp
 
@@ -14,104 +13,97 @@ module.exports = {
   },
 
   async getFloodsWithin (bbox) {
-    const result = await db.query(queries.getFloodsWithin, bbox)
-    const floods = result.rows
+    const { rows: floods } = await db.query('getFloodsWithin', bbox)
     return { floods }
   },
 
   async getAlertArea (code) {
-    const result = await db.query(queries.getAlertArea, [code])
-    const [area] = result.rows
+    const { rows } = await db.query('getAlertArea', [code])
+    const [area] = rows
     return area
   },
 
   async getWarningArea (code) {
-    const result = await db.query(queries.getWarningArea, [code])
-    const [area] = result.rows
+    const { rows } = await db.query('getWarningArea', [code])
+    const [area] = rows
 
     return area
   },
 
   async getStation (id, direction) {
-    const result = await db.query(queries.getStation, [id, direction])
-    const [station] = result.rows
+    const { rows } = await db.query('getStation', [id, direction])
+    const [station] = rows
 
     return station
   },
 
   async getStationsWithin (bbox) {
-    const { rows } = await db.query(queries.getStationsWithin, bbox)
-    return rows || []
+    const { rows } = await db.query('getStationsWithin', bbox)
+    return rows
   },
 
   async getStationsWithinTargetArea (taCode) {
-    const res = await db.query(queries.getStationsWithinTargetArea, taCode)
-    const stations = res.rows
+    const { rows } = await db.query('getStationsWithinTargetArea', taCode)
+    const stations = rows
     const targetArea = await this.getTargetArea(taCode)
     return { stations, targetArea }
   },
 
   async getTargetArea (taCode) {
-    const targetAreaRes = await db.query(queries.getTargetArea, taCode)
-    const [targetArea] = targetAreaRes.rows
+    const { rows } = await db.query('getTargetArea', taCode)
+    const [targetArea] = rows
     return targetArea
   },
 
   async getWarningsAlertsWithinStationBuffer (long, lat) {
-    const WarningsAlertsRes = await db.query(queries.getWarningsAlertsWithinStationBuffer, [long, lat])
-    const warningsAlerts = WarningsAlertsRes.rows
+    const { rows } = await db.query('getWarningsAlertsWithinStationBuffer', [long, lat])
+    const warningsAlerts = rows
     return warningsAlerts
   },
 
   async getRiverById (riverId) {
-    const { rows } = await db.query(queries.getRiverById, [riverId])
-    return rows || []
+    const { rows } = await db.query('getRiverById', [riverId])
+    return rows
   },
 
   async getRiverStationByStationId (stationId) {
-    const { rows } = await db.query(queries.getRiverStationByStationId, [stationId])
+    const { rows } = await db.query('getRiverStationByStationId', [stationId])
     return rows[0] || {}
   },
 
   async getStationTelemetry (id, direction) {
-    const result = await db.query(queries.getStationTelemetry, [id, direction])
-    const [{ get_telemetry: telemetry }] = result.rows
+    const { rows } = await db.query('getStationTelemetry', [id, direction])
+    const [{ get_telemetry: telemetry }] = rows
 
-    return telemetry || []
+    return telemetry
   },
 
   async getFFOIThresholds (id) {
-    const result = await db.query(queries.getFFOIThresholds, [id])
-    const [{ ffoi_get_thresholds: thresholds }] = result.rows
+    const { rows } = await db.query('getFFOIThresholds', [id])
+    const [{ ffoi_get_thresholds: thresholds }] = rows
 
-    return thresholds || []
+    return thresholds
   },
 
   async isEngland (x, y) {
-    const result = await db.query(queries.isEngland, [x, y])
-    const [value] = result.rows
+    const { rows } = await db.query('isEngland', [x, y])
+    const [value] = rows
 
     return value
   },
 
   async getImpactData (id) {
-    const result = await db.query(queries.getImpactsByRloiId, [id])
-    return result.rows || []
+    const { rows } = await db.query('getImpactsByRloiId', [id])
+    return rows
   },
 
   async getImpactDataWithin (bbox) {
-    const result = await db.query(queries.getImpactsWithin, bbox)
-    return result.rows || []
-  },
-
-  async getStationsByRiver (river) {
-    const result = await db.query(queries.getStationsByRiver, [river])
-    const stations = result.rows
-    return stations || []
+    const { rows } = await db.query('getImpactsWithin', bbox)
+    return rows
   },
 
   async getStationsHealth () {
-    const result = await db.query(queries.getStationsHealth)
+    const result = await db.query('getStationsHealth')
     return {
       count: parseInt(result[0].rows[0].count),
       timestamp: parseInt(result[1].rows[0].load_timestamp)
@@ -119,17 +111,18 @@ module.exports = {
   },
 
   async getTelemetryHealth () {
-    const result = await db.query(queries.getTelemetryHealth)
-    return result.rows
+    const { rows } = await db.query('getTelemetryHealth')
+    return rows
   },
 
   async getFfoiHealth () {
-    const result = await db.query(queries.getFfoiHealth)
-    return result.rows
+    const { rows } = await db.query('getFfoiHealth')
+    return rows
   },
 
   async getStationsOverview () {
-    const result = await db.query(queries.getStationsOverview)
-    return result.rows[0].get_stations_overview || []
+    const { rows } = await db.query('getStationsOverview')
+    const [{ get_stations_overview: stationsOverview }] = rows
+    return stationsOverview
   }
 }

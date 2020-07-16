@@ -8,15 +8,10 @@ const db = require('../../server/services/db')
 const services = require('../../server/services/index.js')
 
 lab.experiment('Services tests', () => {
-  let sandbox
-  // Use a Sinon sandbox to manage spies, stubs and mocks for each test.
-  lab.beforeEach(async () => {
-    sandbox = await sinon.createSandbox()
-  })
   lab.afterEach(async () => {
-    await sandbox.restore()
+    await sinon.restore()
   })
-  lab.test('01 - Check getfloods service', async () => {
+  lab.test('Check getfloods service', async () => {
     const getFloodsData = () => {
       return [
         {
@@ -67,14 +62,14 @@ lab.experiment('Services tests', () => {
       ]
     }
 
-    sandbox.stub(db, 'query').callsFake(getFloodsData)
+    sinon.stub(db, 'query').callsFake(getFloodsData)
 
     const result = await services.getFloods()
 
     await Code.expect(result).to.be.an.object()
     await Code.expect(result.floods[0].code).to.equal('JFS013FWFD5')
   })
-  lab.test('02 - Check getfloodsWithin service', async () => {
+  lab.test('Check getfloodsWithin service', async () => {
     const getFloodsWithinData = () => {
       return {
         command: 'SELECT',
@@ -87,7 +82,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getFloodsWithinData)
+    sinon.stub(db, 'query').callsFake(getFloodsWithinData)
 
     const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
 
@@ -95,7 +90,7 @@ lab.experiment('Services tests', () => {
 
     await Code.expect(result.floods).to.be.an.array()
   })
-  lab.test('03 - Check getAlertArea service', async () => {
+  lab.test('Check getAlertArea service', async () => {
     const getAlertAreaData = () => {
       return {
         command: 'SELECT',
@@ -121,7 +116,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getAlertAreaData)
+    sinon.stub(db, 'query').callsFake(getAlertAreaData)
 
     const code = '061WAF07Cole'
 
@@ -129,7 +124,7 @@ lab.experiment('Services tests', () => {
 
     await Code.expect(result.id).to.equal(5038)
   })
-  lab.test('04 - Check getWarningArea service', async () => {
+  lab.test('Check getWarningArea service', async () => {
     const getWarningAreaData = () => {
       return {
         command: 'SELECT',
@@ -183,7 +178,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getWarningAreaData)
+    sinon.stub(db, 'query').callsFake(getWarningAreaData)
 
     const code = '034FWFDECHURCHW'
 
@@ -191,7 +186,7 @@ lab.experiment('Services tests', () => {
     await Code.expect(result).to.be.an.object()
     await Code.expect(result.id).to.equal(22517)
   })
-  lab.test('05 - Check getStation service', async () => {
+  lab.test('Check getStation service', async () => {
     const getStationData = () => {
       return {
         command: 'SELECT',
@@ -217,7 +212,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getStationData)
+    sinon.stub(db, 'query').callsFake(getStationData)
 
     const id = 7333
     const direction = 'u'
@@ -227,7 +222,7 @@ lab.experiment('Services tests', () => {
     await Code.expect(result).to.be.an.object()
     await Code.expect(result.id).to.equal(5038)
   })
-  lab.test('06 - Check getStationsWithin service', async () => {
+  lab.test('Check getStationsWithin service', async () => {
     const getStationsWithinData = () => {
       return {
         command: 'SELECT',
@@ -259,7 +254,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getStationsWithinData)
+    sinon.stub(db, 'query').callsFake(getStationsWithinData)
 
     const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
 
@@ -269,7 +264,7 @@ lab.experiment('Services tests', () => {
     await Code.expect(result[0].rloi_id).to.equal(5050)
   })
 
-  lab.test('09 - Check getStationTelemetry service', async () => {
+  lab.test('Check getStationTelemetry service', async () => {
     const getStationTelemetryData = () => {
       return {
         command: 'SELECT',
@@ -291,7 +286,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getStationTelemetryData)
+    sinon.stub(db, 'query').callsFake(getStationTelemetryData)
 
     const id = '7333'
     const direction = 'u'
@@ -301,7 +296,34 @@ lab.experiment('Services tests', () => {
     await Code.expect(result).to.be.an.array()
     await Code.expect(result[0]._).to.equal(0.096)
   })
-  lab.test('10 - Check getFFOIThresholds service', async () => {
+  lab.test('Check getStationTelemetry service handle empty results', async () => {
+    const getStationTelemetryData = () => {
+      return {
+        command: 'SELECT',
+        rowCount: 1,
+        oid: null,
+        rows:
+          [{
+            get_telemetry: []
+          }],
+        fields: [],
+        _parsers: [],
+        RowCtor: null,
+        rowAsArray: false
+      }
+    }
+
+    sinon.stub(db, 'query').callsFake(getStationTelemetryData)
+
+    const id = '7333'
+    const direction = 'u'
+
+    const result = await services.getStationTelemetry(id, direction)
+
+    await Code.expect(result).to.be.an.array()
+    await Code.expect(result.length).to.equal(0)
+  })
+  lab.test('Check getFFOIThresholds service', async () => {
     const getFFOIThresholdsData = () => {
       return {
         command: 'SELECT',
@@ -318,7 +340,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getFFOIThresholdsData)
+    sinon.stub(db, 'query').callsFake(getFFOIThresholdsData)
 
     const id = '7333'
 
@@ -329,7 +351,7 @@ lab.experiment('Services tests', () => {
 
   // place holder for 11 getFFOIForecast ------------------------------------
 
-  lab.test('12 - Check isEngland service', async () => {
+  lab.test('Check isEngland service', async () => {
     const isEnglandData = () => {
       return {
         command: 'SELECT',
@@ -351,7 +373,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(isEnglandData)
+    sinon.stub(db, 'query').callsFake(isEnglandData)
 
     const x = '-2.2370500564575195'
     const y = '53.4650993347168'
@@ -361,7 +383,7 @@ lab.experiment('Services tests', () => {
     await Code.expect(result).to.be.an.object()
     await Code.expect(result.is_england).to.equal(true)
   })
-  lab.test('13 - Check getImpactData service', async () => {
+  lab.test('Check getImpactData service', async () => {
     const getImpactDataFake = () => {
       return {
         command: 'SELECT',
@@ -489,7 +511,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getImpactDataFake)
+    sinon.stub(db, 'query').callsFake(getImpactDataFake)
 
     const id = '7333'
 
@@ -498,7 +520,7 @@ lab.experiment('Services tests', () => {
     await Code.expect(result).to.be.an.array()
     await Code.expect(result[0].impactid).to.equal(2614)
   })
-  lab.test('14 - Check getImpactDataWithin service', async () => {
+  lab.test('Check getImpactDataWithin service', async () => {
     const getImpactDataWithinFake = () => {
       return {
         command: 'SELECT',
@@ -512,7 +534,7 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getImpactDataWithinFake)
+    sinon.stub(db, 'query').callsFake(getImpactDataWithinFake)
 
     const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
 
@@ -520,21 +542,21 @@ lab.experiment('Services tests', () => {
 
     await Code.expect(result).to.be.an.array()
   })
-  lab.test('15 - erroring works for getImpactData ', async () => {
-    sandbox.stub(db, 'query').throws(new Error())
+  lab.test('erroring works for getImpactData ', async () => {
+    sinon.stub(db, 'query').throws(new Error())
 
     const id = 7333
 
     await Code.expect(services.getImpactData(id)).to.reject()
   })
-  lab.test('16 - erroring works for getImpactDataWithin ', async () => {
-    sandbox.stub(db, 'query').throws(new Error())
+  lab.test('erroring works for getImpactDataWithin ', async () => {
+    sinon.stub(db, 'query').throws(new Error())
 
     const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
 
     await Code.expect(services.getImpactDataWithin(bbox)).to.reject()
   })
-  lab.test('17 - Check getTargetArea call', async () => {
+  lab.test('Check getTargetArea call', async () => {
     const getTargetArea = () => {
       return {
         rows: [
@@ -546,14 +568,14 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getTargetArea)
+    sinon.stub(db, 'query').callsFake(getTargetArea)
 
     const result = await services.getTargetArea()
     await Code.expect(result).to.be.an.object()
     await Code.expect(result.ta_name).to.contain('The River Gipping')
     await Code.expect(result.fws_tacode).to.equal('054WAFSF4FG')
   })
-  lab.test('18 - Check getStationsWithinTargetArea service', async () => {
+  lab.test('Check getStationsWithinTargetArea service', async () => {
     const getStationsWithinTargetArea = () => {
       return {
         rows: [{
@@ -587,13 +609,13 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getStationsWithinTargetArea)
+    sinon.stub(db, 'query').callsFake(getStationsWithinTargetArea)
 
     const result = await services.getStationsWithinTargetArea()
     await Code.expect(result).to.be.an.object()
     await Code.expect(result.stations[0].rloi_id).to.equal(7021)
   })
-  lab.test('19 - Check getWarningsAlertsWithinStationBuffer service', async () => {
+  lab.test('Check getWarningsAlertsWithinStationBuffer service', async () => {
     const getWarningsAlertsWithinStationBuffer = () => {
       return {
         rows: [
@@ -607,10 +629,136 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    sandbox.stub(db, 'query').callsFake(getWarningsAlertsWithinStationBuffer)
+    sinon.stub(db, 'query').callsFake(getWarningsAlertsWithinStationBuffer)
 
     const result = await services.getWarningsAlertsWithinStationBuffer()
     await Code.expect(result).to.be.an.array()
     await Code.expect(result[0].ta_code).to.equal('061WAF06Coln')
+  })
+  lab.experiment('getRiverById', async () => {
+    lab.test('should return empty rows array', async () => {
+      sinon.stub(db, 'query').returns({ rows: [] })
+      const result = await services.getRiverById()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([])
+    })
+    lab.test('should return populated rows array', async () => {
+      sinon.stub(db, 'query').returns({ rows: [{ f1: 'v1' }] })
+      const result = await services.getRiverById()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([{ f1: 'v1' }])
+    })
+    lab.test('should pass query and river id', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getRiverById', [1])
+        .once()
+        .returns({ rows: [] })
+      await services.getRiverById(1)
+      mock.verify()
+    })
+  })
+  lab.experiment('getRiverStationByStationId', async () => {
+    lab.test('should return empty object for empty array', async () => {
+      sinon.stub(db, 'query').returns({ rows: [] })
+      const result = await services.getRiverStationByStationId()
+      await Code.expect(result).to.be.an.object()
+      await Code.expect(result).to.equal({})
+    })
+    lab.test('should return populated object for non-empty results', async () => {
+      sinon.stub(db, 'query').returns({ rows: [{ f1: 'v1' }] })
+      const result = await services.getRiverStationByStationId()
+      await Code.expect(result).to.be.an.object()
+      await Code.expect(result).to.equal({ f1: 'v1' })
+    })
+    lab.test('should pass query and river id', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getRiverStationByStationId', [1])
+        .once()
+        .returns({ rows: [{ f1: 'v1' }] })
+      await services.getRiverStationByStationId(1)
+      mock.verify()
+    })
+  })
+  lab.experiment('getStationsHealth', async () => {
+    lab.test('should return count and timestamp', async () => {
+      sinon.stub(db, 'query').returns([{ rows: [{ count: 123 }] }, { rows: [{ load_timestamp: 1594824684 }] }])
+      const result = await services.getStationsHealth()
+      await Code.expect(result).to.be.an.object()
+      await Code.expect(result).to.equal({ count: 123, timestamp: 1594824684 })
+    })
+    lab.test('should pass query', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getStationsHealth')
+        .once()
+        .returns([{ rows: [{ count: 123 }] }, { rows: [{ load_timestamp: 1594824684 }] }])
+      await services.getStationsHealth()
+      mock.verify()
+    })
+  })
+  lab.experiment('getTelemetryHealth', async () => {
+    lab.test('should return empty rows array', async () => {
+      sinon.stub(db, 'query').returns({ rows: [] })
+      const result = await services.getTelemetryHealth()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([])
+    })
+    lab.test('should return populated rows array', async () => {
+      sinon.stub(db, 'query').returns({ rows: [{ f1: 'v1' }] })
+      const result = await services.getTelemetryHealth()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([{ f1: 'v1' }])
+    })
+    lab.test('should pass query', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getTelemetryHealth')
+        .once()
+        .returns({ rows: [] })
+      await services.getTelemetryHealth()
+      mock.verify()
+    })
+  })
+  lab.experiment('getFfoiHealth', async () => {
+    lab.test('should return empty rows array', async () => {
+      sinon.stub(db, 'query').returns({ rows: [] })
+      const result = await services.getFfoiHealth()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([])
+    })
+    lab.test('should return populated rows array', async () => {
+      sinon.stub(db, 'query').returns({ rows: [{ f1: 'v1' }] })
+      const result = await services.getFfoiHealth()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([{ f1: 'v1' }])
+    })
+    lab.test('should pass query', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getFfoiHealth')
+        .once()
+        .returns({ rows: [] })
+      await services.getFfoiHealth()
+      mock.verify()
+    })
+  })
+  lab.experiment('getStationsOverview', async () => {
+    lab.test('should return an overview', async () => {
+      sinon.stub(db, 'query').returns({ rows: [{ get_stations_overview: [{ f1: 'v1' }] }] })
+      const result = await services.getStationsOverview()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([{ f1: 'v1' }])
+    })
+    lab.test('should pass query', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getStationsOverview')
+        .once()
+        .returns({ rows: [{ get_stations_overview: [{ f1: 'v1' }] }] })
+      await services.getStationsOverview()
+      mock.verify()
+    })
   })
 })
