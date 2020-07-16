@@ -121,7 +121,8 @@ module.exports = {
   },
 
   async getStationsOverview () {
-    const result = await db.query('getStationsOverview')
-    return result.rows[0].get_stations_overview
+    const { rows } = await db.query('getStationsOverview')
+    const [{ get_stations_overview: stationsOverview }] = rows
+    return stationsOverview
   }
 }
