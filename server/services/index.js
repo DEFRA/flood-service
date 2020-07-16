@@ -103,11 +103,6 @@ module.exports = {
     return rows
   },
 
-  async getStationsByRiver (river) {
-    const { rows } = await db.query(queries.getStationsByRiver, [river])
-    return rows
-  },
-
   async getStationsHealth () {
     const result = await db.query(queries.getStationsHealth)
     return {

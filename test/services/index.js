@@ -681,29 +681,6 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('getStationsByRiver', async () => {
-    lab.test('should return empty rows array', async () => {
-      sinon.stub(db, 'query').returns({ rows: [] })
-      const result = await services.getStationsByRiver()
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result).to.equal([])
-    })
-    lab.test('should return populated rows array', async () => {
-      sinon.stub(db, 'query').returns({ rows: [{ f1: 'v1' }] })
-      const result = await services.getStationsByRiver()
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result).to.equal([{ f1: 'v1' }])
-    })
-    lab.test('should pass query and river id', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs(sinon.match.string, [1])
-        .once()
-        .returns({ rows: [] })
-      await services.getStationsByRiver(1)
-      mock.verify()
-    })
-  })
   lab.experiment('getStationsHealth', async () => {
     lab.test('should return count and timestamp', async () => {
       sinon.stub(db, 'query').returns([{ rows: [{ count: 123 }] }, { rows: [{ load_timestamp: 1594824684 }] }])
