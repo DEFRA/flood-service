@@ -651,7 +651,7 @@ lab.experiment('Services tests', () => {
     lab.test('should pass query and river id', async () => {
       const mock = sinon.mock(db)
         .expects('query')
-        .withArgs(sinon.match.string, [1])
+        .withArgs('getRiverById', [1])
         .once()
         .returns({ rows: [] })
       await services.getRiverById(1)
@@ -674,7 +674,7 @@ lab.experiment('Services tests', () => {
     lab.test('should pass query and river id', async () => {
       const mock = sinon.mock(db)
         .expects('query')
-        .withArgs(sinon.match.string, [1])
+        .withArgs('getRiverStationByStationId', [1])
         .once()
         .returns({ rows: [{ f1: 'v1' }] })
       await services.getRiverStationByStationId(1)
@@ -691,6 +691,7 @@ lab.experiment('Services tests', () => {
     lab.test('should pass query', async () => {
       const mock = sinon.mock(db)
         .expects('query')
+        .withArgs('getStationsHealth')
         .once()
         .returns([{ rows: [{ count: 123 }] }, { rows: [{ load_timestamp: 1594824684 }] }])
       await services.getStationsHealth()
@@ -713,7 +714,7 @@ lab.experiment('Services tests', () => {
     lab.test('should pass query', async () => {
       const mock = sinon.mock(db)
         .expects('query')
-        .withArgs(sinon.match.string)
+        .withArgs('getTelemetryHealth')
         .once()
         .returns({ rows: [] })
       await services.getTelemetryHealth()
@@ -736,6 +737,7 @@ lab.experiment('Services tests', () => {
     lab.test('should pass query', async () => {
       const mock = sinon.mock(db)
         .expects('query')
+        .withArgs('getFfoiHealth')
         .once()
         .returns({ rows: [] })
       await services.getFfoiHealth()
@@ -752,6 +754,7 @@ lab.experiment('Services tests', () => {
     lab.test('should pass query', async () => {
       const mock = sinon.mock(db)
         .expects('query')
+        .withArgs('getStationsOverview')
         .once()
         .returns({ rows: [{ get_stations_overview: [{ f1: 'v1' }] }] })
       await services.getStationsOverview()
