@@ -390,23 +390,31 @@ lab.experiment('Services tests', () => {
     })
   })
   lab.experiment('getFFOIThresholds', async () => {
-    const getFFOIThresholdsData = () => {
-      return {
-        command: 'SELECT',
-        rowCount: 1,
-        oid: null,
-        rows:
-        [{
-          ffoi_get_thresholds: []
-        }],
-        fields: [],
-        _parsers: [],
-        RowCtor: null,
-        rowAsArray: false
-      }
+    const ffoiThresholdsData = {
+      command: 'SELECT',
+      rowCount: 1,
+      oid: null,
+      rows:
+      [{
+        ffoi_get_thresholds: []
+      }],
+      fields: [],
+      _parsers: [],
+      RowCtor: null,
+      rowAsArray: false
     }
-    lab.test('should return data', async () => {
-      sinon.stub(db, 'query').callsFake(getFFOIThresholdsData)
+    lab.test('should return threshold data', async () => {
+      sinon.stub(db, 'query').returns(ffoiThresholdsData)
+
+      const id = '7333'
+
+      const result = await services.getFFOIThresholds(id)
+
+      await Code.expect(result).to.be.an.array()
+    })
+    lab.test('should handle null threshold data', async () => {
+      ffoiThresholdsData.rows = [{}]
+      sinon.stub(db, 'query').returns(ffoiThresholdsData)
 
       const id = '7333'
 
@@ -419,7 +427,7 @@ lab.experiment('Services tests', () => {
         .expects('query')
         .withArgs('getFFOIThresholds', [123])
         .once()
-        .returns(getFFOIThresholdsData())
+        .returns(ffoiThresholdsData)
       await services.getFFOIThresholds(123)
       mock.verify()
     })

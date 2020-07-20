@@ -82,7 +82,7 @@ module.exports = {
     const { rows } = await db.query('getFFOIThresholds', [id])
     const [{ ffoi_get_thresholds: thresholds }] = rows
 
-    return thresholds
+    return thresholds || []
   },
 
   async isEngland (x, y) {
