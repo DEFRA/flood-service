@@ -123,6 +123,6 @@ module.exports = {
   async getStationsOverview () {
     const { rows } = await db.query('getStationsOverview')
     const [{ get_stations_overview: stationsOverview }] = rows
-    return stationsOverview
+    return stationsOverview || []
   }
 }

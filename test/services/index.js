@@ -909,6 +909,18 @@ lab.experiment('Services tests', () => {
       await Code.expect(result).to.be.an.array()
       await Code.expect(result).to.equal([{ f1: 'v1' }])
     })
+    lab.test('should handle empty results', async () => {
+      sinon.stub(db, 'query').returns({ rows: [{ get_stations_overview: [] }] })
+      const result = await services.getStationsOverview()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([])
+    })
+    lab.test('should handle null results', async () => {
+      sinon.stub(db, 'query').returns({ rows: [{}] })
+      const result = await services.getStationsOverview()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([])
+    })
     lab.test('should pass query', async () => {
       const mock = sinon.mock(db)
         .expects('query')
