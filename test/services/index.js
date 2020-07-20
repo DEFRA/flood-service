@@ -11,7 +11,7 @@ lab.experiment('Services tests', () => {
   lab.afterEach(async () => {
     await sinon.restore()
   })
-  lab.test('Check getfloods service', async () => {
+  lab.experiment('getFloods', () => {
     const getFloodsData = () => {
       return [
         {
@@ -61,15 +61,25 @@ lab.experiment('Services tests', () => {
         }
       ]
     }
+    lab.test('should return flood data', async () => {
+      sinon.stub(db, 'query').callsFake(getFloodsData)
 
-    sinon.stub(db, 'query').callsFake(getFloodsData)
+      const result = await services.getFloods()
 
-    const result = await services.getFloods()
-
-    await Code.expect(result).to.be.an.object()
-    await Code.expect(result.floods[0].code).to.equal('JFS013FWFD5')
+      await Code.expect(result).to.be.an.object()
+      await Code.expect(result.floods[0].code).to.equal('JFS013FWFD5')
+    })
+    lab.test('should pass query only', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getFloods')
+        .once()
+        .returns(getFloodsData())
+      await services.getFloods()
+      mock.verify()
+    })
   })
-  lab.test('Check getfloodsWithin service', async () => {
+  lab.experiment('getFloodsWithin', () => {
     const getFloodsWithinData = () => {
       return {
         command: 'SELECT',
@@ -77,281 +87,371 @@ lab.experiment('Services tests', () => {
         oid: null,
         rows: [],
         fields:
-          [],
+        [],
         _parsers: []
       }
     }
-
-    sinon.stub(db, 'query').callsFake(getFloodsWithinData)
-
     const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
+    lab.test('should return flood within data', async () => {
+      sinon.stub(db, 'query').callsFake(getFloodsWithinData)
 
-    const result = await services.getFloodsWithin(bbox)
+      const result = await services.getFloodsWithin(bbox)
 
-    await Code.expect(result.floods).to.be.an.array()
+      await Code.expect(result.floods).to.be.an.array()
+    })
+    lab.test('should pass query and bbox', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getFloodsWithin', bbox)
+        .once()
+        .returns(getFloodsWithinData())
+      await services.getFloodsWithin(bbox)
+      mock.verify()
+    })
   })
-  lab.test('Check getAlertArea service', async () => {
+  lab.experiment('getAlertArea', () => {
     const getAlertAreaData = () => {
       return {
         command: 'SELECT',
         rowCount: 1,
         oid: null,
         rows:
-          [{
-            id: 5038,
-            area: 'Lincs and Northants',
-            code: '055WAF139GBE',
-            name: 'Lower Glen and Bourne Eau System',
-            description: 'Lower River Glen from Kates Bridge to Surfleet Seas End, including the Bourne Eau in Bourne and the area around Baston and Pinchbeck',
-            localauthorityname: 'Lincolnshire',
-            quickdialnumber: '207032',
-            riverorsea: 'River Glen, Bourne Eau System',
-            geom: '{"type":"MultiPolygon","coordinates":[[]]}',
-            centroid: '{"type":"Point","coordinates":[-0.279974216515124,52.7647656448618]}'
-          }],
+        [{
+          id: 5038,
+          area: 'Lincs and Northants',
+          code: '055WAF139GBE',
+          name: 'Lower Glen and Bourne Eau System',
+          description: 'Lower River Glen from Kates Bridge to Surfleet Seas End, including the Bourne Eau in Bourne and the area around Baston and Pinchbeck',
+          localauthorityname: 'Lincolnshire',
+          quickdialnumber: '207032',
+          riverorsea: 'River Glen, Bourne Eau System',
+          geom: '{"type":"MultiPolygon","coordinates":[[]]}',
+          centroid: '{"type":"Point","coordinates":[-0.279974216515124,52.7647656448618]}'
+        }],
         fields: [],
         _parsers: [],
         RowCtor: null,
         rowAsArray: false
       }
     }
+    lab.test('should return alert data', async () => {
+      sinon.stub(db, 'query').callsFake(getAlertAreaData)
 
-    sinon.stub(db, 'query').callsFake(getAlertAreaData)
+      const code = '061WAF07Cole'
 
-    const code = '061WAF07Cole'
+      const result = await services.getAlertArea(code)
 
-    const result = await services.getAlertArea(code)
-
-    await Code.expect(result.id).to.equal(5038)
+      await Code.expect(result.id).to.equal(5038)
+    })
+    lab.test('should pass query and code', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getAlertArea', ['A1'])
+        .once()
+        .returns(getAlertAreaData())
+      await services.getAlertArea('A1')
+      mock.verify()
+    })
   })
-  lab.test('Check getWarningArea service', async () => {
+  lab.experiment('getWarningArea', async () => {
     const getWarningAreaData = () => {
       return {
         command: 'SELECT',
         rowCount: 1,
         oid: null,
         rows:
-          [{
-            id: 22517,
-            area: 'East Midlands',
-            code: '034FWFDECHURCHW',
-            name: 'River Derwent at Church Wilne and Wilne Lane',
-            description: 'River Derwent at Church Wilne and Wilne Lane including Saint Chad\'s Church at Wilne Road',
-            localauthorityname: 'Derbyshire',
-            parent: '034WAF409',
-            quickdialnumber: '306046',
-            riverorsea: 'River Derwent',
-            geom: '{"type":"MultiPolygon","coordinates":[[[[-1.33544746953363,52.8848482501047],[-1.33546067152289,52.8848434955537],[-1.33546748800289,52.8848472610617],[-1.33585013571403,52.8851005127339],[-1.33585454725095,52.8851057037314],[-1.33584767927105,52.8851101202737],[-1.33570052722019,52.8851895514517],[-1.33569221189659,52.8851930046462],[-1.33568677900119,52.8851905101913],[-1.33530719077225,52.8849474525291],[-1.33528257328667,52.8849317287493],[-1.33529240254894,52.8849249600388],[-1.33544746953363,52.8848482501047]]],[[[-1.33370625439746,52.8819197529596],[-1.33482356188233,52.8817372272285],[-1.33516673745288,52.8826201165064],[-1.33413966345575,52.8827312345939],[-1.33370625439746,52.8819197529596]]],[[[-1.33852495787706,52.8806791292156],[-1.33750299388078,52.8804576935391],[-1.3372268335974,52.8800516275704],[-1.33646960335432,52.8800114478567],[-1.33509586640155,52.8794733962017],[-1.33396485875377,52.879583932065],[-1.33236251247491,52.8794221275349],[-1.33187384688512,52.8793115097113],[-1.33447329914901,52.8784001639469],[-1.33543905745595,52.8784055635089],[-1.33589923908392,52.8784351021311],[-1.33733265891451,52.8789554980095],[-1.33980754861945,52.8793917665998],[-1.34215541191797,52.8793867955656],[-1.34267192306564,52.8796233781237],[-1.3430391788855,52.8799040817189],[-1.34309278599214,52.8802909264849],[-1.34294027079286,52.8805507797206],[-1.34179453157455,52.880652319232],[-1.34134809414551,52.8806947955001],[-1.34065069115199,52.8806280051644],[-1.33852495787706,52.8806791292156]]],[[[-1.33609754416278,52.8728992550483],[-1.33610103734122,52.8726699029974],[-1.33570654351593,52.8726725719189],[-1.33569519039541,52.8726726349869],[-1.33568095414035,52.872671847974],[-1.337525802976,52.8712095306907],[-1.33767506308291,52.871091214242],[-1.3376815395069,52.8710873668802],[-1.33769787470883,52.871090202975],[-1.3377097302831,52.8710930722078],[-1.33811220239485,52.8712002457596],[-1.33813042187394,52.8712076162264],[-1.33834305878151,52.8713141492902],[-1.3383543718489,52.8713220850833],[-1.33835552078583,52.8713266062381],[-1.33837984381486,52.8716231197956],[-1.33838010252982,52.8716269999779],[-1.33838011723373,52.871627272737],[-1.33838600066076,52.8717702974466],[-1.33838559983568,52.8717772442891],[-1.33838191245489,52.8717810767237],[-1.33809275649464,52.8720264793205],[-1.33652850090041,52.8733539802987],[-1.33652837119947,52.8733539584939],[-1.33652172432197,52.8733498623933],[-1.33611053718437,52.8730114175582],[-1.3361035793033,52.8730054441108],[-1.33609778345859,52.8730000428868],[-1.33609616291722,52.8729899427985],[-1.33609754416278,52.8728992550483]]]]}',
-            centroid: '{"type":"Point","coordinates":[-1.33764872652984,52.8785953176783]}'
-          }],
-        fields:
-          [{
-            name: 'id',
-            tableID: 90814,
-            columnID: 1,
-            dataTypeID: 23,
-            dataTypeSize: 4,
-            dataTypeModifier: -1,
-            format: 'text'
-          },
-          {
-            name: 'area',
-            tableID: 90814,
-            columnID: 2,
-            dataTypeID: 1043,
-            dataTypeSize: -1,
-            dataTypeModifier: 104,
-            format: 'text'
-          },
-          {
-            name: 'code',
-            tableID: 90814,
-            columnID: 3,
-            dataTypeID: 1043,
-            dataTypeSize: -1,
-            dataTypeModifier: 54,
-            format: 'text'
-          }],
+        [{
+          id: 22517,
+          area: 'East Midlands',
+          code: '034FWFDECHURCHW',
+          name: 'River Derwent at Church Wilne and Wilne Lane',
+          description: 'River Derwent at Church Wilne and Wilne Lane including Saint Chad\'s Church at Wilne Road',
+          localauthorityname: 'Derbyshire',
+          parent: '034WAF409',
+          quickdialnumber: '306046',
+          riverorsea: 'River Derwent',
+          geom: '{"type":"MultiPolygon","coordinates":[[[[-1.33544746953363,52.8848482501047],[-1.33546067152289,52.8848434955537],[-1.33546748800289,52.8848472610617],[-1.33585013571403,52.8851005127339],[-1.33585454725095,52.8851057037314],[-1.33584767927105,52.8851101202737],[-1.33570052722019,52.8851895514517],[-1.33569221189659,52.8851930046462],[-1.33568677900119,52.8851905101913],[-1.33530719077225,52.8849474525291],[-1.33528257328667,52.8849317287493],[-1.33529240254894,52.8849249600388],[-1.33544746953363,52.8848482501047]]],[[[-1.33370625439746,52.8819197529596],[-1.33482356188233,52.8817372272285],[-1.33516673745288,52.8826201165064],[-1.33413966345575,52.8827312345939],[-1.33370625439746,52.8819197529596]]],[[[-1.33852495787706,52.8806791292156],[-1.33750299388078,52.8804576935391],[-1.3372268335974,52.8800516275704],[-1.33646960335432,52.8800114478567],[-1.33509586640155,52.8794733962017],[-1.33396485875377,52.879583932065],[-1.33236251247491,52.8794221275349],[-1.33187384688512,52.8793115097113],[-1.33447329914901,52.8784001639469],[-1.33543905745595,52.8784055635089],[-1.33589923908392,52.8784351021311],[-1.33733265891451,52.8789554980095],[-1.33980754861945,52.8793917665998],[-1.34215541191797,52.8793867955656],[-1.34267192306564,52.8796233781237],[-1.3430391788855,52.8799040817189],[-1.34309278599214,52.8802909264849],[-1.34294027079286,52.8805507797206],[-1.34179453157455,52.880652319232],[-1.34134809414551,52.8806947955001],[-1.34065069115199,52.8806280051644],[-1.33852495787706,52.8806791292156]]],[[[-1.33609754416278,52.8728992550483],[-1.33610103734122,52.8726699029974],[-1.33570654351593,52.8726725719189],[-1.33569519039541,52.8726726349869],[-1.33568095414035,52.872671847974],[-1.337525802976,52.8712095306907],[-1.33767506308291,52.871091214242],[-1.3376815395069,52.8710873668802],[-1.33769787470883,52.871090202975],[-1.3377097302831,52.8710930722078],[-1.33811220239485,52.8712002457596],[-1.33813042187394,52.8712076162264],[-1.33834305878151,52.8713141492902],[-1.3383543718489,52.8713220850833],[-1.33835552078583,52.8713266062381],[-1.33837984381486,52.8716231197956],[-1.33838010252982,52.8716269999779],[-1.33838011723373,52.871627272737],[-1.33838600066076,52.8717702974466],[-1.33838559983568,52.8717772442891],[-1.33838191245489,52.8717810767237],[-1.33809275649464,52.8720264793205],[-1.33652850090041,52.8733539802987],[-1.33652837119947,52.8733539584939],[-1.33652172432197,52.8733498623933],[-1.33611053718437,52.8730114175582],[-1.3361035793033,52.8730054441108],[-1.33609778345859,52.8730000428868],[-1.33609616291722,52.8729899427985],[-1.33609754416278,52.8728992550483]]]]}',
+          centroid: '{"type":"Point","coordinates":[-1.33764872652984,52.8785953176783]}'
+        }],
+        fields: [{
+          name: 'id',
+          tableID: 90814,
+          columnID: 1,
+          dataTypeID: 23,
+          dataTypeSize: 4,
+          dataTypeModifier: -1,
+          format: 'text'
+        },
+        {
+          name: 'area',
+          tableID: 90814,
+          columnID: 2,
+          dataTypeID: 1043,
+          dataTypeSize: -1,
+          dataTypeModifier: 104,
+          format: 'text'
+        },
+        {
+          name: 'code',
+          tableID: 90814,
+          columnID: 3,
+          dataTypeID: 1043,
+          dataTypeSize: -1,
+          dataTypeModifier: 54,
+          format: 'text'
+        }],
         _parsers: [],
         RowCtor: null,
         rowAsArray: false
       }
     }
+    lab.test('Check should return data', async () => {
+      sinon.stub(db, 'query').callsFake(getWarningAreaData)
 
-    sinon.stub(db, 'query').callsFake(getWarningAreaData)
+      const code = '034FWFDECHURCHW'
 
-    const code = '034FWFDECHURCHW'
-
-    const result = await services.getWarningArea(code)
-    await Code.expect(result).to.be.an.object()
-    await Code.expect(result.id).to.equal(22517)
+      const result = await services.getWarningArea(code)
+      await Code.expect(result).to.be.an.object()
+      await Code.expect(result.id).to.equal(22517)
+    })
+    lab.test('should pass query and code', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getWarningArea', ['A1'])
+        .once()
+        .returns(getWarningAreaData())
+      await services.getWarningArea('A1')
+      mock.verify()
+    })
   })
-  lab.test('Check getStation service', async () => {
+  lab.experiment('getStation', async () => {
     const getStationData = () => {
       return {
         command: 'SELECT',
         rowCount: 1,
         oid: null,
         rows:
-          [{
-            id: 5038,
-            area: 'Lincs and Northants',
-            code: '055WAF139GBE',
-            name: 'Lower Glen and Bourne Eau System',
-            description: 'Lower River Glen from Kates Bridge to Surfleet Seas End, including the Bourne Eau in Bourne and the area around Baston and Pinchbeck',
-            localauthorityname: 'Lincolnshire',
-            quickdialnumber: '207032',
-            riverorsea: 'River Glen, Bourne Eau System',
-            geom: '{"type":"MultiPolygon","coordinates":[[]]}',
-            centroid: '{"type":"Point","coordinates":[-0.279974216515124,52.7647656448618]}'
-          }],
+        [{
+          id: 5038,
+          area: 'Lincs and Northants',
+          code: '055WAF139GBE',
+          name: 'Lower Glen and Bourne Eau System',
+          description: 'Lower River Glen from Kates Bridge to Surfleet Seas End, including the Bourne Eau in Bourne and the area around Baston and Pinchbeck',
+          localauthorityname: 'Lincolnshire',
+          quickdialnumber: '207032',
+          riverorsea: 'River Glen, Bourne Eau System',
+          geom: '{"type":"MultiPolygon","coordinates":[[]]}',
+          centroid: '{"type":"Point","coordinates":[-0.279974216515124,52.7647656448618]}'
+        }],
         fields: [],
         _parsers: [],
         RowCtor: null,
         rowAsArray: false
       }
     }
+    lab.test('should return data', async () => {
+      sinon.stub(db, 'query').callsFake(getStationData)
 
-    sinon.stub(db, 'query').callsFake(getStationData)
+      const id = 7333
+      const direction = 'u'
 
-    const id = 7333
-    const direction = 'u'
+      const result = await services.getStation(id, direction)
 
-    const result = await services.getStation(id, direction)
-
-    await Code.expect(result).to.be.an.object()
-    await Code.expect(result.id).to.equal(5038)
+      await Code.expect(result).to.be.an.object()
+      await Code.expect(result.id).to.equal(5038)
+    })
+    lab.test('should pass query, id and direction', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getStation', [123, 'u'])
+        .once()
+        .returns(getStationData())
+      await services.getStation(123, 'u')
+      mock.verify()
+    })
   })
-  lab.test('Check getStationsWithin service', async () => {
+  lab.experiment('Check getStationsWithin service', async () => {
     const getStationsWithinData = () => {
       return {
         command: 'SELECT',
         rowCount: 1,
         oid: null,
         rows:
-          [{
-            rloi_id: 5050,
-            telemetry_id: '694063',
-            region: 'North West',
-            catchment: 'Lower Mersey',
-            wiski_river_name: 'River Mersey',
-            agency_name: 'Fiddlers Ferry',
-            external_name: 'Fiddlers Ferry',
-            station_type: 'S',
-            status: 'Active',
-            qualifier: 'u',
-            iswales: false,
-            value: '2.638',
-            value_timestamp: '2019-08-02T07:15:00.000Z',
-            value_erred: false,
-            percentile_5: '6.2',
-            percentile_95: '2.611'
-          }],
+        [{
+          rloi_id: 5050,
+          telemetry_id: '694063',
+          region: 'North West',
+          catchment: 'Lower Mersey',
+          wiski_river_name: 'River Mersey',
+          agency_name: 'Fiddlers Ferry',
+          external_name: 'Fiddlers Ferry',
+          station_type: 'S',
+          status: 'Active',
+          qualifier: 'u',
+          iswales: false,
+          value: '2.638',
+          value_timestamp: '2019-08-02T07:15:00.000Z',
+          value_erred: false,
+          percentile_5: '6.2',
+          percentile_95: '2.611'
+        }],
         fields: [],
         _parsers: [],
         RowCtor: null,
         rowAsArray: false
       }
     }
-
-    sinon.stub(db, 'query').callsFake(getStationsWithinData)
-
     const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
+    lab.test('Check getStationsWithin service', async () => {
+      sinon.stub(db, 'query').callsFake(getStationsWithinData)
 
-    const result = await services.getStationsWithin(bbox)
+      const result = await services.getStationsWithin(bbox)
 
-    await Code.expect(result).to.be.an.array()
-    await Code.expect(result[0].rloi_id).to.equal(5050)
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result[0].rloi_id).to.equal(5050)
+    })
+    lab.test('should pass query and bbox', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getStationsWithin', bbox)
+        .once()
+        .returns(getStationsWithinData())
+      await services.getStationsWithin(bbox)
+      mock.verify()
+    })
   })
+  lab.experiment('getStationTelemetry', async () => {
+    const stationTelemetryData = {
+      command: 'SELECT',
+      rowCount: 1,
+      oid: null,
+      rows:
+      [{
+        get_telemetry: [
+          { ts: '2019-08-05T04:30Z', _: 0.096, err: false },
+          { ts: '2019-08-05T04:15Z', _: 0.097, err: false },
+          { ts: '2019-08-05T04:00Z', _: 0.097, err: false },
+          { ts: '2019-08-05T03:45Z', _: 0.097, err: false }
+        ]
+      }],
+      fields: [],
+      _parsers: [],
+      RowCtor: null,
+      rowAsArray: false
+    }
+    lab.test('should return data', async () => {
+      sinon.stub(db, 'query').returns(stationTelemetryData)
 
-  lab.test('Check getStationTelemetry service', async () => {
-    const getStationTelemetryData = () => {
-      return {
+      const id = '7333'
+      const direction = 'u'
+
+      const result = await services.getStationTelemetry(id, direction)
+
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result[0]._).to.equal(0.096)
+    })
+    lab.test('should handle empty results', async () => {
+      const stationTelemetryData = {
         command: 'SELECT',
         rowCount: 1,
         oid: null,
         rows:
-          [{
-            get_telemetry: [
-              { ts: '2019-08-05T04:30Z', _: 0.096, err: false },
-              { ts: '2019-08-05T04:15Z', _: 0.097, err: false },
-              { ts: '2019-08-05T04:00Z', _: 0.097, err: false },
-              { ts: '2019-08-05T03:45Z', _: 0.097, err: false }
-            ]
-          }],
+        [{
+          get_telemetry: []
+        }],
         fields: [],
         _parsers: [],
         RowCtor: null,
         rowAsArray: false
       }
-    }
 
-    sinon.stub(db, 'query').callsFake(getStationTelemetryData)
+      sinon.stub(db, 'query').returns(stationTelemetryData)
 
-    const id = '7333'
-    const direction = 'u'
+      const id = '7333'
+      const direction = 'u'
 
-    const result = await services.getStationTelemetry(id, direction)
+      const result = await services.getStationTelemetry(id, direction)
 
-    await Code.expect(result).to.be.an.array()
-    await Code.expect(result[0]._).to.equal(0.096)
-  })
-  lab.test('Check getStationTelemetry service handle empty results', async () => {
-    const getStationTelemetryData = () => {
-      return {
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result.length).to.equal(0)
+    })
+    lab.test('should handle null results', async () => {
+      const stationTelemetryData = {
         command: 'SELECT',
         rowCount: 1,
         oid: null,
         rows:
-          [{
-            get_telemetry: []
-          }],
+        [{}],
         fields: [],
         _parsers: [],
         RowCtor: null,
         rowAsArray: false
       }
-    }
 
-    sinon.stub(db, 'query').callsFake(getStationTelemetryData)
+      sinon.stub(db, 'query').returns(stationTelemetryData)
 
-    const id = '7333'
-    const direction = 'u'
+      const id = '7333'
+      const direction = 'u'
 
-    const result = await services.getStationTelemetry(id, direction)
+      const result = await services.getStationTelemetry(id, direction)
 
-    await Code.expect(result).to.be.an.array()
-    await Code.expect(result.length).to.equal(0)
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result.length).to.equal(0)
+    })
+    lab.test('should pass query, id and direction', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getStationTelemetry', [123, 'u'])
+        .once()
+        .returns(stationTelemetryData)
+      await services.getStationTelemetry(123, 'u')
+      mock.verify()
+    })
   })
-  lab.test('Check getFFOIThresholds service', async () => {
-    const getFFOIThresholdsData = () => {
-      return {
-        command: 'SELECT',
-        rowCount: 1,
-        oid: null,
-        rows:
-          [{
-            ffoi_get_thresholds: []
-          }],
-        fields: [],
-        _parsers: [],
-        RowCtor: null,
-        rowAsArray: false
-      }
+  lab.experiment('getFFOIThresholds', async () => {
+    const ffoiThresholdsData = {
+      command: 'SELECT',
+      rowCount: 1,
+      oid: null,
+      rows:
+      [{
+        ffoi_get_thresholds: []
+      }],
+      fields: [],
+      _parsers: [],
+      RowCtor: null,
+      rowAsArray: false
     }
+    lab.test('should return threshold data', async () => {
+      sinon.stub(db, 'query').returns(ffoiThresholdsData)
 
-    sinon.stub(db, 'query').callsFake(getFFOIThresholdsData)
+      const id = '7333'
 
-    const id = '7333'
+      const result = await services.getFFOIThresholds(id)
 
-    const result = await services.getFFOIThresholds(id)
+      await Code.expect(result).to.be.an.array()
+    })
+    lab.test('should handle null threshold data', async () => {
+      ffoiThresholdsData.rows = [{}]
+      sinon.stub(db, 'query').returns(ffoiThresholdsData)
 
-    await Code.expect(result).to.be.an.array()
+      const id = '7333'
+
+      const result = await services.getFFOIThresholds(id)
+
+      await Code.expect(result).to.be.an.array()
+    })
+    lab.test('should pass query and id', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getFFOIThresholds', [123])
+        .once()
+        .returns(ffoiThresholdsData)
+      await services.getFFOIThresholds(123)
+      mock.verify()
+    })
   })
-
-  // place holder for 11 getFFOIForecast ------------------------------------
-
-  lab.test('Check isEngland service', async () => {
+  lab.experiment('isEngland', async () => {
     const isEnglandData = () => {
       return {
         command: 'SELECT',
@@ -372,18 +472,27 @@ lab.experiment('Services tests', () => {
         rowAsArray: false
       }
     }
-
-    sinon.stub(db, 'query').callsFake(isEnglandData)
-
     const x = '-2.2370500564575195'
     const y = '53.4650993347168'
+    lab.test('should return data', async () => {
+      sinon.stub(db, 'query').callsFake(isEnglandData)
 
-    const result = await services.isEngland(x, y)
+      const result = await services.isEngland(x, y)
 
-    await Code.expect(result).to.be.an.object()
-    await Code.expect(result.is_england).to.equal(true)
+      await Code.expect(result).to.be.an.object()
+      await Code.expect(result.is_england).to.equal(true)
+    })
+    lab.test('should pass query and coords', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('isEngland', [x, y])
+        .once()
+        .returns(isEnglandData())
+      await services.isEngland(x, y)
+      mock.verify()
+    })
   })
-  lab.test('Check getImpactData service', async () => {
+  lab.experiment('getImpactData', async () => {
     const getImpactDataFake = () => {
       return {
         command: 'SELECT',
@@ -510,17 +619,34 @@ lab.experiment('Services tests', () => {
         rowAsArray: false
       }
     }
+    lab.test('should return data', async () => {
+      sinon.stub(db, 'query').callsFake(getImpactDataFake)
 
-    sinon.stub(db, 'query').callsFake(getImpactDataFake)
+      const id = '7333'
 
-    const id = '7333'
+      const result = await services.getImpactData(id)
 
-    const result = await services.getImpactData(id)
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result[0].impactid).to.equal(2614)
+    })
+    lab.test('erroring works', async () => {
+      sinon.stub(db, 'query').throws(new Error())
 
-    await Code.expect(result).to.be.an.array()
-    await Code.expect(result[0].impactid).to.equal(2614)
+      const id = 7333
+
+      await Code.expect(services.getImpactData(id)).to.reject()
+    })
+    lab.test('should pass query and id', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getImpactsByRloiId', [123])
+        .once()
+        .returns(getImpactDataFake())
+      await services.getImpactData(123)
+      mock.verify()
+    })
   })
-  lab.test('Check getImpactDataWithin service', async () => {
+  lab.experiment('Check getImpactDataWithin service', async () => {
     const getImpactDataWithinFake = () => {
       return {
         command: 'SELECT',
@@ -533,30 +659,32 @@ lab.experiment('Services tests', () => {
         rowAsArray: false
       }
     }
-
-    sinon.stub(db, 'query').callsFake(getImpactDataWithinFake)
-
     const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
+    lab.test('Check getImpactDataWithin service', async () => {
+      sinon.stub(db, 'query').callsFake(getImpactDataWithinFake)
 
-    const result = await services.getImpactDataWithin(bbox)
+      const result = await services.getImpactDataWithin(bbox)
 
-    await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.be.an.array()
+    })
+    lab.test('erroring works', async () => {
+      sinon.stub(db, 'query').throws(new Error())
+
+      const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
+
+      await Code.expect(services.getImpactDataWithin(bbox)).to.reject()
+    })
+    lab.test('should pass query and bbox', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getImpactsWithin', bbox)
+        .once()
+        .returns(getImpactDataWithinFake())
+      await services.getImpactDataWithin(bbox)
+      mock.verify()
+    })
   })
-  lab.test('erroring works for getImpactData ', async () => {
-    sinon.stub(db, 'query').throws(new Error())
-
-    const id = 7333
-
-    await Code.expect(services.getImpactData(id)).to.reject()
-  })
-  lab.test('erroring works for getImpactDataWithin ', async () => {
-    sinon.stub(db, 'query').throws(new Error())
-
-    const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
-
-    await Code.expect(services.getImpactDataWithin(bbox)).to.reject()
-  })
-  lab.test('Check getTargetArea call', async () => {
+  lab.experiment('getTargetArea', async () => {
     const getTargetArea = () => {
       return {
         rows: [
@@ -567,15 +695,25 @@ lab.experiment('Services tests', () => {
         ]
       }
     }
+    lab.test('Check should return data', async () => {
+      sinon.stub(db, 'query').callsFake(getTargetArea)
 
-    sinon.stub(db, 'query').callsFake(getTargetArea)
-
-    const result = await services.getTargetArea()
-    await Code.expect(result).to.be.an.object()
-    await Code.expect(result.ta_name).to.contain('The River Gipping')
-    await Code.expect(result.fws_tacode).to.equal('054WAFSF4FG')
+      const result = await services.getTargetArea()
+      await Code.expect(result).to.be.an.object()
+      await Code.expect(result.ta_name).to.contain('The River Gipping')
+      await Code.expect(result.fws_tacode).to.equal('054WAFSF4FG')
+    })
+    lab.test('should pass query and code', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getTargetArea', 'A1')
+        .once()
+        .returns(getTargetArea())
+      await services.getTargetArea('A1')
+      mock.verify()
+    })
   })
-  lab.test('Check getStationsWithinTargetArea service', async () => {
+  lab.experiment('getStationsWithinTargetArea', async () => {
     const getStationsWithinTargetArea = () => {
       return {
         rows: [{
@@ -608,14 +746,22 @@ lab.experiment('Services tests', () => {
         }]
       }
     }
+    lab.test('should return data', async () => {
+      sinon.stub(db, 'query').callsFake(getStationsWithinTargetArea)
 
-    sinon.stub(db, 'query').callsFake(getStationsWithinTargetArea)
-
-    const result = await services.getStationsWithinTargetArea()
-    await Code.expect(result).to.be.an.object()
-    await Code.expect(result.stations[0].rloi_id).to.equal(7021)
+      const result = await services.getStationsWithinTargetArea()
+      await Code.expect(result).to.be.an.object()
+      await Code.expect(result.stations[0].rloi_id).to.equal(7021)
+    })
+    lab.test('should pass query and code', async () => {
+      const mock = sinon.mock(db)
+      mock.expects('query').withArgs('getStationsWithinTargetArea', 'A1').once().returns({ rows: [] })
+      mock.expects('query').withArgs('getTargetArea', 'A1').once().returns(getStationsWithinTargetArea())
+      await services.getStationsWithinTargetArea('A1')
+      mock.verify()
+    })
   })
-  lab.test('Check getWarningsAlertsWithinStationBuffer service', async () => {
+  lab.experiment('getWarningsAlertsWithinStationBuffer', async () => {
     const getWarningsAlertsWithinStationBuffer = () => {
       return {
         rows: [
@@ -628,12 +774,24 @@ lab.experiment('Services tests', () => {
         ]
       }
     }
+    lab.test('should return data', async () => {
+      sinon.stub(db, 'query').callsFake(getWarningsAlertsWithinStationBuffer)
 
-    sinon.stub(db, 'query').callsFake(getWarningsAlertsWithinStationBuffer)
-
-    const result = await services.getWarningsAlertsWithinStationBuffer()
-    await Code.expect(result).to.be.an.array()
-    await Code.expect(result[0].ta_code).to.equal('061WAF06Coln')
+      const result = await services.getWarningsAlertsWithinStationBuffer()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result[0].ta_code).to.equal('061WAF06Coln')
+    })
+    lab.test('should pass query and coords', async () => {
+      const x = 1
+      const y = 2
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getWarningsAlertsWithinStationBuffer', [x, y])
+        .once()
+        .returns(getWarningsAlertsWithinStationBuffer())
+      await services.getWarningsAlertsWithinStationBuffer(x, y)
+      mock.verify()
+    })
   })
   lab.experiment('getRiverById', async () => {
     lab.test('should return empty rows array', async () => {
@@ -750,6 +908,18 @@ lab.experiment('Services tests', () => {
       const result = await services.getStationsOverview()
       await Code.expect(result).to.be.an.array()
       await Code.expect(result).to.equal([{ f1: 'v1' }])
+    })
+    lab.test('should handle empty results', async () => {
+      sinon.stub(db, 'query').returns({ rows: [{ get_stations_overview: [] }] })
+      const result = await services.getStationsOverview()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([])
+    })
+    lab.test('should handle null results', async () => {
+      sinon.stub(db, 'query').returns({ rows: [{}] })
+      const result = await services.getStationsOverview()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([])
     })
     lab.test('should pass query', async () => {
       const mock = sinon.mock(db)

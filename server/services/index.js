@@ -75,14 +75,14 @@ module.exports = {
     const { rows } = await db.query('getStationTelemetry', [id, direction])
     const [{ get_telemetry: telemetry }] = rows
 
-    return telemetry
+    return telemetry || []
   },
 
   async getFFOIThresholds (id) {
     const { rows } = await db.query('getFFOIThresholds', [id])
     const [{ ffoi_get_thresholds: thresholds }] = rows
 
-    return thresholds
+    return thresholds || []
   },
 
   async isEngland (x, y) {
@@ -123,6 +123,6 @@ module.exports = {
   async getStationsOverview () {
     const { rows } = await db.query('getStationsOverview')
     const [{ get_stations_overview: stationsOverview }] = rows
-    return stationsOverview
+    return stationsOverview || []
   }
 }
