@@ -75,7 +75,7 @@ module.exports = {
     const { rows } = await db.query('getStationTelemetry', [id, direction])
     const [{ get_telemetry: telemetry }] = rows
 
-    return telemetry
+    return telemetry || []
   },
 
   async getFFOIThresholds (id) {

@@ -321,28 +321,26 @@ lab.experiment('Services tests', () => {
     })
   })
   lab.experiment('getStationTelemetry', async () => {
-    const getStationTelemetryData = () => {
-      return {
-        command: 'SELECT',
-        rowCount: 1,
-        oid: null,
-        rows:
-        [{
-          get_telemetry: [
-            { ts: '2019-08-05T04:30Z', _: 0.096, err: false },
-            { ts: '2019-08-05T04:15Z', _: 0.097, err: false },
-            { ts: '2019-08-05T04:00Z', _: 0.097, err: false },
-            { ts: '2019-08-05T03:45Z', _: 0.097, err: false }
-          ]
-        }],
-        fields: [],
-        _parsers: [],
-        RowCtor: null,
-        rowAsArray: false
-      }
+    const stationTelemetryData = {
+      command: 'SELECT',
+      rowCount: 1,
+      oid: null,
+      rows:
+      [{
+        get_telemetry: [
+          { ts: '2019-08-05T04:30Z', _: 0.096, err: false },
+          { ts: '2019-08-05T04:15Z', _: 0.097, err: false },
+          { ts: '2019-08-05T04:00Z', _: 0.097, err: false },
+          { ts: '2019-08-05T03:45Z', _: 0.097, err: false }
+        ]
+      }],
+      fields: [],
+      _parsers: [],
+      RowCtor: null,
+      rowAsArray: false
     }
     lab.test('should return data', async () => {
-      sinon.stub(db, 'query').callsFake(getStationTelemetryData)
+      sinon.stub(db, 'query').returns(stationTelemetryData)
 
       const id = '7333'
       const direction = 'u'
@@ -353,23 +351,44 @@ lab.experiment('Services tests', () => {
       await Code.expect(result[0]._).to.equal(0.096)
     })
     lab.test('should handle empty results', async () => {
-      const getStationTelemetryData = () => {
-        return {
-          command: 'SELECT',
-          rowCount: 1,
-          oid: null,
-          rows:
-          [{
-            get_telemetry: []
-          }],
-          fields: [],
-          _parsers: [],
-          RowCtor: null,
-          rowAsArray: false
-        }
+      const stationTelemetryData = {
+        command: 'SELECT',
+        rowCount: 1,
+        oid: null,
+        rows:
+        [{
+          get_telemetry: []
+        }],
+        fields: [],
+        _parsers: [],
+        RowCtor: null,
+        rowAsArray: false
       }
 
-      sinon.stub(db, 'query').callsFake(getStationTelemetryData)
+      sinon.stub(db, 'query').returns(stationTelemetryData)
+
+      const id = '7333'
+      const direction = 'u'
+
+      const result = await services.getStationTelemetry(id, direction)
+
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result.length).to.equal(0)
+    })
+    lab.test('should handle null results', async () => {
+      const stationTelemetryData = {
+        command: 'SELECT',
+        rowCount: 1,
+        oid: null,
+        rows:
+        [{}],
+        fields: [],
+        _parsers: [],
+        RowCtor: null,
+        rowAsArray: false
+      }
+
+      sinon.stub(db, 'query').returns(stationTelemetryData)
 
       const id = '7333'
       const direction = 'u'
@@ -384,7 +403,7 @@ lab.experiment('Services tests', () => {
         .expects('query')
         .withArgs('getStationTelemetry', [123, 'u'])
         .once()
-        .returns(getStationTelemetryData())
+        .returns(stationTelemetryData)
       await services.getStationTelemetry(123, 'u')
       mock.verify()
     })
