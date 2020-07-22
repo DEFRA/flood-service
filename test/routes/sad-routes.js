@@ -24,7 +24,7 @@ lab.experiment('Sad Route tests', () => {
     await server.stop()
   })
 
-  lab.test('1 - GET erroring works for /flood-area/alert/{code}', async () => {
+  lab.test('GET erroring works for /flood-area/alert/{code}', async () => {
     sandbox.stub(services, 'getAlertArea').throws(new Error())
     const options = {
       method: 'GET',
@@ -37,7 +37,7 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get alert area')
   })
 
-  lab.test('2 - GET erroring works for /flood-area/warning/{code}', async () => {
+  lab.test('GET erroring works for /flood-area/warning/{code}', async () => {
     sandbox.stub(services, 'getWarningArea').throws(new Error())
     const options = {
       method: 'GET',
@@ -50,7 +50,7 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get warning area')
   })
 
-  lab.test('3 - GET erroring works for /floods', async () => {
+  lab.test('GET erroring works for /floods', async () => {
     sandbox.stub(services, 'getFloods').throws(new Error())
     const options = {
       method: 'GET',
@@ -63,7 +63,7 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get floods')
   })
 
-  lab.test('4 - GET erroring works for /floods-within/{x1}/{y1}/{x2}/{y2} ', async () => {
+  lab.test('GET erroring works for /floods-within/{x1}/{y1}/{x2}/{y2} ', async () => {
     sandbox.stub(services, 'getFloodsWithin').throws(new Error())
     const options = {
       method: 'GET',
@@ -76,7 +76,7 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get floods search')
   })
 
-  lab.test('5 - GET erroring works for /impacts-within/{x1}/{y1}/{x2}/{y2} ', async () => {
+  lab.test('GET erroring works for /impacts-within/{x1}/{y1}/{x2}/{y2} ', async () => {
     sandbox.stub(services, 'getImpactDataWithin').throws(new Error())
     const options = {
       method: 'GET',
@@ -89,7 +89,7 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get impact data')
   })
 
-  lab.test('6 - GET erroring works for /impacts/{id} ', async () => {
+  lab.test('GET erroring works for /impacts/{id} ', async () => {
     sandbox.stub(services, 'getImpactData').throws(new Error())
     const options = {
       method: 'GET',
@@ -102,7 +102,7 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get impact data')
   })
 
-  lab.test('7 - GET erroring works on /is-england/{x}/{y}', async () => {
+  lab.test('GET erroring works on /is-england/{x}/{y}', async () => {
     sandbox.stub(services, 'isEngland').throws(new Error())
 
     const options = {
@@ -115,7 +115,7 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get isEngland')
   })
 
-  lab.test('8 - GET erroring works for /station/{rloiId}/{direction} ', async () => {
+  lab.test('GET erroring works for /station/{rloiId}/{direction} ', async () => {
     sandbox.stub(services, 'getStation').throws(new Error())
     const options = {
       method: 'GET',
@@ -128,7 +128,7 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get station data')
   })
 
-  lab.test('9 - GET erroring works for /station/{id}/{direction}/telemetry ', async () => {
+  lab.test('GET erroring works for /station/{id}/{direction}/telemetry ', async () => {
     sandbox.stub(services, 'getStationTelemetry').throws(new Error())
     const options = {
       method: 'GET',
@@ -141,7 +141,7 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get telemetry data')
   })
 
-  lab.test('10 - GET erroring works for /station/{telemetryId}/forecast/data ', async () => {
+  lab.test('GET erroring works for /station/{telemetryId}/forecast/data ', async () => {
     sandbox.stub(s3Service, 'ffoi').throws(new Error())
     const options = {
       method: 'GET',
@@ -154,7 +154,7 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get forecast data')
   })
 
-  lab.test('11 - GET erroring works for /station/{id}/forecast/thresholds ', async () => {
+  lab.test('GET erroring works for /station/{id}/forecast/thresholds ', async () => {
     sandbox.stub(services, 'getFFOIThresholds').throws(new Error())
     const options = {
       method: 'GET',
@@ -167,7 +167,7 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get ffoi threshold data')
   })
 
-  lab.test('14 - GET erroring works for /stations-within/{x1}/{y1}/{x2}/{y2} ', async () => {
+  lab.test('GET erroring works for /stations-within/{x1}/{y1}/{x2}/{y2} ', async () => {
     sandbox.stub(services, 'getStationsWithin').throws(new Error())
     const options = {
       method: 'GET',
@@ -180,7 +180,7 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get stations search')
   })
 
-  lab.test('15 - GET erroring works for /stations-health ', async () => {
+  lab.test('GET erroring works for /stations-health ', async () => {
     sandbox.stub(services, 'getStationsHealth').throws(new Error())
     const options = {
       method: 'GET',
@@ -193,7 +193,7 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get station health')
   })
 
-  lab.test('16 - GET erroring works for /ffoi-health ', async () => {
+  lab.test('GET erroring works for /ffoi-health ', async () => {
     sandbox.stub(services, 'getFfoiHealth').throws(new Error())
     const options = {
       method: 'GET',
@@ -206,7 +206,7 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get ffoi health')
   })
 
-  lab.test('17 - GET erroring works for /telemetry-health ', async () => {
+  lab.test('GET erroring works for /telemetry-health ', async () => {
     sandbox.stub(services, 'getTelemetryHealth').throws(new Error())
     const options = {
       method: 'GET',

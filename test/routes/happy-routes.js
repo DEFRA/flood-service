@@ -25,7 +25,7 @@ lab.experiment('Happy Route tests', () => {
     await server.stop()
   })
 
-  lab.test('1 - GET / route works for /flood-area/alert/{code}', async () => {
+  lab.test('GET / route works for /flood-area/alert/{code}', async () => {
     const options = {
       method: 'GET',
       url: '/flood-area/alert/061WAF07Cole'
@@ -50,7 +50,7 @@ lab.experiment('Happy Route tests', () => {
     stub.revert()
   })
 
-  lab.test('2 - GET / route works for /flood-area/warning/{code}', async () => {
+  lab.test('GET / route works for /flood-area/warning/{code}', async () => {
     const options = {
       method: 'GET',
       url: '/flood-area/warning/034FWFDECHURCHW'
@@ -76,7 +76,7 @@ lab.experiment('Happy Route tests', () => {
     stub.revert()
   })
 
-  lab.test('3 - GET / route works for /floods', async () => {
+  lab.test('GET / route works for /floods', async () => {
     const options = {
       method: 'GET',
       url: '/floods'
@@ -110,7 +110,7 @@ lab.experiment('Happy Route tests', () => {
     stub.revert()
   })
 
-  lab.test('4 - GET / route works for /floods-within/{x1}/{y1}/{x2}/{y2} ', async () => {
+  lab.test('GET / route works for /floods-within/{x1}/{y1}/{x2}/{y2} ', async () => {
     const options = {
       method: 'GET',
       url: '/floods-within/-2.5353000164031982/53.420841217041016/-2.6395580768585205/53.36753845214844'
@@ -126,7 +126,7 @@ lab.experiment('Happy Route tests', () => {
     stub.revert()
   })
 
-  lab.test('5 - GET / route works for /impacts-within/{x1}/{y1}/{x2}/{y2} ', async () => {
+  lab.test('GET / route works for /impacts-within/{x1}/{y1}/{x2}/{y2} ', async () => {
     const options = {
       method: 'GET',
       url: '/impacts-within/-2.5353000164031982/53.420841217041016/-2.6395580768585205/53.36753845214844'
@@ -159,7 +159,7 @@ lab.experiment('Happy Route tests', () => {
     stub.revert()
   })
 
-  lab.test('6 - GET / route works for /impacts/{id} ', async () => {
+  lab.test('GET / route works for /impacts/{id} ', async () => {
     const options = {
       method: 'GET',
       url: '/impacts/7333'
@@ -192,7 +192,7 @@ lab.experiment('Happy Route tests', () => {
     stub.revert()
   })
 
-  lab.test('7 - GET / route works on /is-england/{x}/{y}', async () => {
+  lab.test('GET / route works on /is-england/{x}/{y}', async () => {
     const result = { is_england: true }
 
     const isEngland = sandbox.stub(services, 'isEngland')
@@ -208,7 +208,7 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.payload).to.include('true')
   })
 
-  lab.test('8 - GET / route works for /station/{rloiId}/{direction} ', async () => {
+  lab.test('GET / route works for /station/{rloiId}/{direction} ', async () => {
     const options = {
       method: 'GET',
       url: '/station/7333/u'
@@ -265,7 +265,7 @@ lab.experiment('Happy Route tests', () => {
     stub.revert()
   })
 
-  lab.test('9 - GET / route works for /station/{id}/{direction}/telemetry ', async () => {
+  lab.test('GET / route works for /station/{id}/{direction}/telemetry ', async () => {
     const options = {
       method: 'GET',
       url: '/station/7333/u/telemetry'
@@ -290,7 +290,7 @@ lab.experiment('Happy Route tests', () => {
     stub.revert()
   })
 
-  lab.test('10 - GET / route works for /station/{telemetryId}/forecast/data ', async () => {
+  lab.test('GET / route works for /station/{telemetryId}/forecast/data ', async () => {
     const options = {
       method: 'GET',
       url: '/station/L2406/forecast/data'
@@ -350,7 +350,7 @@ lab.experiment('Happy Route tests', () => {
     stub.revert()
   })
 
-  lab.test('11 - GET / route works for /station/{id}/forecast/thresholds ', async () => {
+  lab.test('GET / route works for /station/{id}/forecast/thresholds ', async () => {
     const options = {
       method: 'GET',
       url: '/station/7225/forecast/thresholds'
@@ -364,7 +364,7 @@ lab.experiment('Happy Route tests', () => {
     stub.revert()
   })
 
-  lab.test('15 - GET /flood-guidance-statement ', async () => {
+  lab.test('GET /flood-guidance-statement ', async () => {
     const options = {
       method: 'GET',
       url: '/flood-guidance-statement'
@@ -377,7 +377,7 @@ lab.experiment('Happy Route tests', () => {
     stub.revert()
   })
 
-  lab.test('15 - GET /flood-guidance-statement error', async () => {
+  lab.test('GET /flood-guidance-statement error', async () => {
     const options = {
       method: 'GET',
       url: '/flood-guidance-statement'
@@ -390,7 +390,7 @@ lab.experiment('Happy Route tests', () => {
     stub.revert()
   })
 
-  lab.test('16 - GET / webops health check', async () => {
+  lab.test('GET / webops health check', async () => {
     const options = {
       method: 'GET',
       url: '/'
@@ -400,7 +400,7 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
   })
 
-  lab.test('17 - GET /stations-health webops health check', async () => {
+  lab.test('GET /stations-health webops health check', async () => {
     const options = {
       method: 'GET',
       url: '/stations-health'
@@ -415,7 +415,7 @@ lab.experiment('Happy Route tests', () => {
     stub.revert()
   })
 
-  lab.test('17 - GET /telemetry-health health check', async () => {
+  lab.test('GET /telemetry-health health check', async () => {
     const options = {
       method: 'GET',
       url: '/telemetry-health'
@@ -430,7 +430,7 @@ lab.experiment('Happy Route tests', () => {
     stub.revert()
   })
 
-  lab.test('18 - GET /ffoi-health health check', async () => {
+  lab.test('GET /ffoi-health health check', async () => {
     const options = {
       method: 'GET',
       url: '/ffoi-health'
@@ -445,7 +445,7 @@ lab.experiment('Happy Route tests', () => {
     stub.revert()
   })
 
-  lab.test('19 - GET / route works for /stations-within-target-area', async () => {
+  lab.test('GET / route works for /stations-within-target-area', async () => {
     const options = {
       method: 'GET',
       url: '/stations-within-target-area/053WAF117BED'
