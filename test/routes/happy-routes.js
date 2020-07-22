@@ -344,7 +344,15 @@ lab.experiment('Happy Route tests', () => {
 
     }
 
-    sandbox.stub(services, 'getFFOIThresholds').returns({})
+    sandbox.stub(services, 'getFFOIThresholds').returns([{
+      ffoi_station_threshold_id: 510,
+      ffoi_station_id: 87,
+      fwis_code: '062FWF28CHeath',
+      value: 2.7,
+      fwa_name: 'River Colne at Colney Heath',
+      fwa_type: 'w',
+      fwa_severity: -1
+    }])
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
