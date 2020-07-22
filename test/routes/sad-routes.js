@@ -275,4 +275,15 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get warnings and alerts within buffer search')
   })
+  lab.test('GET /flood-guidance-statement error', async () => {
+    const options = {
+      method: 'GET',
+      url: '/flood-guidance-statement'
+    }
+
+    sandbox.stub(s3Service, 'floodGuidanceStatement').throws(new Error())
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+  })
 })
