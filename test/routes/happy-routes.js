@@ -4,7 +4,6 @@ const lab = exports.lab = Lab.script()
 const createServer = require('../../server')
 const sinon = require('sinon')
 const services = require('../../server/services/index.js')
-const mock = require('../mock')
 const s3Service = require('../../server/services/s3')
 
 lab.experiment('Happy Route tests', () => {
@@ -25,14 +24,14 @@ lab.experiment('Happy Route tests', () => {
     await server.stop()
   })
 
-  lab.test('1 - GET / route works for /flood-area/alert/{code}', async () => {
+  lab.test('GET / route works for /flood-area/alert/{code}', async () => {
     const options = {
       method: 'GET',
       url: '/flood-area/alert/061WAF07Cole'
 
     }
 
-    const stub = mock.replace(services, 'getAlertArea', mock.makePromise(null, {
+    sandbox.stub(services, 'getAlertArea').returns({
       id: 5512,
       area: 'Thames',
       code: '061WAF07Cole',
@@ -43,21 +42,20 @@ lab.experiment('Happy Route tests', () => {
       riverorsea: 'River Cole',
       geom: '{}',
       centroid: '{\'type:\'Point\',\'coordinates:[-1.69232110253823,51.6047668691946]}'
-    }))
+    })
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
-    stub.revert()
   })
 
-  lab.test('2 - GET / route works for /flood-area/warning/{code}', async () => {
+  lab.test('GET / route works for /flood-area/warning/{code}', async () => {
     const options = {
       method: 'GET',
       url: '/flood-area/warning/034FWFDECHURCHW'
 
     }
 
-    const stub = mock.replace(services, 'getWarningArea', mock.makePromise(null, {
+    sandbox.stub(services, 'getWarningArea').returns({
       id: 22517,
       area: 'East Midlands',
       code: '034FWFDECHURCHW',
@@ -69,21 +67,20 @@ lab.experiment('Happy Route tests', () => {
       riverorsea: 'River Derwent',
       geom: '{}',
       centroid: '{"type":"Point","coordinates":[-1.33764872652984,52.8785953176783]}'
-    }))
+    })
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
-    stub.revert()
   })
 
-  lab.test('3 - GET / route works for /floods', async () => {
+  lab.test('GET / route works for /floods', async () => {
     const options = {
       method: 'GET',
       url: '/floods'
 
     }
 
-    const stub = mock.replace(services, 'getFloods', mock.makePromise(null, {
+    sandbox.stub(services, 'getFloods').returns({
       floods:
       {
         code: '061WAF07Cole',
@@ -103,37 +100,35 @@ lab.experiment('Happy Route tests', () => {
         geometry: '{\'type:\'Point\',\'coordinates:[-1.69232110253823,51.6047668691946]}'
       },
       timestamp: '1563969242'
-    }))
+    })
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
-    stub.revert()
   })
 
-  lab.test('4 - GET / route works for /floods-within/{x1}/{y1}/{x2}/{y2} ', async () => {
+  lab.test('GET / route works for /floods-within/{x1}/{y1}/{x2}/{y2} ', async () => {
     const options = {
       method: 'GET',
       url: '/floods-within/-2.5353000164031982/53.420841217041016/-2.6395580768585205/53.36753845214844'
 
     }
 
-    const stub = mock.replace(services, 'getFloodsWithin', mock.makePromise(null, {
+    sandbox.stub(services, 'getFloodsWithin').returns({
       floods: []
-    }))
+    })
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
-    stub.revert()
   })
 
-  lab.test('5 - GET / route works for /impacts-within/{x1}/{y1}/{x2}/{y2} ', async () => {
+  lab.test('GET / route works for /impacts-within/{x1}/{y1}/{x2}/{y2} ', async () => {
     const options = {
       method: 'GET',
       url: '/impacts-within/-2.5353000164031982/53.420841217041016/-2.6395580768585205/53.36753845214844'
 
     }
 
-    const stub = mock.replace(services, 'getImpactDataWithin', mock.makePromise(null, {
+    sandbox.stub(services, 'getImpactDataWithin').returns({
       impactid: 2931,
       gauge: 'River Thames at Windsor',
       rloiid: 7170,
@@ -152,21 +147,20 @@ lab.experiment('Happy Route tests', () => {
       telemetryactive: false,
       forecastmax: '3.369',
       forecastactive: false
-    }))
+    })
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
-    stub.revert()
   })
 
-  lab.test('6 - GET / route works for /impacts/{id} ', async () => {
+  lab.test('GET / route works for /impacts/{id} ', async () => {
     const options = {
       method: 'GET',
       url: '/impacts/7333'
 
     }
 
-    const stub = mock.replace(services, 'getImpactData', mock.makePromise(null, {
+    sandbox.stub(services, 'getImpactData').returns({
       impactid: 2614,
       gauge: 'River Lee at Waterhall',
       rloiid: 7333,
@@ -185,14 +179,13 @@ lab.experiment('Happy Route tests', () => {
       forecastmax: '0.104',
       forecastactive: false
 
-    }))
+    })
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
-    stub.revert()
   })
 
-  lab.test('7 - GET / route works on /is-england/{x}/{y}', async () => {
+  lab.test('GET / route works on /is-england/{x}/{y}', async () => {
     const result = { is_england: true }
 
     const isEngland = sandbox.stub(services, 'isEngland')
@@ -208,14 +201,14 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.payload).to.include('true')
   })
 
-  lab.test('8 - GET / route works for /station/{rloiId}/{direction} ', async () => {
+  lab.test('GET / route works for /station/{rloiId}/{direction} ', async () => {
     const options = {
       method: 'GET',
       url: '/station/7333/u'
 
     }
 
-    const stub = mock.replace(services, 'getStation', mock.makePromise(null, {
+    sandbox.stub(services, 'getStation').returns({
       rloi_id: 7333,
       station_type: 'S',
       qualifier: 'u',
@@ -258,139 +251,118 @@ lab.experiment('Happy Route tests', () => {
       coordinates: '{\'type:\'Point\',\'coordinates:[-0.11752917367099,51.7731387828853]}',
       geography: '0101000020E6100000AB283E556416BEBF7AE12D36F6E24940',
       centroid: '0101000020E6100000AB283E556416BEBF7AE12D36F6E24940'
-    }))
+    })
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
-    stub.revert()
   })
 
-  lab.test('9 - GET / route works for /station/{id}/{direction}/telemetry ', async () => {
+  lab.test('GET / route works for /station/{id}/{direction}/telemetry ', async () => {
     const options = {
       method: 'GET',
       url: '/station/7333/u/telemetry'
 
     }
 
-    const stub = mock.replace(services, 'getStationTelemetry', mock.makePromise(null,
-      [
-        {
-          ts: '2019-07-24T12:00Z',
-          _: 0.113,
-          err: false
-        },
-        {
-          ts: '2019-07-24T11:45Z',
-          _: 0.113,
-          err: false
-        }]))
+    sandbox.stub(services, 'getStationTelemetry').returns([
+      {
+        ts: '2019-07-24T12:00Z',
+        _: 0.113,
+        err: false
+      },
+      {
+        ts: '2019-07-24T11:45Z',
+        _: 0.113,
+        err: false
+      }])
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
-    stub.revert()
   })
 
-  lab.test('10 - GET / route works for /station/{telemetryId}/forecast/data ', async () => {
+  lab.test('GET / route works for /station/{telemetryId}/forecast/data ', async () => {
     const options = {
       method: 'GET',
       url: '/station/L2406/forecast/data'
 
     }
 
-    const stub = mock.replace(s3Service, 'ffoi', mock.makePromise(null,
-
-      {
-        $: {
-          stationReference: 'L2406',
-          region: 'North East',
-          stationName: 'York Viking Recorder',
-          key: 'fwfidata/ENT_7024/NEFSNETS20190725075356053.XML',
-          date: '2019-07-25',
-          time: '07:53:56'
-        },
-        SetofValues: [
-          {
-            $: {
-              parameter: 'Water Level',
-              qualifier: 'Stage',
-              dataType: 'Instantaneous',
-              period: '15 min',
-              characteristic: 'Forecast',
-              units: 'm',
-              startDate: '2019-07-24',
-              startTime: '07:45:00',
-              endDate: '2019-07-26',
-              endTime: '08:00:00'
-            },
-            Value: [
-              {
-                _: '0.376',
-                $: {
-                  date: '2019-07-25',
-                  time: '00:00:00',
-                  flag1: '1'
-                }
-              },
-              {
-                _: '0.376',
-                $: {
-                  date: '2019-07-25',
-                  time: '00:15:00',
-                  flag1: '1'
-                }
-
+    sandbox.stub(s3Service, 'ffoi').returns({
+      $: {
+        stationReference: 'L2406',
+        region: 'North East',
+        stationName: 'York Viking Recorder',
+        key: 'fwfidata/ENT_7024/NEFSNETS20190725075356053.XML',
+        date: '2019-07-25',
+        time: '07:53:56'
+      },
+      SetofValues: [
+        {
+          $: {
+            parameter: 'Water Level',
+            qualifier: 'Stage',
+            dataType: 'Instantaneous',
+            period: '15 min',
+            characteristic: 'Forecast',
+            units: 'm',
+            startDate: '2019-07-24',
+            startTime: '07:45:00',
+            endDate: '2019-07-26',
+            endTime: '08:00:00'
+          },
+          Value: [
+            {
+              _: '0.376',
+              $: {
+                date: '2019-07-25',
+                time: '00:00:00',
+                flag1: '1'
               }
-            ]
-          }
-        ]
-      }))
+            },
+            {
+              _: '0.376',
+              $: {
+                date: '2019-07-25',
+                time: '00:15:00',
+                flag1: '1'
+              }
+
+            }
+          ]
+        }
+      ]
+    })
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
-    stub.revert()
   })
 
-  lab.test('11 - GET / route works for /station/{id}/forecast/thresholds ', async () => {
+  lab.test('GET / route works for /station/{id}/forecast/thresholds ', async () => {
     const options = {
       method: 'GET',
       url: '/station/7225/forecast/thresholds'
 
     }
 
-    const stub = mock.replace(services, 'getFFOIThresholds', mock.makePromise(null, {}))
+    sandbox.stub(services, 'getFFOIThresholds').returns({})
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
-    stub.revert()
   })
 
-  lab.test('15 - GET /flood-guidance-statement ', async () => {
+  lab.test('GET /flood-guidance-statement ', async () => {
     const options = {
       method: 'GET',
       url: '/flood-guidance-statement'
     }
 
-    const stub = mock.replace(s3Service, 'floodGuidanceStatement', mock.makePromise(null, {}))
+    sandbox.stub(s3Service, 'floodGuidanceStatement').returns({})
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
-    stub.revert()
   })
 
-  lab.test('15 - GET /flood-guidance-statement error', async () => {
-    const options = {
-      method: 'GET',
-      url: '/flood-guidance-statement'
-    }
-
-    const stub = mock.replace(s3Service, 'floodGuidanceStatement', mock.makePromise(new Error('test error')))
-
-    const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(400)
-    stub.revert()
-  })
-
-  lab.test('16 - GET / webops health check', async () => {
+  lab.test('GET / webops health check', async () => {
     const options = {
       method: 'GET',
       url: '/'
@@ -400,63 +372,96 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
   })
 
-  lab.test('17 - GET /stations-health webops health check', async () => {
+  lab.test('GET /stations-health webops health check', async () => {
     const options = {
       method: 'GET',
       url: '/stations-health'
     }
 
-    const stub = mock.replace(services, 'getStationsHealth', mock.makePromise(null, {
-      rows: []
-    }))
+    sandbox.stub(services, 'getStationsHealth').returns({ rows: [] })
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
-    stub.revert()
   })
 
-  lab.test('17 - GET /telemetry-health health check', async () => {
+  lab.test('GET /telemetry-health health check', async () => {
     const options = {
       method: 'GET',
       url: '/telemetry-health'
     }
 
-    const stub = mock.replace(services, 'getTelemetryHealth', mock.makePromise(null, {
-      rows: []
-    }))
+    sandbox.stub(services, 'getTelemetryHealth').returns({ rows: [] })
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
-    stub.revert()
   })
 
-  lab.test('18 - GET /ffoi-health health check', async () => {
+  lab.test('GET /ffoi-health health check', async () => {
     const options = {
       method: 'GET',
       url: '/ffoi-health'
     }
 
-    const stub = mock.replace(services, 'getFfoiHealth', mock.makePromise(null, {
-      rows: []
-    }))
+    sandbox.stub(services, 'getFfoiHealth').returns({ rows: [] })
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
-    stub.revert()
   })
 
-  lab.test('19 - GET / route works for /stations-within-target-area', async () => {
+  lab.test('GET / route works for /stations-within-target-area', async () => {
     const options = {
       method: 'GET',
       url: '/stations-within-target-area/053WAF117BED'
     }
 
-    const stub = mock.replace(services, 'getStationsWithinTargetArea', mock.makePromise(null, {
-      rows: []
-    }))
+    sandbox.stub(services, 'getStationsWithinTargetArea').returns({ rows: [] })
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
-    stub.revert()
+  })
+
+  lab.test('GET / route works for /river/{riverid}', async () => {
+    const options = {
+      method: 'GET',
+      url: '/river/123'
+    }
+
+    sandbox.stub(services, 'getRiverById').returns([])
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+  lab.test('GET / route works for /river-station-by-station-id/{stationId}', async () => {
+    const options = {
+      method: 'GET',
+      url: '/river-station-by-station-id/123'
+    }
+
+    sandbox.stub(services, 'getRiverStationByStationId').returns([])
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+  lab.test('GET / route works for /stations-overview', async () => {
+    const options = {
+      method: 'GET',
+      url: '/stations-overview'
+    }
+
+    sandbox.stub(services, 'getStationsOverview').returns([])
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+  lab.test('GET / route works for /warnings-alerts-within-station-buffer/{long}/{lat}', async () => {
+    const options = {
+      method: 'GET',
+      url: '/warnings-alerts-within-station-buffer/1/1'
+    }
+
+    sandbox.stub(services, 'getWarningsAlertsWithinStationBuffer').returns([])
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
   })
 })

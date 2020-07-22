@@ -4,7 +4,6 @@ const lab = exports.lab = Lab.script()
 const createServer = require('../../server')
 const sinon = require('sinon')
 const services = require('../../server/services/index.js')
-const mock = require('../mock')
 
 lab.experiment('404 Route tests', () => {
   let server
@@ -31,12 +30,11 @@ lab.experiment('404 Route tests', () => {
 
     }
 
-    const stub = mock.replace(services, 'getAlertArea', mock.makePromise(null))
+    sandbox.stub(services, 'getAlertArea')
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(404)
     Code.expect(response.payload).to.include('Alert area 061WAF07Cole')
-    stub.revert()
   })
 
   lab.test('2 - null return works for /flood-area/warning/{code}', async () => {
@@ -46,12 +44,11 @@ lab.experiment('404 Route tests', () => {
 
     }
 
-    const stub = mock.replace(services, 'getWarningArea', mock.makePromise(null))
+    sandbox.stub(services, 'getWarningArea')
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(404)
     Code.expect(response.payload).to.include('Warning area 034FWFDECHURCHW')
-    stub.revert()
   })
 
   lab.test('3 - null return works for /station/{rloiId}/{direction} ', async () => {
@@ -61,11 +58,10 @@ lab.experiment('404 Route tests', () => {
 
     }
 
-    const stub = mock.replace(services, 'getStation', mock.makePromise(null))
+    sandbox.stub(services, 'getStation')
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(404)
     Code.expect(response.payload).to.include('Station 7333 (u)')
-    stub.revert()
   })
 })
