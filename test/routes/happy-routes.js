@@ -459,4 +459,49 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
     stub.revert()
   })
+
+  lab.test('GET / route works for /river/{riverid}', async () => {
+    const options = {
+      method: 'GET',
+      url: '/river/123'
+    }
+
+    sandbox.stub(services, 'getRiverById').returns([])
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+  lab.test('GET / route works for /river-station-by-station-id/{stationId}', async () => {
+    const options = {
+      method: 'GET',
+      url: '/river-station-by-station-id/123'
+    }
+
+    sandbox.stub(services, 'getRiverStationByStationId').returns([])
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+  lab.test('GET / route works for /stations-overview', async () => {
+    const options = {
+      method: 'GET',
+      url: '/stations-overview'
+    }
+
+    sandbox.stub(services, 'getStationsOverview').returns([])
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+  lab.test('GET / route works for /warnings-alerts-within-station-buffer/{long}/{lat}', async () => {
+    const options = {
+      method: 'GET',
+      url: '/warnings-alerts-within-station-buffer/1/1'
+    }
+
+    sandbox.stub(services, 'getWarningsAlertsWithinStationBuffer').returns([])
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
 })

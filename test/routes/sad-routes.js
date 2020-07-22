@@ -218,4 +218,61 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get telemetry health')
   })
+  lab.test('GET erroring works for /river/{riverId} ', async () => {
+    sandbox.stub(services, 'getRiverById').throws(new Error())
+    const options = {
+      method: 'GET',
+      url: '/river/123'
+
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get stations by river')
+  })
+  lab.test('GET erroring works for /river-station-by-station-id/{stationId}', async () => {
+    sandbox.stub(services, 'getRiverStationByStationId').throws(new Error())
+    const options = {
+      method: 'GET',
+      url: '/river-station-by-station-id/123'
+
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get River Stations')
+  })
+  lab.test('GET erroring works for /stations-overview', async () => {
+    sandbox.stub(services, 'getStationsOverview').throws(new Error())
+    const options = {
+      method: 'GET',
+      url: '/stations-overview'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get stations overview data')
+  })
+  lab.test('GET erroring works for /stations-within-target-area/{taCode}', async () => {
+    sandbox.stub(services, 'getStationsWithinTargetArea').throws(new Error())
+    const options = {
+      method: 'GET',
+      url: '/stations-within-target-area/TA1'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get stations in target area search')
+  })
+  lab.test('GET erroring works for /warnings-alerts-within-station-buffer/{long}/{lat}', async () => {
+    sandbox.stub(services, 'getWarningsAlertsWithinStationBuffer').throws(new Error())
+    const options = {
+      method: 'GET',
+      url: '/warnings-alerts-within-station-buffer/1/1'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get warnings and alerts within buffer search')
+  })
 })
