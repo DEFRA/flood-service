@@ -10,7 +10,7 @@ For team members these can be found in the lfwconfig repository
 
 | name     | description      | required | default |            valid            | notes |
 |----------|------------------|:--------:|---------|:---------------------------:|-------|
-| NODE_ENV | Node environment |    no    |dev| dev,tst,test,prd |       |
+| NODE_ENV | Node environment |    no    |production| development,dev,test,tst,production |       |
 | PORT     | Port number      |    no    | 3000    |                             |       |
 | FLOOD_SERVICE_CONNECTION_STRING | PG Connection String |    yes    |         |  |       |
 | FLOOD_SERVICE_S3_ACCESS_KEY     | S3 Access Key      |    yes    |     | |       |

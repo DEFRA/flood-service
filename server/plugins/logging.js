@@ -1,3 +1,5 @@
+const isProd = require('../config').isProd
+
 module.exports = {
   plugin: require('@hapi/good'),
   options: {
@@ -11,10 +13,10 @@ module.exports = {
           name: 'Squeeze',
           args: [
             {
-              log: '*',
+              log: isProd ? 'error' : '*',
               error: '*',
-              response: '*',
-              request: '*'
+              response: isProd ? 'error' : '*',
+              request: isProd ? 'error' : '*'
             }
           ]
         },
