@@ -372,6 +372,16 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
   })
 
+  lab.test('GET /robots.txt', async () => {
+    const options = {
+      method: 'GET',
+      url: '/robots.txt'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+
   lab.test('GET /stations-health webops health check', async () => {
     const options = {
       method: 'GET',
