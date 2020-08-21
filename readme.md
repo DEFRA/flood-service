@@ -11,12 +11,12 @@ For team members these can be found in the lfwconfig repository
 | name     | description      | required | default |            valid            | notes |
 |----------|------------------|:--------:|---------|:---------------------------:|-------|
 | NODE_ENV | Node environment |    no    |production| development,dev,test,tst,production |       |
-| PORT     | Port number      |    no    | 3000    |                             |       |
+| PORT     | Port number      |    no    | 8050    |                             |       |
 | FLOOD_SERVICE_CONNECTION_STRING | PG Connection String |    yes    |         |  |       |
 | FLOOD_SERVICE_S3_ACCESS_KEY     | S3 Access Key      |    yes    |     | |       |
 | FLOOD_SERVICE_S3_SECRET_ACCESS_KEY | S3 Secret Key |    yes    |         |  |       |
 | FLOOD_SERVICE_S3_BUCKET     | S3 Bucket      |    yes    |     ||       |
-| FLOOD_SERVICE_S3_TIMEOUT     | S3 Http Timeout      |    no    | 10000 (10s)    ||       |
+| FLOOD_SERVICE_S3_TIMEOUT     | S3 HTTP Timeout      |    no    | 10000 (10s)    ||       |
 
 
 ## Prerequisites

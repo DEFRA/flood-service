@@ -1,6 +1,5 @@
 const joi = require('@hapi/joi')
 
-// Define config schema
 const schema = joi.object({
   port: joi.number().default(8050),
   env: joi.string().valid('development', 'dev', 'test', 'tst', 'production').default('production'),
@@ -13,7 +12,6 @@ const schema = joi.object({
   })
 })
 
-// Build config
 const config = {
   port: process.env.PORT,
   env: process.env.NODE_ENV,
@@ -26,20 +24,16 @@ const config = {
   }
 }
 
-// Validate config
 const result = schema.validate(config, {
   abortEarly: false
 })
 
-// Throw if config is invalid
 if (result.error) {
   throw new Error(`The server config is invalid. ${result.error.message}`)
 }
 
-// Use the joi validated value
 const value = result.value
 
-// Add some helper props
 value.isDev = value.env !== 'production'
 value.isProd = value.env === 'production'
 

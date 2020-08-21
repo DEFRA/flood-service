@@ -12,7 +12,6 @@ function request (method, url, options) {
         const err = (payload || new Error('Unknown error'))
         throw err
       }
-
       return payload
     })
 }
