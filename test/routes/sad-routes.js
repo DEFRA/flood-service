@@ -264,11 +264,11 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get stations in target area search')
   })
-  lab.test('GET erroring works for /warnings-alerts-within-station-buffer/{long}/{lat}', async () => {
+  lab.test('GET erroring works for /warnings-alerts-within-station-buffer/{rloiId}', async () => {
     sandbox.stub(services, 'getWarningsAlertsWithinStationBuffer').throws(new Error())
     const options = {
       method: 'GET',
-      url: '/warnings-alerts-within-station-buffer/1/1'
+      url: '/warnings-alerts-within-station-buffer/1001'
     }
 
     const response = await server.inject(options)
