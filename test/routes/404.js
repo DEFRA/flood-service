@@ -9,7 +9,6 @@ lab.experiment('404 Route tests', () => {
   let server
   let sandbox
 
-  // Create server before each test
   lab.before(async () => {
     sandbox = sinon.createSandbox()
     server = await createServer()
@@ -18,12 +17,12 @@ lab.experiment('404 Route tests', () => {
   lab.afterEach(async () => {
     sandbox.restore()
   })
-  // Stop server after the tests.
+
   lab.after(async () => {
     await server.stop()
   })
 
-  lab.test('1 - null return works for /flood-area/alert/{code}', async () => {
+  lab.test('null return works for /flood-area/alert/{code}', async () => {
     const options = {
       method: 'GET',
       url: '/flood-area/alert/061WAF07Cole'
@@ -36,8 +35,7 @@ lab.experiment('404 Route tests', () => {
     Code.expect(response.statusCode).to.equal(404)
     Code.expect(response.payload).to.include('Alert area 061WAF07Cole')
   })
-
-  lab.test('2 - null return works for /flood-area/warning/{code}', async () => {
+  lab.test('null return works for /flood-area/warning/{code}', async () => {
     const options = {
       method: 'GET',
       url: '/flood-area/warning/034FWFDECHURCHW'
@@ -50,8 +48,7 @@ lab.experiment('404 Route tests', () => {
     Code.expect(response.statusCode).to.equal(404)
     Code.expect(response.payload).to.include('Warning area 034FWFDECHURCHW')
   })
-
-  lab.test('3 - null return works for /station/{rloiId}/{direction} ', async () => {
+  lab.test('null return works for /station/{rloiId}/{direction} ', async () => {
     const options = {
       method: 'GET',
       url: '/station/7333/u'

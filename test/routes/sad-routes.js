@@ -10,7 +10,6 @@ lab.experiment('Sad Route tests', () => {
   let server
   let sandbox
 
-  // Create server before each test
   lab.before(async () => {
     sandbox = sinon.createSandbox()
     server = await createServer()
@@ -19,7 +18,7 @@ lab.experiment('Sad Route tests', () => {
   lab.afterEach(async () => {
     sandbox.restore()
   })
-  // Stop server after the tests.
+
   lab.after(async () => {
     await server.stop()
   })
@@ -36,7 +35,6 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get alert area')
   })
-
   lab.test('GET erroring works for /flood-area/warning/{code}', async () => {
     sandbox.stub(services, 'getWarningArea').throws(new Error())
     const options = {
@@ -49,7 +47,6 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get warning area')
   })
-
   lab.test('GET erroring works for /floods', async () => {
     sandbox.stub(services, 'getFloods').throws(new Error())
     const options = {
@@ -62,7 +59,6 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get floods')
   })
-
   lab.test('GET erroring works for /floods-within/{x1}/{y1}/{x2}/{y2} ', async () => {
     sandbox.stub(services, 'getFloodsWithin').throws(new Error())
     const options = {
@@ -75,7 +71,6 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get floods search')
   })
-
   lab.test('GET erroring works for /impacts-within/{x1}/{y1}/{x2}/{y2} ', async () => {
     sandbox.stub(services, 'getImpactDataWithin').throws(new Error())
     const options = {
@@ -88,7 +83,6 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get impact data')
   })
-
   lab.test('GET erroring works for /impacts/{id} ', async () => {
     sandbox.stub(services, 'getImpactData').throws(new Error())
     const options = {
@@ -101,7 +95,6 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get impact data')
   })
-
   lab.test('GET erroring works on /is-england/{x}/{y}', async () => {
     sandbox.stub(services, 'isEngland').throws(new Error())
 
@@ -114,7 +107,6 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get isEngland')
   })
-
   lab.test('GET erroring works for /station/{rloiId}/{direction} ', async () => {
     sandbox.stub(services, 'getStation').throws(new Error())
     const options = {
@@ -127,7 +119,6 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get station data')
   })
-
   lab.test('GET erroring works for /station/{id}/{direction}/telemetry ', async () => {
     sandbox.stub(services, 'getStationTelemetry').throws(new Error())
     const options = {
@@ -140,7 +131,6 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get telemetry data')
   })
-
   lab.test('GET erroring works for /station/{telemetryId}/forecast/data ', async () => {
     sandbox.stub(s3Service, 'ffoi').throws(new Error())
     const options = {
@@ -153,7 +143,6 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get forecast data')
   })
-
   lab.test('GET erroring works for /station/{id}/forecast/thresholds ', async () => {
     sandbox.stub(services, 'getFFOIThresholds').throws(new Error())
     const options = {
@@ -166,7 +155,6 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get ffoi threshold data')
   })
-
   lab.test('GET erroring works for /stations-within/{x1}/{y1}/{x2}/{y2} ', async () => {
     sandbox.stub(services, 'getStationsWithin').throws(new Error())
     const options = {
@@ -179,7 +167,6 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get stations search')
   })
-
   lab.test('GET erroring works for /stations-health ', async () => {
     sandbox.stub(services, 'getStationsHealth').throws(new Error())
     const options = {
@@ -192,7 +179,6 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get station health')
   })
-
   lab.test('GET erroring works for /ffoi-health ', async () => {
     sandbox.stub(services, 'getFfoiHealth').throws(new Error())
     const options = {
@@ -205,7 +191,6 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get ffoi health')
   })
-
   lab.test('GET erroring works for /telemetry-health ', async () => {
     sandbox.stub(services, 'getTelemetryHealth').throws(new Error())
     const options = {

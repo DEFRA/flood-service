@@ -10,7 +10,6 @@ lab.experiment('Happy Route tests', () => {
   let server
   let sandbox
 
-  // Create server before each test
   lab.before(async () => {
     sandbox = sinon.createSandbox()
     server = await createServer()
@@ -19,7 +18,7 @@ lab.experiment('Happy Route tests', () => {
   lab.afterEach(async () => {
     sandbox.restore()
   })
-  // Stop server after the tests.
+
   lab.after(async () => {
     await server.stop()
   })
@@ -47,7 +46,6 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-
   lab.test('GET / route works for /flood-area/warning/{code}', async () => {
     const options = {
       method: 'GET',
@@ -72,7 +70,6 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-
   lab.test('GET / route works for /floods', async () => {
     const options = {
       method: 'GET',
@@ -105,7 +102,6 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-
   lab.test('GET / route works for /floods-within/{x1}/{y1}/{x2}/{y2} ', async () => {
     const options = {
       method: 'GET',
@@ -120,7 +116,6 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-
   lab.test('GET / route works for /impacts-within/{x1}/{y1}/{x2}/{y2} ', async () => {
     const options = {
       method: 'GET',
@@ -152,7 +147,6 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-
   lab.test('GET / route works for /impacts/{id} ', async () => {
     const options = {
       method: 'GET',
@@ -184,7 +178,6 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-
   lab.test('GET / route works on /is-england/{x}/{y}', async () => {
     const result = { is_england: true }
 
@@ -200,7 +193,6 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
     Code.expect(response.payload).to.include('true')
   })
-
   lab.test('GET / route works for /station/{rloiId}/{direction} ', async () => {
     const options = {
       method: 'GET',
@@ -256,7 +248,6 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-
   lab.test('GET / route works for /station/{id}/{direction}/telemetry ', async () => {
     const options = {
       method: 'GET',
@@ -279,7 +270,6 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-
   lab.test('GET / route works for /station/{telemetryId}/forecast/data ', async () => {
     const options = {
       method: 'GET',
@@ -336,7 +326,6 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-
   lab.test('GET / route works for /station/{id}/forecast/thresholds ', async () => {
     const options = {
       method: 'GET',
@@ -349,7 +338,6 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-
   lab.test('GET /flood-guidance-statement ', async () => {
     const options = {
       method: 'GET',
@@ -361,7 +349,6 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-
   lab.test('GET / webops health check', async () => {
     const options = {
       method: 'GET',
@@ -371,7 +358,6 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-
   lab.test('GET /stations-health webops health check', async () => {
     const options = {
       method: 'GET',
@@ -383,7 +369,6 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-
   lab.test('GET /telemetry-health health check', async () => {
     const options = {
       method: 'GET',
@@ -395,7 +380,6 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-
   lab.test('GET /ffoi-health health check', async () => {
     const options = {
       method: 'GET',
@@ -407,7 +391,6 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-
   lab.test('GET / route works for /stations-within-target-area', async () => {
     const options = {
       method: 'GET',
@@ -419,7 +402,6 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-
   lab.test('GET / route works for /river/{riverid}', async () => {
     const options = {
       method: 'GET',
