@@ -453,10 +453,10 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-  lab.test('GET / route works for /warnings-alerts-within-station-buffer/{long}/{lat}', async () => {
+  lab.test('GET / route works for /warnings-alerts-within-station-buffer/{rloiId}', async () => {
     const options = {
       method: 'GET',
-      url: '/warnings-alerts-within-station-buffer/1/1'
+      url: '/warnings-alerts-within-station-buffer/1001'
     }
 
     sandbox.stub(services, 'getWarningsAlertsWithinStationBuffer').returns([])

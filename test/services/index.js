@@ -782,14 +782,13 @@ lab.experiment('Services tests', () => {
       await Code.expect(result[0].ta_code).to.equal('061WAF06Coln')
     })
     lab.test('should pass query and coords', async () => {
-      const x = 1
-      const y = 2
+      const rloiId = 1001
       const mock = sinon.mock(db)
         .expects('query')
-        .withArgs('getWarningsAlertsWithinStationBuffer', [x, y])
+        .withArgs('getWarningsAlertsWithinStationBuffer', [rloiId])
         .once()
         .returns(getWarningsAlertsWithinStationBuffer())
-      await services.getWarningsAlertsWithinStationBuffer(x, y)
+      await services.getWarningsAlertsWithinStationBuffer(rloiId)
       mock.verify()
     })
   })

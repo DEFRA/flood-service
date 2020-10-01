@@ -55,8 +55,8 @@ module.exports = {
     return targetArea
   },
 
-  async getWarningsAlertsWithinStationBuffer (long, lat) {
-    const { rows } = await db.query('getWarningsAlertsWithinStationBuffer', [long, lat])
+  async getWarningsAlertsWithinStationBuffer (rloiId) {
+    const { rows } = await db.query('getWarningsAlertsWithinStationBuffer', [rloiId])
     const warningsAlerts = rows
     return warningsAlerts
   },
