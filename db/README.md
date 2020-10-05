@@ -1,5 +1,5 @@
 # Backup a shared database (e.g. dev or test)
-`pg_dump -h {hostname} -U u_flood -d flooddev -f flooddev.sql.bak -n u_flood --no-acl --no-owner`
+`pg_dump -h {hostname} -U u_flood -d flooddev -f flooddev.sql.bak -n u_flood
 
 Note 1: hostname would be, for example, the hostname of the dev RDS db in AWS
 Note 2: the password for user u_flood is available on request
