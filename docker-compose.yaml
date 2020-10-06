@@ -1,0 +1,40 @@
+version: "3"
+services:
+  flood-service:
+    build:
+      context: .
+    image: flood-service
+    depends_on:
+      - postgres
+    command:
+      - node
+      # - "--inspect-brk=0.0.0.0"
+      - "index.js"
+    environment:
+      NODE_ENV: "dev"
+      PORT: "8050"
+      FLOOD_SERVICE_CONNECTION_STRING: "postgres://u_flood:fl00d@postgres:5432/flooddev"
+      FLOOD_SERVICE_S3_ACCESS_KEY: ${FLOOD_SERVICE_S3_ACCESS_KEY}
+      FLOOD_SERVICE_S3_SECRET_ACCESS_KEY: ${FLOOD_SERVICE_S3_SECRET_ACCESS_KEY}
+      FLOOD_SERVICE_S3_BUCKET: ${FLOOD_SERVICE_S3_BUCKET}
+    ports:
+      - "8050:8050"
+      - "9229:9229"
+  postgres:
+    build:
+      context: db/.
+    image: postgres10.11-postgis2.4
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+      - ./db/flooddev.sql.bak:/flooddev-backup.sql
+      - flood-tables-volume:/data/flood_tables
+      - flood-indexes-volume:/data/flood_indexes
+
+volumes:
+  flood-tables-volume:
+  flood-indexes-volume:

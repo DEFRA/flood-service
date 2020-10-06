@@ -11,11 +11,11 @@ CREATE DATABASE flooddev WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE 
 ALTER DATABASE flooddev SET search_path=public,u_flood,postgis,topology; 
 
 \c flooddev
-/* \c flooddev rds_superuser */
-/* show search_path; */
 
 CREATE SCHEMA postgis AUTHORIZATION rds_superuser;
 GRANT ALL ON SCHEMA postgis TO u_flood;
 CREATE EXTENSION postgis WITH SCHEMA postgis;
 CREATE SCHEMA topology AUTHORIZATION rds_superuser;
 CREATE EXTENSION postgis_topology WITH SCHEMA topology;
+
+\i flooddev-backup.sql

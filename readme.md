@@ -36,9 +36,27 @@ $ npm i
 $ npm run test
 ```
 
-## Running the application
+## Running the application locally
 
 ```
 $ npm i
 $ node index.js
 ```
+
+## Running the application and db in docker
+
+# Get a backup copy of a shared database (e.g. dev or test)
+`pg_dump -h {hostname} -U u_flood -d flooddev -f flooddev.sql.bak -n u_flood
+
+Note 1: hostname would be, for example, the hostname of the dev RDS db in AWS
+Note 2: the password for user u_flood is available on request
+
+# Build flood service and populated Postgres 10.11/Postgis 2.4.4 docker image and run it
+`docker-compose up --build -d`
+
+Note 1: Postgres runs the ./setup.sql script on DB initialisation. This sets up users, schemas, etc
+required by the backup script and then runs the flooddev.sql.bak SQL script.
+Note 2: The service will be available on http://localhost:8050/
+
+# Tear down app and db
+`docker-compose down -v`

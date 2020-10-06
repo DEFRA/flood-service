@@ -10,6 +10,7 @@ services:
       - "5432:5432"
     volumes:
       - ./setup.sql:/docker-entrypoint-initdb.d/setup.sql
+      - ./flooddev.sql.bak:/flooddev-backup.sql
       - flood-tables-volume:/data/flood_tables
       - flood-indexes-volume:/data/flood_indexes
 
