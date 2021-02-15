@@ -1,5 +1,0 @@
-####### If table already exists then we need to truncate the table (ie if this is not the first load)
-psql ${FLOOD_SERVICE_CONNECTION_STRING} -c "TRUNCATE TABLE u_flood.river_stations;"
-
-###### Import data into river_stations
-psql ${FLOOD_SERVICE_CONNECTION_STRING} -c "\copy u_flood.river_stations(id, name, rloi_id, rank) from /home/tedd/flood-service/data-load/rivers/river-stations.csv with delimiter as ',' CSV HEADER"
