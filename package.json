@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "standard",
-    "unit-test": "lab -v -c -r console -o stdout -r lcov -o lcov.info",
+    "unit-test": "lab -v -c -r console -o stdout -r lcov -o coverage/lcov.info",
     "test": "npm run lint && npm run unit-test"
   },
   "author": "",
