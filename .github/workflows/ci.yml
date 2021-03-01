@@ -1,0 +1,30 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+
+            - name: Install nodejs
+              uses: actions/setup-node@v1
+              with:
+                node-version: "12.x"
+            
+            - name: Install node dependencies
+              run: npm ci
+
+            - name: Run linting
+              run: npm run lint
+
+            - name: Run unit tests
+              env:
+                FLOOD_SERVICE_CONNECTION_STRING: "test_string"
+                FLOOD_SERVICE_S3_ACCESS_KEY: "test_string"
+                FLOOD_SERVICE_S3_BUCKET: "test_string"
+                FLOOD_SERVICE_S3_SECRET_ACCESS_KEY: "test_string"
+              run: npm run unit-test
