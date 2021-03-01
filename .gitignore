@@ -4,3 +4,4 @@ node_modules
 npm-debug.log
 server/public/build
 lcov.info
+coverage

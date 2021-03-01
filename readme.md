@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/DEFRA/flood-service.svg?branch=master)](https://travis-ci.com/DEFRA/flood-service)[![Maintainability](https://api.codeclimate.com/v1/badges/5984525ed1ab73b76869/maintainability)](https://codeclimate.com/github/DEFRA/flood-service/maintainability)[![Test Coverage](https://api.codeclimate.com/v1/badges/5984525ed1ab73b76869/test_coverage)](https://codeclimate.com/github/DEFRA/flood-service/test_coverage)
+![Build status](https://github.com/DEFRA/flood-service/actions/workflows/ci.yml/badge.svg)[![Maintainability](https://api.codeclimate.com/v1/badges/5984525ed1ab73b76869/maintainability)](https://codeclimate.com/github/DEFRA/flood-service/maintainability)[![Test Coverage](https://api.codeclimate.com/v1/badges/5984525ed1ab73b76869/test_coverage)](https://codeclimate.com/github/DEFRA/flood-service/test_coverage)
 
 # flood-service
 

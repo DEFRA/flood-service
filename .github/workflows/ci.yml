@@ -1,0 +1,44 @@
+name: CI
+
+on: [push, pull_request]
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+
+            - name: Install nodejs
+              uses: actions/setup-node@v1
+              with:
+                node-version: "12.x"
+            
+            - name: Install node dependencies
+              run: npm ci
+
+            - name: Run linting
+              run: npm run lint
+
+            - name: Analyse code quality
+              uses: sonarsource/sonarcloud-github-action@master
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+              with:
+                args: >
+                  -Dsonar.organization=defra
+                  -Dsonar.projectKey=DEFRA_flood-service
+
+            - name: Run unit tests
+              env:
+                FLOOD_SERVICE_CONNECTION_STRING: "${{ secrets.FLOOD_SERVICE_CONNECTION_STRING }}"
+                FLOOD_SERVICE_S3_ACCESS_KEY: "${{ secrets.FLOOD_SERVICE_S3_ACCESS_KEY }}"
+                FLOOD_SERVICE_S3_BUCKET: "${{ secrets.FLOOD_SERVICE_S3_BUCKET }}"
+                FLOOD_SERVICE_S3_SECRET_ACCESS_KEY: "${{ secrets.FLOOD_SERVICE_S3_SECRET_ACCESS_KEY }}"
+              run: npm run unit-test
+
+            - name: Publish test coverage
+              uses: paambaati/codeclimate-action@v2.7.5
+              env:
+                CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
