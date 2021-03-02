@@ -22,6 +22,21 @@ jobs:
             - name: Run linting
               run: npm run lint
 
+            # This includes an extra run step. The sonarcloud analysis will be run in a docker container with the current
+            # folder mounted as `/github/workspace`. The problem is when the lcov.info file is generated it will reference the
+            # code in the current folder. So to enable sonarcloud to matchup code coverage with the files we use sed to update
+            # the references in lcov.info
+            # https://community.sonarsource.com/t/code-coverage-doesnt-work-with-github-action/16747/6
+            - name: Run unit tests
+              env:
+                FLOOD_SERVICE_CONNECTION_STRING: "${{ secrets.FLOOD_SERVICE_CONNECTION_STRING }}"
+                FLOOD_SERVICE_S3_ACCESS_KEY: "${{ secrets.FLOOD_SERVICE_S3_ACCESS_KEY }}"
+                FLOOD_SERVICE_S3_BUCKET: "${{ secrets.FLOOD_SERVICE_S3_BUCKET }}"
+                FLOOD_SERVICE_S3_SECRET_ACCESS_KEY: "${{ secrets.FLOOD_SERVICE_S3_SECRET_ACCESS_KEY }}"
+              run: |
+                npm run unit-test
+                sed -i 's/\/home\/runner\/work\/flood-service\/flood-service\//\/github\/workspace\//g' coverage/lcov.info
+
             - name: Analyse code quality
               uses: sonarsource/sonarcloud-github-action@master
               env:
@@ -31,16 +46,6 @@ jobs:
                 args: >
                   -Dsonar.organization=defra
                   -Dsonar.projectKey=DEFRA_flood-service
-
-            - name: Run unit tests
-              env:
-                FLOOD_SERVICE_CONNECTION_STRING: "${{ secrets.FLOOD_SERVICE_CONNECTION_STRING }}"
-                FLOOD_SERVICE_S3_ACCESS_KEY: "${{ secrets.FLOOD_SERVICE_S3_ACCESS_KEY }}"
-                FLOOD_SERVICE_S3_BUCKET: "${{ secrets.FLOOD_SERVICE_S3_BUCKET }}"
-                FLOOD_SERVICE_S3_SECRET_ACCESS_KEY: "${{ secrets.FLOOD_SERVICE_S3_SECRET_ACCESS_KEY }}"
-              run: npm run unit-test
-
-            - name: Publish test coverage
-              uses: paambaati/codeclimate-action@v2.7.5
-              env:
-                CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+                  -Dsonar.exclusions=**/node_modules/**,**/test/**,**/test-output/**
+                  -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+                  -Dsonar.javascript.exclusions=**/node_modules/**,**/test/**,**/test-output/**
