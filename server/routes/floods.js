@@ -4,7 +4,7 @@ const floodsService = require('../services/index')
 module.exports = {
   method: 'GET',
   path: '/floods',
-  handler: async (request, h) => {
+  handler: async () => {
     try {
       return await floodsService.getFloods()
     } catch (err) {

@@ -1,4 +1,4 @@
-![Build status](https://github.com/DEFRA/flood-service/actions/workflows/ci.yml/badge.svg)[![Maintainability](https://api.codeclimate.com/v1/badges/5984525ed1ab73b76869/maintainability)](https://codeclimate.com/github/DEFRA/flood-service/maintainability)[![Test Coverage](https://api.codeclimate.com/v1/badges/5984525ed1ab73b76869/test_coverage)](https://codeclimate.com/github/DEFRA/flood-service/test_coverage)
+![Build status](https://github.com/DEFRA/flood-service/actions/workflows/ci.yml/badge.svg)[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DEFRA_flood-service&metric=alert_status)](https://sonarcloud.io/dashboard?id=DEFRA_flood-service)[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=DEFRA_flood-service&metric=coverage)](https://sonarcloud.io/dashboard?id=DEFRA_flood-service)
 
 # flood-service
 

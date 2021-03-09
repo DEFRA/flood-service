@@ -25,9 +25,9 @@ module.exports = {
       .promise()
       .then(data => JSON.parse(data.Body))
   },
-  ffoi: (id) => {
+  ffoi: id => {
     const s3 = new AWS.S3()
-    const params = { Bucket: config.bucket, Key: 'ffoi/' + id + '.json' }
+    const params = { Bucket: config.bucket, Key: `ffoi/${id}.json` }
 
     return s3.getObject(params)
       .promise()

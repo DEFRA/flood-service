@@ -5,7 +5,7 @@ const floodsService = require('../services/index')
 module.exports = {
   method: 'GET',
   path: '/impacts-within/{x1}/{y1}/{x2}/{y2}',
-  handler: async (request, h) => {
+  handler: async request => {
     try {
       const { x1, y1, x2, y2 } = request.params
       return await floodsService.getImpactDataWithin([x1, y1, x2, y2])

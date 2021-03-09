@@ -7,7 +7,7 @@ module.exports = {
   options: {
     description: 'Get the flood guidance statement'
   },
-  handler: async (request, h) => {
+  handler: async () => {
     try {
       return await s3Service.floodGuidanceStatement()
     } catch (err) {

@@ -57,8 +57,7 @@ module.exports = {
 
   async getWarningsAlertsWithinStationBuffer (rloiId) {
     const { rows } = await db.query('getWarningsAlertsWithinStationBuffer', [rloiId])
-    const warningsAlerts = rows
-    return warningsAlerts
+    return rows
   },
 
   async getRiverById (riverId) {
