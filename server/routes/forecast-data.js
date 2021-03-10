@@ -5,7 +5,7 @@ const s3Service = require('../services/s3')
 module.exports = {
   method: 'GET',
   path: '/station/{telemetryId}/forecast/data',
-  handler: async (request, h) => {
+  handler: async request => {
     try {
       return await s3Service.ffoi(request.params.telemetryId)
     } catch (err) {

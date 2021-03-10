@@ -5,7 +5,7 @@ const floodsService = require('../services/index')
 module.exports = {
   method: 'GET',
   path: '/station/{rloiId}/{direction}/telemetry',
-  handler: async (request, h) => {
+  handler: async request => {
     try {
       const { rloiId, direction } = request.params
       return await floodsService.getStationTelemetry(rloiId, direction)

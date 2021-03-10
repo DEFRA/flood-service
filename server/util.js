@@ -9,8 +9,7 @@ function request (method, url, options) {
       const payload = response.payload
 
       if (res.statusCode !== 200) {
-        const err = (payload || new Error('Unknown error'))
-        throw err
+        throw payload || new Error('Unknown error')
       }
 
       return payload

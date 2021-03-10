@@ -5,7 +5,7 @@ const floodsService = require('../services/index')
 module.exports = {
   method: 'GET',
   path: '/station/{id}/forecast/thresholds',
-  handler: async (request, h) => {
+  handler: async request => {
     try {
       return await floodsService.getFFOIThresholds(request.params.id)
     } catch (err) {

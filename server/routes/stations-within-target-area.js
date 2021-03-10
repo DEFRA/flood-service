@@ -5,10 +5,9 @@ const floodsService = require('../services/index')
 module.exports = {
   method: 'GET',
   path: '/stations-within-target-area/{taCode}',
-  handler: async (request, h) => {
+  handler: async request => {
     try {
-      const { taCode } = request.params
-      return await floodsService.getStationsWithinTargetArea([taCode])
+      return await floodsService.getStationsWithinTargetArea([request.params.taCode])
     } catch (err) {
       return boom.badRequest('Failed to get stations in target area search', err)
     }

@@ -4,7 +4,7 @@ const boom = require('@hapi/boom')
 module.exports = {
   method: 'GET',
   path: '/stations-health',
-  handler: async (request, h) => {
+  handler: async () => {
     try {
       return await floodsService.getStationsHealth()
     } catch (err) {

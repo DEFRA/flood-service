@@ -5,7 +5,7 @@ const floodsService = require('../services/index')
 module.exports = {
   method: 'GET',
   path: '/flood-area/warning/{code}',
-  handler: async (request, h) => {
+  handler: async request => {
     try {
       const { code } = request.params
       const area = await floodsService.getWarningArea(code)

@@ -5,7 +5,7 @@ const services = require('../services/index')
 module.exports = {
   method: 'GET',
   path: '/river/{riverId}',
-  handler: async (request, h) => {
+  handler: async request => {
     try {
       return services.getRiverById(request.params.riverId)
     } catch (err) {

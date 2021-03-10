@@ -5,7 +5,7 @@ const floodsService = require('../services/index')
 module.exports = {
   method: 'GET',
   path: '/impacts/{id}',
-  handler: async (request, h) => {
+  handler: async request => {
     try {
       return await floodsService.getImpactData(request.params.id)
     } catch (err) {

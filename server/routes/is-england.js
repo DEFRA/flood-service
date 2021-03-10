@@ -7,7 +7,7 @@ module.exports = {
   path: '/is-england/{x}/{y}',
   options: {
     description: 'Check if coordinates are in england',
-    handler: async (request, h) => {
+    handler: async request => {
       try {
         return await floodsService.isEngland(request.params.x, request.params.y)
       } catch (err) {

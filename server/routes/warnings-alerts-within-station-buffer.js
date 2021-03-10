@@ -5,10 +5,9 @@ const floodsService = require('../services/index')
 module.exports = {
   method: 'GET',
   path: '/warnings-alerts-within-station-buffer/{rloiId}',
-  handler: async (request, h) => {
+  handler: async request => {
     try {
-      const { rloiId } = request.params
-      return await floodsService.getWarningsAlertsWithinStationBuffer(rloiId)
+      return await floodsService.getWarningsAlertsWithinStationBuffer(request.params.rloiId)
     } catch (err) {
       return boom.badRequest('Failed to get warnings and alerts within buffer search', err)
     }

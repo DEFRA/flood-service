@@ -6,7 +6,7 @@ module.exports = {
   path: '/stations-overview',
   options: {
     description: 'Get stations overview',
-    handler: async (request, h) => {
+    handler: async () => {
       try {
         return await service.getStationsOverview()
       } catch (err) {
