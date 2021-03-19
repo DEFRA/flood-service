@@ -153,7 +153,7 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('getWarningArea', async () => {
+  lab.experiment('getWarningArea', () => {
     const getWarningAreaData = () => {
       return {
         command: 'SELECT',
@@ -224,7 +224,7 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('getStation', async () => {
+  lab.experiment('getStation', () => {
     const getStationData = () => {
       return {
         command: 'SELECT',
@@ -270,7 +270,7 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('Check getStationsWithin service', async () => {
+  lab.experiment('Check getStationsWithin service', () => {
     const getStationsWithinData = () => {
       return {
         command: 'SELECT',
@@ -320,7 +320,7 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('getStationTelemetry', async () => {
+  lab.experiment('getStationTelemetry', () => {
     const stationTelemetryData = {
       command: 'SELECT',
       rowCount: 1,
@@ -408,7 +408,7 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('getFFOIThresholds', async () => {
+  lab.experiment('getFFOIThresholds', () => {
     const ffoiThresholdsData = {
       command: 'SELECT',
       rowCount: 1,
@@ -451,7 +451,7 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('isEngland', async () => {
+  lab.experiment('isEngland', () => {
     const isEnglandData = () => {
       return {
         command: 'SELECT',
@@ -492,7 +492,7 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('getImpactData', async () => {
+  lab.experiment('getImpactData', () => {
     const getImpactDataFake = () => {
       return {
         command: 'SELECT',
@@ -646,7 +646,7 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('Check getImpactDataWithin service', async () => {
+  lab.experiment('Check getImpactDataWithin service', () => {
     const getImpactDataWithinFake = () => {
       return {
         command: 'SELECT',
@@ -684,7 +684,7 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('getTargetArea', async () => {
+  lab.experiment('getTargetArea', () => {
     const getTargetArea = () => {
       return {
         rows: [
@@ -713,7 +713,7 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('getStationsWithinTargetArea', async () => {
+  lab.experiment('getStationsWithinTargetArea', () => {
     const getStationsWithinTargetArea = () => {
       return {
         rows: [{
@@ -761,7 +761,7 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('getWarningsAlertsWithinStationBuffer', async () => {
+  lab.experiment('getWarningsAlertsWithinStationBuffer', () => {
     const getWarningsAlertsWithinStationBuffer = () => {
       return {
         rows: [
@@ -792,7 +792,7 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('getRiverById', async () => {
+  lab.experiment('getRiverById', () => {
     lab.test('should return empty rows array', async () => {
       sinon.stub(db, 'query').returns({ rows: [] })
       const result = await services.getRiverById()
@@ -815,7 +815,7 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('getRiverStationByStationId', async () => {
+  lab.experiment('getRiverStationByStationId', () => {
     lab.test('should return empty object for empty array', async () => {
       sinon.stub(db, 'query').returns({ rows: [] })
       const result = await services.getRiverStationByStationId()
@@ -838,7 +838,7 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('getStationsHealth', async () => {
+  lab.experiment('getStationsHealth', () => {
     lab.test('should return count and timestamp', async () => {
       sinon.stub(db, 'query').returns([{ rows: [{ count: 123 }] }, { rows: [{ load_timestamp: 1594824684 }] }])
       const result = await services.getStationsHealth()
@@ -855,7 +855,7 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('getTelemetryHealth', async () => {
+  lab.experiment('getTelemetryHealth', () => {
     lab.test('should return empty rows array', async () => {
       sinon.stub(db, 'query').returns({ rows: [] })
       const result = await services.getTelemetryHealth()
@@ -878,7 +878,7 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('getFfoiHealth', async () => {
+  lab.experiment('getFfoiHealth', () => {
     lab.test('should return empty rows array', async () => {
       sinon.stub(db, 'query').returns({ rows: [] })
       const result = await services.getFfoiHealth()
@@ -901,7 +901,7 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('getStationsOverview', async () => {
+  lab.experiment('getStationsOverview', () => {
     lab.test('should return an overview', async () => {
       sinon.stub(db, 'query').returns({ rows: [{ get_stations_overview: [{ f1: 'v1' }] }] })
       const result = await services.getStationsOverview()
