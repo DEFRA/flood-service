@@ -408,6 +408,18 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
   })
 
+  lab.test('GET / route works for /stations', async () => {
+    const options = {
+      method: 'GET',
+      url: '/stations'
+    }
+
+    sandbox.stub(services, 'getStations').returns({ rows: [] })
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+
   lab.test('GET / route works for /stations-within-target-area', async () => {
     const options = {
       method: 'GET',

@@ -37,6 +37,11 @@ module.exports = {
     return station
   },
 
+  async getStations () {
+    const { rows } = await db.query('getStations')
+    return rows
+  },
+
   async getStationsWithin (bbox) {
     const { rows } = await db.query('getStationsWithin', bbox)
     return rows
