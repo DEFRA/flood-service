@@ -270,6 +270,55 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
+  lab.experiment('Check getStations service', () => {
+    const getStationsData = () => {
+      return {
+        command: 'SELECT',
+        rowCount: 1,
+        oid: null,
+        rows:
+        [{
+          rloi_id: 5050,
+          telemetry_id: '694063',
+          region: 'North West',
+          catchment: 'Lower Mersey',
+          wiski_river_name: 'River Mersey',
+          agency_name: 'Fiddlers Ferry',
+          external_name: 'Fiddlers Ferry',
+          station_type: 'S',
+          status: 'Active',
+          qualifier: 'u',
+          iswales: false,
+          value: '2.638',
+          value_timestamp: '2019-08-02T07:15:00.000Z',
+          value_erred: false,
+          percentile_5: '6.2',
+          percentile_95: '2.611'
+        }],
+        fields: [],
+        _parsers: [],
+        RowCtor: null,
+        rowAsArray: false
+      }
+    }
+    lab.test('Check getStations service', async () => {
+      sinon.stub(db, 'query').callsFake(getStationsData)
+
+      const result = await services.getStations()
+
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result[0].rloi_id).to.equal(5050)
+    })
+    lab.test('should pass query and bbox', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getStations')
+        .once()
+        .returns(getStationsData())
+      await services.getStations()
+      mock.verify()
+    })
+  })
   lab.experiment('Check getStationsWithin service', () => {
     const getStationsWithinData = () => {
       return {
