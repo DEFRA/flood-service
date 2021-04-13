@@ -49,8 +49,6 @@ module.exports = {
 
   async getStationsWithinTargetArea (taCode) {
     const { rows } = await db.query('getStationsWithinTargetArea', taCode)
-    // const stations = rows
-    // const targetArea = await this.getTargetArea(taCode)
     return rows
   },
 
