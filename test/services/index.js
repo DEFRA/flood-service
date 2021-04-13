@@ -755,7 +755,7 @@ lab.experiment('Services tests', () => {
     lab.test('should pass query and code', async () => {
       const mock = sinon.mock(db)
         .expects('query')
-        .withArgs('getTargetArea', 'A1')
+        .withArgs('getTargetArea', ['A1'])
         .once()
         .returns(getTargetArea())
       await services.getTargetArea('A1')
@@ -799,13 +799,12 @@ lab.experiment('Services tests', () => {
       sinon.stub(db, 'query').callsFake(getStationsWithinTargetArea)
 
       const result = await services.getStationsWithinTargetArea()
-      await Code.expect(result).to.be.an.object()
-      await Code.expect(result.stations[0].rloi_id).to.equal(7021)
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result[0].rloi_id).to.equal(7021)
     })
     lab.test('should pass query and code', async () => {
       const mock = sinon.mock(db)
       mock.expects('query').withArgs('getStationsWithinTargetArea', 'A1').once().returns({ rows: [] })
-      mock.expects('query').withArgs('getTargetArea', 'A1').once().returns(getStationsWithinTargetArea())
       await services.getStationsWithinTargetArea('A1')
       mock.verify()
     })
