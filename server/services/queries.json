@@ -20,5 +20,6 @@
   "getStationsHealth": "select count(1) from u_flood.telemetry_context; select load_timestamp from u_flood.current_load_timestamp where id = 2;",
   "getTelemetryHealth": "select * from (select subrank.file_prefix, subrank.region, subrank.imported from (select SUBSTRING(filename, 15, 4) as file_prefix, region, imported, rank() over (PARTITION by SUBSTRING(filename, 15, 4) ORDER BY imported desc, filename, station, parameter, qualifier) as rank from u_flood.sls_telemetry_value_parent) as subrank where subrank.rank = 1) as latest;",
   "getFfoiHealth": "select file_prefix, updated_date as imported from (select substring(filename, 19, 4) as file_prefix, updated_date, rank() over (PARTITION by SUBSTRING(filename, 19, 4) ORDER BY updated_date desc, telemetry_id) as rank from u_flood.ffoi_max where substring(filename, 19, 4) != 'test') as ranked where ranked.rank = 1;",
-  "getStationsOverview" : "select array_to_json(array_agg(row_to_json(d))) as get_stations_overview from (SELECT * FROM u_flood.stations_overview_mview) d"
+  "getStationsOverview" : "select array_to_json(array_agg(row_to_json(d))) as get_stations_overview from (SELECT * FROM u_flood.stations_overview_mview) d",
+  "getStationsByRadius" : "select * from u_flood.rivers_mview where ST_DWithin(centroid::geography, ST_MakePoint($1, $2)::geography, 8000);"
 }

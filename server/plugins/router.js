@@ -22,7 +22,8 @@ const routes = [].concat(
   require('../routes/telemetry-health'),
   require('../routes/ffoi-health'),
   require('../routes/stations-overview'),
-  require('../routes/target-area')
+  require('../routes/target-area'),
+  require('../routes/stations-by-radius')
 )
 
 module.exports = {
