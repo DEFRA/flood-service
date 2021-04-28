@@ -270,6 +270,55 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
+  lab.experiment('Check getStations service', () => {
+    const getStationsData = () => {
+      return {
+        command: 'SELECT',
+        rowCount: 1,
+        oid: null,
+        rows:
+        [{
+          rloi_id: 5050,
+          telemetry_id: '694063',
+          region: 'North West',
+          catchment: 'Lower Mersey',
+          wiski_river_name: 'River Mersey',
+          agency_name: 'Fiddlers Ferry',
+          external_name: 'Fiddlers Ferry',
+          station_type: 'S',
+          status: 'Active',
+          qualifier: 'u',
+          iswales: false,
+          value: '2.638',
+          value_timestamp: '2019-08-02T07:15:00.000Z',
+          value_erred: false,
+          percentile_5: '6.2',
+          percentile_95: '2.611'
+        }],
+        fields: [],
+        _parsers: [],
+        RowCtor: null,
+        rowAsArray: false
+      }
+    }
+    lab.test('Check getStations service', async () => {
+      sinon.stub(db, 'query').callsFake(getStationsData)
+
+      const result = await services.getStations()
+
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result[0].rloi_id).to.equal(5050)
+    })
+    lab.test('should pass query and bbox', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getStations')
+        .once()
+        .returns(getStationsData())
+      await services.getStations()
+      mock.verify()
+    })
+  })
   lab.experiment('Check getStationsWithin service', () => {
     const getStationsWithinData = () => {
       return {
@@ -706,7 +755,7 @@ lab.experiment('Services tests', () => {
     lab.test('should pass query and code', async () => {
       const mock = sinon.mock(db)
         .expects('query')
-        .withArgs('getTargetArea', 'A1')
+        .withArgs('getTargetArea', ['A1'])
         .once()
         .returns(getTargetArea())
       await services.getTargetArea('A1')
@@ -750,13 +799,12 @@ lab.experiment('Services tests', () => {
       sinon.stub(db, 'query').callsFake(getStationsWithinTargetArea)
 
       const result = await services.getStationsWithinTargetArea()
-      await Code.expect(result).to.be.an.object()
-      await Code.expect(result.stations[0].rloi_id).to.equal(7021)
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result[0].rloi_id).to.equal(7021)
     })
     lab.test('should pass query and code', async () => {
       const mock = sinon.mock(db)
       mock.expects('query').withArgs('getStationsWithinTargetArea', 'A1').once().returns({ rows: [] })
-      mock.expects('query').withArgs('getTargetArea', 'A1').once().returns(getStationsWithinTargetArea())
       await services.getStationsWithinTargetArea('A1')
       mock.verify()
     })

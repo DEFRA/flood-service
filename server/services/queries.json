@@ -5,6 +5,7 @@
   "getWarningArea": "SELECT gid as id, area, fws_tacode as code, ta_name as name, descrip as description, la_name as localAuthorityName, parent, qdial as quickDialNumber, river_sea as riverOrSea, st_AsGeoJSON(geom) as geom, ST_AsGeoJSON(ST_centroid(geom)) as centroid FROM u_flood.flood_warning_area WHERE fws_tacode = $1;",
   "getStation": "SELECT * FROM u_flood.station_split_mview WHERE rloi_id = $1 AND qualifier = $2;",
   "getStationTelemetry": "SELECT * FROM u_flood.get_telemetry($1, $2);",
+  "getStations": "select * from u_flood.rivers_mview;",
   "getStationsWithin": "select * from u_flood.rivers_mview where ST_Contains(ST_MakeEnvelope($1, $2, $3, $4, 4326), centroid);",
   "getStationsWithinTargetArea": "select * from u_flood.rivers_mview where ST_Contains((SELECT ST_BUFFER(ST_ENVELOPE(geom)::geography, 8000)::geometry as geom FROM flood_alert_area WHERE fws_tacode = $1 union SELECT ST_BUFFER(ST_ENVELOPE(geom)::geography, 8000)::geometry as geom FROM flood_warning_area WHERE fws_tacode = $1), centroid);",
   "getTargetArea": "select fws_tacode, ta_name from u_flood.flood_alert_area where fws_tacode = $1 union select fws_tacode, ta_name from u_flood.flood_warning_area where fws_tacode = $1;",

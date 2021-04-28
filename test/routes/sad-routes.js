@@ -180,6 +180,32 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get stations search')
   })
 
+  lab.test('GET erroring works for /stations', async () => {
+    sandbox.stub(services, 'getStations').throws(new Error())
+    const options = {
+      method: 'GET',
+      url: '/stations'
+
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get stations')
+  })
+
+  lab.test('GET erroring works for /target-area', async () => {
+    sandbox.stub(services, 'getTargetArea').throws(new Error())
+    const options = {
+      method: 'GET',
+      url: '/target-area/a1'
+
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get target area')
+  })
+
   lab.test('GET erroring works for /stations-health ', async () => {
     sandbox.stub(services, 'getStationsHealth').throws(new Error())
     const options = {

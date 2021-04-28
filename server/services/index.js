@@ -37,6 +37,11 @@ module.exports = {
     return station
   },
 
+  async getStations () {
+    const { rows } = await db.query('getStations')
+    return rows
+  },
+
   async getStationsWithin (bbox) {
     const { rows } = await db.query('getStationsWithin', bbox)
     return rows
@@ -44,15 +49,12 @@ module.exports = {
 
   async getStationsWithinTargetArea (taCode) {
     const { rows } = await db.query('getStationsWithinTargetArea', taCode)
-    const stations = rows
-    const targetArea = await this.getTargetArea(taCode)
-    return { stations, targetArea }
+    return rows
   },
 
   async getTargetArea (taCode) {
-    const { rows } = await db.query('getTargetArea', taCode)
-    const [targetArea] = rows
-    return targetArea
+    const { rows } = await db.query('getTargetArea', [taCode])
+    return rows[0] || {}
   },
 
   async getWarningsAlertsWithinStationBuffer (rloiId) {

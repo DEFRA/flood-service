@@ -13,6 +13,7 @@ const routes = [].concat(
   require('../routes/river'),
   require('../routes/river-station-by-station-id.js'),
   require('../routes/station-telemetry'),
+  require('../routes/stations'),
   require('../routes/stations-within'),
   require('../routes/stations-within-target-area'),
   require('../routes/warnings-alerts-within-station-buffer'),
@@ -20,7 +21,8 @@ const routes = [].concat(
   require('../routes/stations-health'),
   require('../routes/telemetry-health'),
   require('../routes/ffoi-health'),
-  require('../routes/stations-overview')
+  require('../routes/stations-overview'),
+  require('../routes/target-area')
 )
 
 module.exports = {
