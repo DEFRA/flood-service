@@ -125,5 +125,10 @@ module.exports = {
     const { rows } = await db.query('getStationsOverview')
     const [{ get_stations_overview: stationsOverview }] = rows
     return stationsOverview || []
+  },
+
+  async getStationsByRadius (x, y, rad) {
+    const { rows } = await db.query('getStationsByRadius', [x, y, rad])
+    return rows
   }
 }

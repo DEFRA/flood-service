@@ -312,4 +312,16 @@ lab.experiment('Sad Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(400)
   })
+  lab.test('GET /flood-guidance-statement error', async () => {
+    const options = {
+      method: 'GET',
+      url: '/stations-by-radius/-1.17316039381184/52.3951465511329'
+    }
+
+    sandbox.stub(services, 'getStationsByRadius').throws(new Error())
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get stations search')
+  })
 })

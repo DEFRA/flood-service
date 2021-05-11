@@ -476,6 +476,28 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
+  lab.test('GET / route works for /stations-by-radius/{x}/{y}', async () => {
+    const options = {
+      method: 'GET',
+      url: '/stations-by-radius/-1.17316039381184/52.3951465511329'
+    }
+
+    sandbox.stub(services, 'getStationsByRadius').returns([])
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+  lab.test('GET / route works for /stations-by-radius/{x}/{y}/{rad}', async () => {
+    const options = {
+      method: 'GET',
+      url: '/stations-by-radius/-1.17316039381184/52.3951465511329/8000'
+    }
+
+    sandbox.stub(services, 'getStationsByRadius').returns([])
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
 
   lab.test('GET / route works for /target-area', async () => {
     const options = {
