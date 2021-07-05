@@ -23,7 +23,8 @@ const routes = [].concat(
   require('../routes/ffoi-health'),
   require('../routes/stations-overview'),
   require('../routes/target-area'),
-  require('../routes/stations-by-radius')
+  require('../routes/stations-by-radius'),
+  require('../routes/error')
 )
 
 module.exports = {
