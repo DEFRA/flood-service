@@ -1,7 +1,7 @@
 module.exports = {
   plugin: {
     name: 'on-pre-response',
-    register: (server) => {
+    register: server => {
       server.ext('onPreResponse', (request, h) => {
         const response = request.response
 
