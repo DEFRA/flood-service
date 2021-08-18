@@ -5,13 +5,13 @@
   "getWarningArea": "SELECT gid as id, area, fws_tacode as code, ta_name as name, descrip as description, la_name as localAuthorityName, parent, qdial as quickDialNumber, river_sea as riverOrSea, st_AsGeoJSON(geom) as geom, ST_AsGeoJSON(ST_centroid(geom)) as centroid FROM u_flood.flood_warning_area WHERE fws_tacode = $1;",
   "getStation": "SELECT * FROM u_flood.station_split_mview WHERE rloi_id = $1 AND qualifier = $2;",
   "getStationTelemetry": "SELECT * FROM u_flood.get_telemetry($1, $2);",
-  "getStations": "select * from u_flood.stations_list_mview;",
-  "getStationsWithin": "select * from u_flood.stations_list_mview where ST_Contains(ST_MakeEnvelope($1, $2, $3, $4, 4326), centroid);",
-  "getStationsWithinTargetArea": "select * from u_flood.stations_list_mview where ST_Contains((SELECT ST_BUFFER(ST_ENVELOPE(geom)::geography, 8000)::geometry as geom FROM flood_alert_area WHERE fws_tacode = $1 union SELECT ST_BUFFER(ST_ENVELOPE(geom)::geography, 8000)::geometry as geom FROM flood_warning_area WHERE fws_tacode = $1), centroid);",
+  "getStations": "select * from u_flood.stations_list_mview ORDER BY view_rank, river_id, \"rank\", agency_name;",
+  "getStationsWithin": "select * from u_flood.stations_list_mview where ST_Contains(ST_MakeEnvelope($1, $2, $3, $4, 4326), centroid) ORDER BY view_rank, river_id, \"rank\", agency_name;",
+  "getStationsWithinTargetArea": "select * from u_flood.stations_list_mview where ST_Contains((SELECT ST_BUFFER(ST_ENVELOPE(geom)::geography, 8000)::geometry as geom FROM flood_alert_area WHERE fws_tacode = $1 union SELECT ST_BUFFER(ST_ENVELOPE(geom)::geography, 8000)::geometry as geom FROM flood_warning_area WHERE fws_tacode = $1), centroid) ORDER BY view_rank, river_id, \"rank\", agency_name;",
   "getTargetArea": "select fws_tacode, ta_name from u_flood.flood_alert_area where fws_tacode = $1 union select fws_tacode, ta_name from u_flood.flood_warning_area where fws_tacode = $1;",
   "getWarningsAlertsWithinStationBuffer": "select ta_id,ta_code,ta_name,ta_description,situation,quick_dial,situation_changed,severity_changed,message_received,severity_value,severity,ST_AsGeoJSON(st_centroid) as geometry from u_flood.station_ta_8km sta inner join u_flood.fwa_mview f on sta.fws_tacode = f.ta_code where sta.rloi_id = $1 ORDER BY CASE severity_value WHEN 3 THEN 1 WHEN 1 THEN 3 ELSE severity_value END, ta_name;",
-  "getRiverById": "select * from u_flood.stations_list_mview where river_id = $1;",
-  "getRiverStationByStationId": "select * from u_flood.stations_list_mview where rloi_id = $1",
+  "getRiverById": "select * from u_flood.stations_list_mview where river_id = $1 ORDER BY view_rank, river_id, \"rank\", agency_name;",
+  "getRiverStationByStationId": "select * from u_flood.stations_list_mview where rloi_id = $1 ORDER BY view_rank, river_id, \"rank\", agency_name",
   "getFFOIForecast": "SELECT f.* FROM u_flood.ffoi_forecast f INNER JOIN u_flood.ffoi_station s ON f.rloi_id = s.rloi_id WHERE f.rloi_id = $1 ORDER BY forecast_date DESC LIMIT 1;",
   "getFFOIThresholds": "SELECT u_flood.ffoi_get_thresholds($1);",
   "isEngland": "SELECT ((SELECT count(1) FROM u_flood.england_010k e WHERE st_intersects(st_setsrid(st_makepoint($1, $2), 4326), e.geom)) > 0) AS is_england;",
@@ -21,5 +21,5 @@
   "getTelemetryHealth": "select * from (select subrank.file_prefix, subrank.region, subrank.imported from (select SUBSTRING(filename, 15, 4) as file_prefix, region, imported, rank() over (PARTITION by SUBSTRING(filename, 15, 4) ORDER BY imported desc, filename, station, parameter, qualifier) as rank from u_flood.sls_telemetry_value_parent) as subrank where subrank.rank = 1) as latest;",
   "getFfoiHealth": "select file_prefix, updated_date as imported from (select substring(filename, 19, 4) as file_prefix, updated_date, rank() over (PARTITION by SUBSTRING(filename, 19, 4) ORDER BY updated_date desc, telemetry_id) as rank from u_flood.ffoi_max where substring(filename, 19, 4) != 'test') as ranked where ranked.rank = 1;",
   "getStationsOverview" : "select array_to_json(array_agg(row_to_json(d))) as get_stations_overview from (SELECT * FROM u_flood.stations_overview_mview) d",
-  "getStationsByRadius" : "select * from u_flood.stations_list_mview where ST_DWithin(centroid::geography, ST_MakePoint($1, $2)::geography, $3);"
+  "getStationsByRadius" : "select * from u_flood.stations_list_mview where ST_DWithin(centroid::geography, ST_MakePoint($1, $2)::geography, $3) ORDER BY view_rank, river_id, \"rank\", agency_name;"
 }
