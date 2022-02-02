@@ -863,6 +863,29 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
+  lab.experiment('getRainfallByStation', () => {
+    lab.test('should return empty rows array', async () => {
+      sinon.stub(db, 'query').returns({ rows: [] })
+      const result = await services.getRainfallByStation()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([])
+    })
+    lab.test('should return populated rows array', async () => {
+      sinon.stub(db, 'query').returns({ rows: [{ station: 'E24195', period: '15 min', value: '0.01', value_timestamp: '2022-02-02T09:15:00.000Z' }] })
+      const result = await services.getRainfallByStation()
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.equal([{ station: 'E24195', period: '15 min', value: '0.01', value_timestamp: '2022-02-02T09:15:00.000Z' }])
+    })
+    lab.test('should pass query and rainfall gauge id', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getRainfallByStation', [1])
+        .once()
+        .returns({ rows: [] })
+      await services.getRainfallByStation(1)
+      mock.verify()
+    })
+  })
   lab.experiment('getRiverStationByStationId', () => {
     lab.test('should return empty object for empty array', async () => {
       sinon.stub(db, 'query').returns({ rows: [] })
