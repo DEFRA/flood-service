@@ -102,8 +102,20 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get impact data')
   })
 
+  lab.test('GET erroring works for /rainfall-station-telemetry/{stationId} LG', async () => {
+    sandbox.stub(services, 'getRainfallStationTelemetry').throws(new Error())
+    const options = {
+      method: 'GET',
+      url: '/rainfall-station-telemetry/E12345'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get rainfall station telemetry')
+  })
+
   lab.test('GET erroring works for /rainfall-station/{stationId} ', async () => {
-    sandbox.stub(services, 'getRainfallByStation').throws(new Error())
+    sandbox.stub(services, 'getRainfallStation').throws(new Error())
     const options = {
       method: 'GET',
       url: '/rainfall-station/E12345'

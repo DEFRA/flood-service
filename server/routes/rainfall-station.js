@@ -4,16 +4,16 @@ const floodsService = require('../services/index')
 
 module.exports = {
   method: 'GET',
-  path: '/rainfall-station-totals/{stationId}',
+  path: '/rainfall-station/{stationId}',
   handler: async request => {
     try {
-      return await floodsService.getRainfallStationTotals(request.params.stationId)
+      return await floodsService.getRainfallStation(request.params.stationId)
     } catch (err) {
-      return Boom.badRequest('Failed to get rainfall station totals', err)
+      return Boom.badRequest('Failed to get rainfall by station data', err)
     }
   },
   options: {
-    description: 'Get rainfall station totals',
+    description: 'Get rainfall by station',
     validate: {
       params: joi.object({
         stationId: joi.string().required()

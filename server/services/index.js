@@ -67,13 +67,13 @@ module.exports = {
     return rows
   },
 
-  async getRainfallByStation (stationId) {
-    const { rows } = await db.query('getRainfallByStation', [stationId])
+  async getRainfallStationTelemetry (stationId) {
+    const { rows } = await db.query('getRainfallStationTelemetry', [stationId])
     return rows
   },
 
-  async getRainfallStationTotals (stationId) {
-    const { rows } = await db.query('getRainfallStationTotals', [stationId])
+  async getRainfallStation (stationId) {
+    const { rows } = await db.query('getRainfallStation', [stationId])
     return rows
   },
 
