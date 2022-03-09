@@ -420,6 +420,30 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
   })
 
+  lab.test('GET / route works for /rainfall-station/{stationId}', async () => {
+    const options = {
+      method: 'GET',
+      url: '/rainfall-station/E24195'
+    }
+
+    sandbox.stub(services, 'getRainfallStation').returns({ rows: [] })
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+
+  lab.test('GET / route works for /rainfall-station-telemetry/{stationId}', async () => {
+    const options = {
+      method: 'GET',
+      url: '/rainfall-station-telemetry/E24195'
+    }
+
+    sandbox.stub(services, 'getRainfallStationTelemetry').returns({ rows: [] })
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+
   lab.test('GET / route works for /stations-within-target-area', async () => {
     const options = {
       method: 'GET',
