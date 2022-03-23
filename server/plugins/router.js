@@ -10,6 +10,7 @@ const routes = [].concat(
   require('../routes/impacts'),
   require('../routes/is-england'),
   require('../routes/station'),
+  require('../routes/rainfall-station'),
   require('../routes/river'),
   require('../routes/river-station-by-station-id.js'),
   require('../routes/station-telemetry'),
@@ -24,7 +25,8 @@ const routes = [].concat(
   require('../routes/stations-overview'),
   require('../routes/target-area'),
   require('../routes/stations-by-radius'),
-  require('../routes/error')
+  require('../routes/error'),
+  require('../routes/rainfall-station-telemetry')
 )
 
 module.exports = {
