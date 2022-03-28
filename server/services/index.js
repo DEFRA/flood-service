@@ -67,6 +67,16 @@ module.exports = {
     return rows
   },
 
+  async getRainfallStationTelemetry (stationId) {
+    const { rows } = await db.query('getRainfallStationTelemetry', [stationId])
+    return rows
+  },
+
+  async getRainfallStation (stationId) {
+    const { rows } = await db.query('getRainfallStation', [stationId])
+    return rows
+  },
+
   async getRiverStationByStationId (stationId) {
     const { rows } = await db.query('getRiverStationByStationId', [stationId])
     return rows[0] || {}
