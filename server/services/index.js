@@ -52,6 +52,11 @@ module.exports = {
     return rows
   },
 
+  async getRiverByName (location) {
+    const { rows } = await db.query('getRiverByName', location)
+    return rows
+  },
+
   async getTargetArea (taCode) {
     const { rows } = await db.query('getTargetArea', [taCode])
     return rows[0] || {}
