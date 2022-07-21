@@ -26,7 +26,8 @@ const routes = [].concat(
   require('../routes/target-area'),
   require('../routes/stations-by-radius'),
   require('../routes/error'),
-  require('../routes/rainfall-station-telemetry')
+  require('../routes/rainfall-station-telemetry'),
+  require('../routes/river-name')
 )
 
 module.exports = {
