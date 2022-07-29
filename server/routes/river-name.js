@@ -7,7 +7,8 @@ module.exports = {
   handler: async request => {
     try {
       const { location } = request.params
-      return await floodsService.getRiverByName(location)
+      // % signs added to allow for a like sql search in json string
+      return await floodsService.getRiverByName([`%${location}%`])
     } catch (err) {
       return boom.badRequest('Failed to get river names', err)
     }
