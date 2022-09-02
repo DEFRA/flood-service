@@ -432,6 +432,18 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
   })
 
+  lab.test('GET / route works for /river-name/{location}', async () => {
+    const options = {
+      method: 'GET',
+      url: '/river-name/Tyne'
+    }
+
+    sandbox.stub(services, 'getRiverByName').returns({ rows: [] })
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+
   lab.test('GET / route works for /rainfall-station-telemetry/{stationId}', async () => {
     const options = {
       method: 'GET',
