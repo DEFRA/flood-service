@@ -20,6 +20,7 @@ const routes = [].concat(
   require('../routes/warnings-alerts-within-station-buffer'),
   require('../routes/thresholds-data'),
   require('../routes/thresholds-data-imtd'),
+  require('../routes/station-threshold'),
   require('../routes/stations-health'),
   require('../routes/telemetry-health'),
   require('../routes/ffoi-health'),

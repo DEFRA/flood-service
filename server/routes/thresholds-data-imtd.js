@@ -10,27 +10,40 @@ module.exports = {
       const imtdPayload = await util.getJson(imtdUrl)
 
       const warningThresholds = []
+      const warningAreasThresholds = []
       const alertThresholds = []
+      const alertAreasThresholds = []
       imtdPayload[0].TimeSeriesMetaData.forEach(element => {
         element.Thresholds.forEach(threshold => {
-          if (threshold.FloodWarningArea !== null) {
+          if (threshold.ThresholdType === 'FW ACT FW' || threshold.ThresholdType === 'FW ACTCON FW' || threshold.ThresholdType === 'FW RES FW') {
+            const warningAreaThreshold = {}
             warningThresholds.push(threshold.Level)
+            warningAreaThreshold.floodWarningArea = threshold.FloodWarningArea
+            warningAreaThreshold.level = threshold.Level
+            warningAreasThresholds.push(warningAreaThreshold)
           }
-          if (threshold.ThresholdType === 'INFO RLOI OTH') {
+          if (threshold.ThresholdType === 'FW ACT FAL' || threshold.ThresholdType === 'FW ACTCON FAL' || threshold.ThresholdType === 'FW RES FAL') {
+            const alertAreaThreshold = {}
             alertThresholds.push(threshold.Level)
+            alertAreaThreshold.floodWarningArea = threshold.FloodWarningArea
+            alertAreaThreshold.level = threshold.Level
+            alertAreasThresholds.push(alertAreaThreshold)
           }
         })
       })
 
       // Return alert and warning threshold
 
-      return [Math.min(...warningThresholds), Math.min(...alertThresholds)]
+      const alertMin = Math.min(...alertAreasThresholds.map(item => item.level))
+      const warningMin = Math.min(...warningAreasThresholds.map(item => item.level))
+
+      return [warningMin, alertMin]
     } catch (err) {
-      return { error: 'Failed to get IMTD ffoi threshold data' }
+      return { error: 'Failed to get IMTD threshold data' }
     }
   },
   options: {
-    description: 'Get IMTD forecast thresholds by station id',
+    description: 'Get IMTD thresholds by station id',
     validate: {
       params: joi.object({
         id: joi.number().required()
