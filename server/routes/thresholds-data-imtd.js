@@ -16,15 +16,17 @@ module.exports = {
       imtdPayload[0].TimeSeriesMetaData.forEach(element => {
         element.Thresholds.forEach(threshold => {
           if (threshold.ThresholdType === 'FW ACT FW' || threshold.ThresholdType === 'FW ACTCON FW' || threshold.ThresholdType === 'FW RES FW') {
-            const warningAreaThreshold = {}
-            warningAreaThreshold.floodWarningArea = threshold.FloodWarningArea
-            warningAreaThreshold.level = threshold.Level
+            const warningAreaThreshold = {
+              floodWarningArea: threshold.FloodWarningArea,
+              level: threshold.Level
+            }
             warningAreasThresholds.push(warningAreaThreshold)
           }
           if (threshold.ThresholdType === 'FW ACT FAL' || threshold.ThresholdType === 'FW ACTCON FAL' || threshold.ThresholdType === 'FW RES FAL') {
-            const alertAreaThreshold = {}
-            alertAreaThreshold.floodWarningArea = threshold.FloodWarningArea
-            alertAreaThreshold.level = threshold.Level
+            const alertAreaThreshold = {
+              floodWarningArea: threshold.FloodWarningArea,
+              level: threshold.Level
+            }
             alertAreasThresholds.push(alertAreaThreshold)
           }
         })

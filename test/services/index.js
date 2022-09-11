@@ -500,6 +500,51 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
+
+  lab.experiment('getstationThreshold', () => {
+    const stationThresholdData = {
+      command: 'SELECT',
+      rowCount: 1,
+      oid: null,
+      rows:
+      [{
+        station_threshold: []
+      }],
+      fields: [],
+      _parsers: [],
+      RowCtor: null,
+      rowAsArray: false
+    }
+    lab.test('should return station threshold data', async () => {
+      sinon.stub(db, 'query').returns(stationThresholdData)
+
+      const id = '7333'
+
+      const result = await services.getStationThreshold(id)
+
+      await Code.expect(result).to.be.an.array()
+    })
+    lab.test('should handle null station threshold data', async () => {
+      stationThresholdData.rows = [{}]
+      sinon.stub(db, 'query').returns(stationThresholdData)
+
+      const id = '7333'
+
+      const result = await services.getStationThreshold(id)
+
+      await Code.expect(result).to.be.an.array()
+    })
+    lab.test('should pass query and id', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getStationThreshold', [123])
+        .once()
+        .returns(stationThresholdData)
+      await services.getStationThreshold(123)
+      mock.verify()
+    })
+  })
+
   lab.experiment('isEngland', () => {
     const isEnglandData = () => {
       return {

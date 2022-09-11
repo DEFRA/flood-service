@@ -365,14 +365,66 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
   })
 
-  lab.test('GET / route works for /station/{id}/thresholds ', async () => {
+  lab.test('GET / route works for /station/{id}/threshold ', async () => {
     const options = {
       method: 'GET',
-      url: '/station/7225/imtd/thresholds'
+      url: '/station/7225/threshold'
 
     }
 
     sandbox.stub(thresholds, 'handler').returns([0, 0])
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+
+  lab.test('GET / test values reurned from station_threshold table ', async () => {
+    const options = {
+      method: 'GET',
+      url: '/station/7122/threshold'
+
+    }
+
+    sandbox.stub(services, 'getStationThreshold').returns(
+      [
+        {
+          station_threshold_id: '4040',
+          station_id: '7122',
+          fwis_code: '061WAF22LowerKen',
+          value: '5.35'
+        },
+        {
+          station_threshold_id: '4041',
+          station_id: '7122',
+          fwis_code: '061WAF22UpperKen',
+          value: '5.35'
+        },
+        {
+          station_threshold_id: '4042',
+          station_id: '7122',
+          fwis_code: '061FWF22Newbury',
+          value: '5.65'
+        },
+        {
+          station_threshold_id: '4043',
+          station_id: '7122',
+          fwis_code: '061FWF22Thatcham',
+          value: '5.65'
+        },
+        {
+          station_threshold_id: '4044',
+          station_id: '7122',
+          fwis_code: '061FWF22Newbury',
+          value: '5.75'
+        },
+        {
+          station_threshold_id: '4047',
+          station_id: '7122',
+          fwis_code: '061FWF22Thatcham',
+          value: '5.75'
+        }
+      ]
+    )
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
