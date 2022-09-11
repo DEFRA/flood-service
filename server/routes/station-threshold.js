@@ -13,12 +13,16 @@ module.exports = {
 
         stationThreshold.forEach(element => {
           if (element.fwis_code.charAt(4).toLowerCase() === 'w') {
-            const warningAreaThreshold = {}
-            warningAreaThreshold.floodWarningArea = element.fwis_code
-            warningAreaThreshold.level = element.value
+            const warningAreaThreshold = {
+              floodWarningArea: element.fwis_code,
+              level: element.value
+            }
             warningAreasThresholds.push(warningAreaThreshold)
           } else {
-            const alertAreaThreshold = {}
+            const alertAreaThreshold = {
+              floodWarningArea: element.fwis_code,
+              level: element.value
+            }
             alertAreaThreshold.floodWarningArea = element.fwis_code
             alertAreaThreshold.level = element.value
             alertAreasThresholds.push(alertAreaThreshold)
