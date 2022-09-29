@@ -444,6 +444,18 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
   })
 
+  lab.test('GET / route works for /river-by-riverid-or-wiskiname/{riverId}/{riverName}', async () => {
+    const options = {
+      method: 'GET',
+      url: '/river-by-riverid-or-wiskiname/river-tyne/River Tyne'
+    }
+
+    sandbox.stub(services, 'getRiverByIdOrWiskiName').returns({ rows: [] })
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+
   lab.test('GET / route works for /rainfall-station-telemetry/{stationId}', async () => {
     const options = {
       method: 'GET',
