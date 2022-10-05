@@ -558,4 +558,15 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
+  lab.test('GET / route works for /river-name', async () => {
+    const options = {
+      method: 'GET',
+      url: '/river-name/mersey'
+    }
+
+    sandbox.stub(services, 'getRiverByName').returns({ rows: [] })
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
 })
