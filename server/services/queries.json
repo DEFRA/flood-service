@@ -24,6 +24,6 @@
   "getStationsByRadius" : "select * from u_flood.stations_list_mview where ST_DWithin(centroid::geography, ST_MakePoint($1, $2)::geography, $3) ORDER BY view_rank, river_id, \"rank\", agency_name;",
   "getRainfallStationTelemetry" : "select DISTINCT a.period,b.value,b.value_timestamp from sls_telemetry_value_parent a inner join sls_telemetry_value b on a.telemetry_value_parent_id = b.telemetry_value_parent_id inner join sls_telemetry_station c on c.station_reference = a.station where a.station = $1 and b.value_timestamp > now() - interval '5 Days' order by b.value_timestamp desc;",
   "getRainfallStation" : "select a.*, b.lat, b.lon from rainfall_stations_mview a inner join stations_list_mview b on a.station_reference = b.telemetry_id where a.station_reference = $1",
-  "getRiverByName" : "SELECT * FROM river_display WHERE lower($1) NOT SIMILAR TO 'river|brook|stream' AND (lower(local_name) LIKE concat('%', lower($1), '%') OR lower(qualified_name) = lower($1)) ORDER BY qualified_name",
+  "getRiversByName" : "SELECT * FROM river_display WHERE lower($1) NOT SIMILAR TO 'river|brook|stream' AND (lower(local_name) LIKE concat('%', lower($1), '%') OR lower(qualified_name) = lower($1)) ORDER BY qualified_name",
   "getRiverByIdOrWiskiName" : "select * from u_flood.stations_list_mview where river_id = ($1) OR wiski_river_name = ($2) ORDER BY view_rank, river_id, rank, agency_name;"
 }

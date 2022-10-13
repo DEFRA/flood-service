@@ -7,7 +7,7 @@ module.exports = {
   handler: async request => {
     try {
       const { location } = request.params
-      return await floodsService.getRiverByName(location)
+      return await floodsService.getRiversByName(location)
     } catch (err) {
       return boom.badRequest('Failed to get river names', err)
     }

@@ -52,8 +52,8 @@ module.exports = {
     return rows
   },
 
-  async getRiverByName (location) {
-    const { rows } = await db.query('getRiverByName', [location])
+  async getRiversByName (location) {
+    const { rows } = await db.query('getRiversByName', [location])
     return rows
   },
 
