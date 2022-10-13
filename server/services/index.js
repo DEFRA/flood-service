@@ -52,8 +52,8 @@ module.exports = {
     return rows
   },
 
-  async getRiverByName (fuzzyLocation, location) {
-    const { rows } = await db.query('getRiverByName', [fuzzyLocation, location])
+  async getRiverByName (location) {
+    const { rows } = await db.query('getRiverByName', [location])
     return rows
   },
 
