@@ -127,7 +127,7 @@ lab.experiment('Sad Route tests', () => {
   })
 
   lab.test('GET erroring works for /river-name/{location} ', async () => {
-    sandbox.stub(services, 'getRiverByName').throws(new Error())
+    sandbox.stub(services, 'getRiversByName').throws(new Error())
     const options = {
       method: 'GET',
       url: '/river-name/Tyne'
@@ -378,7 +378,7 @@ lab.experiment('Sad Route tests', () => {
       url: '/river-name/merseysdvsdvsdv'
     }
 
-    sandbox.stub(services, 'getRiverByName').throws(new Error())
+    sandbox.stub(services, 'getRiversByName').throws(new Error())
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(400)

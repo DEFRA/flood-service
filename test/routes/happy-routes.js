@@ -438,7 +438,7 @@ lab.experiment('Happy Route tests', () => {
       url: '/river-name/Tyne'
     }
 
-    sandbox.stub(services, 'getRiverByName').returns({ rows: [] })
+    sandbox.stub(services, 'getRiversByName').returns({ rows: [] })
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
@@ -579,7 +579,7 @@ lab.experiment('Happy Route tests', () => {
       url: '/river-name/mersey'
     }
 
-    sandbox.stub(services, 'getRiverByName').returns({ rows: [] })
+    sandbox.stub(services, 'getRiversByName').returns({ rows: [] })
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
