@@ -10,30 +10,30 @@ module.exports = {
     try {
       const imtdUrl = `https://imfs-prd1-thresholds-api.azurewebsites.net/Location/${request.params.id}?version=2`
       const imtdPayload = await util.getJson(imtdUrl)
-
       const warningAreasThresholds = []
       const alertAreasThresholds = []
       imtdPayload[0].TimeSeriesMetaData.forEach(element => {
-        element.Thresholds.forEach(threshold => {
-          if (threshold.ThresholdType === 'FW ACT FW' || threshold.ThresholdType === 'FW ACTCON FW' || threshold.ThresholdType === 'FW RES FW') {
-            const warningAreaThreshold = {
-              floodWarningArea: threshold.FloodWarningArea,
-              level: threshold.Level
+        if (element.Parameter !== 'Flow') {
+          element.Thresholds.forEach(threshold => {
+            if (threshold.ThresholdType === 'FW ACT FW' || threshold.ThresholdType === 'FW ACTCON FW' || threshold.ThresholdType === 'FW RES FW') {
+              const warningAreaThreshold = {
+                floodWarningArea: threshold.FloodWarningArea,
+                level: threshold.Level
+              }
+              warningAreasThresholds.push(warningAreaThreshold)
             }
-            warningAreasThresholds.push(warningAreaThreshold)
-          }
-          if (threshold.ThresholdType === 'FW ACT FAL' || threshold.ThresholdType === 'FW ACTCON FAL' || threshold.ThresholdType === 'FW RES FAL') {
-            const alertAreaThreshold = {
-              floodWarningArea: threshold.FloodWarningArea,
-              level: threshold.Level
+            if (threshold.ThresholdType === 'FW ACT FAL' || threshold.ThresholdType === 'FW ACTCON FAL' || threshold.ThresholdType === 'FW RES FAL') {
+              const alertAreaThreshold = {
+                floodWarningArea: threshold.FloodWarningArea,
+                level: threshold.Level
+              }
+              alertAreasThresholds.push(alertAreaThreshold)
             }
-            alertAreasThresholds.push(alertAreaThreshold)
-          }
-        })
+          })
+        }
       })
 
       // Return alert and warning threshold
-
       const alertMin = Math.min(...alertAreasThresholds.map(item => item.level))
       const warningMin = Math.min(...warningAreasThresholds.map(item => item.level))
 
