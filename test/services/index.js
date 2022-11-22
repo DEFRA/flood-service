@@ -840,26 +840,26 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  lab.experiment('getRiverById', () => {
+  lab.experiment('getRiverStationsByRiverId', () => {
     lab.test('should return empty rows array', async () => {
       sinon.stub(db, 'query').returns({ rows: [] })
-      const result = await services.getRiverById()
+      const result = await services.getRiverStationsByRiverId()
       await Code.expect(result).to.be.an.array()
       await Code.expect(result).to.equal([])
     })
     lab.test('should return populated rows array', async () => {
       sinon.stub(db, 'query').returns({ rows: [{ f1: 'v1' }] })
-      const result = await services.getRiverById()
+      const result = await services.getRiverStationsByRiverId()
       await Code.expect(result).to.be.an.array()
       await Code.expect(result).to.equal([{ f1: 'v1' }])
     })
     lab.test('should pass query and river id', async () => {
       const mock = sinon.mock(db)
         .expects('query')
-        .withArgs('getRiverById', [1])
+        .withArgs('getRiverStationsByRiverId', [1])
         .once()
         .returns({ rows: [] })
-      await services.getRiverById(1)
+      await services.getRiverStationsByRiverId(1)
       mock.verify()
     })
   })

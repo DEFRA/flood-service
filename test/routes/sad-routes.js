@@ -293,7 +293,7 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get telemetry health')
   })
   lab.test('GET erroring works for /river/{riverId} ', async () => {
-    sandbox.stub(services, 'getRiverById').throws(new Error())
+    sandbox.stub(services, 'getRiverStationsByRiverId').throws(new Error())
     const options = {
       method: 'GET',
       url: '/river/123'

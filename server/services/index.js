@@ -67,8 +67,8 @@ module.exports = {
     return rows
   },
 
-  async getRiverById (riverId) {
-    const { rows } = await db.query('getRiverById', [riverId])
+  async getRiverStationsByRiverId (riverId) {
+    const { rows } = await db.query('getRiverStationsByRiverId', [riverId])
     return rows
   },
 

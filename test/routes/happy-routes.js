@@ -501,7 +501,7 @@ lab.experiment('Happy Route tests', () => {
       url: '/river/123'
     }
 
-    sandbox.stub(services, 'getRiverById').returns([])
+    sandbox.stub(services, 'getRiverStationsByRiverId').returns([])
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
