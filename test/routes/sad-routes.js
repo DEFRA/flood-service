@@ -138,18 +138,6 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get river names')
   })
 
-  lab.test('GET erroring works for /river-by-riverid-or-wiskiname/{riverId}/{riverName} ', async () => {
-    sandbox.stub(services, 'getRiverByIdOrWiskiName').throws(new Error())
-    const options = {
-      method: 'GET',
-      url: '/river-by-riverid-or-wiskiname/river-tyne/River Tyne'
-    }
-
-    const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(400)
-    Code.expect(response.payload).to.include('Failed to get stations by river_id or wiski_name')
-  })
-
   lab.test('GET erroring works on /is-england/{x}/{y}', async () => {
     sandbox.stub(services, 'isEngland').throws(new Error())
 
@@ -293,7 +281,7 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get telemetry health')
   })
   lab.test('GET erroring works for /river/{riverId} ', async () => {
-    sandbox.stub(services, 'getRiverById').throws(new Error())
+    sandbox.stub(services, 'getRiverStationsByRiverId').throws(new Error())
     const options = {
       method: 'GET',
       url: '/river/123'
