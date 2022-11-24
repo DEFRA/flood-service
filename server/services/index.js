@@ -61,7 +61,8 @@ module.exports = {
     if (searchTerm.match('^(river|brook|stream|water)$')) {
       return []
     }
-    const { rows } = await db.query('getRiversByName', [`\\m${escapeRegExp(searchTerm)}\\M`])
+    const fullTextSearchTerm = searchTerm.split(' ').join('&')
+    const { rows } = await db.query('getRiversByName', [fullTextSearchTerm])
     return rows
   },
 
