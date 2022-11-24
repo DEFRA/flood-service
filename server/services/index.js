@@ -1,5 +1,10 @@
 const db = require('./db')
 
+function escapeRegExp (string) {
+  // source: https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
+}
+
 module.exports = {
   async getFloods () {
     const result = await db.query('getFloods')
@@ -52,8 +57,8 @@ module.exports = {
     return rows
   },
 
-  async getRiversByName (location) {
-    const { rows } = await db.query('getRiversByName', [location])
+  async getRiversByName (searchTerm) {
+    const { rows } = await db.query('getRiversByName', [`\\m${escapeRegExp(searchTerm)}\\M`])
     return rows
   },
 
