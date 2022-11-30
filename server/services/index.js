@@ -1,8 +1,10 @@
 const db = require('./db')
 
-function escapeRegExp (string) {
-  // source: https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
+function regexClean (string) {
+  // remove brackets which were causing issues when mismatched pairings were present
+  // this does not affect the results returned as brackets are treated as word boundary characters
+  // and therefore the \m and \M in the query will match the same with or without them
+  return string.replace(/[{}[\]()]*/g, '')
 }
 
 module.exports = {
@@ -58,7 +60,7 @@ module.exports = {
   },
 
   async getRiversByName (searchTerm) {
-    const { rows } = await db.query('getRiversByName', [escapeRegExp(searchTerm)])
+    const { rows } = await db.query('getRiversByName', [searchTerm, regexClean(searchTerm)])
     return rows
   },
 
