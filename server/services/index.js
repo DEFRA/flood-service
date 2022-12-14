@@ -1,5 +1,12 @@
 const db = require('./db')
 
+function regexClean (string) {
+  // remove brackets which were causing issues when mismatched pairings were present
+  // this does not affect the results returned as brackets are treated as word boundary characters
+  // and therefore the \m and \M in the query will match the same with or without them
+  return string.replace(/[{}[\]()]*/g, '')
+}
+
 module.exports = {
   async getFloods () {
     const result = await db.query('getFloods')
@@ -52,6 +59,11 @@ module.exports = {
     return rows
   },
 
+  async getRiversByName (searchTerm) {
+    const { rows } = await db.query('getRiversByName', [searchTerm, regexClean(searchTerm)])
+    return rows
+  },
+
   async getTargetArea (taCode) {
     const { rows } = await db.query('getTargetArea', [taCode])
     return rows[0] || {}
@@ -62,8 +74,8 @@ module.exports = {
     return rows
   },
 
-  async getRiverById (riverId) {
-    const { rows } = await db.query('getRiverById', [riverId])
+  async getRiverStationsByRiverId (riverId) {
+    const { rows } = await db.query('getRiverStationsByRiverId', [riverId])
     return rows
   },
 

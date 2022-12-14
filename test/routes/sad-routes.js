@@ -102,7 +102,7 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get impact data')
   })
 
-  lab.test('GET erroring works for /rainfall-station-telemetry/{stationId} LG', async () => {
+  lab.test('GET erroring works for /rainfall-station-telemetry/{stationId} ', async () => {
     sandbox.stub(services, 'getRainfallStationTelemetry').throws(new Error())
     const options = {
       method: 'GET',
@@ -124,6 +124,18 @@ lab.experiment('Sad Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get rainfall by station data')
+  })
+
+  lab.test('GET erroring works for /river-name/{location} ', async () => {
+    sandbox.stub(services, 'getRiversByName').throws(new Error())
+    const options = {
+      method: 'GET',
+      url: '/river-name/Tyne'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get river names')
   })
 
   lab.test('GET erroring works on /is-england/{x}/{y}', async () => {
@@ -269,7 +281,7 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get telemetry health')
   })
   lab.test('GET erroring works for /river/{riverId} ', async () => {
-    sandbox.stub(services, 'getRiverById').throws(new Error())
+    sandbox.stub(services, 'getRiverStationsByRiverId').throws(new Error())
     const options = {
       method: 'GET',
       url: '/river/123'
@@ -347,5 +359,17 @@ lab.experiment('Sad Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get stations search')
+  })
+  lab.test('GET /river-name error', async () => {
+    const options = {
+      method: 'GET',
+      url: '/river-name/merseysdvsdvsdv'
+    }
+
+    sandbox.stub(services, 'getRiversByName').throws(new Error())
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get river names')
   })
 })
