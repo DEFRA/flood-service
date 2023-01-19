@@ -1,6 +1,6 @@
 {
   "name": "flood-service",
-  "version": "5.13.0",
+  "version": "6.0.0",
   "description": "Flood risk service",
   "engines": {
     "node": ">=16"
