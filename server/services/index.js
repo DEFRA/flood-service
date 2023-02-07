@@ -108,6 +108,12 @@ module.exports = {
     return thresholds || []
   },
 
+  async getStationThreshold (id) {
+    const { rows } = await db.query('getStationThreshold', [id])
+
+    return rows
+  },
+  
   async isEngland (x, y) {
     const { rows } = await db.query('isEngland', [x, y])
     const [value] = rows
