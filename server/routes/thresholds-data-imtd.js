@@ -13,7 +13,7 @@ module.exports = {
       const warningAreasThresholds = []
       const alertAreasThresholds = []
       imtdPayload[0].TimeSeriesMetaData.forEach(element => {
-        if (element.Parameter !== 'Flow') {
+        if (element.Parameter !== 'Flow' && element.qualifier === 'Stage') {
           element.Thresholds.forEach(threshold => {
             if (threshold.ThresholdType === 'FW ACT FW' || threshold.ThresholdType === 'FW ACTCON FW' || threshold.ThresholdType === 'FW RES FW') {
               const warningAreaThreshold = {
