@@ -500,7 +500,7 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
-  
+
   lab.experiment('getstationThreshold', () => {
     const stationThresholdData = {
       command: 'SELECT',
