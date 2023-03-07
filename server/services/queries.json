@@ -14,7 +14,7 @@
   "getRiverStationByStationId": "select * from u_flood.stations_list_mview where rloi_id = $1 ORDER BY view_rank, river_id, \"rank\", agency_name",
   "getFFOIForecast": "SELECT f.* FROM u_flood.ffoi_forecast f INNER JOIN u_flood.ffoi_station s ON f.rloi_id = s.rloi_id WHERE f.rloi_id = $1 ORDER BY forecast_date DESC LIMIT 1;",
   "getFFOIThresholds": "SELECT u_flood.ffoi_get_thresholds($1);",
-  "getStationThreshold": "SELECT * from u_flood.station_threshold where station_id = $1;",
+  "getStationThreshold": "SELECT * from u_flood.station_threshold where station_id = $1 and direction = $2;",
   "isEngland": "SELECT ((SELECT count(1) FROM u_flood.england_010k e WHERE st_intersects(st_setsrid(st_makepoint($1, $2), 4326), e.geom)) > 0) AS is_england;",
   "getImpactsWithin": "select * from u_flood.impact_mview i where ST_Contains(ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, 4326), 4326), i.geom);",
   "getImpactsByRloiId": "select * from u_flood.impact_mview i where i.rloiid = $1 order by value desc, description;",

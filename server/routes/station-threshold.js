@@ -1,43 +1,20 @@
 const joi = require('@hapi/joi')
 const floodsService = require('../services/index')
 
+function getMin (thresholds, warningType) {
+  const match = (a, b) => a.toLowerCase() === b.toLowerCase()
+  return Math.min(...thresholds.filter(t => match(t.fwis_type, warningType)).map(t => t.value))
+}
+
 module.exports = {
   method: 'GET',
-  path: '/station/{id}/threshold',
+  path: '/station/{id}/{direction}/threshold',
   handler: async request => {
     try {
-      const stationThreshold = await floodsService.getStationThreshold(request.params.id)
-      if (stationThreshold.length > 0) {
-        const warningAreasThresholds = []
-        const alertAreasThresholds = []
-
-        stationThreshold.forEach(element => {
-          if (element.fwis_code.charAt(4).toLowerCase() === 'w') {
-            const warningAreaThreshold = {
-              floodWarningArea: element.fwis_code,
-              level: element.value
-            }
-            warningAreasThresholds.push(warningAreaThreshold)
-          } else {
-            const alertAreaThreshold = {
-              floodWarningArea: element.fwis_code,
-              level: element.value
-            }
-            alertAreaThreshold.floodWarningArea = element.fwis_code
-            alertAreaThreshold.level = element.value
-            alertAreasThresholds.push(alertAreaThreshold)
-          }
-        })
-
-        // Return alert and warning threshold
-
-        const alertMin = Math.min(...alertAreasThresholds.map(item => item.level))
-        const warningMin = Math.min(...warningAreasThresholds.map(item => item.level))
-
-        return [warningMin, alertMin]
-      } else {
-        return [null, null]
-      }
+      const stationThreshold = await floodsService.getStationThreshold(request.params.id, request.params.direction)
+      const alertMin = getMin(stationThreshold, 'a')
+      const warningMin = getMin(stationThreshold, 'w')
+      return { warning: warningMin, alert: alertMin }
     } catch (err) {
       return { error: `Failed to get station threshold data: ${err}` }
     }
@@ -46,7 +23,8 @@ module.exports = {
     description: 'Get station threshold by station id',
     validate: {
       params: joi.object({
-        id: joi.number().required()
+        id: joi.number().required(),
+        direction: joi.string().valid('u', 'd')
       })
     }
   }

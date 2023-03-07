@@ -508,7 +508,7 @@ lab.experiment('Services tests', () => {
       oid: null,
       rows:
       [{
-        station_threshold: []
+        station_threshold: {}
       }],
       fields: [],
       _parsers: [],
@@ -518,9 +518,7 @@ lab.experiment('Services tests', () => {
     lab.test('should return station threshold data', async () => {
       sinon.stub(db, 'query').returns(stationThresholdData)
 
-      const id = '7333'
-
-      const result = await services.getStationThreshold(id)
+      const result = await services.getStationThreshold(7333, 'u')
 
       await Code.expect(result).to.be.an.array()
     })
@@ -528,19 +526,17 @@ lab.experiment('Services tests', () => {
       stationThresholdData.rows = [{}]
       sinon.stub(db, 'query').returns(stationThresholdData)
 
-      const id = '7333'
-
-      const result = await services.getStationThreshold(id)
+      const result = await services.getStationThreshold(7333, 'u')
 
       await Code.expect(result).to.be.an.array()
     })
     lab.test('should pass query and id', async () => {
       const mock = sinon.mock(db)
         .expects('query')
-        .withArgs('getStationThreshold', [123])
+        .withArgs('getStationThreshold', [123, 'u'])
         .once()
         .returns(stationThresholdData)
-      await services.getStationThreshold(123)
+      await services.getStationThreshold(123, 'u')
       mock.verify()
     })
   })
