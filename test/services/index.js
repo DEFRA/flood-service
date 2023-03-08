@@ -520,7 +520,8 @@ lab.experiment('Services tests', () => {
 
       const result = await services.getStationThreshold(7333, 'u')
 
-      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.be.an.object()
+      await Code.expect(result).to.equal({ alert: null, warning: null })
     })
     lab.test('should handle null station threshold data', async () => {
       stationThresholdData.rows = [{}]
@@ -528,7 +529,8 @@ lab.experiment('Services tests', () => {
 
       const result = await services.getStationThreshold(7333, 'u')
 
-      await Code.expect(result).to.be.an.array()
+      await Code.expect(result).to.be.an.object()
+      await Code.expect(result).to.equal({ alert: null, warning: null })
     })
     lab.test('should pass query and id', async () => {
       const mock = sinon.mock(db)
