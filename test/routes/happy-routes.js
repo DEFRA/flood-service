@@ -365,7 +365,7 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
   })
 
-  lab.test('GET / route works for /station/{id}/{direction}/threshold blahblah', async () => {
+  lab.test('GET / route works for /station/{id}/{direction}/threshold', async () => {
     const options = {
       method: 'GET',
       url: '/station/7225/u/threshold'
