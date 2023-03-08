@@ -365,23 +365,23 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
   })
 
-  lab.test('GET / route works for /station/{id}/threshold ', async () => {
+  lab.test('GET / route works for /station/{id}/{direction}/threshold', async () => {
     const options = {
       method: 'GET',
-      url: '/station/7225/threshold'
+      url: '/station/7225/u/threshold'
 
     }
 
-    sandbox.stub(thresholds, 'handler').returns([0, 0])
+    sandbox.stub(thresholds, 'handler').returns({ warning: null, alert: null })
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
 
-  lab.test('GET / test values reurned from station_threshold table ', async () => {
+  lab.test('GET / test values returned from station_threshold table ', async () => {
     const options = {
       method: 'GET',
-      url: '/station/7122/threshold'
+      url: '/station/7122/u/threshold'
 
     }
 
@@ -391,36 +391,48 @@ lab.experiment('Happy Route tests', () => {
           station_threshold_id: '4040',
           station_id: '7122',
           fwis_code: '061WAF22LowerKen',
+          fwis_type: 'A',
+          direction: 'u',
           value: '5.35'
         },
         {
           station_threshold_id: '4041',
           station_id: '7122',
           fwis_code: '061WAF22UpperKen',
+          fwis_type: 'A',
+          direction: 'u',
           value: '5.35'
         },
         {
           station_threshold_id: '4042',
           station_id: '7122',
           fwis_code: '061FWF22Newbury',
+          fwis_type: 'W',
+          direction: 'u',
           value: '5.65'
         },
         {
           station_threshold_id: '4043',
           station_id: '7122',
           fwis_code: '061FWF22Thatcham',
+          fwis_type: 'W',
+          direction: 'u',
           value: '5.65'
         },
         {
           station_threshold_id: '4044',
           station_id: '7122',
           fwis_code: '061FWF22Newbury',
+          fwis_type: 'W',
+          direction: 'u',
           value: '5.75'
         },
         {
           station_threshold_id: '4047',
           station_id: '7122',
           fwis_code: '061FWF22Thatcham',
+          fwis_type: 'W',
+          direction: 'u',
           value: '5.75'
         }
       ]
