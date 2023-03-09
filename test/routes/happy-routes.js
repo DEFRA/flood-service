@@ -4,8 +4,7 @@ const lab = exports.lab = Lab.script()
 const createServer = require('../../server')
 const sinon = require('sinon')
 const services = require('../../server/services/index.js')
-const imtdThresholds = require('../../server/routes/thresholds-data-imtd')
-const thresholds = require('../../server/routes/station-threshold')
+const thresholds = require('../../server/routes/station-imtd-threshold')
 const s3Service = require('../../server/services/s3')
 
 lab.experiment('Happy Route tests', () => {
@@ -347,19 +346,6 @@ lab.experiment('Happy Route tests', () => {
     }
 
     sandbox.stub(services, 'getFFOIThresholds').returns({})
-
-    const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
-  })
-
-  lab.test('GET / route works for /station/{id}/imtd/thresholds ', async () => {
-    const options = {
-      method: 'GET',
-      url: '/station/7225/imtd/thresholds'
-
-    }
-
-    sandbox.stub(imtdThresholds, 'handler').returns([0, 0])
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
