@@ -3,10 +3,10 @@ const floodsService = require('../services/index')
 
 module.exports = {
   method: 'GET',
-  path: '/station/{id}/{direction}/threshold',
+  path: '/station/{id}/{direction}/imtd-thresholds',
   handler: async request => {
     try {
-      return await floodsService.getStationThreshold(request.params.id, request.params.direction)
+      return await floodsService.getStationImtdThresholds(request.params.id, request.params.direction)
     } catch (err) {
       return { error: `Failed to get station threshold data: ${err}` }
     }

@@ -365,10 +365,10 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
   })
 
-  lab.test('GET / route works for /station/{id}/{direction}/threshold', async () => {
+  lab.test('GET / route works for /station/{id}/{direction}/imtd-thresholds', async () => {
     const options = {
       method: 'GET',
-      url: '/station/7225/u/threshold'
+      url: '/station/7225/u/imtd-thresholds'
 
     }
 
@@ -378,14 +378,14 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
   })
 
-  lab.test('GET / test values returned from station_threshold table ', async () => {
+  lab.test('GET / test values returned from station_imtd_threshold table ', async () => {
     const options = {
       method: 'GET',
-      url: '/station/7122/u/threshold'
+      url: '/station/7122/u/imtd-thresholds'
 
     }
 
-    sandbox.stub(services, 'getStationThreshold').returns(
+    sandbox.stub(services, 'getStationImtdThresholds').returns(
       [
         {
           station_threshold_id: '4040',
