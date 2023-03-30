@@ -11,7 +11,7 @@
   "getTargetArea": "select fws_tacode, ta_name from u_flood.flood_alert_area where fws_tacode = $1 union select fws_tacode, ta_name from u_flood.flood_warning_area where fws_tacode = $1;",
   "getWarningsAlertsWithinStationBuffer": "select ta_id,ta_code,ta_name,ta_description,situation,quick_dial,situation_changed,severity_changed,message_received,severity_value,severity,ST_AsGeoJSON(st_centroid) as geometry from u_flood.station_ta_8km sta inner join u_flood.fwa_mview f on sta.fws_tacode = f.ta_code where sta.rloi_id = $1 ORDER BY CASE severity_value WHEN 3 THEN 1 WHEN 1 THEN 3 ELSE severity_value END, ta_name;",
   "getRiverStationsByRiverId": "select * from u_flood.stations_list_mview where river_id = $1 ORDER BY view_rank, river_id, \"rank\", qualifier DESC, agency_name;",
-  "getRiverStationByStationId": "select * from u_flood.stations_list_mview where rloi_id = $1 ORDER BY view_rank, river_id, \"rank\", agency_name",
+  "getRiverStationByStationId": "select * from u_flood.stations_list_mview where rloi_id = $1 and qualifier = $2 ORDER BY view_rank, river_id, \"rank\", agency_name",
   "getFFOIForecast": "SELECT f.* FROM u_flood.ffoi_forecast f INNER JOIN u_flood.ffoi_station s ON f.rloi_id = s.rloi_id WHERE f.rloi_id = $1 ORDER BY forecast_date DESC LIMIT 1;",
   "getFFOIThresholds": "SELECT u_flood.ffoi_get_thresholds($1);",
   "isEngland": "SELECT ((SELECT count(1) FROM u_flood.england_010k e WHERE st_intersects(st_setsrid(st_makepoint($1, $2), 4326), e.geom)) > 0) AS is_england;",

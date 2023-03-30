@@ -479,10 +479,10 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-  lab.test('GET / route works for /river-station-by-station-id/{stationId}', async () => {
+  lab.test('GET / route works for /river-station-by-station-id/{stationId}{direction}', async () => {
     const options = {
       method: 'GET',
-      url: '/river-station-by-station-id/123'
+      url: '/river-station-by-station-id/123/u'
     }
 
     sandbox.stub(services, 'getRiverStationByStationId').returns([])
