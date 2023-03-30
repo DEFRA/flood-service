@@ -292,11 +292,11 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get stations by river')
   })
-  lab.test('GET erroring works for /river-station-by-station-id/{stationId}', async () => {
+  lab.test('GET erroring works for /river-station-by-station-id/{stationId}{direction}', async () => {
     sandbox.stub(services, 'getRiverStationByStationId').throws(new Error())
     const options = {
       method: 'GET',
-      url: '/river-station-by-station-id/123'
+      url: '/river-station-by-station-id/123/u'
 
     }
 
