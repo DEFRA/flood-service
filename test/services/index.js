@@ -925,10 +925,10 @@ lab.experiment('Services tests', () => {
     lab.test('should pass query and river id', async () => {
       const mock = sinon.mock(db)
         .expects('query')
-        .withArgs('getRiverStationByStationId', [1])
+        .withArgs('getRiverStationByStationId', [1, 'u'])
         .once()
         .returns({ rows: [{ f1: 'v1' }] })
-      await services.getRiverStationByStationId(1)
+      await services.getRiverStationByStationId(1, 'u')
       mock.verify()
     })
   })
