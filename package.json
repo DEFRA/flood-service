@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/boom": "9.1.4",
-    "@hapi/code": "^8.0.5",
+    "@hapi/code": "^9.0.3",
     "@hapi/good": "9.0.1",
     "@hapi/good-console": "9.0.1",
     "@hapi/good-squeeze": "6.0.0",
