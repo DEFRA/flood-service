@@ -64,4 +64,18 @@ lab.experiment('404 Route tests', () => {
     Code.expect(response.statusCode).to.equal(404)
     Code.expect(response.payload).to.include('Station 7333 (u)')
   })
+
+  lab.test('4 - null return works for /rainfall-station/{stationId}', async () => {
+    const options = {
+      method: 'GET',
+      url: '/rainfall-station/123456'
+
+    }
+
+    sandbox.stub(services, 'getRainfallStation')
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(404)
+    Code.expect(response.payload).to.include('{"statusCode":404,"error":"Not Found","message":"No rainfall station data found"}')
+  })
 })

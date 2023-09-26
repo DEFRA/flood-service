@@ -933,14 +933,20 @@ lab.experiment('Services tests', () => {
     lab.test('should return empty rows array', async () => {
       sinon.stub(db, 'query').returns({ rows: [] })
       const result = await services.getRainfallStation()
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result).to.equal([])
+      await Code.expect(result).to.be.undefined()
     })
     lab.test('should return populated rows array', async () => {
       sinon.stub(db, 'query').returns({ rows: [{ station_reference: 'E24195', region: 'Anglian', station_name: 'LAVENHAM', ngr: 'TL9237348710', period: '15 min', units: 'mm' }] })
       const result = await services.getRainfallStation()
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result).to.equal([{ station_reference: 'E24195', region: 'Anglian', station_name: 'LAVENHAM', ngr: 'TL9237348710', period: '15 min', units: 'mm' }])
+      await Code.expect(result).to.be.an.object()
+      await Code.expect(result).to.equal({
+        station_reference: 'E24195',
+        region: 'Anglian',
+        station_name: 'LAVENHAM',
+        ngr: 'TL9237348710',
+        period: '15 min',
+        units: 'mm'
+      })
     })
     lab.test('should pass query and rainfall gauge id', async () => {
       const mock = sinon.mock(db)
