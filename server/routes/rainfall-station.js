@@ -7,7 +7,11 @@ module.exports = {
   path: '/rainfall-station/{stationId}',
   handler: async request => {
     try {
-      return await floodsService.getRainfallStation(request.params.stationId)
+      const rainfallStation = await floodsService.getRainfallStation(request.params.stationId)
+      if (!rainfallStation) {
+        return Boom.notFound('No rainfall station data found')
+      }
+      return rainfallStation
     } catch (err) {
       return Boom.badRequest('Failed to get rainfall by station data', err)
     }
