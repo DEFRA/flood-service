@@ -4,7 +4,7 @@ const pino = require('../lib/pino')
 module.exports = {
   plugin: require('hapi-pino'),
   options: {
-    logRequestComplete: false,
+    logEvents: ['onPostStart', 'onPostStop'],
     instance: pino,
     serializers: {
       req: req => ({
