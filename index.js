@@ -2,7 +2,11 @@ const createServer = require('./server')
 const pino = require('./server/lib/pino')
 
 createServer()
-  .then(server => server.start())
+  .then(async server => {
+    server.listener.requestTimeout = 0
+    server.listener.headersTimeout = 0
+    return server.start()
+  })
   .catch(err => {
     pino.fatal({
       situation: 'UNEXPECTED_FATAL_ERROR',
