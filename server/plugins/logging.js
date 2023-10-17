@@ -1,30 +1,20 @@
-const isProd = require('../config').isProd
+'use strict'
+const pino = require('../lib/pino')
 
 module.exports = {
-  plugin: require('@hapi/good'),
+  plugin: require('hapi-pino'),
   options: {
-    ops: {
-      interval: 1000
-    },
-    reporters: {
-      console: [
-        {
-          module: '@hapi/good-squeeze',
-          name: 'Squeeze',
-          args: [
-            {
-              log: isProd ? 'error' : '*',
-              error: '*',
-              response: isProd ? 'error' : '*',
-              request: isProd ? 'error' : '*'
-            }
-          ]
-        },
-        {
-          module: '@hapi/good-console'
-        },
-        'stdout'
-      ]
+    logRequestComplete: false,
+    instance: pino,
+    serializers: {
+      req: req => ({
+        method: req.method.toUpperCase(),
+        url: req.url,
+        query: Object.keys(req.query || {}).length ? req.query : undefined
+      }),
+      res: res => ({
+        statusCode: res.statusCode
+      })
     }
   }
 }

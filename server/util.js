@@ -1,19 +1,24 @@
+'use strict'
 const wreck = require('wreck').defaults({
   timeout: 10000
 })
 
-function request (method, url, options) {
-  return wreck[method](url, options)
-    .then(response => {
-      const res = response.res
-      const payload = response.payload
-
-      if (res.statusCode !== 200) {
-        throw payload || new Error('Unknown error')
-      }
-
-      return payload
-    })
+async function request (method, url, options) {
+  let res, payload
+  try {
+    const response = await wreck[method](url, options)
+    res = response.res
+    payload = response.payload
+  } catch (error) {
+    if (error?.message?.startsWith('Response Error:')) {
+      error.message += ` on ${method.toUpperCase()} ${url}`
+    }
+    throw error
+  }
+  if (res.statusCode !== 200) {
+    throw (payload || new Error('Unknown error'))
+  }
+  return payload
 }
 
 function get (url, options) {

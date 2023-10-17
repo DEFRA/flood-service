@@ -10,7 +10,9 @@ const schema = joi.object({
     secretAccessKey: joi.string().required(),
     bucket: joi.string().required(),
     httpTimeoutMs: joi.number().default(10000)
-  })
+  }),
+  logLevel: joi.string().default('info'),
+  isPM2: joi.boolean().default(false)
 })
 
 // Build config
@@ -23,7 +25,9 @@ const config = {
     secretAccessKey: process.env.FLOOD_SERVICE_S3_SECRET_ACCESS_KEY,
     bucket: process.env.FLOOD_SERVICE_S3_BUCKET,
     httpTimeoutMs: process.env.FLOOD_SERVICE_S3_TIMEOUT
-  }
+  },
+  logLevel: process.env.LOG_LEVEL,
+  isPM2: !!process.env.PM2_HOME
 }
 
 // Validate config

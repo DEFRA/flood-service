@@ -11,7 +11,6 @@ module.exports = {
     try {
       return await s3Service.floodGuidanceStatement()
     } catch (err) {
-      console.log(err)
       return boom.badRequest('Failed to get the flood guidance statement', err)
     }
   }
