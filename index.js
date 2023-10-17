@@ -1,7 +1,7 @@
 const createServer = require('./server')
 const pino = require('./server/lib/pino')
 
-createServer()
+module.exports = createServer()
   .then(async server => {
     server.listener.requestTimeout = 0
     server.listener.headersTimeout = 0
