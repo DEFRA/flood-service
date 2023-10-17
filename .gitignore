@@ -3,6 +3,8 @@
 node_modules
 npm-debug.log
 server/public/build
+logs
+*.log
 lcov.info
 coverage
 .env
