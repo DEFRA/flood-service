@@ -10,13 +10,15 @@ const mocks = {
   createServer: sinon.stub(),
   start: sinon.stub(),
   exit: sinon.stub(),
+  flush: sinon.stub(),
   fatal: sinon.stub()
 }
 
 const index = () => proxyquire('../index', {
   './server': mocks.createServer,
-  './server/lib/pino': {
-    fatal: mocks.fatal
+  './server/lib/logging/pino': {
+    fatal: mocks.fatal,
+    flush: mocks.flush
   }
 })
 
@@ -40,6 +42,7 @@ lab.experiment('Server fail test', () => {
   lab.test('it should handle errors with createServer()', async () => {
     mocks.createServer.rejects(new Error('create server went wrong'))
     mocks.fatal.returns(undefined)
+    mocks.flush.callsFake(cb => cb())
 
     let error
     try {
@@ -57,6 +60,7 @@ lab.experiment('Server fail test', () => {
     mocks.createServer.resolves({ start: mocks.start, listener: {} })
     mocks.start.rejects(new Error('server start went wrong'))
     mocks.fatal.returns(undefined)
+    mocks.flush.callsFake(cb => cb())
 
     let error
     try {
@@ -75,6 +79,7 @@ lab.experiment('Server fail test', () => {
     mocks.createServer.resolves({ start: mocks.start, listener })
     mocks.start.resolves(undefined)
     mocks.fatal.returns(undefined)
+    mocks.flush.callsFake(cb => cb())
 
     let error
     try {

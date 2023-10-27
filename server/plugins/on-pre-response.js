@@ -1,5 +1,4 @@
 'use strict'
-const { STATUS_CODES } = require('http')
 
 module.exports = {
   plugin: {
@@ -9,13 +8,11 @@ module.exports = {
         const response = request.response
         let logLevel = 'debug'
         let statusCode = response.statusCode
-        let situation = statusCode && STATUS_CODES[statusCode]
-        let stack
+        let err
 
         if (response.isBoom) {
           statusCode = response.output.statusCode
-          situation = response.message
-          stack = response.stack
+          err = response
         }
 
         if (statusCode >= 400 && statusCode !== 404) {
@@ -23,9 +20,8 @@ module.exports = {
         }
 
         request.logger[logLevel]({
-          statusCode,
-          situation,
-          stack
+          res: response,
+          err
         })
 
         return h.continue
