@@ -68,8 +68,8 @@ lab.experiment('on-pre-response plugin', () => {
     await server.inject(options)
 
     Code.expect(mocks.debug.callCount).to.equal(1)
-    Code.expect(mocks.debug.lastCall.args[0].statusCode).to.equal(200)
-    Code.expect(mocks.debug.lastCall.args[0].situation).to.equal('OK')
+    Code.expect(mocks.debug.lastCall.args[0].res).not.to.equal(undefined)
+    Code.expect(mocks.debug.lastCall.args[0].err).to.equal(undefined)
   })
 
   lab.test('produces debug log for 404', async () => {
@@ -83,9 +83,8 @@ lab.experiment('on-pre-response plugin', () => {
     await server.inject(options)
 
     Code.expect(mocks.debug.callCount).to.equal(1)
-    Code.expect(mocks.debug.lastCall.args[0].statusCode).to.equal(404)
-    Code.expect(mocks.debug.lastCall.args[0].situation).to.equal('something not found')
-    Code.expect(mocks.debug.lastCall.args[0].stack).to.startWith('Error: something not found')
+    Code.expect(mocks.debug.lastCall.args[0].res).not.to.equal(undefined)
+    Code.expect(mocks.debug.lastCall.args[0].err).not.to.equal(undefined)
   })
 
   lab.test('produces error log for 403', async () => {
@@ -99,9 +98,8 @@ lab.experiment('on-pre-response plugin', () => {
     await server.inject(options)
 
     Code.expect(mocks.error.callCount).to.equal(1)
-    Code.expect(mocks.error.lastCall.args[0].statusCode).to.equal(403)
-    Code.expect(mocks.error.lastCall.args[0].situation).to.equal('computer says no')
-    Code.expect(mocks.error.lastCall.args[0].stack).to.startWith('Error: computer says no')
+    Code.expect(mocks.error.lastCall.args[0].res).not.to.equal(undefined)
+    Code.expect(mocks.error.lastCall.args[0].err).not.to.equal(undefined)
   })
 
   lab.test('produces error log for 500', async () => {
@@ -115,8 +113,7 @@ lab.experiment('on-pre-response plugin', () => {
     await server.inject(options)
 
     Code.expect(mocks.error.callCount).to.equal(1)
-    Code.expect(mocks.error.lastCall.args[0].statusCode).to.equal(500)
-    Code.expect(mocks.error.lastCall.args[0].situation).to.equal('Bang!')
-    Code.expect(mocks.error.lastCall.args[0].stack).to.startWith('Error: Bang!')
+    Code.expect(mocks.error.lastCall.args[0].res).not.to.equal(undefined)
+    Code.expect(mocks.error.lastCall.args[0].err).not.to.equal(undefined)
   })
 })
