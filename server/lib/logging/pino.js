@@ -2,6 +2,7 @@
 const pino = require('pino')
 const config = require('../../config')
 const createLoggingTarget = require('./create-logging-target')
+const createErrbitTarget = require('./create-errbit-target')
 
 module.exports = pino({
   level: config.logLevel.toLowerCase(),
@@ -15,6 +16,8 @@ module.exports = pino({
   }
 }, pino.transport({
   targets: [
+    createErrbitTarget('fatal', 'critical'),
+    createErrbitTarget('error', 'error'),
     createLoggingTarget('fatal'),
     createLoggingTarget('error'),
     createLoggingTarget('warn'),

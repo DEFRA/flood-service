@@ -12,7 +12,13 @@ const schema = joi.object({
     httpTimeoutMs: joi.number().default(10000)
   }),
   logLevel: joi.string().default('info'),
-  isPM2: joi.boolean().default(false)
+  isPM2: joi.boolean().default(false),
+  errbit: joi.object({
+    enabled: joi.boolean().default(false),
+    host: joi.string().default('https://errbit-prd.aws-int.defra.cloud'),
+    projectId: joi.number().default(1),
+    projectKey: joi.string()
+  })
 })
 
 // Build config
@@ -27,7 +33,13 @@ const config = {
     httpTimeoutMs: process.env.FLOOD_SERVICE_S3_TIMEOUT
   },
   logLevel: process.env.LOG_LEVEL,
-  isPM2: !!process.env.PM2_HOME
+  isPM2: !!process.env.PM2_HOME,
+  errbit: {
+    enabled: process.env.ERRBIT_ENABLED === 'true',
+    host: process.env.ERRBIT_HOST,
+    projectId: process.env.ERRBIT_PROJECT_ID,
+    projectKey: process.env.ERRBIT_PROJECT_KEY
+  }
 }
 
 // Validate config
