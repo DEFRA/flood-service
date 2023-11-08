@@ -56,7 +56,7 @@ lab.experiment('util / outbound request helpers : request', () => {
     expect(postResult).to.equal(mockResponse.payload)
   })
 
-  lab.test('request adds the method and url (with any key redacted) to wreck request errors', async () => {
+  lab.test('request adds the method and url (with query strings removed) to wreck request errors', async () => {
     const method = 'get'
     const url = '/some/get/url?a=1&b=2&key=secret&c=4'
     const requestOptions = {
@@ -74,7 +74,7 @@ lab.experiment('util / outbound request helpers : request', () => {
       err = e
     }
 
-    expect(err.message).to.equal('Response Error: some response error on GET /some/get/url?a=1&b=2&key=<redacted>&c=4')
+    expect(err.message).to.equal('Response Error: some response error on GET /some/get/url')
   })
 
   lab.test('request does not add the method and url to wreck non-request errors', async () => {

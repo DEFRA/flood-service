@@ -11,7 +11,7 @@ async function request (method, url, options) {
     payload = response.payload
   } catch (error) {
     if (error?.message?.startsWith('Response Error:')) {
-      error.message += ` on ${method.toUpperCase()} ${redactKeyQueryString(url)}`
+      error.message += ` on ${method.toUpperCase()} ${url.replace(/\?.*$/, '')}`
     }
     throw error
   }
@@ -38,10 +38,6 @@ function postJson (url, options) {
 
 function getJson (url) {
   return get(url, { json: true })
-}
-
-function redactKeyQueryString (urlString) {
-  return urlString.replace(/([?&])key=[^&]*(&|$)/, (_match, a, b) => `${a}key=<redacted>${b}`)
 }
 
 module.exports = {
