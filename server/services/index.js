@@ -110,9 +110,7 @@ module.exports = {
 
   async getStationImtdThresholds (id, direction) {
     const { rows } = await db.query('getStationImtdThresholds', [id, direction])
-    const [stationThreshold] = rows
-    const thresholdParser = (value) => value ? Number(value) : null
-    return { alert: thresholdParser(stationThreshold.alert), warning: thresholdParser(stationThreshold.warning) }
+    return rows
   },
 
   async isEngland (x, y) {
