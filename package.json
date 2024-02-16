@@ -8,6 +8,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "standard",
+    "start:local": "nodemon -r dotenv/config index.js",
     "unit-test": "export LOG_LEVEL=silent && lab -v -c -r console -o stdout -r lcov -o coverage/lcov.info",
     "test": "npm run lint && npm run unit-test"
   },
@@ -32,5 +33,9 @@
     "sinon": "^15.2.0",
     "standard": "17.1.0",
     "wreck": "^14.2.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.3.1",
+    "nodemon": "^3.0.1"
   }
 }
