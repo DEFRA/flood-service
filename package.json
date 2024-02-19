@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "standard",
     "start:local": "nodemon -r dotenv/config index.js",
-    "unit-test": "export LOG_LEVEL=silent && lab -v -c -r console -o stdout -r lcov -o coverage/lcov.info",
+    "unit-test": "export LOG_LEVEL=silent && lab -v -c -r console -o stdout -r lcov -o coverage/lcov.info --require dotenv/config",
     "test": "npm run lint && npm run unit-test"
   },
   "author": "",
