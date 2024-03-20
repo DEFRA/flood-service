@@ -1,5 +1,7 @@
 'use strict'
 
+const { HTTP_BAD_REQUEST, HTTP_NOT_FOUND } = require('../constants')
+
 module.exports = {
   plugin: {
     name: 'on-pre-response',
@@ -15,7 +17,7 @@ module.exports = {
           err = response
         }
 
-        if (statusCode >= 400 && statusCode !== 404) {
+        if (statusCode >= HTTP_BAD_REQUEST && statusCode !== HTTP_NOT_FOUND) {
           logLevel = 'error'
         }
 

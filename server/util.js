@@ -1,4 +1,7 @@
 'use strict'
+
+const { HTTP_OK } = require('./constants')
+
 const wreck = require('wreck').defaults({
   timeout: 10000
 })
@@ -15,7 +18,7 @@ async function request (method, url, options) {
     }
     throw error
   }
-  if (res.statusCode !== 200) {
+  if (res.statusCode !== HTTP_OK) {
     throw (payload || new Error('Unknown error'))
   }
   return payload
