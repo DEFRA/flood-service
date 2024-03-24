@@ -1,0 +1,19 @@
+# Check For Flooding Service Release
+
+* Version: {{ version }}
+* Proposed Release Date: {{ date }}
+* Jira Release Overview: https://eaflood.atlassian.net/projects/FSR/versions/{{ id }}/tab/release-report-all-issues
+
+## Tickets
+
+{% if tickets.length == 0 %}
+  No flood-service feature tickets included in this release
+{% else %}
+  {% for ticket in tickets %}
+  - {{ ticket }}
+  {% endfor %}
+{% endif %}
+
+## Instructions
+
+See intructions in the release notes for Check For Flooding App
