@@ -22,7 +22,7 @@ jobs:
 
       - name: Check PAT token is still valid
         run: |
-          gh workflow list --repo defra/flood-service
+          gh workflow list --repo "$GITHUB_REPOSITORY_OWNER/flood-service"
         env:
           # if this fails the create/regenerate classic PAT and then populate it using `gh secret set GH_WORKFLOW`
           GH_TOKEN: ${{ secrets.GH_WORKFLOW }}
@@ -58,7 +58,7 @@ jobs:
 
       - name: Check flood app has a GitHub release 
         run: |
-         release_count=$(gh release list --repo defra/flood-app --json tagName --limit 1 --jq ".[] | select(.tagName == \"${TAG_VERSION}\")" )
+         release_count=$(gh release list --repo "$GITHUB_REPOSITORY_OWNER/flood-app"  --json tagName --limit 1 --jq ".[] | select(.tagName == \"${TAG_VERSION}\")" )
          if [ $release_count -eq 0 ]; then
            echo "There is no release for tag $TAG_VERSION in flood-app. This suggests that this workflow is being run manually and should not be."
            exit 1

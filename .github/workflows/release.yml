@@ -37,7 +37,7 @@ jobs:
 
       - name: Check PAT token is still valid
         run: |
-          gh workflow list --repo defra/flood-service
+          gh workflow list --repo  "$GITHUB_REPOSITORY_OWNER/flood-service"
         env:
           # if this fails the create/regenerate classic PAT and then populate it using `gh secret set GH_WORKFLOW`
           GH_TOKEN: ${{ secrets.GH_WORKFLOW }}
@@ -72,7 +72,7 @@ jobs:
 
       - name: Check flood app has a PR for the release branch to master
         run: |
-         pr_count=$(gh pr list --repo defra/flood-app --base "master" --head "$RELEASE_BRANCH" --limit 1 --json title --state open --jq 'length')
+         pr_count=$(gh pr list --repo "$GITHUB_REPOSITORY_OWNER/flood-app" --base "master" --head "$RELEASE_BRANCH" --limit 1 --json title --state open --jq 'length')
          if [ $pr_count -eq 0 ]; then
            echo "There is no open PR for $RELEASE_BRANCH > master in flood-app. This suggests that this workflow is being run manually and should not be."
            exit 1
