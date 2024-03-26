@@ -1,0 +1,124 @@
+name: Create Release Branch and Pull Requests (Should only ever be triggered by the equivilant job in flood-app)
+
+# It should be very rare to run this workflow manually
+# It will almost always be triggered by the equivilant job in flood app
+# Only run it manually if you are sure you know what you are doing
+
+on:
+  workflow_dispatch:
+    inputs:
+      jira_release_id:
+        type: string
+        description: id of release in Jira
+      proposed_release_date:
+        type: string
+        description: Proposed release date (dd/mm/yyyy)
+      increment:
+        type: choice
+        description: Release increment
+        options: 
+        - major
+        - minor
+        - patch
+        
+jobs:
+  create_release_branch_and_draft_pr:
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+      - name: Display inputs
+        run: echo "${{ github.event.inputs.jira_release_id }} ${{ github.event.inputs.increment }} ${{ github.event.inputs.db_changes }} ${{ github.event.inputs.proposed_release_date }}" 
+
+      - name: Validate date
+        run: |
+          date=$(date --date $(date --date "${{ github.event.inputs.proposed_release_date }}" "+%d/%m/%Y") "+%A %d %B %Y")
+          echo FORMATTED_DATE=$date >> "$GITHUB_ENV"
+
+      - name: Check PAT token is still valid
+        run: |
+          gh workflow list --repo  "$GITHUB_REPOSITORY_OWNER/flood-service"
+        env:
+          # if this fails the create/regenerate classic PAT and then populate it using `gh secret set GH_WORKFLOW`
+          GH_TOKEN: ${{ secrets.GH_WORKFLOW }}
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: development
+          fetch-depth: 0 
+
+      - name: Set up Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Bump version
+        run: |
+          npm version --no-git-tag-version "${{ github.event.inputs.increment }}"
+          version=$(jq -r '.version' package.json)
+          echo VERSION=$version >> "$GITHUB_ENV"
+          echo RELEASE_BRANCH="release/$version" >> "$GITHUB_ENV"
+
+      - name: Check branch doesn't already exist
+        run: |
+          if git ls-remote --exit-code origin "refs/heads/${RELEASE_BRANCH}"; then
+            echo "Error: Branch ${RELEASE_BRANCH} already exists." >&2
+            exit 1
+          fi
+
+      - name: Check flood app has a PR for the release branch to master
+        run: |
+         pr_count=$(gh pr list --repo "$GITHUB_REPOSITORY_OWNER/flood-app" --base "master" --head "$RELEASE_BRANCH" --limit 1 --json title --state open --jq 'length')
+         if [ $pr_count -eq 0 ]; then
+           echo "There is no open PR for $RELEASE_BRANCH > master in flood-app. This suggests that this workflow is being run manually and should not be."
+           exit 1
+         fi
+        env:
+          # if this fails the create/regenerate classic PAT and then populate it using `gh secret set GH_WORKFLOW`
+          GH_TOKEN: ${{ secrets.GH_WORKFLOW }}
+
+      - name: Create release branch
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git switch -c $RELEASE_BRANCH
+          git add .
+          git commit -m "Bump version number (${VERSION})"
+          git push origin $RELEASE_BRANCH
+        env:
+          FLOOD_SERVICE_CONNECTION_STRING: "${{ secrets.FLOOD_SERVICE_CONNECTION_STRING }}"
+          FLOOD_SERVICE_S3_ACCESS_KEY: "${{ secrets.FLOOD_SERVICE_S3_ACCESS_KEY }}"
+          FLOOD_SERVICE_S3_BUCKET: "${{ secrets.FLOOD_SERVICE_S3_BUCKET }}"
+          FLOOD_SERVICE_S3_SECRET_ACCESS_KEY: "${{ secrets.FLOOD_SERVICE_S3_SECRET_ACCESS_KEY }}"
+
+      - name: Create release notes from template (if it exists)
+        run: |
+          template_file="release-docs/template.njk"
+          if [ -e "$template_file" ]; then
+            release_notes_file="release-docs/CFF-${VERSION}.md"
+            temp_file=$(mktemp)
+            git log --oneline --pretty=%s origin/master...$RELEASE_BRANCH --grep '^FSR-' > $temp_file
+            npm run create-release-notes -- \
+              --file $temp_file \
+              --date "$FORMATTED_DATE" \
+              --release "$VERSION" \
+              --output $release_notes_file \
+              --id "${{ github.event.inputs.jira_release_id }}" \
+              --template "release-docs/template.njk"
+            git add $release_notes_file
+            git commit --no-verify -m "Add release notes (${VERSION})"
+            git push origin $RELEASE_BRANCH
+            echo RELEASE_NOTES_FILE=$release_notes_file >> "$GITHUB_ENV"
+          fi
+
+      - name: Create Draft PRs
+        run: |
+          gh pr create --base master --title "Release $VERSION" --body "TBC"
+          gh pr create --base development --title "Release $VERSION"  --body "TBC"
+        env:
+          # create classic PAT and then run `gh secret set GH_WORKFLOW`
+          GH_TOKEN: ${{ secrets.GH_WORKFLOW }}
