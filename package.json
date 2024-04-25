@@ -25,6 +25,7 @@
     "aws-sdk": "2.1499.0",
     "blipp": "4.0.2",
     "hapi-pino": "^12.1.0",
+    "nunjucks": "^3.2.4",
     "pg": "8.11.3",
     "pino": "^8.16.2",
     "pino-abstract-transport": "^1.1.0",
