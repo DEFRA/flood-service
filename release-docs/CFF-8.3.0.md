@@ -6,9 +6,7 @@
 
 ## Tickets
 
-
-  No flood-service feature tickets included in this release
-
+* FSR-1193 | TA Update - 22 May 2024
 
 ## Instructions
 
