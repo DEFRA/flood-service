@@ -6,9 +6,7 @@
 
 ## Tickets
 
-
-  No flood-service feature tickets included in this release
-
+* FSR-1158 : Sonarcloud issues on Flood Service
 
 ## Instructions
 
