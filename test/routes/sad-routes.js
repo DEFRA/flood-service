@@ -372,4 +372,28 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get river names')
   })
+  lab.test('GET /forecast-station error', async () => {
+    const options = {
+      method: 'GET',
+      url: '/forecast-station/8208/u'
+    }
+
+    sandbox.stub(services, 'getForecastFlag').throws(new Error())
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get station data')
+  })
+  lab.test('GET /forecast-station fails validation', async () => {
+    const options = {
+      method: 'GET',
+      url: '/forecast-station/hndghndghn/u'
+    }
+
+    sandbox.stub(services, 'getForecastFlag').throws(new Error())
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Invalid request params input')
+  })
 })

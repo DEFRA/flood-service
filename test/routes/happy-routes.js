@@ -635,4 +635,33 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
+  lab.test('GET / route works for /forecast-station/{rloiId}/{direction} ', async () => {
+    const options = {
+      method: 'GET',
+      url: '/forecast-station/8208/u'
+
+    }
+
+    sandbox.stub(services, 'getForecastFlag').returns({
+      station_display_time_series_id: '94280',
+      station_id: '8208',
+      direction: 'u',
+      display_time_series: true
+    })
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+  lab.test('GET /forecast-station/{rloiId}/{direction} to not error if station not found ', async () => {
+    const options = {
+      method: 'GET',
+      url: '/forecast-station/8208/u'
+
+    }
+
+    sandbox.stub(services, 'getForecastFlag').returns(null)
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
 })
