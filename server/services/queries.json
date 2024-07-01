@@ -4,6 +4,7 @@
   "getAlertArea": "SELECT gid as id, area, fws_tacode as code, ta_name as name, descrip as description, la_name as localAuthorityName, qdial as quickDialNumber, river_sea as riverOrSea, st_AsGeoJSON(geom) as geom, ST_AsGeoJSON(ST_centroid(geom)) as centroid FROM u_flood.flood_alert_area WHERE fws_tacode = $1;",
   "getWarningArea": "SELECT gid as id, area, fws_tacode as code, ta_name as name, descrip as description, la_name as localAuthorityName, parent, qdial as quickDialNumber, river_sea as riverOrSea, st_AsGeoJSON(geom) as geom, ST_AsGeoJSON(ST_centroid(geom)) as centroid FROM u_flood.flood_warning_area WHERE fws_tacode = $1;",
   "getStation": "SELECT * FROM u_flood.station_split_mview WHERE rloi_id = $1 AND qualifier = $2;",
+  "getForecastFlag": "SELECT * FROM u_flood.station_display_time_series WHERE station_id = $1 AND direction = $2;",
   "getStationTelemetry": "SELECT * FROM u_flood.get_telemetry($1, $2);",
   "getStations": "select * from u_flood.stations_list_mview ORDER BY view_rank, river_id, \"rank\", agency_name;",
   "getStationsWithin": "select * from u_flood.stations_list_mview where ST_Contains(ST_MakeEnvelope($1, $2, $3, $4, 4326), centroid) ORDER BY view_rank, river_id, \"rank\", agency_name;",
