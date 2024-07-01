@@ -28,7 +28,7 @@
     "nunjucks": "^3.2.4",
     "pg": "8.11.3",
     "pino": "^8.16.2",
-    "pino-abstract-transport": "^1.1.0",
+    "pino-abstract-transport": "^1.2.0",
     "pino-pretty": "^10.2.3",
     "proxy-agent": "6.3.1",
     "proxyquire": "^2.1.3",
