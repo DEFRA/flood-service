@@ -43,6 +43,12 @@ module.exports = {
 
     return station
   },
+  async getForecastFlag (id, direction) {
+    const { rows } = await db.query('getForecastFlag', [id, direction])
+    const [station] = rows
+
+    return station
+  },
 
   async getStations () {
     const { rows } = await db.query('getStations')
