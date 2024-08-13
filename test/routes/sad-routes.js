@@ -190,19 +190,6 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get forecast data')
   })
 
-  lab.test('GET erroring works for /station/{id}/forecast/thresholds ', async () => {
-    sandbox.stub(services, 'getFFOIThresholds').throws(new Error())
-    const options = {
-      method: 'GET',
-      url: '/station/7225/forecast/thresholds'
-
-    }
-
-    const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(400)
-    Code.expect(response.payload).to.include('Failed to get ffoi threshold data')
-  })
-
   lab.test('GET erroring works for /stations-within/{x1}/{y1}/{x2}/{y2} ', async () => {
     sandbox.stub(services, 'getStationsWithin').throws(new Error())
     const options = {

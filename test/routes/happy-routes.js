@@ -338,19 +338,6 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
   })
 
-  lab.test('GET / route works for /station/{id}/forecast/thresholds ', async () => {
-    const options = {
-      method: 'GET',
-      url: '/station/7225/forecast/thresholds'
-
-    }
-
-    sandbox.stub(services, 'getFFOIThresholds').returns({})
-
-    const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
-  })
-
   lab.test('GET / route works for /station/{id}/{direction}/imtd-thresholds', async () => {
     const options = {
       method: 'GET',
