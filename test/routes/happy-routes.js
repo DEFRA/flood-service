@@ -599,7 +599,6 @@ lab.experiment('Happy Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
   })
-
   lab.test('GET / route works for /target-area', async () => {
     const options = {
       method: 'GET',
@@ -618,6 +617,17 @@ lab.experiment('Happy Route tests', () => {
     }
 
     sandbox.stub(services, 'getRiversByName').returns({ rows: [] })
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+  lab.test('GET / route works for /target-area/{fwisCode}/imtd-thresholds', async () => {
+    const options = {
+      method: 'GET',
+      url: '/target-area/034FWFTRWLLNGTN/imtd-thresholds'
+    }
+
+    sandbox.stub(services, 'getTargetAreaThresholds').returns({ thresholds: [] })
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
