@@ -500,6 +500,53 @@ lab.experiment('Services tests', () => {
     })
   })
 
+  lab.experiment('getTargetAreaThresholds', () => {
+    const getTargetAreaThresholdsData = () => {
+      return {
+        rows: [
+          {
+            rloi_id: 5041,
+            river_name: 'River Birket',
+            agency_name: 'Davis Road',
+            status: 'Active',
+            iswales: false,
+            latest_level: '0.474',
+            threshold_value: '3.64',
+            direction: 'u',
+            threshold_type: 'FW RES FW',
+            value_timestamp: '2024-08-21T13:45:00.000Z'
+          }
+        ]
+      }
+    }
+
+    lab.test('should return target area thresholds', async () => {
+      sinon.stub(db, 'query').callsFake(getTargetAreaThresholdsData)
+
+      const result = await services.getTargetAreaThresholds('FWIS001')
+
+      await Code.expect(result).to.be.an.array()
+      await Code.expect(result[0].rloi_id).to.equal(5041)
+      await Code.expect(result[0].river_name).to.equal('River Birket')
+      await Code.expect(result[0].agency_name).to.equal('Davis Road')
+      await Code.expect(result[0].latest_level).to.equal('0.474')
+      await Code.expect(result[0].threshold_value).to.equal('3.64')
+      await Code.expect(result[0].direction).to.equal('u')
+      await Code.expect(result[0].threshold_type).to.equal('FW RES FW')
+      await Code.expect(result[0].value_timestamp).to.equal('2024-08-21T13:45:00.000Z')
+    })
+
+    lab.test('should pass query and id', async () => {
+      const mock = sinon.mock(db)
+        .expects('query')
+        .withArgs('getTargetAreaThresholds', ['FWIS001'])
+        .once()
+        .returns(getTargetAreaThresholdsData())
+      await services.getTargetAreaThresholds('FWIS001')
+      mock.verify()
+    })
+  })
+
   lab.experiment('isEngland', () => {
     const isEnglandData = () => {
       return {
