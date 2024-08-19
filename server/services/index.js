@@ -43,6 +43,12 @@ module.exports = {
 
     return station
   },
+  async getForecastFlag (id, direction) {
+    const { rows } = await db.query('getForecastFlag', [id, direction])
+    const [station] = rows
+
+    return station
+  },
 
   async getStations () {
     const { rows } = await db.query('getStations')
@@ -99,13 +105,6 @@ module.exports = {
     const [{ get_telemetry: telemetry }] = rows
 
     return telemetry || []
-  },
-
-  async getFFOIThresholds (id) {
-    const { rows } = await db.query('getFFOIThresholds', [id])
-    const [{ ffoi_get_thresholds: thresholds }] = rows
-
-    return thresholds || []
   },
 
   async getStationImtdThresholds (id, direction) {

@@ -18,7 +18,6 @@ const routes = [].concat(
   require('../routes/stations-within'),
   require('../routes/stations-within-target-area'),
   require('../routes/warnings-alerts-within-station-buffer'),
-  require('../routes/thresholds-data'),
   require('../routes/station-imtd-threshold'),
   require('../routes/stations-health'),
   require('../routes/telemetry-health'),
@@ -28,7 +27,8 @@ const routes = [].concat(
   require('../routes/stations-by-radius'),
   require('../routes/error'),
   require('../routes/rainfall-station-telemetry'),
-  require('../routes/river-name')
+  require('../routes/river-name'),
+  require('../routes/forecast-station')
 )
 
 module.exports = {
