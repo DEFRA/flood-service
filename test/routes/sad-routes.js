@@ -359,6 +359,19 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Failed to get river names')
   })
+
+  lab.test('GET erroring works for /target-area/{fwisCode}/imtd-thresholds', async () => {
+    const options = {
+      method: 'GET',
+      url: '/target-area/034FWFTRWLLNGTA/imtd-thresholds'
+    }
+
+    sandbox.stub(services, 'getTargetAreaThresholds').throws(new Error())
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get target area thresholds')
+  })
   lab.test('GET /forecast-station error', async () => {
     const options = {
       method: 'GET',
