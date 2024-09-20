@@ -13,7 +13,7 @@
   "getWarningsAlertsWithinStationBuffer": "select ta_id,ta_code,ta_name,ta_description,situation,quick_dial,situation_changed,severity_changed,message_received,severity_value,severity,ST_AsGeoJSON(st_centroid) as geometry from u_flood.station_ta_8km sta inner join u_flood.fwa_mview f on sta.fws_tacode = f.ta_code where sta.rloi_id = $1 ORDER BY CASE severity_value WHEN 3 THEN 1 WHEN 1 THEN 3 ELSE severity_value END, ta_name;",
   "getRiverStationsByRiverId": "select * from u_flood.stations_list_mview where river_id = $1 ORDER BY view_rank, river_id, \"rank\", qualifier DESC, agency_name;",
   "getRiverStationByStationId": "select * from u_flood.stations_list_mview where rloi_id = $1 and qualifier = $2 ORDER BY view_rank, river_id, \"rank\", agency_name",
-  "getStationImtdThresholds": "SELECT sit.*, fwa.ta_name, fwa.severity_value FROM station_imtd_threshold sit LEFT JOIN fwa_mview fwa ON sit.fwis_code = fwa.ta_code WHERE sit.station_id = $1 AND sit.direction = $2;",
+  "getStationImtdThresholds": "SELECT sit.*, fwa.ta_name, fwa.severity_value FROM station_imtd_threshold sit LEFT JOIN fwa_mview fwa ON sit.fwis_code = fwa.ta_code WHERE sit.station_id = $1 AND sit.direction = $2 AND fwa.severity_value IS NOT null;",
   "isEngland": "SELECT ((SELECT count(1) FROM u_flood.england_010k e WHERE st_intersects(st_setsrid(st_makepoint($1, $2), 4326), e.geom)) > 0) AS is_england;",
   "getImpactsWithin": "select * from u_flood.impact_mview i where ST_Contains(ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, 4326), 4326), i.geom);",
   "getImpactsByRloiId": "select * from u_flood.impact_mview i where i.rloiid = $1 order by value desc, description;",
