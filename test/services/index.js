@@ -514,13 +514,16 @@ lab.experiment('Services tests', () => {
             threshold_value: '3.64',
             direction: 'u',
             threshold_type: 'FW RES FW',
-            value_timestamp: '2024-08-21T13:45:00.000Z'
+            value_timestamp: '2024-08-21T13:45:00.000Z',
+            post_process: false,
+            stage_datum: '0.48',
+            subtract: null
           }
         ]
       }
     }
 
-    lab.test('should return target area thresholds', async () => {
+    lab.test('should return target area thresholds with additional fields', async () => {
       sinon.stub(db, 'query').callsFake(getTargetAreaThresholdsData)
 
       const result = await services.getTargetAreaThresholds('FWIS001')
@@ -534,6 +537,9 @@ lab.experiment('Services tests', () => {
       await Code.expect(result[0].direction).to.equal('u')
       await Code.expect(result[0].threshold_type).to.equal('FW RES FW')
       await Code.expect(result[0].value_timestamp).to.equal('2024-08-21T13:45:00.000Z')
+      await Code.expect(result[0].post_process).to.equal(false)
+      await Code.expect(result[0].stage_datum).to.equal('0.48')
+      await Code.expect(result[0].subtract).to.equal(null)
     })
 
     lab.test('should pass query and id', async () => {
