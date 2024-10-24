@@ -24,6 +24,7 @@ const routes = [].concat(
   require('../routes/ffoi-health'),
   require('../routes/stations-overview'),
   require('../routes/target-area'),
+  require('../routes/ta-thresholds'),
   require('../routes/stations-by-radius'),
   require('../routes/error'),
   require('../routes/rainfall-station-telemetry'),

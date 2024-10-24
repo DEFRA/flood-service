@@ -112,6 +112,11 @@ module.exports = {
     return rows
   },
 
+  async getTargetAreaThresholds (id) {
+    const { rows } = await db.query('getTargetAreaThresholds', [id])
+    return rows
+  },
+
   async isEngland (x, y) {
     const { rows } = await db.query('isEngland', [x, y])
     const [value] = rows
