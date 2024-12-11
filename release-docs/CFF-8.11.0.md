@@ -6,11 +6,9 @@
 
 ## Tickets
 
+  * FSR-1344 | Bump critical dependencies for service (#272)
 
-  
-  - FSR-1344: Bump critical dependencies for service (#272)
-
-  - FSR-1365: Latest Levels box shows correct level for multi-station areas (#270)
+  * FSR-1344 | Latest Levels box shows correct level for multi-station areas (#270)
   
 
 
