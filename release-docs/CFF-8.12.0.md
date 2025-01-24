@@ -8,7 +8,11 @@
 
 
   
-  - FSR-1378 | fix sonarcloud issue (#277)
+ * FSR-607 | Welsh Station Pages – Height Data Missing from Rivers list but Present on Map Tooltip
+
+ * FSR-1377 | Location Search Issues (CFF / Bing)
+
+ * FSR-452 | Set z-index for stations (2) and rainfall (1) layers to ensure proper visibility.
   
 
 
