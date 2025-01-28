@@ -37,7 +37,7 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "dotenv": "^16.3.1",
-    "nodemon": "^3.1.7"
+    "dotenv": "^16.4.7",
+    "nodemon": "^3.1.9"
   }
 }
