@@ -8,8 +8,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "standard",
-    "start:local": "node index.js",
-    "start:nodemon": "nodemon --ext js,json,html,env -r dotenv/config index.js",
+    "start:local": "nodemon --ext js,json,html,env -r dotenv/config index.js",
+    "start:local:no-watch": "node -r dotenv/config index.js",
     "unit-test": "export LOG_LEVEL=silent && lab -v -c -r console -o stdout -r lcov -o coverage/lcov.info --require dotenv/config",
     "test": "npm run lint && npm run unit-test",
     "create-release-notes": "node release-docs/lib/create-release-notes.js"
