@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@hapi/code": "^9.0.3",
-    "@hapi/lab": "^25.3.1",
+    "@hapi/lab": "^26.0.0",
     "dotenv": "^16.4.7",
     "nodemon": "^3.1.9",
     "proxyquire": "^2.1.3",
