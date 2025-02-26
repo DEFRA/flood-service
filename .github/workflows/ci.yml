@@ -7,17 +7,20 @@ jobs:
 
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
               with:
                 fetch-depth: 0
 
+            - name: Set node version
+              run: echo "NODE_VERSION=$(cat .nvmrc)" >> $GITHUB_ENV
+
             - name: Install nodejs
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v4
               with:
-                node-version: "18.x"
+                node-version: ${{ env.NODE_VERSION }}
             
             - name: Install node dependencies
-              run: npm ci
+              run: npm ci --engine-strict
 
             - name: Run linting
               run: npm run lint
