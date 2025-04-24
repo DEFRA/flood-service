@@ -1,9 +1,8 @@
 const joi = require('joi')
-const defaultPort = 8050
 
 // Define config schema
 const schema = joi.object({
-  port: joi.number().default(defaultPort),
+  port: joi.number().default(8050),
   env: joi.string().valid('development', 'dev', 'test', 'tst', 'production').default('production'),
   connectionString: joi.string().required(),
   s3: joi.object().required().keys({
