@@ -36,7 +36,7 @@ jobs:
       - name: Set up Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version-file: '.nvmrc'
 
       - name: Install dependencies
         run: npm install
@@ -73,7 +73,7 @@ jobs:
           git config --global user.name "GitHub Actions"
           git switch $RELEASE_BRANCH
           git switch master
-          git merge --ff-only $RELEASE_BRANCH
+          git merge $RELEASE_BRANCH
           git push
 
       - name: Create GitHub Release
@@ -85,5 +85,5 @@ jobs:
       - name: Merge release branch into development
         run: |
           git switch development
-          git merge --ff-only $RELEASE_BRANCH
+          git merge $RELEASE_BRANCH
           git push
