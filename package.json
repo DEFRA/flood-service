@@ -19,9 +19,9 @@
   "license": "ISC",
   "dependencies": {
     "@airbrake/node": "^2.1.8",
+    "@aws-sdk/client-s3": "^3.820.0",
     "@hapi/boom": "10.0.1",
     "@hapi/hapi": "^21.3.10",
-    "aws-sdk": "^2.1692.0",
     "blipp": "4.0.2",
     "hapi-pino": "^12.1.0",
     "joi": "^17.13.3",
