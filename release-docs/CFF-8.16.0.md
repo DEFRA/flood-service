@@ -1,18 +1,12 @@
 # Check For Flooding Service Release
 
 * Version: 8.16.0
-* Proposed Release Date: 
+* Proposed Release Date: 10th June 2025
 * Jira Release Overview: https://eaflood.atlassian.net/projects/FSR/versions/21662/tab/release-report-all-issues
 
 ## Tickets
 
-
-  
-  - FSR-000 : switch to using node-version-file in workflows (#287)
-  
-  - FSR-1324 : sonar cloud issue (#289)
-  
-
+- FSR-1426 | Latest levels updates
 
 ## Instructions
 
