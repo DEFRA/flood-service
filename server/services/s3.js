@@ -11,6 +11,7 @@ const s3Client = new S3Client({
     accessKeyId: config.accessKey,
     secretAccessKey: config.secretAccessKey
   },
+  region: config.region,
   maxAttempts: 3 // Equivalent to maxRetries in v2
 })
 
