@@ -31,6 +31,7 @@ jobs:
               env:
                 FLOOD_SERVICE_CONNECTION_STRING: "${{ secrets.FLOOD_SERVICE_CONNECTION_STRING }}"
                 FLOOD_SERVICE_S3_ACCESS_KEY: "${{ secrets.FLOOD_SERVICE_S3_ACCESS_KEY }}"
+                FLOOD_SERVICE_S3_REGION: "${{ secrets.FLOOD_SERVICE_S3_REGION }}"
                 FLOOD_SERVICE_S3_BUCKET: "${{ secrets.FLOOD_SERVICE_S3_BUCKET }}"
                 FLOOD_SERVICE_S3_SECRET_ACCESS_KEY: "${{ secrets.FLOOD_SERVICE_S3_SECRET_ACCESS_KEY }}"
               run: |
