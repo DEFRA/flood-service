@@ -2,7 +2,7 @@ const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3')
 const { NodeHttpHandler } = require('@smithy/node-http-handler')
 const config = require('../config').s3
 
-// Create S3 client with credentials
+// Create a configured S3 client.
 const s3Client = new S3Client({
   requestHandler: new NodeHttpHandler({
     requestTimeout: config.httpTimeoutMs
