@@ -9,7 +9,6 @@ const schema = joi.object({
   s3: joi.object().required().keys({
     accessKey: joi.string().required(),
     secretAccessKey: joi.string().required(),
-    region: joi.string().required(),
     bucket: joi.string().required(),
     httpTimeoutMs: joi.number().default(10000)
   }),
@@ -31,7 +30,6 @@ const config = {
   s3: {
     accessKey: process.env.FLOOD_SERVICE_S3_ACCESS_KEY,
     secretAccessKey: process.env.FLOOD_SERVICE_S3_SECRET_ACCESS_KEY,
-    region: process.env.FLOOD_SERVICE_S3_REGION,
     bucket: process.env.FLOOD_SERVICE_S3_BUCKET,
     httpTimeoutMs: process.env.FLOOD_SERVICE_S3_TIMEOUT
   },
