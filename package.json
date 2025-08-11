@@ -27,7 +27,7 @@
     "joi": "^17.13.3",
     "nunjucks": "^3.2.4",
     "pg": "^8.13.1",
-    "pino": "^9.6.0",
+    "pino": "^9.8.0",
     "pino-abstract-transport": "^2.0.0",
     "pino-pretty": "^11.3.0",
     "standard": "17.1.2",
