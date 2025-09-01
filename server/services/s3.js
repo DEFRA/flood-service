@@ -1,36 +1,41 @@
-const AWS = require('aws-sdk')
+const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3')
+const { NodeHttpHandler } = require('@smithy/node-http-handler')
 const config = require('../config').s3
 
-AWS.config.credentials = {
-  accessKeyId: config.accessKey,
-  secretAccessKey: config.secretAccessKey
-}
-
-AWS.config.httpOptions = {
-  timeout: config.httpTimeoutMs
-}
-
-// S3 default is set to undefined, so setting to 3 as per rest of aws service default
-AWS.config.maxRetries = 3
+// Create a configured S3 client.
+const s3Client = new S3Client({
+  requestHandler: new NodeHttpHandler({
+    requestTimeout: config.httpTimeoutMs
+  }),
+  credentials: {
+    accessKeyId: config.accessKey,
+    secretAccessKey: config.secretAccessKey
+  },
+  region: config.region,
+  maxAttempts: 3 // Equivalent to maxRetries in v2
+})
 
 module.exports = {
-  floodGuidanceStatement: () => {
-    const s3 = new AWS.S3()
+  floodGuidanceStatement: async () => {
     const params = {
       Key: 'fgs/latest.json',
       Bucket: config.bucket
     }
 
-    return s3.getObject(params)
-      .promise()
-      .then(data => JSON.parse(data.Body))
+    const command = new GetObjectCommand(params)
+    const response = await s3Client.send(command)
+    const bodyContents = await response.Body.transformToString()
+    return JSON.parse(bodyContents)
   },
-  ffoi: id => {
-    const s3 = new AWS.S3()
-    const params = { Bucket: config.bucket, Key: `ffoi/${id}.json` }
+  ffoi: async (id) => {
+    const params = {
+      Bucket: config.bucket,
+      Key: `ffoi/${id}.json`
+    }
 
-    return s3.getObject(params)
-      .promise()
-      .then(data => JSON.parse(data.Body))
+    const command = new GetObjectCommand(params)
+    const response = await s3Client.send(command)
+    const bodyContents = await response.Body.transformToString()
+    return JSON.parse(bodyContents)
   }
 }
