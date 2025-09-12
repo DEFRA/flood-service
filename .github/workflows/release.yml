@@ -83,7 +83,6 @@ jobs:
           git switch -c $RELEASE_BRANCH
           git add .
           git commit -m "Bump version number (${VERSION})"
-          git push origin $RELEASE_BRANCH
         env:
           FLOOD_SERVICE_CONNECTION_STRING: "${{ secrets.FLOOD_SERVICE_CONNECTION_STRING }}"
           FLOOD_SERVICE_S3_ACCESS_KEY: "${{ secrets.FLOOD_SERVICE_S3_ACCESS_KEY }}"
@@ -106,9 +105,11 @@ jobs:
               --template "release-docs/template.njk"
             git add $release_notes_file
             git commit --no-verify -m "Add release notes (${VERSION})"
-            git push origin $RELEASE_BRANCH
             echo RELEASE_NOTES_FILE=$release_notes_file >> "$GITHUB_ENV"
           fi
+
+      - name: Push changes
+        run: git push origin $RELEASE_BRANCH
 
       - name: Create Draft PRs
         run: |
