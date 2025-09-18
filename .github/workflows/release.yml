@@ -49,7 +49,7 @@ jobs:
           node-version-file: '.nvmrc'
           
       - name: Install dependencies
-        run: npm install
+        run: npm ci
         
       - name: Bump version
         run: |
