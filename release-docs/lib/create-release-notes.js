@@ -1,13 +1,16 @@
+#!/usr/bin/env node
+
 const fs = require('fs')
 const nunjucks = require('nunjucks')
-const yargs = require('yargs')
+const yargs = require('yargs/yargs')
+const { hideBin } = require('yargs/helpers')
 
-const options = yargs
+const options = yargs(hideBin(process.argv))
   .option('f', {
     alias: 'file',
     describe: 'Input file path',
-    demandOption: true, // Make the option required
-    type: 'string' // Specify the type of the option's value
+    demandOption: true,
+    type: 'string'
   })
   .option('o', {
     alias: 'output',
@@ -45,6 +48,7 @@ const options = yargs
     type: 'boolean',
     default: false
   })
+  .help()
   .argv
 
 const templateStr = fs.readFileSync(options.template, 'utf8')
