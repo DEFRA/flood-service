@@ -19,7 +19,7 @@
   "license": "ISC",
   "dependencies": {
     "@airbrake/node": "^2.1.9",
-    "@aws-sdk/client-s3": "^3.844.0",
+    "@aws-sdk/client-s3": "^3.893.0",
     "@hapi/boom": "10.0.1",
     "@hapi/hapi": "^21.4.0",
     "blipp": "4.0.2",
