@@ -29,7 +29,7 @@
     "npm": "11.6.1",
     "nunjucks": "3.2.4",
     "pg": "8.16.3",
-    "pino": "9.12.0",
+    "pino": "10.0.0",
     "pino-abstract-transport": "2.0.0",
     "pino-pretty": "13.1.1",
     "standard": "17.1.2",
