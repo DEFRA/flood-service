@@ -31,7 +31,7 @@ AWS serverless lfw-data tier processing telemetry, forecast, 5DF, fwis data and 
 
 S3 Bucket storing some of the processed data files, referred to as `FLOOD_SERVICE_S3_BUCKET` in the env vars
 
-Node v8+
+Node v20
 
 ## Testing the application
 
