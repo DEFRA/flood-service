@@ -3,7 +3,7 @@
   "version": "8.23.0",
   "description": "Flood risk service",
   "engines": {
-    "node": "20.x"
+    "node": "22.x"
   },
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,7 @@
     "hapi-pino": "13.0.0",
     "install": "0.13.0",
     "joi": "18.0.1",
-    "npm": "11.6.1",
+    "npm": "^11.6.0",
     "nunjucks": "3.2.4",
     "pg": "8.16.3",
     "pino": "9.12.0",
