@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "standard",
-    "start:local": "nodemon --ext js,json,html,env -r dotenv/config index.js",
+    "start:local": "npx nodemon --ext js,json,html,env -r dotenv/config index.js",
     "start:local:no-watch": "node -r dotenv/config index.js",
     "unit-test": "export LOG_LEVEL=silent && lab -v -c -r console -o stdout -r lcov -o coverage/lcov.info --require dotenv/config",
     "unit-test:no-coverage": "export LOG_LEVEL=silent && lab -v -c -r console -o stdout --require dotenv/config",
