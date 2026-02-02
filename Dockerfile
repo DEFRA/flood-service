@@ -17,9 +17,9 @@ RUN set -xe \
 WORKDIR /home/node/app
 
 # Copy the basic directories/files across
-COPY --chown=node:node package*.json .
-COPY --chown=node:node ./index.js .
-COPY --chown=node:node ./server ./server
+COPY --chown=root:root package*.json .
+COPY --chown=root:root ./index.js .
+COPY --chown=root:root ./server ./server
 
 
 ARG BUILD_VERSION=v8.23.0-1-g6666666
@@ -28,7 +28,7 @@ RUN echo -e "module.exports = { version: '$BUILD_VERSION', revision: '$GIT_COMMI
 
 FROM base AS development
 
-COPY --chown=node:node ./test ./test
+COPY --chown=root:root ./test ./test
 
 RUN npm ci --ignore-scripts --include dev
 USER node
