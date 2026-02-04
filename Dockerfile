@@ -9,9 +9,7 @@ USER root
 # set -xe : -e abort on error : -x verbose output
 RUN set -xe \
   && apk update && apk upgrade \
-  && rm -rf /var/cache/apk/* \
-  && mkdir -p /home/node/app \
-  && chown -R node:node /home/node/app
+  && rm -rf /var/cache/apk/*
 
 # Create app directory
 WORKDIR /home/node/app
