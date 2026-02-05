@@ -1,0 +1,36 @@
+# Version control
+.git
+.github
+
+# Dependencies
+node_modules
+
+# Environment files
+.env
+.env.*
+*.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Testing
+coverage
+
+# IDE
+.vscode
+.DS_Store
+
+# Build artifacts
+server/dist
+
+# Documentation
+docs
+readme.md
+
+# Release notes
+release-docs
+
+# Misc
+Dockerfile
