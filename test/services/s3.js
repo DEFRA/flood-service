@@ -124,4 +124,167 @@ lab.experiment('S3 service test', () => {
     Code.expect(s3Mock.send.calledOnce).to.be.true()
     Code.expect(result).to.equal(expectedJson)
   })
+
+  lab.experiment('S3 client configuration tests', () => {
+    let S3ClientConstructorStub
+    let s3ConfigCapture
+
+    lab.beforeEach(() => {
+      delete require.cache[require.resolve('../../server/services/s3.js')]
+      delete process.env.AWS_ENDPOINT_URL
+
+      S3ClientConstructorStub = sinon.stub().callsFake((config) => {
+        s3ConfigCapture = config
+        return new S3Client(config)
+      })
+    })
+
+    lab.afterEach(() => {
+      delete process.env.AWS_ENDPOINT_URL
+    })
+
+    lab.test('should include credentials when accessKey and secretAccessKey are provided', () => {
+      const configWithCreds = {
+        s3: {
+          accessKey: 'test-key',
+          secretAccessKey: 'test-secret',
+          region: 'eu-west-2',
+          bucket: 'test-bucket',
+          httpTimeoutMs: 5000
+        }
+      }
+
+      proxyquire('../../server/services/s3', {
+        '../config': configWithCreds,
+        '@aws-sdk/client-s3': {
+          S3Client: S3ClientConstructorStub,
+          GetObjectCommand
+        }
+      })
+
+      Code.expect(s3ConfigCapture).to.exist()
+      Code.expect(s3ConfigCapture.credentials).to.exist()
+      Code.expect(s3ConfigCapture.credentials.accessKeyId).to.equal('test-key')
+      Code.expect(s3ConfigCapture.credentials.secretAccessKey).to.equal('test-secret')
+      Code.expect(s3ConfigCapture.region).to.equal('eu-west-2')
+    })
+
+    lab.test('should NOT include credentials when accessKey is empty', () => {
+      const configWithoutCreds = {
+        s3: {
+          accessKey: '',
+          secretAccessKey: 'test-secret',
+          region: 'eu-west-2',
+          bucket: 'test-bucket',
+          httpTimeoutMs: 5000
+        }
+      }
+
+      proxyquire('../../server/services/s3', {
+        '../config': configWithoutCreds,
+        '@aws-sdk/client-s3': {
+          S3Client: S3ClientConstructorStub,
+          GetObjectCommand
+        }
+      })
+
+      Code.expect(s3ConfigCapture).to.exist()
+      Code.expect(s3ConfigCapture.credentials).to.not.exist()
+      Code.expect(s3ConfigCapture.region).to.equal('eu-west-2')
+    })
+
+    lab.test('should NOT include credentials when secretAccessKey is empty', () => {
+      const configWithoutCreds = {
+        s3: {
+          accessKey: 'test-key',
+          secretAccessKey: '',
+          region: 'eu-west-2',
+          bucket: 'test-bucket',
+          httpTimeoutMs: 5000
+        }
+      }
+
+      proxyquire('../../server/services/s3', {
+        '../config': configWithoutCreds,
+        '@aws-sdk/client-s3': {
+          S3Client: S3ClientConstructorStub,
+          GetObjectCommand
+        }
+      })
+
+      Code.expect(s3ConfigCapture).to.exist()
+      Code.expect(s3ConfigCapture.credentials).to.not.exist()
+    })
+
+    lab.test('should NOT include credentials when both are undefined', () => {
+      const configWithoutCreds = {
+        s3: {
+          region: 'eu-west-2',
+          bucket: 'test-bucket',
+          httpTimeoutMs: 5000
+        }
+      }
+
+      proxyquire('../../server/services/s3', {
+        '../config': configWithoutCreds,
+        '@aws-sdk/client-s3': {
+          S3Client: S3ClientConstructorStub,
+          GetObjectCommand
+        }
+      })
+
+      Code.expect(s3ConfigCapture).to.exist()
+      Code.expect(s3ConfigCapture.credentials).to.not.exist()
+    })
+
+    lab.test('should include endpoint and forcePathStyle when AWS_ENDPOINT_URL is set', () => {
+      process.env.AWS_ENDPOINT_URL = 'http://testurl:9000'
+
+      const config = {
+        s3: {
+          accessKey: 'test-key',
+          secretAccessKey: 'test-secret',
+          region: 'eu-west-2',
+          bucket: 'test-bucket',
+          httpTimeoutMs: 5000
+        }
+      }
+
+      proxyquire('../../server/services/s3', {
+        '../config': config,
+        '@aws-sdk/client-s3': {
+          S3Client: S3ClientConstructorStub,
+          GetObjectCommand
+        }
+      })
+
+      Code.expect(s3ConfigCapture).to.exist()
+      Code.expect(s3ConfigCapture.endpoint).to.equal('http://testurl:9000')
+      Code.expect(s3ConfigCapture.forcePathStyle).to.be.true()
+    })
+
+    lab.test('should NOT include endpoint when AWS_ENDPOINT_URL is not set', () => {
+      const config = {
+        s3: {
+          accessKey: 'test-key',
+          secretAccessKey: 'test-secret',
+          region: 'eu-west-2',
+          bucket: 'test-bucket',
+          httpTimeoutMs: 5000
+        }
+      }
+
+      proxyquire('../../server/services/s3', {
+        '../config': config,
+        '@aws-sdk/client-s3': {
+          S3Client: S3ClientConstructorStub,
+          GetObjectCommand
+        }
+      })
+
+      Code.expect(s3ConfigCapture).to.exist()
+      Code.expect(s3ConfigCapture.endpoint).to.not.exist()
+      Code.expect(s3ConfigCapture.forcePathStyle).to.not.exist()
+    })
+  })
 })
