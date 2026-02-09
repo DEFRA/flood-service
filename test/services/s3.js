@@ -286,7 +286,7 @@ lab.experiment('S3 service test', () => {
       Code.expect(s3ConfigCapture.endpoint).to.not.exist()
       Code.expect(s3ConfigCapture.forcePathStyle).to.not.exist()
     })
-    
+
     lab.test('should throw error when AWS_ENDPOINT_URL is set but credentials are missing', () => {
       process.env.AWS_ENDPOINT_URL = 'http://localhost.localstack.cloud:4566'
 
