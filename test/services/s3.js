@@ -286,5 +286,29 @@ lab.experiment('S3 service test', () => {
       Code.expect(s3ConfigCapture.endpoint).to.not.exist()
       Code.expect(s3ConfigCapture.forcePathStyle).to.not.exist()
     })
+    
+    lab.test('should throw error when AWS_ENDPOINT_URL is set but credentials are missing', () => {
+      process.env.AWS_ENDPOINT_URL = 'http://localhost.localstack.cloud:4566'
+
+      const configWithoutCreds = {
+        s3: {
+          region: 'eu-west-2',
+          bucket: 'test-bucket',
+          httpTimeoutMs: 5000
+        }
+      }
+
+      const loadModule = () => {
+        proxyquire('../../server/services/s3', {
+          '../config': configWithoutCreds,
+          '@aws-sdk/client-s3': {
+            S3Client: S3ClientConstructorStub,
+            GetObjectCommand
+          }
+        })
+      }
+
+      Code.expect(loadModule).to.throw(Error, 'AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required when AWS_ENDPOINT_URL is set for local development')
+    })
   })
 })

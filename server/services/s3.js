@@ -22,6 +22,9 @@ if (config.accessKey && config.secretAccessKey) {
 
 // Add endpoint for localstack if provided
 if (process.env.AWS_ENDPOINT_URL) {
+  if (!config.accessKey || !config.secretAccessKey) {
+    throw new Error('AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required when AWS_ENDPOINT_URL is set for local development')
+  }
   s3Config.endpoint = process.env.AWS_ENDPOINT_URL
   s3Config.forcePathStyle = true // Required for localstack
 }
