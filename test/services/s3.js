@@ -133,7 +133,6 @@ lab.experiment('S3 service test', () => {
       delete require.cache[require.resolve('../../server/services/s3.js')]
       delete process.env.AWS_ENDPOINT_URL
       delete process.env.AWS_EXECUTION_ENV
-      delete process.env.ECS_AGENT_URI
 
       S3ClientConstructorStub = sinon.stub().callsFake((config) => {
         s3ConfigCapture = config
@@ -144,7 +143,6 @@ lab.experiment('S3 service test', () => {
     lab.afterEach(() => {
       delete process.env.AWS_ENDPOINT_URL
       delete process.env.AWS_EXECUTION_ENV
-      delete process.env.ECS_AGENT_URI
     })
 
     lab.test('should include credentials when accessKey and secretAccessKey are provided', () => {
