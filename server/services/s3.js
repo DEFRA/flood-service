@@ -21,7 +21,7 @@ if (config.accessKey && config.secretAccessKey) {
 }
 
 // Check if running in ECS (where IAM roles provide credentials automatically)
-const isRunningInECS = process.env.AWS_EXECUTION_ENV && process.env.AWS_EXECUTION_ENV.toUpperCase() === 'AWS_ECS_FARGATE'
+const isRunningInECS = process.env.AWS_EXECUTION_ENV?.toUpperCase() === 'AWS_ECS_FARGATE'
 
 // Validate credentials are provided when not in ECS
 if (!isRunningInECS && (!config.accessKey || !config.secretAccessKey)) {
