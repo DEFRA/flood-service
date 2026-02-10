@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - master
-      # development to be added once code changes required for ECS and local deployment are available through FSR-1601.
-      # This prevents incompatible Docker images being pushed to ECR.
+      - development
     tags:
       - "v*.*.*"
   workflow_dispatch:
