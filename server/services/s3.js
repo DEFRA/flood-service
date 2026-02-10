@@ -25,7 +25,7 @@ const isRunningInECS = process.env.AWS_EXECUTION_ENV?.toUpperCase() === 'AWS_ECS
 
 // Validate credentials are provided when not in ECS
 if (!isRunningInECS && (!config.accessKey || !config.secretAccessKey)) {
-  throw new Error('AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required for local development')
+  throw new Error('AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required when not running in ECS')
 }
 // Create a configured S3 client.
 const s3Client = new S3Client(s3Config)

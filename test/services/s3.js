@@ -267,7 +267,7 @@ lab.experiment('S3 service test', () => {
         })
       }
 
-      Code.expect(loadModule).to.throw(Error, 'AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required for local development')
+      Code.expect(loadModule).to.throw(Error, 'AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required when not running in ECS')
     })
 
     lab.test('should throw error when accessKey is missing and NOT in ECS', () => {
@@ -290,7 +290,7 @@ lab.experiment('S3 service test', () => {
         })
       }
 
-      Code.expect(loadModule).to.throw(Error, 'AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required for local development')
+      Code.expect(loadModule).to.throw(Error, 'AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required when not running in ECS')
     })
 
     lab.test('should throw error when secretAccessKey is missing and NOT in ECS', () => {
@@ -313,7 +313,7 @@ lab.experiment('S3 service test', () => {
         })
       }
 
-      Code.expect(loadModule).to.throw(Error, 'AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required for local development')
+      Code.expect(loadModule).to.throw(Error, 'AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required when not running in ECS')
     })
 
     lab.test('should NOT throw when in ECS (AWS_ECS_FARGATE) without credentials', () => {
