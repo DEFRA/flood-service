@@ -15,8 +15,9 @@ For DEFRA employees, these environment variables are available in our private lf
 | NODE_ENV                          | Node environment       |    no    | production  | development, dev, test, tst, production |       |
 | PORT                              | Port number            |    no    | 3000        |                                     |       |
 | FLOOD_SERVICE_CONNECTION_STRING   | PG Connection String   |    yes   |             |                                     |       |
-| FLOOD_SERVICE_S3_ACCESS_KEY       | S3 Access Key          |    yes   |             |                                     |       |
-| FLOOD_SERVICE_S3_SECRET_ACCESS_KEY| S3 Secret Key          |    yes   |             |                                     |       |
+| FLOOD_SERVICE_S3_ACCESS_KEY       | S3 Access Key          |    yes   |             |                                     | Remove in production (uses IAM roles) |
+| FLOOD_SERVICE_S3_SECRET_ACCESS_KEY| S3 Secret Key          |    yes   |             |                                     | Remove in production (uses IAM roles) |
+| FLOOD_SERVICE_S3_REGION           | S3 Region              |    yes   |             | e.g. eu-west-2                      |       |
 | FLOOD_SERVICE_S3_BUCKET           | S3 Bucket              |    yes   |             |                                     |       |
 | FLOOD_SERVICE_S3_TIMEOUT          | S3 Http Timeout        |    no    | 10000 (10s) |                                     |       |
 | ERRBIT_PROJECT_KEY                | Errbit Project Key     |    no    |             |                                     |       |

@@ -20,15 +20,13 @@ if (config.accessKey && config.secretAccessKey) {
   }
 }
 
-// Add endpoint for localstack if provided
-if (process.env.AWS_ENDPOINT_URL) {
-  if (!config.accessKey || !config.secretAccessKey) {
-    throw new Error('AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required when AWS_ENDPOINT_URL is set for local development')
-  }
-  s3Config.endpoint = process.env.AWS_ENDPOINT_URL
-  s3Config.forcePathStyle = true // Required for localstack
-}
+// Check if running in ECS (where IAM roles provide credentials automatically)
+const isRunningInECS = process.env.AWS_EXECUTION_ENV && process.env.AWS_EXECUTION_ENV.toUpperCase() === 'AWS_ECS_FARGATE'
 
+// Validate credentials are provided when not in ECS
+if (!isRunningInECS && (!config.accessKey || !config.secretAccessKey)) {
+  throw new Error('AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required for local development')
+}
 // Create a configured S3 client.
 const s3Client = new S3Client(s3Config)
 

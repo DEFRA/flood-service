@@ -132,6 +132,8 @@ lab.experiment('S3 service test', () => {
     lab.beforeEach(() => {
       delete require.cache[require.resolve('../../server/services/s3.js')]
       delete process.env.AWS_ENDPOINT_URL
+      delete process.env.AWS_EXECUTION_ENV
+      delete process.env.ECS_AGENT_URI
 
       S3ClientConstructorStub = sinon.stub().callsFake((config) => {
         s3ConfigCapture = config
@@ -141,6 +143,8 @@ lab.experiment('S3 service test', () => {
 
     lab.afterEach(() => {
       delete process.env.AWS_ENDPOINT_URL
+      delete process.env.AWS_EXECUTION_ENV
+      delete process.env.ECS_AGENT_URI
     })
 
     lab.test('should include credentials when accessKey and secretAccessKey are provided', () => {
@@ -169,7 +173,9 @@ lab.experiment('S3 service test', () => {
       Code.expect(s3ConfigCapture.region).to.equal('eu-west-2')
     })
 
-    lab.test('should NOT include credentials when accessKey is empty', () => {
+    lab.test('should NOT include credentials when accessKey is empty in ECS', () => {
+      process.env.AWS_EXECUTION_ENV = 'AWS_ECS_FARGATE'
+
       const configWithoutCreds = {
         s3: {
           accessKey: '',
@@ -193,7 +199,9 @@ lab.experiment('S3 service test', () => {
       Code.expect(s3ConfigCapture.region).to.equal('eu-west-2')
     })
 
-    lab.test('should NOT include credentials when secretAccessKey is empty', () => {
+    lab.test('should NOT include credentials when secretAccessKey is empty in ECS', () => {
+      process.env.AWS_EXECUTION_ENV = 'AWS_ECS_FARGATE'
+
       const configWithoutCreds = {
         s3: {
           accessKey: 'test-key',
@@ -216,7 +224,9 @@ lab.experiment('S3 service test', () => {
       Code.expect(s3ConfigCapture.credentials).to.not.exist()
     })
 
-    lab.test('should NOT include credentials when both are undefined', () => {
+    lab.test('should NOT include credentials when both are undefined in ECS', () => {
+      process.env.AWS_EXECUTION_ENV = 'AWS_ECS_FARGATE'
+
       const configWithoutCreds = {
         s3: {
           region: 'eu-west-2',
@@ -225,71 +235,22 @@ lab.experiment('S3 service test', () => {
         }
       }
 
-      proxyquire('../../server/services/s3', {
-        '../config': configWithoutCreds,
-        '@aws-sdk/client-s3': {
-          S3Client: S3ClientConstructorStub,
-          GetObjectCommand
-        }
-      })
+      const loadModule = () => {
+        return proxyquire('../../server/services/s3', {
+          '../config': configWithoutCreds,
+          '@aws-sdk/client-s3': {
+            S3Client: S3ClientConstructorStub,
+            GetObjectCommand
+          }
+        })
+      }
 
+      Code.expect(loadModule).to.not.throw()
       Code.expect(s3ConfigCapture).to.exist()
       Code.expect(s3ConfigCapture.credentials).to.not.exist()
     })
 
-    lab.test('should include endpoint and forcePathStyle when AWS_ENDPOINT_URL is set', () => {
-      process.env.AWS_ENDPOINT_URL = 'http://testurl:9000'
-
-      const config = {
-        s3: {
-          accessKey: 'test-key',
-          secretAccessKey: 'test-secret',
-          region: 'eu-west-2',
-          bucket: 'test-bucket',
-          httpTimeoutMs: 5000
-        }
-      }
-
-      proxyquire('../../server/services/s3', {
-        '../config': config,
-        '@aws-sdk/client-s3': {
-          S3Client: S3ClientConstructorStub,
-          GetObjectCommand
-        }
-      })
-
-      Code.expect(s3ConfigCapture).to.exist()
-      Code.expect(s3ConfigCapture.endpoint).to.equal('http://testurl:9000')
-      Code.expect(s3ConfigCapture.forcePathStyle).to.be.true()
-    })
-
-    lab.test('should NOT include endpoint when AWS_ENDPOINT_URL is not set', () => {
-      const config = {
-        s3: {
-          accessKey: 'test-key',
-          secretAccessKey: 'test-secret',
-          region: 'eu-west-2',
-          bucket: 'test-bucket',
-          httpTimeoutMs: 5000
-        }
-      }
-
-      proxyquire('../../server/services/s3', {
-        '../config': config,
-        '@aws-sdk/client-s3': {
-          S3Client: S3ClientConstructorStub,
-          GetObjectCommand
-        }
-      })
-
-      Code.expect(s3ConfigCapture).to.exist()
-      Code.expect(s3ConfigCapture.endpoint).to.not.exist()
-      Code.expect(s3ConfigCapture.forcePathStyle).to.not.exist()
-    })
-
-    lab.test('should throw error when AWS_ENDPOINT_URL is set but credentials are missing', () => {
-      process.env.AWS_ENDPOINT_URL = 'http://localhost.localstack.cloud:4566'
-
+    lab.test('should throw error when credentials are missing and NOT in ECS', () => {
       const configWithoutCreds = {
         s3: {
           region: 'eu-west-2',
@@ -308,11 +269,10 @@ lab.experiment('S3 service test', () => {
         })
       }
 
-      Code.expect(loadModule).to.throw(Error, 'AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required when AWS_ENDPOINT_URL is set for local development')
+      Code.expect(loadModule).to.throw(Error, 'AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required for local development')
     })
-    lab.test('should throw error when AWS_ENDPOINT_URL is set but accessKey is missing', () => {
-      process.env.AWS_ENDPOINT_URL = 'http://localhost.localstack.cloud:4566'
 
+    lab.test('should throw error when accessKey is missing and NOT in ECS', () => {
       const configMissingAccessKey = {
         s3: {
           secretAccessKey: 'test-secret',
@@ -332,12 +292,10 @@ lab.experiment('S3 service test', () => {
         })
       }
 
-      Code.expect(loadModule).to.throw(Error, 'AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required when AWS_ENDPOINT_URL is set for local development')
+      Code.expect(loadModule).to.throw(Error, 'AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required for local development')
     })
 
-    lab.test('should throw error when AWS_ENDPOINT_URL is set but secretAccessKey is missing', () => {
-      process.env.AWS_ENDPOINT_URL = 'http://localhost.localstack.cloud:4566'
-
+    lab.test('should throw error when secretAccessKey is missing and NOT in ECS', () => {
       const configMissingSecretKey = {
         s3: {
           accessKey: 'test-key',
@@ -357,7 +315,60 @@ lab.experiment('S3 service test', () => {
         })
       }
 
-      Code.expect(loadModule).to.throw(Error, 'AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required when AWS_ENDPOINT_URL is set for local development')
+      Code.expect(loadModule).to.throw(Error, 'AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required for local development')
+    })
+
+    lab.test('should NOT throw when in ECS (AWS_ECS_FARGATE) without credentials', () => {
+      process.env.AWS_EXECUTION_ENV = 'AWS_ECS_FARGATE'
+
+      const configWithoutCreds = {
+        s3: {
+          region: 'eu-west-2',
+          bucket: 'test-bucket',
+          httpTimeoutMs: 5000
+        }
+      }
+
+      const loadModule = () => {
+        return proxyquire('../../server/services/s3', {
+          '../config': configWithoutCreds,
+          '@aws-sdk/client-s3': {
+            S3Client: S3ClientConstructorStub,
+            GetObjectCommand
+          }
+        })
+      }
+
+      Code.expect(loadModule).to.not.throw()
+      Code.expect(s3ConfigCapture.credentials).to.not.exist()
+    })
+
+    lab.test('should allow credentials when in ECS environment', () => {
+      process.env.AWS_EXECUTION_ENV = 'AWS_ECS_FARGATE'
+
+      const configWithCreds = {
+        s3: {
+          accessKey: 'test-key',
+          secretAccessKey: 'test-secret',
+          region: 'eu-west-2',
+          bucket: 'test-bucket',
+          httpTimeoutMs: 5000
+        }
+      }
+
+      const loadModule = () => {
+        return proxyquire('../../server/services/s3', {
+          '../config': configWithCreds,
+          '@aws-sdk/client-s3': {
+            S3Client: S3ClientConstructorStub,
+            GetObjectCommand
+          }
+        })
+      }
+
+      Code.expect(loadModule).to.not.throw()
+      Code.expect(s3ConfigCapture.credentials).to.exist()
+      Code.expect(s3ConfigCapture.credentials.accessKeyId).to.equal('test-key')
     })
   })
 })
