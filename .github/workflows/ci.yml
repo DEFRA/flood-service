@@ -17,7 +17,7 @@ jobs:
                 node-version-file: '.nvmrc'
             
             - name: Install node dependencies
-              run: npm ci --engine-strict
+              run: npm ci --ignore-scripts --engine-strict
 
             - name: Run linting
               run: npm run lint
@@ -38,7 +38,7 @@ jobs:
                 npm run unit-test
 
             - name: Analyse code quality
-              uses: sonarsource/sonarqube-scan-action@master
+              uses: sonarsource/sonarqube-scan-action@a31c9398be7ace6bbfaf30c0bd5d415f843d45e9 #7.0.0
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
