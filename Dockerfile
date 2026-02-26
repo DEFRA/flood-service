@@ -27,8 +27,6 @@ FROM base AS development
 
 # Copy test resources
 COPY --chown=root:root ./test ./test
-# The coverage directory needs to be writable by the node user for reports to be generated.
-COPY --chown=node:node ./coverage ./coverage
 
 RUN npm ci --engine-strict --ignore-scripts --include=dev
 
