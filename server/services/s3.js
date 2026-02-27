@@ -2,18 +2,33 @@ const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3')
 const { NodeHttpHandler } = require('@smithy/node-http-handler')
 const config = require('../config').s3
 
-// Create a configured S3 client.
-const s3Client = new S3Client({
+// Create S3 client config
+const s3Config = {
   requestHandler: new NodeHttpHandler({
     requestTimeout: config.httpTimeoutMs
   }),
-  credentials: {
-    accessKeyId: config.accessKey,
-    secretAccessKey: config.secretAccessKey
-  },
   region: config.region,
   maxAttempts: 3 // Equivalent to maxRetries in v2
-})
+}
+
+// Only add credentials if provided (local development)
+// In deployed environments, IAM roles will be used automatically
+if (config.accessKey && config.secretAccessKey) {
+  s3Config.credentials = {
+    accessKeyId: config.accessKey,
+    secretAccessKey: config.secretAccessKey
+  }
+}
+
+// Check if running in ECS (where IAM roles provide credentials automatically)
+const isRunningInECS = process.env.AWS_EXECUTION_ENV?.toUpperCase() === 'AWS_ECS_FARGATE'
+
+// Validate credentials are provided when not in ECS
+if (!isRunningInECS && (!config.accessKey || !config.secretAccessKey)) {
+  throw new Error('AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required when not running in ECS')
+}
+// Create a configured S3 client.
+const s3Client = new S3Client(s3Config)
 
 module.exports = {
   floodGuidanceStatement: async () => {

@@ -7,8 +7,8 @@ const schema = joi.object({
   env: joi.string().valid('development', 'dev', 'test', 'tst', 'production').default('production'),
   connectionString: joi.string().required(),
   s3: joi.object().required().keys({
-    accessKey: joi.string().required(),
-    secretAccessKey: joi.string().required(),
+    accessKey: joi.string().allow('').optional(),
+    secretAccessKey: joi.string().allow('').optional(),
     region: joi.string().required(),
     bucket: joi.string().required(),
     httpTimeoutMs: joi.number().default(10000)

@@ -1,14 +1,14 @@
 {
   "name": "flood-service",
-  "version": "8.23.0",
+  "version": "8.25.0",
   "description": "Flood risk service",
   "engines": {
-    "node": "20.x"
+    "node": "22.x"
   },
   "main": "index.js",
   "scripts": {
     "lint": "standard",
-    "start:local": "nodemon --ext js,json,html,env -r dotenv/config index.js",
+    "start:local": "npx nodemon --ext js,json,html,env -r dotenv/config index.js",
     "start:local:no-watch": "node -r dotenv/config index.js",
     "unit-test": "export LOG_LEVEL=silent && lab -v -c -r console -o stdout -r lcov -o coverage/lcov.info --require dotenv/config",
     "unit-test:no-coverage": "export LOG_LEVEL=silent && lab -v -c -r console -o stdout --require dotenv/config",
@@ -26,7 +26,7 @@
     "hapi-pino": "13.0.0",
     "install": "0.13.0",
     "joi": "18.0.1",
-    "npm": "11.6.1",
+    "npm": "11.7.0",
     "nunjucks": "3.2.4",
     "pg": "8.16.3",
     "pino": "9.12.0",
