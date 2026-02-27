@@ -37,7 +37,8 @@ CMD [ "node", "--inspect=0.0.0.0:9229", "index.js" ]
 
 FROM base AS production 
 
-RUN npm ci --engine-strict --ignore-scripts --omit=dev
+RUN npm ci --engine-strict --ignore-scripts --omit=dev \
+&& chmod -R a-w /home/node
 
 USER node
 EXPOSE ${PORT}/tcp
