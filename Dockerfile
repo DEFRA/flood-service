@@ -15,6 +15,8 @@ RUN set -xe \
 WORKDIR /home/node/app
 
 # Copy the basic directories/files across
+# When developing/debugging within a container locally, --chown=root:root should be replaced with --chown=node:node to provide
+# required write permissions. SonarQube cloud will raise a security issue if analysing these changes.
 COPY --chown=root:root package*.json .
 COPY --chown=root:root ./index.js .
 COPY --chown=root:root ./server ./server
@@ -26,6 +28,8 @@ RUN echo -e "module.exports = { version: '$BUILD_VERSION', revision: '$GIT_COMMI
 FROM base AS development
 
 # Copy test resources
+# When developing/debugging within a container locally, --chown=root:root should be replaced with --chown=node:node to provide
+# required write permissions. SonarQube cloud will raise a security issue if analysing these changes.
 COPY --chown=root:root ./test ./test
 
 RUN npm ci --engine-strict --ignore-scripts --include=dev
