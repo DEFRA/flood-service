@@ -7,7 +7,7 @@ const globalsAsArray = [
   '__asyncGenerator', '__asyncDelegator', '__asyncValues', '__makeTemplateObject', 
   '__importStar', '__importDefault', '__classPrivateFieldGet', '__classPrivateFieldSet', 
   '__classPrivateFieldIn', '__addDisposableResource', '__disposeResources', 
-  '__rewriteRelativeImportExtension'
+  '__rewriteRelativeImportExtension', 'awslambda'
 ]
 
 const globals = globalsAsArray.toString()
