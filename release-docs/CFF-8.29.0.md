@@ -1,13 +1,12 @@
 # Check For Flooding Service Release
 
 * Version: 8.29.0
-* Proposed Release Date: 
+* Proposed Release Date: 7th May 2026
 * Jira Release Overview: https://eaflood.atlassian.net/projects/FSR/versions/32016/tab/release-report-all-issues
 
 ## Tickets
 
-
-  No flood-service feature tickets included in this release
+  See Flood App Release Notes
 
 
 ## Instructions
