@@ -49,3 +49,10 @@ jobs:
                   -Dsonar.exclusions=**/node_modules/**,**/test/**,**/test-output/**
                   -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
                   -Dsonar.javascript.exclusions=**/node_modules/**,**/test/**,**/test-output/**
+            - name: Dependency Review
+              if: github.event_name == 'pull_request'
+              uses: actions/dependency-review-action@v4
+              with:
+                fail-on-severity: moderate
+                comment-summary-in-pr: always
+                  
