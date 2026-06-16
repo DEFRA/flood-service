@@ -1,0 +1,12 @@
+# Exclude non-source/generated content from GitHub Copilot indexing
+# .env files are excluded at organisation level.
+
+# Build and coverage artifacts
+coverage/**
+server/dist/**
+
+# Release notes and generated publication docs
+release-docs/**
+
+# Dependencies
+node_modules/**
