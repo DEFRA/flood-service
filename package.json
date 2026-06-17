@@ -3,7 +3,7 @@
   "version": "8.30.0",
   "description": "Flood risk service",
   "engines": {
-    "node": "22.x"
+    "node": "24.x"
   },
   "main": "index.js",
   "scripts": {
