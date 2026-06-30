@@ -106,6 +106,39 @@ lab.experiment('Happy Route tests', () => {
     Code.expect(response.statusCode).to.equal(200)
   })
 
+  lab.test('GET / route works for /stationsGeoJson', async () => {
+    const options = {
+      method: 'GET',
+      url: '/stationsGeoJson'
+
+    }
+
+    sandbox.stub(services, 'getFloods').returns({
+      floods:
+      {
+        code: '061WAF07Cole',
+        key: 175364,
+        description: 'River Cole and Dorcan Brook',
+        quickdialnumber: '171235',
+        region: 'South East',
+        area: 'West Thames',
+        floodtype: 'f',
+        severity: 3,
+        severitydescription: 'Flood Alert',
+        warningkey: 106274,
+        raised: '2019-07-24T06:17:00.000Z',
+        severitychanged: '2019-07-24T06:17:00.000Z',
+        messagechanged: '2019-07-24T06:17:00.000Z',
+        message: 'Property flooding is not currently expected.\nRiver levels have risen on the River Cole at Lower Stratton as a result of thunderstorms overnight. River levels have peaked and are expected to start falling soon, with no further rise forecasted.\nOur incident response staff are monitoring the situation. This message will be updated this afternoon',
+        geometry: '{\'type:\'Point\',\'coordinates:[-1.69232110253823,51.6047668691946]}'
+      },
+      timestamp: '1563969242'
+    })
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+  })
+
   lab.test('GET / route works for /floods-within/{x1}/{y1}/{x2}/{y2} ', async () => {
     const options = {
       method: 'GET',

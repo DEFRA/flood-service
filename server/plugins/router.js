@@ -1,6 +1,7 @@
 const routes = [].concat(
   require('../routes/index'),
   require('../routes/floods'),
+  require('../routes/stationsGeoJson'),
   require('../routes/flood-area-alert'),
   require('../routes/flood-area-warning'),
   require('../routes/flood-guidance-statement'),

@@ -63,6 +63,19 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Failed to get floods')
   })
 
+  lab.test('GET erroring works for /stationsGeoJson', async () => {
+    sandbox.stub(services, 'getFloods').throws(new Error())
+    const options = {
+      method: 'GET',
+      url: '/stationsGeoJson'
+
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get floods')
+  })
+
   lab.test('GET erroring works for /floods-within/{x1}/{y1}/{x2}/{y2} ', async () => {
     sandbox.stub(services, 'getFloodsWithin').throws(new Error())
     const options = {
