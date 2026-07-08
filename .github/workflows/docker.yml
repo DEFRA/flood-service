@@ -49,7 +49,7 @@ jobs:
         id: rc-number
         if: contains(github.ref, 'release') || contains(github.ref, 'hotfix')
         run: |
-          rc_count=$(git rev-list --count origin/master..HEAD 2>/dev/null || echo "1")
+          rc_count=$(git rev-list --count origin/development..HEAD 2>/dev/null || echo "1")
           echo "rc_count=${rc_count}" >> $GITHUB_OUTPUT
 
       - name: Extract Docker metadata
