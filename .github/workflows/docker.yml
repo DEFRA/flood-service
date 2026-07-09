@@ -45,6 +45,7 @@ jobs:
         run:
           echo "raw_tag=$(git describe --always --tags)" >> $GITHUB_OUTPUT
 
+      # If on a release or hotfix branch, generate a release candidate number based on the number of commits since the last development branch commit.
       - name: Generate release candidate number
         id: rc-number
         if: contains(github.ref, 'release') || contains(github.ref, 'hotfix')
