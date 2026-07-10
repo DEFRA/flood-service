@@ -3,7 +3,7 @@
   "version": "8.30.0",
   "description": "Flood risk service",
   "engines": {
-    "node": "22.x"
+    "node": "24.x"
   },
   "main": "index.js",
   "scripts": {
@@ -22,10 +22,10 @@
     "@airbrake/node": "2.1.9",
     "@aws-sdk/client-s3": "3.1043.0",
     "@hapi/boom": "10.0.1",
-    "@hapi/hapi": "21.4.8",
+    "@hapi/hapi": "21.4.9",
     "blipp": "4.0.2",
     "hapi-pino": "13.0.0",
-    "joi": "18.2.1",
+    "joi": "18.2.3",
     "nunjucks": "3.2.4",
     "pg": "8.20.0",
     "pino": "10.3.1",
