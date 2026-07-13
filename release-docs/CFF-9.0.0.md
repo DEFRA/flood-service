@@ -1,7 +1,7 @@
 # Check For Flooding Service Release
 
 * Version: 9.0.0
-* Proposed Release Date: 
+* Proposed Release Date: 22nd July 2026
 * Jira Release Overview: https://eaflood.atlassian.net/projects/FSR/versions/37414/tab/release-report-all-issues
 
 ## Tickets
