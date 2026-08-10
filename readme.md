@@ -10,6 +10,7 @@ Create a .env file at the root of the project to set your environment variables 
 
 For DEFRA employees, these environment variables are available in our private lfwconfig repository.
 
+
 | name                              | description            | required | default     | valid                               | notes |
 |-----------------------------------|------------------------|:--------:|-------------|-------------------------------------|-------|
 | NODE_ENV                          | Node environment       |    no    | production  | development, dev, test, tst, production |       |
