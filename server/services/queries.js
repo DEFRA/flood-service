@@ -1,0 +1,158 @@
+module.exports = {
+  getFloods: `select ta_id,ta_code,ta_name,ta_description,situation,quick_dial,situation_changed,severity_changed,message_received,severity_value,severity,ST_AsGeoJSON(st_centroid) as geometry from u_flood.fwa_mview ORDER BY CASE severity_value WHEN 3 THEN 1 WHEN 1 THEN 3 ELSE severity_value END, ta_name; SELECT load_timestamp as timestamp FROM u_flood.current_load_timestamp where id = 1;`,
+
+  getFloodsWithin: `select ta_id,ta_code,ta_name,ta_description,situation,quick_dial,situation_changed,severity_changed,message_received,severity_value,severity,ST_AsGeoJSON(st_centroid) as geometry from u_flood.fwa_mview WHERE ST_Intersects(geom, ST_Transform(ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, 4326), 27700), 4326)) ORDER BY CASE severity_value WHEN 3 THEN 1 WHEN 1 THEN 3 ELSE severity_value END, ta_name;`,
+
+  getAlertArea: `SELECT gid as id, area, fws_tacode as code, ta_name as name, descrip as description, la_name as localAuthorityName, qdial as quickDialNumber, river_sea as riverOrSea, st_AsGeoJSON(geom) as geom, ST_AsGeoJSON(ST_centroid(geom)) as centroid FROM u_flood.flood_alert_area WHERE fws_tacode = $1;`,
+
+  getWarningArea: `SELECT gid as id, area, fws_tacode as code, ta_name as name, descrip as description, la_name as localAuthorityName, parent, qdial as quickDialNumber, river_sea as riverOrSea, st_AsGeoJSON(geom) as geom, ST_AsGeoJSON(ST_centroid(geom)) as centroid FROM u_flood.flood_warning_area WHERE fws_tacode = $1;`,
+
+  getStation: `SELECT * FROM u_flood.station_split_mview WHERE rloi_id = $1 AND qualifier = $2;`,
+
+  getForecastFlag: `SELECT * FROM u_flood.station_display_time_series WHERE station_id = $1 AND direction = $2;`,
+
+  getStationTelemetry: `SELECT * FROM u_flood.get_telemetry($1, $2);`,
+
+  getStations: `select * from u_flood.stations_list_mview ORDER BY view_rank, river_id, "rank", agency_name;`,
+
+  getStationsWithin: `select * from u_flood.stations_list_mview where ST_Contains(ST_MakeEnvelope($1, $2, $3, $4, 4326), centroid) ORDER BY view_rank, river_id, "rank", agency_name;`,
+
+  getStationsWithinTargetArea: `select * from u_flood.stations_list_mview where ST_Contains((SELECT ST_BUFFER(ST_ENVELOPE(geom)::geography, 8000)::geometry as geom FROM flood_alert_area WHERE fws_tacode = $1 union SELECT ST_BUFFER(ST_ENVELOPE(geom)::geography, 8000)::geometry as geom FROM flood_warning_area WHERE fws_tacode = $1), centroid) ORDER BY view_rank, river_id, "rank", agency_name;`,
+
+  getTargetArea: `select fws_tacode, ta_name from u_flood.flood_alert_area where fws_tacode = $1 union select fws_tacode, ta_name from u_flood.flood_warning_area where fws_tacode = $1;`,
+
+  getWarningsAlertsWithinStationBuffer: `select ta_id,ta_code,ta_name,ta_description,situation,quick_dial,situation_changed,severity_changed,message_received,severity_value,severity,ST_AsGeoJSON(st_centroid) as geometry from u_flood.station_ta_8km sta inner join u_flood.fwa_mview f on sta.fws_tacode = f.ta_code where sta.rloi_id = $1 ORDER BY CASE severity_value WHEN 3 THEN 1 WHEN 1 THEN 3 ELSE severity_value END, ta_name;`,
+
+  getRiverStationsByRiverId: `select * from u_flood.stations_list_mview where river_id = $1 ORDER BY view_rank, river_id, "rank", qualifier DESC, agency_name;`,
+
+  getRiverStationByStationId: `select * from u_flood.stations_list_mview where rloi_id = $1 and qualifier = $2 ORDER BY view_rank, river_id, "rank", agency_name`,
+
+  getStationImtdThresholds: `SELECT sit.*,slm.rloi_id,slm.river_name,slm.agency_name,slm.status,slm.iswales,slm.value AS latest_level,sit.value AS threshold_value,sit.direction,sit.threshold_type,slm.value_timestamp,fwa.ta_name,fwa.severity_value FROM station_imtd_threshold sit JOIN stations_list_mview slm ON sit.station_id = slm.rloi_id LEFT JOIN fwa_mview fwa ON sit.fwis_code = fwa.ta_code WHERE sit.station_id = $1 AND sit.direction = $2;`,
+
+  isEngland: `SELECT ((SELECT count(1) FROM u_flood.england_010k e WHERE st_intersects(st_setsrid(st_makepoint($1, $2), 4326), e.geom)) > 0) AS is_england;`,
+
+  getImpactsWithin: `select * from u_flood.impact_mview i where ST_Contains(ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, 4326), 4326), i.geom);`,
+
+  getImpactsByRloiId: `select * from u_flood.impact_mview i where i.rloiid = $1 order by value desc, description;`,
+
+  getStationsHealth: `select count(1) from u_flood.telemetry_context; select load_timestamp from u_flood.current_load_timestamp where id = 2;`,
+
+  getTelemetryHealth: `select * from (select subrank.file_prefix, subrank.region, subrank.imported from (select SUBSTRING(filename, 15, 4) as file_prefix, region, imported, rank() over (PARTITION by SUBSTRING(filename, 15, 4) ORDER BY imported desc, filename, station, parameter, qualifier) as rank from u_flood.sls_telemetry_value_parent) as subrank where subrank.rank = 1) as latest;`,
+
+  getFfoiHealth: `select file_prefix, updated_date as imported from (select substring(filename, 19, 4) as file_prefix, updated_date, rank() over (PARTITION by SUBSTRING(filename, 19, 4) ORDER BY updated_date desc, telemetry_id) as rank from u_flood.ffoi_max where substring(filename, 19, 4) != 'test') as ranked where ranked.rank = 1;`,
+
+  getStationsOverview: `select array_to_json(array_agg(row_to_json(d))) as get_stations_overview from (SELECT * FROM u_flood.stations_overview_mview) d`,
+
+  getStationsByRadius: `select * from u_flood.stations_list_mview where ST_DWithin(centroid::geography, ST_MakePoint($1, $2)::geography, $3) ORDER BY view_rank, river_id, "rank", agency_name;`,
+
+  getRainfallStationTelemetry: `select DISTINCT a.period,b.value,b.value_timestamp from sls_telemetry_value_parent a inner join sls_telemetry_value b on a.telemetry_value_parent_id = b.telemetry_value_parent_id inner join sls_telemetry_station c on c.station_reference = a.station where a.station = $1 and b.value_timestamp > now() - interval '5 Days' order by b.value_timestamp desc;`,
+
+  getRainfallStation: `select a.*, b.lat, b.lon from rainfall_stations_mview a inner join stations_list_mview b on a.station_reference = b.telemetry_id where a.station_reference = $1`,
+
+  getRiversByName: `SELECT * FROM river WHERE $1 !~* '^(river|brook|stream|water)$' AND (name ~* concat('\\m', $2::text, '\\M')  OR lower(qualified_name) = lower($1)) ORDER BY qualified_name`,
+
+  getTargetAreaThresholds: `SELECT slm.rloi_id, slm.river_name, sit.station_threshold_id, slm.agency_name, slm.external_name, slm.station_type, slm.status, slm.iswales, slm.value AS latest_level, sit.value AS threshold_value, sit.direction, sit.threshold_type, slm.value_timestamp, ssm.post_process, ssm.stage_datum, ssm.subtract, fwa.severity_value FROM station_imtd_threshold sit JOIN stations_list_mview slm ON sit.station_id = slm.rloi_id JOIN station_split_mview ssm ON slm.rloi_id = ssm.rloi_id JOIN fwa_mview fwa ON fwa.ta_code = sit.fwis_code WHERE sit.fwis_code = $1 AND fwa.severity_value IN (2, 3) AND (slm.station_type <> 'M' OR (slm.station_type = 'M' AND sit.direction = slm.qualifier));`,
+
+  // GeoJSON endpoints: queries to return feature data with ST_AsGeoJSON() for geometry
+  // Each query includes LIMIT/OFFSET placeholders ($N) for paging support
+
+  getStationsGeoJson: `
+    SELECT DISTINCT
+      CASE
+        WHEN risk.direction = 'd' THEN CONCAT(ss.rloi_id, '/downstream')
+        ELSE CAST(ss.rloi_id AS VARCHAR)
+      END AS rloi_id,
+      risk.direction,
+      ss.station_type as type,
+      ss.centroid,
+      (lower(ss.region) = 'wales' OR ss.rloi_id IN (4162, 4170, 4173, 4174, 4176)) AS iswales,
+      risk.at_risk as atrisk,
+      ss.status,
+      ss.external_name as name,
+      ss.wiski_river_name as river,
+      CASE
+        WHEN risk.processed_value = 'NaN' THEN null
+        ELSE risk.processed_value
+      END AS value,
+      risk.value_timestamp as value_date,
+      risk.trend,
+      risk.percentile_5,
+      risk.percentile_95,
+      risk.forecast as is_ffoi,
+      (risk.forecast AND ffoi.value >= risk.percentile_5) as is_ffoi_at_risk,
+      CASE
+        WHEN ffoi.value = 'NaN' THEN null
+        ELSE ffoi.value
+      END AS ffoi_max,
+      ffoi.value_date as ffoi_date,
+      r.up,
+      r.down,
+      r.river_name,
+      r.up_station_type,
+      r.down_station_type,
+      ss.rloi_id as base_rloi_id,
+      ST_AsGeoJSON(ss.centroid) as geom
+    FROM u_flood.telemetry_context_mview ss
+    LEFT JOIN (
+      -- Get all risk data for both upstream and downstream directions with ranking to avoid duplicates
+      SELECT rloi_id, at_risk, direction, processed_value, value_timestamp, percentile_5, percentile_95, trend, forecast,
+             ROW_NUMBER() OVER (PARTITION BY rloi_id, direction ORDER BY at_risk DESC, value_timestamp DESC, processed_value DESC) as rn
+      FROM u_flood.stations_overview_mview
+      WHERE direction IN ('u', 'd')
+    ) as risk ON risk.rloi_id = ss.rloi_id AND risk.rn = 1
+    LEFT JOIN u_flood.ffoi_max ffoi ON ss.telemetry_id = ffoi.telemetry_id
+    LEFT JOIN u_flood.rivers_mview r ON ss.rloi_id = r.rloi_id AND risk.direction = r.qualifier
+    WHERE (lower(ss.region) != 'wales' OR ss.catchment IN ('Dee', 'Severn Uplands', 'Wye'))
+    LIMIT $1 OFFSET $2
+  `,
+
+  getStationsGeoJsonCount: `
+    SELECT COUNT(DISTINCT(ss.rloi_id || ' ' || risk.direction)) as count
+    FROM u_flood.telemetry_context_mview ss
+    LEFT JOIN (
+      -- Get all risk data for both upstream and downstream directions with ranking to avoid duplicates
+      SELECT rloi_id, at_risk, direction, processed_value, value_timestamp, percentile_5, percentile_95, trend, forecast,
+             ROW_NUMBER() OVER (PARTITION BY rloi_id, direction ORDER BY at_risk DESC, value_timestamp DESC, processed_value DESC) as rn
+      FROM u_flood.stations_overview_mview
+      WHERE direction IN ('u', 'd')
+    ) as risk ON risk.rloi_id = ss.rloi_id AND risk.rn = 1
+    LEFT JOIN u_flood.ffoi_max ffoi ON ss.telemetry_id = ffoi.telemetry_id
+    LEFT JOIN u_flood.rivers_mview r ON ss.rloi_id = r.rloi_id AND risk.direction = r.qualifier
+    WHERE (lower(ss.region) != 'wales' OR ss.catchment IN ('Dee', 'Severn Uplands', 'Wye'))
+  `,
+
+  getRainfallStationsGeoJson: `
+    SELECT *,
+      ST_AsGeoJSON(centroid) as geom
+    FROM u_flood.rainfall_stations_mview
+    WHERE region != 'Wales'
+    LIMIT $1 OFFSET $2
+  `,
+
+  getRainfallStationsGeoJsonCount: `
+    SELECT COUNT(telemetry_station_id) as count
+    FROM u_flood.rainfall_stations_mview
+    WHERE region != 'Wales'
+  `,
+
+  getFloodWarningAlertGeoJson: `
+    SELECT
+      id,
+      ta_code as taCode,
+      ta_code,
+      ta_name,
+      severity_value,
+      severity,
+      ST_AsGeoJSON(geom) as geom
+    FROM u_flood.fwa_mview
+    WHERE ST_Intersects(geom, ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, 3857), 4326))
+    ORDER BY severity_value DESC
+    LIMIT $5 OFFSET $6
+  `,
+
+  getFloodWarningAlertGeoJsonCount: `
+    SELECT COUNT(id) as count
+    FROM u_flood.fwa_mview
+    WHERE ST_Intersects(geom, ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, 3857), 4326))
+  `
+}
