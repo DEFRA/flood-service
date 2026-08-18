@@ -168,7 +168,7 @@ module.exports = {
   // featureBuilder config object should have: getId(row), geometryName, getProperties(row)
   async rowsToGeoJsonFeatureCollection (queryName, queryParams, featureBuilder, pagingOptions, countQueryName) {
     // Append paging values to query params if provided
-    const fullParams = pagingOptions ? [...queryParams, pagingOptions.offset, pagingOptions.limit] : queryParams
+    const fullParams = pagingOptions ? [...queryParams, pagingOptions.limit, pagingOptions.offset] : queryParams
 
     // Execute main GeoJSON query
     const { rows } = await db.query(queryName, fullParams)
@@ -187,7 +187,8 @@ module.exports = {
 
     // If paging requested, execute COUNT query to get total features before pagination
     let numberMatched = features.length
-    if (pagingOptions && countQueryName) {
+    const shouldRunCountQuery = pagingOptions !== undefined && countQueryName !== undefined
+    if (shouldRunCountQuery) {
       const countResult = await db.query(countQueryName, queryParams)
       numberMatched = parseInt(countResult.rows[0].count, 10)
     }
@@ -197,6 +198,7 @@ module.exports = {
 
     return {
       type: 'FeatureCollection',
+      features,
       totalFeatures: numberMatched,
       numberMatched,
       numberReturned,
@@ -206,8 +208,7 @@ module.exports = {
         properties: {
           name: 'urn:ogc:def:crs:EPSG::4326'
         }
-      },
-      features
+      }
     }
   },
 
@@ -288,11 +289,11 @@ module.exports = {
     )
   },
 
-  // GET /flood-warning-alert-geojson?bbox=... - Flood warning/alert areas with optional bbox and paging
+  // GET /flood-warning-alerts-geojson?bbox=... - Flood warning/alert areas with optional bbox and paging
   // bbox format: xmin,ymin,xmax,ymax in EPSG:3857 (Web Mercator)
-  async getFloodWarningAlertGeoJson (bboxParams, pagingOptions) {
+  async getFloodWarningAlertsGeoJson (bboxParams, pagingOptions) {
     return this.rowsToGeoJsonFeatureCollection(
-      'getFloodWarningAlertGeoJson',
+      'getFloodWarningAlertsGeoJson',
       bboxParams,
       {
         getId: row => `flood_warning_alert.${row.ta_code}`,
@@ -307,7 +308,7 @@ module.exports = {
         })
       },
       pagingOptions,
-      'getFloodWarningAlertGeoJsonCount'
+      'getFloodWarningAlertsGeoJsonCount'
     )
   }
 }
