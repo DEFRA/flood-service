@@ -9,6 +9,7 @@ const s3Service = require('../../server/services/s3')
 lab.experiment('Sad Route tests', () => {
   let server
   let sandbox
+  const tewkesburyBboxEpsg3857 = '-200000,6600000,-100000,6700000,EPSG:3857'
 
   // Create server before each test
   lab.before(async () => {
@@ -395,5 +396,97 @@ lab.experiment('Sad Route tests', () => {
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(400)
     Code.expect(response.payload).to.include('Invalid request params input')
+  })
+
+  lab.test('GET /stations-geojson errors when service throws', async () => {
+    sandbox.stub(services, 'getStationsGeoJson').throws(new Error('Database error'))
+
+    const options = {
+      method: 'GET',
+      url: '/stations-geojson'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get stations GeoJSON')
+  })
+
+  lab.test('GET /stations-geojson validates maxFeatures must be positive', async () => {
+    const options = {
+      method: 'GET',
+      url: '/stations-geojson?maxFeatures=0'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+  })
+
+  lab.test('GET /rainfall-stations-geojson errors when service throws', async () => {
+    sandbox.stub(services, 'getRainfallStationsGeoJson').throws(new Error('Database error'))
+
+    const options = {
+      method: 'GET',
+      url: '/rainfall-stations-geojson'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get rainfall stations GeoJSON')
+  })
+
+  lab.test('GET /rainfall-stations-geojson validates startIndex must be non-negative', async () => {
+    const options = {
+      method: 'GET',
+      url: '/rainfall-stations-geojson?startIndex=-1'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+  })
+
+  lab.test('GET /flood-warning-alerts-geojson without bbox parameter returns 400', async () => {
+    const options = {
+      method: 'GET',
+      url: '/flood-warning-alerts-geojson'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+  })
+
+  lab.test('GET /flood-warning-alerts-geojson with invalid bbox format returns 400', async () => {
+    const options = {
+      method: 'GET',
+      url: '/flood-warning-alerts-geojson?bbox=invalid'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Invalid bbox')
+  })
+
+  lab.test('GET /flood-warning-alerts-geojson with non-numeric bbox returns 400', async () => {
+    const options = {
+      method: 'GET',
+      url: '/flood-warning-alerts-geojson?bbox=abc,def,ghi,jkl'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Invalid bbox')
+  })
+
+  lab.test('GET /flood-warning-alerts-geojson errors when service throws', async () => {
+    sandbox.stub(services, 'getFloodWarningAlertsGeoJson').throws(new Error('Database error'))
+
+    const options = {
+      method: 'GET',
+      // Tewkesbury, Gloucestershire (EPSG:3857), a well-known UK flooding location.
+      url: `/flood-warning-alerts-geojson?bbox=${tewkesburyBboxEpsg3857}`
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Failed to get flood warning alerts GeoJSON')
   })
 })
