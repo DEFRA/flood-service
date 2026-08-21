@@ -12,7 +12,7 @@ const pagingQuerySchema = {
 
 // Handle joi validation failures for paging query parameters
 // Returns boom.badRequest with error details
-function pagingValidationFailActionHandler (request, h, error) {
+function pagingValidationFailActionHandler (_request, _h, error) {
   return boom.badRequest('Invalid query parameters: ' + error.message)
 }
 

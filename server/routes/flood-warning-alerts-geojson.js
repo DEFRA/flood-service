@@ -2,22 +2,19 @@ const joi = require('joi')
 const boom = require('@hapi/boom')
 const { createGeoJsonRoute } = require('./lib/utils')
 
+const BBOX_COORDINATE_COUNT = 4
+
 function getBboxParams (request) {
   const { bbox } = request.query
 
   // Parse bbox string format: "xmin,ymin,xmax,ymax,EPSG:3857"
   // Strip CRS suffix and convert to numeric array
   const bboxParts = bbox.split(',')
-  if (bboxParts.length < 4) {
+  if (bboxParts.length < BBOX_COORDINATE_COUNT) {
     throw boom.badRequest('Invalid bbox format. Expected: xmin,ymin,xmax,ymax,EPSG:3857')
   }
 
-  const bboxParams = [
-    parseFloat(bboxParts[0]),
-    parseFloat(bboxParts[1]),
-    parseFloat(bboxParts[2]),
-    parseFloat(bboxParts[3])
-  ]
+  const bboxParams = bboxParts.slice(0, BBOX_COORDINATE_COUNT).map(part => parseFloat(part))
 
   // Validate bbox coordinates are numbers
   if (bboxParams.some(coord => isNaN(coord))) {
