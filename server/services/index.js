@@ -137,8 +137,8 @@ module.exports = {
   async getStationsHealth () {
     const result = await db.query('getStationsHealth')
     return {
-      count: parseInt(result[0].rows[0].count),
-      timestamp: parseInt(result[1].rows[0].load_timestamp)
+      count: Number.parseInt(result[0].rows[0].count),
+      timestamp: Number.parseInt(result[1].rows[0].load_timestamp)
     }
   },
 
@@ -190,7 +190,7 @@ module.exports = {
     const shouldRunCountQuery = pagingOptions !== undefined && countQueryName !== undefined
     if (shouldRunCountQuery) {
       const countResult = await db.query(countQueryName, queryParams)
-      numberMatched = parseInt(countResult.rows[0].count, 10)
+      numberMatched = Number.parseInt(countResult.rows[0].count, 10)
     }
 
     const timeStamp = new Date().toISOString()
