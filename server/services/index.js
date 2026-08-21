@@ -220,8 +220,8 @@ module.exports = {
       queryParams,
       {
         getId: row => {
-          // GeoServer returns concatenated rloi_id for downstream: "9575/downstream"
-          // For upstream or unmarked, use just the rloi_id as string
+          // rloi_id from the SQL query is already suffixed with "/downstream" for
+          // downstream-direction rows (matches original GeoServer virtual table CASE logic)
           return `stations.${row.rloi_id}`
         },
         geometryName: 'centroid',
