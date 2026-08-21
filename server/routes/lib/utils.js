@@ -35,7 +35,7 @@ function createPagedGeoJsonHandler ({ serviceFunctionName, pagingConfigName, get
       }
 
       if (typeof floodsService[serviceFunctionName] !== 'function') {
-        throw new Error(`Invalid service function: ${serviceFunctionName}`)
+        throw new TypeError(`Invalid service function: ${serviceFunctionName}`)
       }
 
       return await floodsService[serviceFunctionName](getQueryParams(request), pagingOptions)

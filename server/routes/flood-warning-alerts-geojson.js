@@ -14,10 +14,10 @@ function getBboxParams (request) {
     throw boom.badRequest('Invalid bbox format. Expected: xmin,ymin,xmax,ymax,EPSG:3857')
   }
 
-  const bboxParams = bboxParts.slice(0, BBOX_COORDINATE_COUNT).map(part => parseFloat(part))
+  const bboxParams = bboxParts.slice(0, BBOX_COORDINATE_COUNT).map(part => Number.parseFloat(part))
 
   // Validate bbox coordinates are numbers
-  if (bboxParams.some(coord => isNaN(coord))) {
+  if (bboxParams.some(coord => Number.isNaN(coord))) {
     throw boom.badRequest('Invalid bbox coordinates. Expected numeric values')
   }
 
