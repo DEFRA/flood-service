@@ -70,19 +70,24 @@ module.exports = {
       ss.status,
       ss.external_name as name,
       ss.wiski_river_name as river,
+      -- Cast NUMERIC columns to double precision: pg returns NUMERIC as a
+      -- string by default (unlike GeoServer/JDBC, which serialised these as
+      -- JSON numbers), which broke flood-app templates calling .toFixed()
+      -- directly on these values. Double precision is parsed as a native
+      -- JavaScript number by pg, localised to just these columns.
       CASE
         WHEN risk.processed_value = 'NaN' THEN null
-        ELSE risk.processed_value
+        ELSE risk.processed_value::double precision
       END AS value,
       risk.value_timestamp as value_date,
       risk.trend,
-      risk.percentile_5,
-      risk.percentile_95,
+      risk.percentile_5::double precision as percentile_5,
+      risk.percentile_95::double precision as percentile_95,
       risk.forecast as is_ffoi,
       (risk.forecast AND ffoi.value >= risk.percentile_5) as is_ffoi_at_risk,
       CASE
         WHEN ffoi.value = 'NaN' THEN null
-        ELSE ffoi.value
+        ELSE ffoi.value::double precision
       END AS ffoi_max,
       ffoi.value_date as ffoi_date,
       r.up,
