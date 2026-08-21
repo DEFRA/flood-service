@@ -1,6 +1,6 @@
 const joi = require('joi')
 const boom = require('@hapi/boom')
-const { pagingValidationFailActionHandler, createPagedGeoJsonHandler } = require('./lib/utils')
+const { createGeoJsonRoute } = require('./lib/utils')
 
 function getBboxParams (request) {
   const { bbox } = request.query
@@ -27,24 +27,12 @@ function getBboxParams (request) {
   return bboxParams
 }
 
-module.exports = {
-  method: 'GET',
+module.exports = createGeoJsonRoute({
   path: '/flood-warning-alerts-geojson',
-  handler: createPagedGeoJsonHandler({
-    serviceFunctionName: 'getFloodWarningAlertsGeoJson',
-    pagingConfigName: 'floodWarningAlerts',
-    getQueryParams: getBboxParams,
-    errorMessage: 'Failed to get flood warning alerts GeoJSON'
-  }),
-  options: {
-    description: 'Get flood warning/alert areas as GeoJSON FeatureCollection',
-    validate: {
-      query: joi.object({
-        bbox: joi.string().required(),
-        maxFeatures: joi.number().integer().min(1).optional(),
-        startIndex: joi.number().integer().min(0).optional()
-      }),
-      failAction: pagingValidationFailActionHandler
-    }
-  }
-}
+  serviceFunctionName: 'getFloodWarningAlertsGeoJson',
+  pagingConfigName: 'floodWarningAlerts',
+  description: 'Get flood warning/alert areas as GeoJSON FeatureCollection',
+  errorMessage: 'Failed to get flood warning alerts GeoJSON',
+  extraQuerySchema: { bbox: joi.string().required() },
+  getQueryParams: getBboxParams
+})
