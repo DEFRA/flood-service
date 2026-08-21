@@ -103,4 +103,55 @@ lab.experiment('Route utils', () => {
     Code.expect(response.output.statusCode).to.equal(400)
     Code.expect(response.message).to.equal('Failed to get stations GeoJSON')
   })
+
+  lab.test('createGeoJsonRoute builds a full route module with base paging schema', async () => {
+    const { createGeoJsonRoute } = buildUtils({
+      geoJsonPaging: { stations: { defaultStartIndex: 0, defaultMaxFeatures: 1000 } },
+      services: { getStationsGeoJson: sinon.stub().resolves({ ok: true }) }
+    })
+
+    const route = createGeoJsonRoute({
+      path: '/stations-geojson',
+      serviceFunctionName: 'getStationsGeoJson',
+      pagingConfigName: 'stations',
+      description: 'Get water level monitoring stations as GeoJSON FeatureCollection',
+      errorMessage: 'Failed to get stations GeoJSON'
+    })
+
+    Code.expect(route.method).to.equal('GET')
+    Code.expect(route.path).to.equal('/stations-geojson')
+    Code.expect(route.handler).to.be.a.function()
+    Code.expect(route.options.description).to.equal('Get water level monitoring stations as GeoJSON FeatureCollection')
+    Code.expect(route.options.validate.failAction).to.be.a.function()
+
+    const { error: validError } = route.options.validate.query.validate({ maxFeatures: 5, startIndex: 1 })
+    Code.expect(validError).to.not.exist()
+
+    const { error: invalidError } = route.options.validate.query.validate({ maxFeatures: 0 })
+    Code.expect(invalidError).to.exist()
+  })
+
+  lab.test('createGeoJsonRoute extends the base schema and query params for bbox endpoints', async () => {
+    const joi = require('joi')
+    const { createGeoJsonRoute } = buildUtils({
+      geoJsonPaging: { floodWarningAlerts: { defaultStartIndex: 0, defaultMaxFeatures: 1000 } },
+      services: { getFloodWarningAlertsGeoJson: sinon.stub().resolves({ ok: true }) }
+    })
+
+    const route = createGeoJsonRoute({
+      path: '/flood-warning-alerts-geojson',
+      serviceFunctionName: 'getFloodWarningAlertsGeoJson',
+      pagingConfigName: 'floodWarningAlerts',
+      description: 'Get flood warning/alert areas as GeoJSON FeatureCollection',
+      errorMessage: 'Failed to get flood warning alerts GeoJSON',
+      extraQuerySchema: { bbox: joi.string().required() },
+      getQueryParams: request => [request.query.bbox]
+    })
+
+    const { error: missingBboxError } = route.options.validate.query.validate({})
+    Code.expect(missingBboxError).to.exist()
+
+    const { error: validError } = route.options.validate.query.validate({ bbox: '1,2,3,4,EPSG:3857' })
+    Code.expect(validError).to.not.exist()
+  })
 })
