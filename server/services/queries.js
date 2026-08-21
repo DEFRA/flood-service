@@ -108,6 +108,9 @@ module.exports = {
     LEFT JOIN u_flood.ffoi_max ffoi ON ss.telemetry_id = ffoi.telemetry_id
     LEFT JOIN u_flood.rivers_mview r ON ss.rloi_id = r.rloi_id AND risk.direction = r.qualifier
     WHERE (lower(ss.region) != 'wales' OR ss.catchment IN ('Dee', 'Severn Uplands', 'Wye'))
+    -- WebGL layers don't support z-index so source data needs to be in desired order
+    -- Sort at-risk stations first for correct UI rendering (matches GeoServer behavior)
+    ORDER BY risk.at_risk DESC
     LIMIT $1 OFFSET $2
   `,
 
