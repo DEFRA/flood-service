@@ -1,10 +1,8 @@
 const joi = require('joi')
 const defaultPort = 8050
-const DEFAULT_STATIONS_GEOJSON_START_INDEX = 0
+const DEFAULT_GEOJSON_START_INDEX = 0
 const DEFAULT_STATIONS_GEOJSON_MAX_FEATURES = null // null means no limit
-const DEFAULT_RAINFALL_STATIONS_GEOJSON_START_INDEX = 0
 const DEFAULT_RAINFALL_STATIONS_GEOJSON_MAX_FEATURES = null // null means no limit
-const DEFAULT_FLOOD_WARNING_ALERTS_GEOJSON_START_INDEX = 0
 const DEFAULT_FLOOD_WARNING_ALERTS_GEOJSON_MAX_FEATURES = null // null means no limit
 
 // Define config schema
@@ -14,15 +12,15 @@ const schema = joi.object({
   connectionString: joi.string().required(),
   geoJsonPaging: joi.object().keys({
     stations: joi.object().keys({
-      defaultStartIndex: joi.number().integer().min(0).default(DEFAULT_STATIONS_GEOJSON_START_INDEX),
+      defaultStartIndex: joi.number().integer().min(0).default(DEFAULT_GEOJSON_START_INDEX),
       defaultMaxFeatures: joi.number().integer().min(1).allow(null).default(DEFAULT_STATIONS_GEOJSON_MAX_FEATURES)
     }),
     rainfallStations: joi.object().keys({
-      defaultStartIndex: joi.number().integer().min(0).default(DEFAULT_RAINFALL_STATIONS_GEOJSON_START_INDEX),
+      defaultStartIndex: joi.number().integer().min(0).default(DEFAULT_GEOJSON_START_INDEX),
       defaultMaxFeatures: joi.number().integer().min(1).allow(null).default(DEFAULT_RAINFALL_STATIONS_GEOJSON_MAX_FEATURES)
     }),
     floodWarningAlerts: joi.object().keys({
-      defaultStartIndex: joi.number().integer().min(0).default(DEFAULT_FLOOD_WARNING_ALERTS_GEOJSON_START_INDEX),
+      defaultStartIndex: joi.number().integer().min(0).default(DEFAULT_GEOJSON_START_INDEX),
       defaultMaxFeatures: joi.number().integer().min(1).allow(null).default(DEFAULT_FLOOD_WARNING_ALERTS_GEOJSON_MAX_FEATURES)
     })
   }),
@@ -50,15 +48,15 @@ const config = {
   connectionString: process.env.FLOOD_SERVICE_CONNECTION_STRING,
   geoJsonPaging: {
     stations: {
-      defaultStartIndex: process.env.FLOOD_SERVICE_STATIONS_GEOJSON_DEFAULT_START_INDEX,
+      defaultStartIndex: DEFAULT_GEOJSON_START_INDEX,
       defaultMaxFeatures: process.env.FLOOD_SERVICE_STATIONS_GEOJSON_DEFAULT_MAX_FEATURES
     },
     rainfallStations: {
-      defaultStartIndex: process.env.FLOOD_SERVICE_RAINFALL_STATIONS_GEOJSON_DEFAULT_START_INDEX,
+      defaultStartIndex: DEFAULT_GEOJSON_START_INDEX,
       defaultMaxFeatures: process.env.FLOOD_SERVICE_RAINFALL_STATIONS_GEOJSON_DEFAULT_MAX_FEATURES
     },
     floodWarningAlerts: {
-      defaultStartIndex: process.env.FLOOD_SERVICE_FLOOD_WARNING_ALERTS_GEOJSON_DEFAULT_START_INDEX,
+      defaultStartIndex: DEFAULT_GEOJSON_START_INDEX,
       defaultMaxFeatures: process.env.FLOOD_SERVICE_FLOOD_WARNING_ALERTS_GEOJSON_DEFAULT_MAX_FEATURES
     }
   },
