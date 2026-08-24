@@ -8,7 +8,7 @@ This is the service tier node application supporting the Check for flooding serv
 
 Create a .env file at the root of the project to set your environment variables locally, which is especially useful during development. The [dotenv](https://www.npmjs.com/package/dotenv) package facilitates this by automatically loading these variables at application start. This approach is recommended as a simpler alternative to global settings, like those in .bashrc. 
 
-For DEFRA employees, these environment variables are available in our private lfwconfig repository.
+For DEFRA employees, these environment variables are available for internal use.
 
 
 | name                              | description            | required | default     | valid                               | notes |
@@ -21,11 +21,8 @@ For DEFRA employees, these environment variables are available in our private lf
 | FLOOD_SERVICE_S3_REGION           | S3 Region              |    yes   |             | e.g. eu-west-2                      |       |
 | FLOOD_SERVICE_S3_BUCKET           | S3 Bucket              |    yes   |             |                                     |       |
 | FLOOD_SERVICE_S3_TIMEOUT          | S3 Http Timeout        |    no    | 10000 (10s) |                                     |       |
-| FLOOD_SERVICE_STATIONS_GEOJSON_DEFAULT_START_INDEX | Default start index for `/stations-geojson` paging |    no    | 0           |                                     |       |
 | FLOOD_SERVICE_STATIONS_GEOJSON_DEFAULT_MAX_FEATURES | Default max features for `/stations-geojson` paging |    no    | no limit    |                                     |       |
-| FLOOD_SERVICE_RAINFALL_STATIONS_GEOJSON_DEFAULT_START_INDEX | Default start index for `/rainfall-stations-geojson` paging |    no    | 0           |                                     |       |
 | FLOOD_SERVICE_RAINFALL_STATIONS_GEOJSON_DEFAULT_MAX_FEATURES | Default max features for `/rainfall-stations-geojson` paging |    no    | no limit    |                                     |       |
-| FLOOD_SERVICE_FLOOD_WARNING_ALERTS_GEOJSON_DEFAULT_START_INDEX | Default start index for `/flood-warning-alerts-geojson` paging |    no    | 0           |                                     |       |
 | FLOOD_SERVICE_FLOOD_WARNING_ALERTS_GEOJSON_DEFAULT_MAX_FEATURES | Default max features for `/flood-warning-alerts-geojson` paging |    no    | no limit    |                                     |       |
 | ERRBIT_PROJECT_KEY                | Errbit Project Key     |    no    |             |                                     |       |
 | ERRBIT_ENABLED                    | Errbit Enabled         |    no    |             |                                     |       |
@@ -47,9 +44,11 @@ CRS (e.g. EPSG:3857).
 
 ### Paging
 
-`startIndex`/`maxFeatures` control pagination and default per-endpoint via the `geoJsonPaging` config block (see
-`server/config.js`), configurable via the `FLOOD_SERVICE_*_GEOJSON_DEFAULT_START_INDEX`/`_MAX_FEATURES` environment
-variables listed in the Environment variables section above.
+`startIndex` controls the index of the first feature to be returned per request. It defaults to 0.
+`maxFeatures` controls the maximum number of features returned per request. It defaults to no limit and is
+configurable per-endpoint via the `geoJsonPaging` config block (see `server/config.js`) and the
+`FLOOD_SERVICE_*_GEOJSON_DEFAULT_MAX_FEATURES` environment variables listed in the Environment variables section
+above.
 
 ### Not OGC compliant
 
