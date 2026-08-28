@@ -20,13 +20,6 @@ jobs:
       - name: Display inputs
         run: echo "${{ github.event.inputs.version }}"
 
-      - name: Check PAT token is still valid
-        run: |
-          gh workflow list --repo "$GITHUB_REPOSITORY_OWNER/flood-service"
-        env:
-          # if this fails the create/regenerate classic PAT and then populate it using `gh secret set GH_WORKFLOW`
-          GH_TOKEN: ${{ secrets.GH_WORKFLOW }}
-
       - name: Checkout code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # 4.3.1
         with:
@@ -64,8 +57,7 @@ jobs:
            exit 1
          fi
         env:
-          # if this fails the create/regenerate classic PAT and then populate it using `gh secret set GH_WORKFLOW`
-          GH_TOKEN: ${{ secrets.GH_WORKFLOW }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Merge release branch into master
         run: |
@@ -76,14 +68,13 @@ jobs:
           git merge $RELEASE_BRANCH
           git push
 
-      - name: Create GitHub Release
-        run: gh release create $TAG_VERSION --title "Release $VERSION" --notes "[release notes](/$RELEASE_NOTES_FILE)"
-        env:
-          # create classic PAT and then run `gh secret set GH_WORKFLOW`
-          GH_TOKEN: ${{ secrets.GH_WORKFLOW }}
-
       - name: Merge release branch into development
         run: |
           git switch development
           git merge $RELEASE_BRANCH
           git push
+
+      - name: Create GitHub Release
+        run: gh release create $TAG_VERSION --title "Release $VERSION" --notes "[release notes](/$RELEASE_NOTES_FILE)"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
