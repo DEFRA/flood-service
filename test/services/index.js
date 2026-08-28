@@ -1189,6 +1189,17 @@ lab.experiment('Services tests', () => {
       Code.expect(queries.getStationsGeoJson).to.contain("ffoi.value != 'NaN' AND ffoi.value >= risk.percentile_5")
     })
 
+    lab.test('getStationsGeoJson SQL orders NULLS LAST with a deterministic tie-breaker', () => {
+      // Regression test: risk is a LEFT JOIN so at_risk can be null, and Postgres sorts nulls
+      // first for DESC by default - without NULLS LAST that would put no-risk-data stations
+      // ahead of at-risk ones. Without a secondary sort, stations sharing the same at_risk
+      // value have no fixed relative order, so LIMIT/OFFSET paging could return a station on
+      // more than one page, or skip one entirely, between requests.
+      const queries = require('../../server/services/queries')
+
+      Code.expect(queries.getStationsGeoJson).to.contain('ORDER BY risk.at_risk DESC NULLS LAST, ss.rloi_id, risk.direction')
+    })
+
     lab.test('getRainfallStationsGeoJson maps rainfall properties and IDs', async () => {
       const queryStub = sinon.stub(db, 'query')
       queryStub.onFirstCall().returns({
@@ -1257,6 +1268,15 @@ lab.experiment('Services tests', () => {
       const queries = require('../../server/services/queries')
 
       Code.expect(queries.getFloodWarningAlertsGeoJson).to.contain('ta_code as "taCode"')
+    })
+
+    lab.test('getFloodWarningAlertsGeoJson SQL orders with a deterministic tie-breaker', () => {
+      // Regression test: severity_value is not unique, so alerts sharing a severity have no
+      // fixed relative order on their own - without a tie-breaker, LIMIT/OFFSET paging could
+      // return the same alert on more than one page, or skip one entirely, between requests.
+      const queries = require('../../server/services/queries')
+
+      Code.expect(queries.getFloodWarningAlertsGeoJson).to.contain('ORDER BY severity_value DESC, id')
     })
   })
 })

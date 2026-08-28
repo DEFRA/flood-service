@@ -112,8 +112,16 @@ module.exports = {
     LEFT JOIN u_flood.rivers_mview r ON ss.rloi_id = r.rloi_id AND risk.direction = r.qualifier
     WHERE (lower(ss.region) != 'wales' OR ss.catchment IN ('Dee', 'Severn Uplands', 'Wye'))
     -- WebGL layers don't support z-index so source data needs to be in desired order
-    -- Sort at-risk stations first for correct UI rendering (matches GeoServer behavior)
-    ORDER BY risk.at_risk DESC
+    -- Sort at-risk stations first for correct UI rendering (matches GeoServer behavior).
+    -- NULLS LAST: risk is a LEFT JOIN so at_risk can be null; Postgres sorts nulls first
+    -- for DESC by default, which would otherwise put no-risk-data stations ahead of
+    -- genuinely at-risk ones. Without a secondary sort, stations sharing the same
+    -- at_risk value have no fixed relative order, so LIMIT/OFFSET paging could return
+    -- a station on more than one page, or skip one entirely, between requests.
+    -- Adding ss.rloi_id and risk.direction (the same columns used to build the
+    -- rloi_id feature id above) fixes that relative order so each station appears
+    -- on exactly one page, in the same position, every time.
+    ORDER BY risk.at_risk DESC NULLS LAST, ss.rloi_id, risk.direction
     LIMIT $1 OFFSET $2
   `,
 
@@ -159,7 +167,11 @@ module.exports = {
       ST_AsGeoJSON(geom) as geom
     FROM u_flood.fwa_mview
     WHERE ST_Intersects(geom, ST_Transform(ST_MakeEnvelope($1, $2, $3, $4, 3857), 4326))
-    ORDER BY severity_value DESC
+    -- severity_value is not unique, so alerts sharing a severity have no fixed relative
+    -- order on their own; without a tie-breaker, LIMIT/OFFSET paging could return the
+    -- same alert on more than one page, or skip one entirely, between requests. Adding
+    -- id (the mview's unique key) fixes that relative order for stable paging.
+    ORDER BY severity_value DESC, id
     LIMIT $5 OFFSET $6
   `,
 
