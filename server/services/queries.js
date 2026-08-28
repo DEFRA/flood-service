@@ -157,6 +157,11 @@ module.exports = {
       ST_AsGeoJSON(centroid) as geom
     FROM u_flood.rainfall_stations_mview
     WHERE region != 'Wales'
+    -- Without an ORDER BY, LIMIT/OFFSET paging has no fixed row sequence to page
+    -- through - Postgres is free to return rows in a different order between
+    -- requests, so adjacent pages could overlap or miss stations. telemetry_station_id
+    -- is unique per station, so ordering by it gives every page a stable position.
+    ORDER BY telemetry_station_id
     LIMIT $1 OFFSET $2
   `,
 
