@@ -510,6 +510,18 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Invalid bbox coordinates')
   })
 
+  lab.test('GET /flood-warning-alerts-geojson with an overlong numeric bbox coordinate that overflows to Infinity returns 400', async () => {
+    const overlongCoordinate = '9'.repeat(400)
+    const options = {
+      method: 'GET',
+      url: `/flood-warning-alerts-geojson?bbox=${overlongCoordinate},6600000,-100000,6700000,EPSG:3857`
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Invalid bbox coordinates')
+  })
+
   lab.test('GET /flood-warning-alerts-geojson with an invalid bbox envelope (xmin >= xmax) returns 400', async () => {
     const options = {
       method: 'GET',

@@ -25,7 +25,15 @@ function getBboxParams (request) {
     throw boom.badRequest('Invalid bbox coordinates. Expected numeric values')
   }
 
-  const [xmin, ymin, xmax, ymax] = coordinateParts.map(Number)
+  const coordinates = coordinateParts.map(Number)
+
+  // Number() overflows to Infinity for an overlong all-digit string that still
+  // passes NUMERIC_COORDINATE_PATTERN, so a finiteness check is needed after conversion
+  if (coordinates.some(coord => !Number.isFinite(coord))) {
+    throw boom.badRequest('Invalid bbox coordinates. Expected finite numeric values')
+  }
+
+  const [xmin, ymin, xmax, ymax] = coordinates
 
   if (xmin >= xmax || ymin >= ymax) {
     throw boom.badRequest('Invalid bbox coordinates. Expected xmin < xmax and ymin < ymax')
