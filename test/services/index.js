@@ -1183,10 +1183,12 @@ lab.experiment('Services tests', () => {
     lab.test('getStationsGeoJson SQL excludes NaN from the is_ffoi_at_risk comparison', () => {
       // Regression test: Postgres numeric 'NaN' compares greater than any ordinary value, so
       // without excluding it explicitly a NaN ffoi.value would incorrectly report
-      // is_ffoi_at_risk = true even though ffoi_max maps NaN to null for the same row.
+      // is_ffoi_at_risk = true even though ffoi_max maps NaN to null for the same row. A NaN
+      // risk.percentile_5 must also be excluded, since it would otherwise make the comparison
+      // always false regardless of ffoi.value, silently hiding an invalid/unknown threshold.
       const queries = require('../../server/services/queries')
 
-      Code.expect(queries.getStationsGeoJson).to.contain("ffoi.value != 'NaN' AND ffoi.value >= risk.percentile_5")
+      Code.expect(queries.getStationsGeoJson).to.contain("ffoi.value != 'NaN' AND risk.percentile_5 != 'NaN' AND ffoi.value >= risk.percentile_5")
     })
 
     lab.test('getStationsGeoJson SQL orders NULLS LAST with a deterministic tie-breaker', () => {

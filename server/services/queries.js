@@ -84,10 +84,12 @@ module.exports = {
       risk.percentile_5::double precision as percentile_5,
       risk.percentile_95::double precision as percentile_95,
       risk.forecast as is_ffoi,
-      -- Exclude NaN from the risk comparison: Postgres numeric 'NaN' compares greater
-      -- than any ordinary value, so without this check a NaN ffoi.value would incorrectly
-      -- report is_ffoi_at_risk = true even though ffoi_max (below) maps NaN to null
-      (risk.forecast AND ffoi.value != 'NaN' AND ffoi.value >= risk.percentile_5) as is_ffoi_at_risk,
+      -- Exclude NaN from the risk comparison: Postgres numeric 'NaN' compares greater than
+      -- any ordinary value, so without these checks a NaN ffoi.value would incorrectly report
+      -- is_ffoi_at_risk = true even though ffoi_max (below) maps NaN to null, and a NaN
+      -- risk.percentile_5 would make the comparison always false regardless of ffoi.value,
+      -- silently hiding an invalid/unknown threshold as "not at risk"
+      (risk.forecast AND ffoi.value != 'NaN' AND risk.percentile_5 != 'NaN' AND ffoi.value >= risk.percentile_5) as is_ffoi_at_risk,
       CASE
         WHEN ffoi.value = 'NaN' THEN null
         ELSE ffoi.value::double precision
