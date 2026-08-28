@@ -3,25 +3,35 @@ const boom = require('@hapi/boom')
 const { createGeoJsonRoute } = require('./lib/utils')
 
 const BBOX_COORDINATE_COUNT = 4
+const BBOX_CRS_SUFFIX = 'EPSG:3857'
+const BBOX_PART_COUNT = BBOX_COORDINATE_COUNT + 1
+
+// Matches a complete signed integer or decimal number only - rejects partial parses
+// (e.g. "1x"), exponential notation, and non-finite literals (e.g. "Infinity") that
+// Number.parseFloat/Number would otherwise silently accept
+const NUMERIC_COORDINATE_PATTERN = /^-?\d+(\.\d+)?$/
 
 function getBboxParams (request) {
   const { bbox } = request.query
 
   // Parse bbox string format: "xmin,ymin,xmax,ymax,EPSG:3857"
-  // Strip CRS suffix and convert to numeric array
   const bboxParts = bbox.split(',')
-  if (bboxParts.length < BBOX_COORDINATE_COUNT) {
-    throw boom.badRequest('Invalid bbox format. Expected: xmin,ymin,xmax,ymax,EPSG:3857')
+  if (bboxParts.length !== BBOX_PART_COUNT || bboxParts[BBOX_COORDINATE_COUNT] !== BBOX_CRS_SUFFIX) {
+    throw boom.badRequest(`Invalid bbox format. Expected: xmin,ymin,xmax,ymax,${BBOX_CRS_SUFFIX}`)
   }
 
-  const bboxParams = bboxParts.slice(0, BBOX_COORDINATE_COUNT).map(part => Number.parseFloat(part))
-
-  // Validate bbox coordinates are numbers
-  if (bboxParams.some(coord => Number.isNaN(coord))) {
+  const coordinateParts = bboxParts.slice(0, BBOX_COORDINATE_COUNT)
+  if (coordinateParts.some(part => !NUMERIC_COORDINATE_PATTERN.test(part))) {
     throw boom.badRequest('Invalid bbox coordinates. Expected numeric values')
   }
 
-  return bboxParams
+  const [xmin, ymin, xmax, ymax] = coordinateParts.map(Number)
+
+  if (xmin >= xmax || ymin >= ymax) {
+    throw boom.badRequest('Invalid bbox coordinates. Expected xmin < xmax and ymin < ymax')
+  }
+
+  return [xmin, ymin, xmax, ymax]
 }
 
 module.exports = createGeoJsonRoute({

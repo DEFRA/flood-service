@@ -476,6 +476,62 @@ lab.experiment('Sad Route tests', () => {
     Code.expect(response.payload).to.include('Invalid bbox')
   })
 
+  lab.test('GET /flood-warning-alerts-geojson with missing/incorrect CRS suffix returns 400', async () => {
+    const options = {
+      method: 'GET',
+      url: '/flood-warning-alerts-geojson?bbox=-200000,6600000,-100000,6700000,EPSG:4326'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Invalid bbox format')
+  })
+
+  lab.test('GET /flood-warning-alerts-geojson with a partial-numeric bbox coordinate returns 400', async () => {
+    // parseFloat would previously accept "1x" as 1 - the stricter numeric pattern rejects it
+    const options = {
+      method: 'GET',
+      url: '/flood-warning-alerts-geojson?bbox=1x,6600000,-100000,6700000,EPSG:3857'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Invalid bbox coordinates')
+  })
+
+  lab.test('GET /flood-warning-alerts-geojson with an infinite bbox coordinate returns 400', async () => {
+    const options = {
+      method: 'GET',
+      url: '/flood-warning-alerts-geojson?bbox=Infinity,6600000,-100000,6700000,EPSG:3857'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('Invalid bbox coordinates')
+  })
+
+  lab.test('GET /flood-warning-alerts-geojson with an invalid bbox envelope (xmin >= xmax) returns 400', async () => {
+    const options = {
+      method: 'GET',
+      url: '/flood-warning-alerts-geojson?bbox=-100000,6600000,-200000,6700000,EPSG:3857'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('xmin < xmax and ymin < ymax')
+  })
+
+  lab.test('GET /flood-warning-alerts-geojson with an invalid bbox envelope (ymin >= ymax) returns 400', async () => {
+    const options = {
+      method: 'GET',
+      url: '/flood-warning-alerts-geojson?bbox=-200000,6700000,-100000,6600000,EPSG:3857'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(400)
+    Code.expect(response.payload).to.include('xmin < xmax and ymin < ymax')
+  })
+
   lab.test('GET /flood-warning-alerts-geojson errors when service throws', async () => {
     sandbox.stub(services, 'getFloodWarningAlertsGeoJson').throws(new Error('Database error'))
 
