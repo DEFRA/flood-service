@@ -30,13 +30,6 @@ jobs:
       - name: Display inputs
         run: echo "${{ github.event.inputs.jira_release_id }} ${{ github.event.inputs.increment }} ${{ github.event.inputs.db_changes }} ${{ github.event.inputs.proposed_release_date }}" 
 
-      - name: Check PAT token is still valid
-        run: |
-          gh workflow list --repo  "$GITHUB_REPOSITORY_OWNER/flood-service"
-        env:
-          # if this fails the create/regenerate classic PAT and then populate it using `gh secret set GH_WORKFLOW`
-          GH_TOKEN: ${{ secrets.GH_WORKFLOW }}
-
       - name: Checkout code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # 4.3.1
         with:
@@ -73,8 +66,7 @@ jobs:
            exit 1
          fi
         env:
-          # if this fails the create/regenerate classic PAT and then populate it using `gh secret set GH_WORKFLOW`
-          GH_TOKEN: ${{ secrets.GH_WORKFLOW }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create release branch
         run: |
@@ -116,5 +108,4 @@ jobs:
           gh pr create --base master --title "Release $VERSION" --body "TBC"
           gh pr create --base development --title "Release $VERSION"  --body "TBC"
         env:
-          # create classic PAT and then run `gh secret set GH_WORKFLOW`
-          GH_TOKEN: ${{ secrets.GH_WORKFLOW }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
