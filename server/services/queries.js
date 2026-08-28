@@ -126,7 +126,19 @@ module.exports = {
   `,
 
   getStationsGeoJsonCount: `
-    SELECT COUNT(DISTINCT(ss.rloi_id || ' ' || risk.direction)) as count
+    -- This count must use the exact same feature-id expression as the "rloi_id" column
+    -- in getStationsGeoJson below, not a simple "rloi_id || ' ' || direction"
+    -- concatenation. Why: risk is a LEFT JOIN, so a station with no matching risk row
+    -- has a null "direction". Concatenating anything with null produces null, and
+    -- COUNT(DISTINCT ...) ignores null values - so that station would be missing from
+    -- this count even though getStationsGeoJson still returns it as a feature. Using
+    -- the same CASE expression here as the feature id guarantees they always agree.
+    SELECT COUNT(DISTINCT(
+      CASE
+        WHEN risk.direction = 'd' THEN CONCAT(ss.rloi_id, '/downstream')
+        ELSE CAST(ss.rloi_id AS VARCHAR)
+      END
+    )) as count
     FROM u_flood.telemetry_context_mview ss
     LEFT JOIN (
       -- Get all risk data for both upstream and downstream directions with ranking to avoid duplicates
