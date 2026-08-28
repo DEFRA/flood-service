@@ -1247,5 +1247,16 @@ lab.experiment('Services tests', () => {
       Code.expect(result.numberMatched).to.equal(1)
       Code.expect(result.numberReturned).to.equal(1)
     })
+
+    lab.test('getFloodWarningAlertsGeoJson SQL quotes the taCode alias', () => {
+      // Regression test: Postgres folds unquoted identifiers to lowercase, so an unquoted
+      // "as taCode" would silently produce a "tacode" column and row.taCode would always be
+      // undefined in the JS mapping above. The fixture row in the previous test can't catch
+      // this because it constructs "taCode" directly rather than going through real Postgres
+      // column-name folding, so this asserts the query text itself uses a quoted alias.
+      const queries = require('../../server/services/queries')
+
+      Code.expect(queries.getFloodWarningAlertsGeoJson).to.contain('ta_code as "taCode"')
+    })
   })
 })

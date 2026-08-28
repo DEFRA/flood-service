@@ -149,7 +149,9 @@ module.exports = {
   getFloodWarningAlertsGeoJson: `
     SELECT
       id,
-      ta_code as taCode,
+      -- Alias must be double-quoted: Postgres folds unquoted identifiers to lowercase,
+      -- so an unquoted "as taCode" would silently produce a "tacode" column instead
+      ta_code as "taCode",
       ta_code,
       ta_name,
       severity_value,
