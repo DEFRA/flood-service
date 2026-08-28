@@ -1180,6 +1180,15 @@ lab.experiment('Services tests', () => {
       Code.expect(result.numberReturned).to.equal(1)
     })
 
+    lab.test('getStationsGeoJson SQL excludes NaN from the is_ffoi_at_risk comparison', () => {
+      // Regression test: Postgres numeric 'NaN' compares greater than any ordinary value, so
+      // without excluding it explicitly a NaN ffoi.value would incorrectly report
+      // is_ffoi_at_risk = true even though ffoi_max maps NaN to null for the same row.
+      const queries = require('../../server/services/queries')
+
+      Code.expect(queries.getStationsGeoJson).to.contain("ffoi.value != 'NaN' AND ffoi.value >= risk.percentile_5")
+    })
+
     lab.test('getRainfallStationsGeoJson maps rainfall properties and IDs', async () => {
       const queryStub = sinon.stub(db, 'query')
       queryStub.onFirstCall().returns({
