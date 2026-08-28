@@ -1248,6 +1248,15 @@ lab.experiment('Services tests', () => {
       Code.expect(result.numberReturned).to.equal(1)
     })
 
+    lab.test('getRainfallStationsGeoJson SQL orders by the unique telemetry_station_id', () => {
+      // Regression test: without an ORDER BY, LIMIT/OFFSET paging has no fixed row sequence,
+      // so adjacent pages could overlap or miss stations between requests. telemetry_station_id
+      // is unique per station, so ordering by it gives every page a stable position.
+      const queries = require('../../server/services/queries')
+
+      Code.expect(queries.getRainfallStationsGeoJson).to.contain('ORDER BY telemetry_station_id')
+    })
+
     lab.test('getFloodWarningAlertsGeoJson maps alert properties and IDs', async () => {
       const queryStub = sinon.stub(db, 'query')
       queryStub.onFirstCall().returns({
