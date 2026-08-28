@@ -1200,6 +1200,19 @@ lab.experiment('Services tests', () => {
       Code.expect(queries.getStationsGeoJson).to.contain('ORDER BY risk.at_risk DESC NULLS LAST, ss.rloi_id, risk.direction')
     })
 
+    lab.test('getStationsGeoJsonCount SQL counts the same feature-id expression as getStationsGeoJson', () => {
+      // Regression test: risk is a LEFT JOIN, so a station with no matching risk row has a
+      // null direction. The previous "rloi_id || ' ' || direction" concatenation becomes null
+      // in that case, and COUNT(DISTINCT ...) ignores nulls, so that station would be missing
+      // from this count even though getStationsGeoJson still returns it as a feature. Using the
+      // same CASE expression as the feature id in getStationsGeoJson guarantees they agree.
+      const queries = require('../../server/services/queries')
+
+      Code.expect(queries.getStationsGeoJsonCount).to.contain(
+        "CASE\n        WHEN risk.direction = 'd' THEN CONCAT(ss.rloi_id, '/downstream')\n        ELSE CAST(ss.rloi_id AS VARCHAR)\n      END"
+      )
+    })
+
     lab.test('getRainfallStationsGeoJson maps rainfall properties and IDs', async () => {
       const queryStub = sinon.stub(db, 'query')
       queryStub.onFirstCall().returns({
