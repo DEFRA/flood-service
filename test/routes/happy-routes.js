@@ -9,6 +9,7 @@ const s3Service = require('../../server/services/s3')
 lab.experiment('Happy Route tests', () => {
   let server
   let sandbox
+  const tewkesburyBboxEpsg3857 = '-200000,6600000,-100000,6700000,EPSG:3857'
 
   // Create server before each test
   lab.before(async () => {
@@ -667,5 +668,260 @@ lab.experiment('Happy Route tests', () => {
 
     const response = await server.inject(options)
     Code.expect(response.statusCode).to.equal(200)
+  })
+
+  lab.test('GET /stations-geojson returns valid GeoJSON FeatureCollection', async () => {
+    const mockGeoJsonResponse = {
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          id: 'stations.9575',
+          geometry: { type: 'Point', coordinates: [-2.37757665, 52.81171587] },
+          geometry_name: 'centroid',
+          properties: {
+            direction: 'u',
+            type: 'S',
+            iswales: false,
+            atrisk: false,
+            status: 'Active',
+            name: 'Test Station',
+            river: 'Test River'
+          }
+        }
+      ],
+      totalFeatures: 2,
+      numberMatched: 2,
+      numberReturned: 2,
+      timeStamp: '2026-08-13T11:34:56.132Z',
+      crs: {
+        type: 'name',
+        properties: {
+          name: 'urn:ogc:def:crs:EPSG::4326'
+        }
+      }
+    }
+
+    sandbox.stub(services, 'getStationsGeoJson').returns(mockGeoJsonResponse)
+
+    const options = {
+      method: 'GET',
+      url: '/stations-geojson'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+    Code.expect(response.result.type).to.equal('FeatureCollection')
+    Code.expect(response.result.features).to.be.an.array()
+    Code.expect(response.result.numberMatched).to.equal(2)
+  })
+
+  lab.test('GET /stations-geojson with paging parameters', async () => {
+    const mockGeoJsonResponse = {
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          id: 'stations.1001',
+          geometry: { type: 'Point', coordinates: [-2.37, 52.81] },
+          geometry_name: 'centroid',
+          properties: { direction: 'u', type: 'S', name: 'Station 1' }
+        },
+        {
+          type: 'Feature',
+          id: 'stations.1002/downstream',
+          geometry: { type: 'Point', coordinates: [-2.38, 52.82] },
+          geometry_name: 'centroid',
+          properties: { direction: 'd', type: 'M', name: 'Station 2' }
+        }
+      ],
+      totalFeatures: 3,
+      numberMatched: 3,
+      numberReturned: 2,
+      timeStamp: '2026-08-13T11:34:56.132Z',
+      crs: {
+        type: 'name',
+        properties: { name: 'urn:ogc:def:crs:EPSG::4326' }
+      }
+    }
+
+    sandbox.stub(services, 'getStationsGeoJson').returns(mockGeoJsonResponse)
+
+    const options = {
+      method: 'GET',
+      url: '/stations-geojson?maxFeatures=2&startIndex=1'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+    Code.expect(response.result.numberMatched).to.equal(3)
+    Code.expect(response.result.numberReturned).to.equal(2)
+    Code.expect(response.result.features.length).to.equal(2)
+  })
+
+  lab.test('GET /rainfall-stations-geojson returns valid GeoJSON FeatureCollection', async () => {
+    const mockGeoJsonResponse = {
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          id: 'rainfall_stations.E14440.Southern',
+          geometry: { type: 'Point', coordinates: [-1.57475224, 50.74392203] },
+          geometry_name: 'centroid',
+          properties: {
+            telemetry_station_id: 103,
+            station_name: 'Efford',
+            ngr: 'SZ301939'
+          }
+        }
+      ],
+      totalFeatures: 1,
+      numberMatched: 1,
+      numberReturned: 1,
+      timeStamp: '2026-08-13T11:34:56.132Z',
+      crs: {
+        type: 'name',
+        properties: { name: 'urn:ogc:def:crs:EPSG::4326' }
+      }
+    }
+
+    sandbox.stub(services, 'getRainfallStationsGeoJson').returns(mockGeoJsonResponse)
+
+    const options = {
+      method: 'GET',
+      url: '/rainfall-stations-geojson'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+    Code.expect(response.result.type).to.equal('FeatureCollection')
+    Code.expect(response.result.features[0].id).to.startWith('rainfall_stations.')
+  })
+
+  lab.test('GET /rainfall-stations-geojson with paging parameters', async () => {
+    const mockGeoJsonResponse = {
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          id: 'rainfall_stations.E10001.Southern',
+          geometry: { type: 'Point', coordinates: [-1.57, 50.74] },
+          geometry_name: 'centroid',
+          properties: { telemetry_station_id: 1001, station_name: 'Rain 1' }
+        },
+        {
+          type: 'Feature',
+          id: 'rainfall_stations.E10002.Southern',
+          geometry: { type: 'Point', coordinates: [-1.58, 50.75] },
+          geometry_name: 'centroid',
+          properties: { telemetry_station_id: 1002, station_name: 'Rain 2' }
+        }
+      ],
+      totalFeatures: 4,
+      numberMatched: 4,
+      numberReturned: 2,
+      timeStamp: '2026-08-13T11:34:56.132Z',
+      crs: {
+        type: 'name',
+        properties: { name: 'urn:ogc:def:crs:EPSG::4326' }
+      }
+    }
+
+    sandbox.stub(services, 'getRainfallStationsGeoJson').returns(mockGeoJsonResponse)
+
+    const options = {
+      method: 'GET',
+      url: '/rainfall-stations-geojson?maxFeatures=2&startIndex=1'
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+    Code.expect(response.result.numberMatched).to.equal(4)
+    Code.expect(response.result.numberReturned).to.equal(2)
+    Code.expect(response.result.features.length).to.equal(2)
+  })
+
+  lab.test('GET /flood-warning-alerts-geojson with bbox returns valid GeoJSON FeatureCollection', async () => {
+    const mockGeoJsonResponse = {
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          id: 'flood_warning_alert.112FWTNOR03',
+          geometry: { type: 'MultiPolygon', coordinates: [[[[]]]] },
+          geometry_name: 'geom',
+          properties: {
+            id: 33764755,
+            ta_code: '112FWTNOR03',
+            ta_name: 'Severn Estuary at Northwick'
+          }
+        }
+      ],
+      totalFeatures: 1,
+      numberMatched: 1,
+      numberReturned: 1,
+      timeStamp: '2026-08-13T11:34:56.132Z',
+      crs: {
+        type: 'name',
+        properties: { name: 'urn:ogc:def:crs:EPSG::4326' }
+      }
+    }
+
+    sandbox.stub(services, 'getFloodWarningAlertsGeoJson').returns(mockGeoJsonResponse)
+
+    const options = {
+      method: 'GET',
+      // Tewkesbury, Gloucestershire (EPSG:3857), a well-known UK flooding location.
+      url: `/flood-warning-alerts-geojson?bbox=${tewkesburyBboxEpsg3857}`
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+    Code.expect(response.result.type).to.equal('FeatureCollection')
+    Code.expect(response.result.features[0].id).to.startWith('flood_warning_alert.')
+  })
+
+  lab.test('GET /flood-warning-alerts-geojson with bbox and paging parameters', async () => {
+    const mockGeoJsonResponse = {
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          id: 'flood_warning_alert.112FWTNOR03',
+          geometry: { type: 'MultiPolygon', coordinates: [[[[]]]] },
+          geometry_name: 'geom',
+          properties: { id: 33764755, ta_code: '112FWTNOR03', ta_name: 'Alert 1' }
+        },
+        {
+          type: 'Feature',
+          id: 'flood_warning_alert.112FWTNOR04',
+          geometry: { type: 'MultiPolygon', coordinates: [[[[]]]] },
+          geometry_name: 'geom',
+          properties: { id: 33764756, ta_code: '112FWTNOR04', ta_name: 'Alert 2' }
+        }
+      ],
+      totalFeatures: 3,
+      numberMatched: 3,
+      numberReturned: 2,
+      timeStamp: '2026-08-13T11:34:56.132Z',
+      crs: {
+        type: 'name',
+        properties: { name: 'urn:ogc:def:crs:EPSG::4326' }
+      }
+    }
+
+    sandbox.stub(services, 'getFloodWarningAlertsGeoJson').returns(mockGeoJsonResponse)
+
+    const options = {
+      method: 'GET',
+      // Tewkesbury, Gloucestershire (EPSG:3857), a well-known UK flooding location.
+      url: `/flood-warning-alerts-geojson?bbox=${tewkesburyBboxEpsg3857}&maxFeatures=2&startIndex=0`
+    }
+
+    const response = await server.inject(options)
+    Code.expect(response.statusCode).to.equal(200)
+    Code.expect(response.result.numberMatched).to.equal(3)
+    Code.expect(response.result.numberReturned).to.equal(2)
+    Code.expect(response.result.features.length).to.equal(2)
   })
 })
