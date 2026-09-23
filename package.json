@@ -27,7 +27,7 @@
     "hapi-pino": "13.0.0",
     "joi": "18.2.3",
     "nunjucks": "3.2.4",
-    "pg": "8.20.0",
+    "pg": "8.22.0",
     "pino": "10.3.1",
     "pino-abstract-transport": "3.0.0",
     "pino-pretty": "13.1.3",
