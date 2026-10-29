@@ -1,11 +1,29 @@
 const joi = require('joi')
 const defaultPort = 8050
+const DEFAULT_GEOJSON_START_INDEX = 0
+const DEFAULT_STATIONS_GEOJSON_MAX_FEATURES = null // null means no limit
+const DEFAULT_RAINFALL_STATIONS_GEOJSON_MAX_FEATURES = null // null means no limit
+const DEFAULT_FLOOD_WARNING_ALERTS_GEOJSON_MAX_FEATURES = null // null means no limit
 
 // Define config schema
 const schema = joi.object({
   port: joi.number().default(defaultPort),
   env: joi.string().valid('development', 'dev', 'test', 'tst', 'production').default('production'),
   connectionString: joi.string().required(),
+  geoJsonPaging: joi.object().keys({
+    stations: joi.object().keys({
+      defaultStartIndex: joi.number().integer().min(0).default(DEFAULT_GEOJSON_START_INDEX),
+      defaultMaxFeatures: joi.number().integer().min(1).allow(null).default(DEFAULT_STATIONS_GEOJSON_MAX_FEATURES)
+    }),
+    rainfallStations: joi.object().keys({
+      defaultStartIndex: joi.number().integer().min(0).default(DEFAULT_GEOJSON_START_INDEX),
+      defaultMaxFeatures: joi.number().integer().min(1).allow(null).default(DEFAULT_RAINFALL_STATIONS_GEOJSON_MAX_FEATURES)
+    }),
+    floodWarningAlerts: joi.object().keys({
+      defaultStartIndex: joi.number().integer().min(0).default(DEFAULT_GEOJSON_START_INDEX),
+      defaultMaxFeatures: joi.number().integer().min(1).allow(null).default(DEFAULT_FLOOD_WARNING_ALERTS_GEOJSON_MAX_FEATURES)
+    })
+  }),
   s3: joi.object().required().keys({
     accessKey: joi.string().allow('').optional(),
     secretAccessKey: joi.string().allow('').optional(),
@@ -28,6 +46,20 @@ const config = {
   port: process.env.PORT,
   env: process.env.NODE_ENV,
   connectionString: process.env.FLOOD_SERVICE_CONNECTION_STRING,
+  geoJsonPaging: {
+    stations: {
+      defaultStartIndex: DEFAULT_GEOJSON_START_INDEX,
+      defaultMaxFeatures: process.env.FLOOD_SERVICE_STATIONS_GEOJSON_DEFAULT_MAX_FEATURES
+    },
+    rainfallStations: {
+      defaultStartIndex: DEFAULT_GEOJSON_START_INDEX,
+      defaultMaxFeatures: process.env.FLOOD_SERVICE_RAINFALL_STATIONS_GEOJSON_DEFAULT_MAX_FEATURES
+    },
+    floodWarningAlerts: {
+      defaultStartIndex: DEFAULT_GEOJSON_START_INDEX,
+      defaultMaxFeatures: process.env.FLOOD_SERVICE_FLOOD_WARNING_ALERTS_GEOJSON_DEFAULT_MAX_FEATURES
+    }
+  },
   s3: {
     accessKey: process.env.FLOOD_SERVICE_S3_ACCESS_KEY,
     secretAccessKey: process.env.FLOOD_SERVICE_S3_SECRET_ACCESS_KEY,
