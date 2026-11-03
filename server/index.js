@@ -17,7 +17,7 @@ async function createServer () {
   // Register the plugins
   await server.register(require('./plugins/router'))
   if (!config.isPM2) {
-    await server.register(require('blipp'))
+    await server.register(require('./lib/route-logger'))
   }
   await server.register(require('./plugins/logging'))
   await server.register(require('./plugins/on-pre-response'))
