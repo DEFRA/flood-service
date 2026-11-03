@@ -10,10 +10,16 @@ on:
       version:
         type: string
         description: version for release
+      workflow_branch:
+        type: string
+        description: Branch for the Docker workflow
+        default: development
 
 jobs:
   merge_release_branch_and_create_release:
     runs-on: ubuntu-latest
+    env:
+      WORKFLOW_BRANCH: ${{ inputs.workflow_branch || 'development' }}
 
     steps:
 
@@ -78,3 +84,8 @@ jobs:
         run: gh release create $TAG_VERSION --title "Release $VERSION" --notes "[release notes](/$RELEASE_NOTES_FILE)"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Trigger Docker build
+        run: gh workflow run --repo "$GITHUB_REPOSITORY" docker.yml --ref "$WORKFLOW_BRANCH"
+        env:
+          GH_TOKEN: ${{ secrets.GH_WORKFLOW }}

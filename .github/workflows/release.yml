@@ -82,6 +82,8 @@ jobs:
           FLOOD_SERVICE_S3_SECRET_ACCESS_KEY: "${{ secrets.FLOOD_SERVICE_S3_SECRET_ACCESS_KEY }}"
 
       - name: Create release notes from template (if it exists)
+        env:
+          FORMATTED_DATE: ${{ inputs.proposed_release_date || 'TBC' }}
         run: |
           template_file="release-docs/template.njk"
           if [ -e "$template_file" ]; then
