@@ -1,6 +1,6 @@
 {
   "name": "flood-service",
-  "version": "9.1.1",
+  "version": "9.1.2",
   "description": "Flood risk service",
   "engines": {
     "node": "24.x"
