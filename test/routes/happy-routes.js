@@ -1,37 +1,28 @@
-const Lab = require('@hapi/lab')
-const Code = require('@hapi/code')
-const lab = exports.lab = Lab.script()
 const createServer = require('../../server')
-const sinon = require('sinon')
 const services = require('../../server/services/index.js')
 const s3Service = require('../../server/services/s3')
 
-lab.experiment('Happy Route tests', () => {
+describe('Happy Route tests', () => {
   let server
-  let sandbox
 
-  // Create server before each test
-  lab.before(async () => {
-    sandbox = sinon.createSandbox()
+  // Create server once before the tests.
+  beforeAll(async () => {
     server = await createServer()
   })
 
-  lab.afterEach(async () => {
-    sandbox.restore()
-  })
   // Stop server after the tests.
-  lab.after(async () => {
+  afterAll(async () => {
     await server.stop()
   })
 
-  lab.test('GET / route works for /flood-area/alert/{code}', async () => {
+  test('GET / route works for /flood-area/alert/{code}', async () => {
     const options = {
       method: 'GET',
       url: '/flood-area/alert/061WAF07Cole'
 
     }
 
-    sandbox.stub(services, 'getAlertArea').returns({
+    jest.spyOn(services, 'getAlertArea').mockReturnValue({
       id: 5512,
       area: 'Thames',
       code: '061WAF07Cole',
@@ -45,17 +36,17 @@ lab.experiment('Happy Route tests', () => {
     })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET / route works for /flood-area/warning/{code}', async () => {
+  test('GET / route works for /flood-area/warning/{code}', async () => {
     const options = {
       method: 'GET',
       url: '/flood-area/warning/034FWFDECHURCHW'
 
     }
 
-    sandbox.stub(services, 'getWarningArea').returns({
+    jest.spyOn(services, 'getWarningArea').mockReturnValue({
       id: 22517,
       area: 'East Midlands',
       code: '034FWFDECHURCHW',
@@ -70,17 +61,17 @@ lab.experiment('Happy Route tests', () => {
     })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET / route works for /floods', async () => {
+  test('GET / route works for /floods', async () => {
     const options = {
       method: 'GET',
       url: '/floods'
 
     }
 
-    sandbox.stub(services, 'getFloods').returns({
+    jest.spyOn(services, 'getFloods').mockReturnValue({
       floods:
       {
         code: '061WAF07Cole',
@@ -103,32 +94,32 @@ lab.experiment('Happy Route tests', () => {
     })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET / route works for /floods-within/{x1}/{y1}/{x2}/{y2} ', async () => {
+  test('GET / route works for /floods-within/{x1}/{y1}/{x2}/{y2} ', async () => {
     const options = {
       method: 'GET',
       url: '/floods-within/-2.5353000164031982/53.420841217041016/-2.6395580768585205/53.36753845214844'
 
     }
 
-    sandbox.stub(services, 'getFloodsWithin').returns({
+    jest.spyOn(services, 'getFloodsWithin').mockReturnValue({
       floods: []
     })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET / route works for /impacts-within/{x1}/{y1}/{x2}/{y2} ', async () => {
+  test('GET / route works for /impacts-within/{x1}/{y1}/{x2}/{y2} ', async () => {
     const options = {
       method: 'GET',
       url: '/impacts-within/-2.5353000164031982/53.420841217041016/-2.6395580768585205/53.36753845214844'
 
     }
 
-    sandbox.stub(services, 'getImpactDataWithin').returns({
+    jest.spyOn(services, 'getImpactDataWithin').mockReturnValue({
       impactid: 2931,
       gauge: 'River Thames at Windsor',
       rloiid: 7170,
@@ -150,17 +141,17 @@ lab.experiment('Happy Route tests', () => {
     })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET / route works for /impacts/{id} ', async () => {
+  test('GET / route works for /impacts/{id} ', async () => {
     const options = {
       method: 'GET',
       url: '/impacts/7333'
 
     }
 
-    sandbox.stub(services, 'getImpactData').returns({
+    jest.spyOn(services, 'getImpactData').mockReturnValue({
       impactid: 2614,
       gauge: 'River Lee at Waterhall',
       rloiid: 7333,
@@ -182,14 +173,13 @@ lab.experiment('Happy Route tests', () => {
     })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET / route works on /is-england/{x}/{y}', async () => {
+  test('GET / route works on /is-england/{x}/{y}', async () => {
     const result = { is_england: true }
 
-    const isEngland = sandbox.stub(services, 'isEngland')
-    isEngland.returns(result)
+    jest.spyOn(services, 'isEngland').mockReturnValue(result)
 
     const options = {
       method: 'GET',
@@ -197,18 +187,18 @@ lab.experiment('Happy Route tests', () => {
     }
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
-    Code.expect(response.payload).to.include('true')
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).toContain('true')
   })
 
-  lab.test('GET / route works for /station/{rloiId}/{direction} ', async () => {
+  test('GET / route works for /station/{rloiId}/{direction} ', async () => {
     const options = {
       method: 'GET',
       url: '/station/7333/u'
 
     }
 
-    sandbox.stub(services, 'getStation').returns({
+    jest.spyOn(services, 'getStation').mockReturnValue({
       rloi_id: 7333,
       station_type: 'S',
       qualifier: 'u',
@@ -254,17 +244,17 @@ lab.experiment('Happy Route tests', () => {
     })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET / route works for /station/{id}/{direction}/telemetry ', async () => {
+  test('GET / route works for /station/{id}/{direction}/telemetry ', async () => {
     const options = {
       method: 'GET',
       url: '/station/7333/u/telemetry'
 
     }
 
-    sandbox.stub(services, 'getStationTelemetry').returns([
+    jest.spyOn(services, 'getStationTelemetry').mockReturnValue([
       {
         ts: '2019-07-24T12:00Z',
         _: 0.113,
@@ -277,17 +267,17 @@ lab.experiment('Happy Route tests', () => {
       }])
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET / route works for /station/{telemetryId}/forecast/data ', async () => {
+  test('GET / route works for /station/{telemetryId}/forecast/data ', async () => {
     const options = {
       method: 'GET',
       url: '/station/L2406/forecast/data'
 
     }
 
-    sandbox.stub(s3Service, 'ffoi').returns({
+    jest.spyOn(s3Service, 'ffoi').mockReturnValue({
       $: {
         stationReference: 'L2406',
         region: 'North East',
@@ -334,16 +324,16 @@ lab.experiment('Happy Route tests', () => {
     })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET / route works for /station/{id}/{direction}/imtd-thresholds', async () => {
+  test('GET / route works for /station/{id}/{direction}/imtd-thresholds', async () => {
     const options = {
       method: 'GET',
       url: '/station/7225/u/imtd-thresholds'
     }
 
-    sandbox.stub(services, 'getStationImtdThresholds').resolves([
+    jest.spyOn(services, 'getStationImtdThresholds').mockResolvedValue([
       {
         station_threshold_id: '1234',
         station_id: '7225',
@@ -355,17 +345,17 @@ lab.experiment('Happy Route tests', () => {
     ])
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET / test values returned from station_imtd_threshold table ', async () => {
+  test('GET / test values returned from station_imtd_threshold table ', async () => {
     const options = {
       method: 'GET',
       url: '/station/7122/u/imtd-thresholds'
 
     }
 
-    sandbox.stub(services, 'getStationImtdThresholds').returns(
+    jest.spyOn(services, 'getStationImtdThresholds').mockReturnValue(
       [
         {
           station_threshold_id: '4040',
@@ -419,234 +409,234 @@ lab.experiment('Happy Route tests', () => {
     )
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET /flood-guidance-statement ', async () => {
+  test('GET /flood-guidance-statement ', async () => {
     const options = {
       method: 'GET',
       url: '/flood-guidance-statement'
     }
 
-    sandbox.stub(s3Service, 'floodGuidanceStatement').returns({})
+    jest.spyOn(s3Service, 'floodGuidanceStatement').mockReturnValue({})
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET / webops health check', async () => {
+  test('GET / webops health check', async () => {
     const options = {
       method: 'GET',
       url: '/'
     }
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET /stations-health webops health check', async () => {
+  test('GET /stations-health webops health check', async () => {
     const options = {
       method: 'GET',
       url: '/stations-health'
     }
 
-    sandbox.stub(services, 'getStationsHealth').returns({ rows: [] })
+    jest.spyOn(services, 'getStationsHealth').mockReturnValue({ rows: [] })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET /telemetry-health health check', async () => {
+  test('GET /telemetry-health health check', async () => {
     const options = {
       method: 'GET',
       url: '/telemetry-health'
     }
 
-    sandbox.stub(services, 'getTelemetryHealth').returns({ rows: [] })
+    jest.spyOn(services, 'getTelemetryHealth').mockReturnValue({ rows: [] })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET /ffoi-health health check', async () => {
+  test('GET /ffoi-health health check', async () => {
     const options = {
       method: 'GET',
       url: '/ffoi-health'
     }
 
-    sandbox.stub(services, 'getFfoiHealth').returns({ rows: [] })
+    jest.spyOn(services, 'getFfoiHealth').mockReturnValue({ rows: [] })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET / route works for /stations', async () => {
+  test('GET / route works for /stations', async () => {
     const options = {
       method: 'GET',
       url: '/stations'
     }
 
-    sandbox.stub(services, 'getStations').returns({ rows: [] })
+    jest.spyOn(services, 'getStations').mockReturnValue({ rows: [] })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET / route works for /rainfall-station/{stationId}', async () => {
+  test('GET / route works for /rainfall-station/{stationId}', async () => {
     const options = {
       method: 'GET',
       url: '/rainfall-station/E24195'
     }
 
-    sandbox.stub(services, 'getRainfallStation').returns({ rows: [] })
+    jest.spyOn(services, 'getRainfallStation').mockReturnValue({ rows: [] })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET / route works for /river-name/{location}', async () => {
+  test('GET / route works for /river-name/{location}', async () => {
     const options = {
       method: 'GET',
       url: '/river-name/Tyne'
     }
 
-    sandbox.stub(services, 'getRiversByName').returns({ rows: [] })
+    jest.spyOn(services, 'getRiversByName').mockReturnValue({ rows: [] })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET / route works for /rainfall-station-telemetry/{stationId}', async () => {
+  test('GET / route works for /rainfall-station-telemetry/{stationId}', async () => {
     const options = {
       method: 'GET',
       url: '/rainfall-station-telemetry/E24195'
     }
 
-    sandbox.stub(services, 'getRainfallStationTelemetry').returns({ rows: [] })
+    jest.spyOn(services, 'getRainfallStationTelemetry').mockReturnValue({ rows: [] })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET / route works for /stations-within-target-area', async () => {
+  test('GET / route works for /stations-within-target-area', async () => {
     const options = {
       method: 'GET',
       url: '/stations-within-target-area/053WAF117BED'
     }
 
-    sandbox.stub(services, 'getStationsWithinTargetArea').returns({ rows: [] })
+    jest.spyOn(services, 'getStationsWithinTargetArea').mockReturnValue({ rows: [] })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 
-  lab.test('GET / route works for /river/{riverid}', async () => {
+  test('GET / route works for /river/{riverid}', async () => {
     const options = {
       method: 'GET',
       url: '/river/123'
     }
 
-    sandbox.stub(services, 'getRiverStationsByRiverId').returns([])
+    jest.spyOn(services, 'getRiverStationsByRiverId').mockReturnValue([])
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
-  lab.test('GET / route works for /river-station-by-station-id/{stationId}{direction}', async () => {
+  test('GET / route works for /river-station-by-station-id/{stationId}{direction}', async () => {
     const options = {
       method: 'GET',
       url: '/river-station-by-station-id/123/u'
     }
 
-    sandbox.stub(services, 'getRiverStationByStationId').returns([])
+    jest.spyOn(services, 'getRiverStationByStationId').mockReturnValue([])
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
-  lab.test('GET / route works for /stations-overview', async () => {
+  test('GET / route works for /stations-overview', async () => {
     const options = {
       method: 'GET',
       url: '/stations-overview'
     }
 
-    sandbox.stub(services, 'getStationsOverview').returns([])
+    jest.spyOn(services, 'getStationsOverview').mockReturnValue([])
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
-  lab.test('GET / route works for /warnings-alerts-within-station-buffer/{rloiId}', async () => {
+  test('GET / route works for /warnings-alerts-within-station-buffer/{rloiId}', async () => {
     const options = {
       method: 'GET',
       url: '/warnings-alerts-within-station-buffer/1001'
     }
 
-    sandbox.stub(services, 'getWarningsAlertsWithinStationBuffer').returns([])
+    jest.spyOn(services, 'getWarningsAlertsWithinStationBuffer').mockReturnValue([])
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
-  lab.test('GET / route works for /stations-by-radius/{x}/{y}', async () => {
+  test('GET / route works for /stations-by-radius/{x}/{y}', async () => {
     const options = {
       method: 'GET',
       url: '/stations-by-radius/-1.17316039381184/52.3951465511329'
     }
 
-    sandbox.stub(services, 'getStationsByRadius').returns([])
+    jest.spyOn(services, 'getStationsByRadius').mockReturnValue([])
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
-  lab.test('GET / route works for /stations-by-radius/{x}/{y}/{rad}', async () => {
+  test('GET / route works for /stations-by-radius/{x}/{y}/{rad}', async () => {
     const options = {
       method: 'GET',
       url: '/stations-by-radius/-1.17316039381184/52.3951465511329/8000'
     }
 
-    sandbox.stub(services, 'getStationsByRadius').returns([])
+    jest.spyOn(services, 'getStationsByRadius').mockReturnValue([])
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
-  lab.test('GET / route works for /target-area', async () => {
+  test('GET / route works for /target-area', async () => {
     const options = {
       method: 'GET',
       url: '/target-area/a1'
     }
 
-    sandbox.stub(services, 'getTargetArea').returns({ rows: [] })
+    jest.spyOn(services, 'getTargetArea').mockReturnValue({ rows: [] })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
-  lab.test('GET / route works for /river-name', async () => {
+  test('GET / route works for /river-name', async () => {
     const options = {
       method: 'GET',
       url: '/river-name/mersey'
     }
 
-    sandbox.stub(services, 'getRiversByName').returns({ rows: [] })
+    jest.spyOn(services, 'getRiversByName').mockReturnValue({ rows: [] })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
-  lab.test('GET / route works for /target-area/{fwisCode}/imtd-thresholds', async () => {
+  test('GET / route works for /target-area/{fwisCode}/imtd-thresholds', async () => {
     const options = {
       method: 'GET',
       url: '/target-area/034FWFTRWLLNGTN/imtd-thresholds'
     }
 
-    sandbox.stub(services, 'getTargetAreaThresholds').returns({ thresholds: [] })
+    jest.spyOn(services, 'getTargetAreaThresholds').mockReturnValue({ thresholds: [] })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
-  lab.test('GET / route works for /forecast-station/{rloiId}/{direction} ', async () => {
+  test('GET / route works for /forecast-station/{rloiId}/{direction} ', async () => {
     const options = {
       method: 'GET',
       url: '/forecast-station/8208/u'
 
     }
 
-    sandbox.stub(services, 'getForecastFlag').returns({
+    jest.spyOn(services, 'getForecastFlag').mockReturnValue({
       station_display_time_series_id: '94280',
       station_id: '8208',
       direction: 'u',
@@ -654,18 +644,18 @@ lab.experiment('Happy Route tests', () => {
     })
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
-  lab.test('GET /forecast-station/{rloiId}/{direction} to not error if station not found ', async () => {
+  test('GET /forecast-station/{rloiId}/{direction} to not error if station not found ', async () => {
     const options = {
       method: 'GET',
       url: '/forecast-station/8208/u'
 
     }
 
-    sandbox.stub(services, 'getForecastFlag').returns(null)
+    jest.spyOn(services, 'getForecastFlag').mockReturnValue(null)
 
     const response = await server.inject(options)
-    Code.expect(response.statusCode).to.equal(200)
+    expect(response.statusCode).toBe(200)
   })
 })

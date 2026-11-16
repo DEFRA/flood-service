@@ -10,8 +10,8 @@
     "lint": "eslint .",
     "start:local": "npx nodemon --ext js,json,html,env -r dotenv/config index.js",
     "start:local:no-watch": "node -r dotenv/config index.js",
-    "unit-test": "export LOG_LEVEL=silent && lab -v -c -r console -o stdout -r lcov -o coverage/lcov.info --require dotenv/config",
-    "unit-test:no-coverage": "export LOG_LEVEL=silent && lab -v -r console --require dotenv/config",
+    "unit-test": "LOG_LEVEL=silent jest --coverage",
+    "unit-test:no-coverage": "LOG_LEVEL=silent jest",
     "test": "npm run lint && npm run unit-test",
     "test:no-coverage": "npm run lint && npm run unit-test:no-coverage",
     "create-release-notes": "node release-docs/lib/create-release-notes.js"
@@ -33,15 +33,13 @@
     "yargs": "18.0.0"
   },
   "devDependencies": {
-    "@hapi/code": "9.0.3",
-    "@hapi/lab": "26.0.1",
     "aws-sdk-client-mock": "4.1.0",
     "dotenv": "17.4.2",
     "eslint": "10.14.0",
+    "jest": "30.5.2",
+    "jest-extended": "7.0.0",
     "neostandard": "0.14.1",
-    "nodemon": "3.1.14",
-    "proxyquire": "2.1.3",
-    "sinon": "22.0.0"
+    "nodemon": "3.1.14"
   },
   "overrides": {
     "eslint": {
