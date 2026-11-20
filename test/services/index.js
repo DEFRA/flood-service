@@ -1,17 +1,10 @@
 'use strict'
 
-const Lab = require('@hapi/lab')
-const Code = require('@hapi/code')
-const lab = exports.lab = Lab.script()
-const sinon = require('sinon')
 const db = require('../../server/services/db')
 const services = require('../../server/services/index.js')
 
-lab.experiment('Services tests', () => {
-  lab.afterEach(async () => {
-    await sinon.restore()
-  })
-  lab.experiment('getFloods', () => {
+describe('Services tests', () => {
+  describe('getFloods', () => {
     const getFloodsData = () => {
       return [
         {
@@ -61,25 +54,22 @@ lab.experiment('Services tests', () => {
         }
       ]
     }
-    lab.test('should return flood data', async () => {
-      sinon.stub(db, 'query').callsFake(getFloodsData)
+    test('should return flood data', async () => {
+      jest.spyOn(db, 'query').mockImplementation(getFloodsData)
 
       const result = await services.getFloods()
 
-      await Code.expect(result).to.be.an.object()
-      await Code.expect(result.floods[0].code).to.equal('JFS013FWFD5')
+      expect(result).toBeObject()
+      expect(result.floods[0].code).toBe('JFS013FWFD5')
     })
-    lab.test('should pass query only', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getFloods')
-        .once()
-        .returns(getFloodsData())
+    test('should pass query only', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue(getFloodsData())
       await services.getFloods()
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getFloods')
     })
   })
-  lab.experiment('getFloodsWithin', () => {
+  describe('getFloodsWithin', () => {
     const getFloodsWithinData = () => {
       return {
         command: 'SELECT',
@@ -87,92 +77,86 @@ lab.experiment('Services tests', () => {
         oid: null,
         rows: [],
         fields:
-        [],
+          [],
         _parsers: []
       }
     }
     const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
-    lab.test('should return flood within data', async () => {
-      sinon.stub(db, 'query').callsFake(getFloodsWithinData)
+    test('should return flood within data', async () => {
+      jest.spyOn(db, 'query').mockImplementation(getFloodsWithinData)
 
       const result = await services.getFloodsWithin(bbox)
 
-      await Code.expect(result.floods).to.be.an.array()
+      expect(result.floods).toBeArray()
     })
-    lab.test('should pass query and bbox', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getFloodsWithin', bbox)
-        .once()
-        .returns(getFloodsWithinData())
+    test('should pass query and bbox', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue(getFloodsWithinData())
       await services.getFloodsWithin(bbox)
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getFloodsWithin', bbox)
     })
   })
-  lab.experiment('getAlertArea', () => {
+  describe('getAlertArea', () => {
     const getAlertAreaData = () => {
       return {
         command: 'SELECT',
         rowCount: 1,
         oid: null,
         rows:
-        [{
-          id: 5038,
-          area: 'Lincs and Northants',
-          code: '055WAF139GBE',
-          name: 'Lower Glen and Bourne Eau System',
-          description: 'Lower River Glen from Kates Bridge to Surfleet Seas End, including the Bourne Eau in Bourne and the area around Baston and Pinchbeck',
-          localauthorityname: 'Lincolnshire',
-          quickdialnumber: '207032',
-          riverorsea: 'River Glen, Bourne Eau System',
-          geom: '{"type":"MultiPolygon","coordinates":[[]]}',
-          centroid: '{"type":"Point","coordinates":[-0.279974216515124,52.7647656448618]}'
-        }],
+          [{
+            id: 5038,
+            area: 'Lincs and Northants',
+            code: '055WAF139GBE',
+            name: 'Lower Glen and Bourne Eau System',
+            description: 'Lower River Glen from Kates Bridge to Surfleet Seas End, including the Bourne Eau in Bourne and the area around Baston and Pinchbeck',
+            localauthorityname: 'Lincolnshire',
+            quickdialnumber: '207032',
+            riverorsea: 'River Glen, Bourne Eau System',
+            geom: '{"type":"MultiPolygon","coordinates":[[]]}',
+            centroid: '{"type":"Point","coordinates":[-0.279974216515124,52.7647656448618]}'
+          }],
         fields: [],
         _parsers: [],
         RowCtor: null,
         rowAsArray: false
       }
     }
-    lab.test('should return alert data', async () => {
-      sinon.stub(db, 'query').callsFake(getAlertAreaData)
+    test('should return alert data', async () => {
+      jest.spyOn(db, 'query').mockImplementation(getAlertAreaData)
 
       const code = '061WAF07Cole'
 
       const result = await services.getAlertArea(code)
 
-      await Code.expect(result.id).to.equal(5038)
+      expect(result.id).toBe(5038)
     })
-    lab.test('should pass query and code', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getAlertArea', ['A1'])
-        .once()
-        .returns(getAlertAreaData())
+    test('should pass query and code', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue(getAlertAreaData())
       await services.getAlertArea('A1')
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getAlertArea', ['A1'])
     })
   })
-  lab.experiment('getWarningArea', () => {
+  describe('getWarningArea', () => {
     const getWarningAreaData = () => {
       return {
         command: 'SELECT',
         rowCount: 1,
         oid: null,
         rows:
-        [{
-          id: 22517,
-          area: 'East Midlands',
-          code: '034FWFDECHURCHW',
-          name: 'River Derwent at Church Wilne and Wilne Lane',
-          description: 'River Derwent at Church Wilne and Wilne Lane including Saint Chad\'s Church at Wilne Road',
-          localauthorityname: 'Derbyshire',
-          parent: '034WAF409',
-          quickdialnumber: '306046',
-          riverorsea: 'River Derwent',
-          geom: '{"type":"MultiPolygon","coordinates":[[[[-1.33544746953363,52.8848482501047],[-1.33546067152289,52.8848434955537],[-1.33546748800289,52.8848472610617],[-1.33585013571403,52.8851005127339],[-1.33585454725095,52.8851057037314],[-1.33584767927105,52.8851101202737],[-1.33570052722019,52.8851895514517],[-1.33569221189659,52.8851930046462],[-1.33568677900119,52.8851905101913],[-1.33530719077225,52.8849474525291],[-1.33528257328667,52.8849317287493],[-1.33529240254894,52.8849249600388],[-1.33544746953363,52.8848482501047]]],[[[-1.33370625439746,52.8819197529596],[-1.33482356188233,52.8817372272285],[-1.33516673745288,52.8826201165064],[-1.33413966345575,52.8827312345939],[-1.33370625439746,52.8819197529596]]],[[[-1.33852495787706,52.8806791292156],[-1.33750299388078,52.8804576935391],[-1.3372268335974,52.8800516275704],[-1.33646960335432,52.8800114478567],[-1.33509586640155,52.8794733962017],[-1.33396485875377,52.879583932065],[-1.33236251247491,52.8794221275349],[-1.33187384688512,52.8793115097113],[-1.33447329914901,52.8784001639469],[-1.33543905745595,52.8784055635089],[-1.33589923908392,52.8784351021311],[-1.33733265891451,52.8789554980095],[-1.33980754861945,52.8793917665998],[-1.34215541191797,52.8793867955656],[-1.34267192306564,52.8796233781237],[-1.3430391788855,52.8799040817189],[-1.34309278599214,52.8802909264849],[-1.34294027079286,52.8805507797206],[-1.34179453157455,52.880652319232],[-1.34134809414551,52.8806947955001],[-1.34065069115199,52.8806280051644],[-1.33852495787706,52.8806791292156]]],[[[-1.33609754416278,52.8728992550483],[-1.33610103734122,52.8726699029974],[-1.33570654351593,52.8726725719189],[-1.33569519039541,52.8726726349869],[-1.33568095414035,52.872671847974],[-1.337525802976,52.8712095306907],[-1.33767506308291,52.871091214242],[-1.3376815395069,52.8710873668802],[-1.33769787470883,52.871090202975],[-1.3377097302831,52.8710930722078],[-1.33811220239485,52.8712002457596],[-1.33813042187394,52.8712076162264],[-1.33834305878151,52.8713141492902],[-1.3383543718489,52.8713220850833],[-1.33835552078583,52.8713266062381],[-1.33837984381486,52.8716231197956],[-1.33838010252982,52.8716269999779],[-1.33838011723373,52.871627272737],[-1.33838600066076,52.8717702974466],[-1.33838559983568,52.8717772442891],[-1.33838191245489,52.8717810767237],[-1.33809275649464,52.8720264793205],[-1.33652850090041,52.8733539802987],[-1.33652837119947,52.8733539584939],[-1.33652172432197,52.8733498623933],[-1.33611053718437,52.8730114175582],[-1.3361035793033,52.8730054441108],[-1.33609778345859,52.8730000428868],[-1.33609616291722,52.8729899427985],[-1.33609754416278,52.8728992550483]]]]}',
-          centroid: '{"type":"Point","coordinates":[-1.33764872652984,52.8785953176783]}'
-        }],
+          [{
+            id: 22517,
+            area: 'East Midlands',
+            code: '034FWFDECHURCHW',
+            name: 'River Derwent at Church Wilne and Wilne Lane',
+            description: 'River Derwent at Church Wilne and Wilne Lane including Saint Chad\'s Church at Wilne Road',
+            localauthorityname: 'Derbyshire',
+            parent: '034WAF409',
+            quickdialnumber: '306046',
+            riverorsea: 'River Derwent',
+            geom: '{"type":"MultiPolygon","coordinates":[[[[-1.33544746953363,52.8848482501047],[-1.33546067152289,52.8848434955537],[-1.33546748800289,52.8848472610617],[-1.33585013571403,52.8851005127339],[-1.33585454725095,52.8851057037314],[-1.33584767927105,52.8851101202737],[-1.33570052722019,52.8851895514517],[-1.33569221189659,52.8851930046462],[-1.33568677900119,52.8851905101913],[-1.33530719077225,52.8849474525291],[-1.33528257328667,52.8849317287493],[-1.33529240254894,52.8849249600388],[-1.33544746953363,52.8848482501047]]],[[[-1.33370625439746,52.8819197529596],[-1.33482356188233,52.8817372272285],[-1.33516673745288,52.8826201165064],[-1.33413966345575,52.8827312345939],[-1.33370625439746,52.8819197529596]]],[[[-1.33852495787706,52.8806791292156],[-1.33750299388078,52.8804576935391],[-1.3372268335974,52.8800516275704],[-1.33646960335432,52.8800114478567],[-1.33509586640155,52.8794733962017],[-1.33396485875377,52.879583932065],[-1.33236251247491,52.8794221275349],[-1.33187384688512,52.8793115097113],[-1.33447329914901,52.8784001639469],[-1.33543905745595,52.8784055635089],[-1.33589923908392,52.8784351021311],[-1.33733265891451,52.8789554980095],[-1.33980754861945,52.8793917665998],[-1.34215541191797,52.8793867955656],[-1.34267192306564,52.8796233781237],[-1.3430391788855,52.8799040817189],[-1.34309278599214,52.8802909264849],[-1.34294027079286,52.8805507797206],[-1.34179453157455,52.880652319232],[-1.34134809414551,52.8806947955001],[-1.34065069115199,52.8806280051644],[-1.33852495787706,52.8806791292156]]],[[[-1.33609754416278,52.8728992550483],[-1.33610103734122,52.8726699029974],[-1.33570654351593,52.8726725719189],[-1.33569519039541,52.8726726349869],[-1.33568095414035,52.872671847974],[-1.337525802976,52.8712095306907],[-1.33767506308291,52.871091214242],[-1.3376815395069,52.8710873668802],[-1.33769787470883,52.871090202975],[-1.3377097302831,52.8710930722078],[-1.33811220239485,52.8712002457596],[-1.33813042187394,52.8712076162264],[-1.33834305878151,52.8713141492902],[-1.3383543718489,52.8713220850833],[-1.33835552078583,52.8713266062381],[-1.33837984381486,52.8716231197956],[-1.33838010252982,52.8716269999779],[-1.33838011723373,52.871627272737],[-1.33838600066076,52.8717702974466],[-1.33838559983568,52.8717772442891],[-1.33838191245489,52.8717810767237],[-1.33809275649464,52.8720264793205],[-1.33652850090041,52.8733539802987],[-1.33652837119947,52.8733539584939],[-1.33652172432197,52.8733498623933],[-1.33611053718437,52.8730114175582],[-1.3361035793033,52.8730054441108],[-1.33609778345859,52.8730000428868],[-1.33609616291722,52.8729899427985],[-1.33609754416278,52.8728992550483]]]]}',
+            centroid: '{"type":"Point","coordinates":[-1.33764872652984,52.8785953176783]}'
+          }],
         fields: [{
           name: 'id',
           tableID: 90814,
@@ -205,145 +189,136 @@ lab.experiment('Services tests', () => {
         rowAsArray: false
       }
     }
-    lab.test('Check should return data', async () => {
-      sinon.stub(db, 'query').callsFake(getWarningAreaData)
+    test('Check should return data', async () => {
+      jest.spyOn(db, 'query').mockImplementation(getWarningAreaData)
 
       const code = '034FWFDECHURCHW'
 
       const result = await services.getWarningArea(code)
-      await Code.expect(result).to.be.an.object()
-      await Code.expect(result.id).to.equal(22517)
+      expect(result).toBeObject()
+      expect(result.id).toBe(22517)
     })
-    lab.test('should pass query and code', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getWarningArea', ['A1'])
-        .once()
-        .returns(getWarningAreaData())
+    test('should pass query and code', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue(getWarningAreaData())
       await services.getWarningArea('A1')
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getWarningArea', ['A1'])
     })
   })
-  lab.experiment('getStation', () => {
+  describe('getStation', () => {
     const getStationData = () => {
       return {
         command: 'SELECT',
         rowCount: 1,
         oid: null,
         rows:
-        [{
-          id: 5038,
-          area: 'Lincs and Northants',
-          code: '055WAF139GBE',
-          name: 'Lower Glen and Bourne Eau System',
-          description: 'Lower River Glen from Kates Bridge to Surfleet Seas End, including the Bourne Eau in Bourne and the area around Baston and Pinchbeck',
-          localauthorityname: 'Lincolnshire',
-          quickdialnumber: '207032',
-          riverorsea: 'River Glen, Bourne Eau System',
-          geom: '{"type":"MultiPolygon","coordinates":[[]]}',
-          centroid: '{"type":"Point","coordinates":[-0.279974216515124,52.7647656448618]}'
-        }],
+          [{
+            id: 5038,
+            area: 'Lincs and Northants',
+            code: '055WAF139GBE',
+            name: 'Lower Glen and Bourne Eau System',
+            description: 'Lower River Glen from Kates Bridge to Surfleet Seas End, including the Bourne Eau in Bourne and the area around Baston and Pinchbeck',
+            localauthorityname: 'Lincolnshire',
+            quickdialnumber: '207032',
+            riverorsea: 'River Glen, Bourne Eau System',
+            geom: '{"type":"MultiPolygon","coordinates":[[]]}',
+            centroid: '{"type":"Point","coordinates":[-0.279974216515124,52.7647656448618]}'
+          }],
         fields: [],
         _parsers: [],
         RowCtor: null,
         rowAsArray: false
       }
     }
-    lab.test('should return data', async () => {
-      sinon.stub(db, 'query').callsFake(getStationData)
+    test('should return data', async () => {
+      jest.spyOn(db, 'query').mockImplementation(getStationData)
 
       const id = 7333
       const direction = 'u'
 
       const result = await services.getStation(id, direction)
 
-      await Code.expect(result).to.be.an.object()
-      await Code.expect(result.id).to.equal(5038)
+      expect(result).toBeObject()
+      expect(result.id).toBe(5038)
     })
-    lab.test('should pass query, id and direction', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getStation', [123, 'u'])
-        .once()
-        .returns(getStationData())
+    test('should pass query, id and direction', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue(getStationData())
       await services.getStation(123, 'u')
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getStation', [123, 'u'])
     })
   })
-  lab.experiment('Check getStations service', () => {
+  describe('Check getStations service', () => {
     const getStationsData = () => {
       return {
         command: 'SELECT',
         rowCount: 1,
         oid: null,
         rows:
-        [{
-          rloi_id: 5050,
-          telemetry_id: '694063',
-          region: 'North West',
-          catchment: 'Lower Mersey',
-          wiski_river_name: 'River Mersey',
-          agency_name: 'Fiddlers Ferry',
-          external_name: 'Fiddlers Ferry',
-          station_type: 'S',
-          status: 'Active',
-          qualifier: 'u',
-          iswales: false,
-          value: '2.638',
-          value_timestamp: '2019-08-02T07:15:00.000Z',
-          value_erred: false,
-          percentile_5: '6.2',
-          percentile_95: '2.611'
-        }],
+          [{
+            rloi_id: 5050,
+            telemetry_id: '694063',
+            region: 'North West',
+            catchment: 'Lower Mersey',
+            wiski_river_name: 'River Mersey',
+            agency_name: 'Fiddlers Ferry',
+            external_name: 'Fiddlers Ferry',
+            station_type: 'S',
+            status: 'Active',
+            qualifier: 'u',
+            iswales: false,
+            value: '2.638',
+            value_timestamp: '2019-08-02T07:15:00.000Z',
+            value_erred: false,
+            percentile_5: '6.2',
+            percentile_95: '2.611'
+          }],
         fields: [],
         _parsers: [],
         RowCtor: null,
         rowAsArray: false
       }
     }
-    lab.test('Check getStations service', async () => {
-      sinon.stub(db, 'query').callsFake(getStationsData)
+    test('Check getStations service', async () => {
+      jest.spyOn(db, 'query').mockImplementation(getStationsData)
 
       const result = await services.getStations()
 
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result[0].rloi_id).to.equal(5050)
+      expect(result).toBeArray()
+      expect(result[0].rloi_id).toBe(5050)
     })
-    lab.test('should pass query and bbox', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getStations')
-        .once()
-        .returns(getStationsData())
+    test('should pass query and bbox', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue(getStationsData())
       await services.getStations()
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getStations')
     })
   })
-  lab.experiment('Check getStationsWithin service', () => {
+  describe('Check getStationsWithin service', () => {
     const getStationsWithinData = () => {
       return {
         command: 'SELECT',
         rowCount: 1,
         oid: null,
         rows:
-        [{
-          rloi_id: 5050,
-          telemetry_id: '694063',
-          region: 'North West',
-          catchment: 'Lower Mersey',
-          wiski_river_name: 'River Mersey',
-          agency_name: 'Fiddlers Ferry',
-          external_name: 'Fiddlers Ferry',
-          station_type: 'S',
-          status: 'Active',
-          qualifier: 'u',
-          iswales: false,
-          value: '2.638',
-          value_timestamp: '2019-08-02T07:15:00.000Z',
-          value_erred: false,
-          percentile_5: '6.2',
-          percentile_95: '2.611'
-        }],
+          [{
+            rloi_id: 5050,
+            telemetry_id: '694063',
+            region: 'North West',
+            catchment: 'Lower Mersey',
+            wiski_river_name: 'River Mersey',
+            agency_name: 'Fiddlers Ferry',
+            external_name: 'Fiddlers Ferry',
+            station_type: 'S',
+            status: 'Active',
+            qualifier: 'u',
+            iswales: false,
+            value: '2.638',
+            value_timestamp: '2019-08-02T07:15:00.000Z',
+            value_erred: false,
+            percentile_5: '6.2',
+            percentile_95: '2.611'
+          }],
         fields: [],
         _parsers: [],
         RowCtor: null,
@@ -351,156 +326,147 @@ lab.experiment('Services tests', () => {
       }
     }
     const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
-    lab.test('Check getStationsWithin service', async () => {
-      sinon.stub(db, 'query').callsFake(getStationsWithinData)
+    test('Check getStationsWithin service', async () => {
+      jest.spyOn(db, 'query').mockImplementation(getStationsWithinData)
 
       const result = await services.getStationsWithin(bbox)
 
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result[0].rloi_id).to.equal(5050)
+      expect(result).toBeArray()
+      expect(result[0].rloi_id).toBe(5050)
     })
-    lab.test('should pass query and bbox', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getStationsWithin', bbox)
-        .once()
-        .returns(getStationsWithinData())
+    test('should pass query and bbox', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue(getStationsWithinData())
       await services.getStationsWithin(bbox)
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getStationsWithin', bbox)
     })
   })
-  lab.experiment('getStationTelemetry', () => {
+  describe('getStationTelemetry', () => {
     const stationTelemetryData = {
       command: 'SELECT',
       rowCount: 1,
       oid: null,
       rows:
-      [{
-        get_telemetry: [
-          { ts: '2019-08-05T04:30Z', _: 0.096, err: false },
-          { ts: '2019-08-05T04:15Z', _: 0.097, err: false },
-          { ts: '2019-08-05T04:00Z', _: 0.097, err: false },
-          { ts: '2019-08-05T03:45Z', _: 0.097, err: false }
-        ]
-      }],
+        [{
+          get_telemetry: [
+            { ts: '2019-08-05T04:30Z', _: 0.096, err: false },
+            { ts: '2019-08-05T04:15Z', _: 0.097, err: false },
+            { ts: '2019-08-05T04:00Z', _: 0.097, err: false },
+            { ts: '2019-08-05T03:45Z', _: 0.097, err: false }
+          ]
+        }],
       fields: [],
       _parsers: [],
       RowCtor: null,
       rowAsArray: false
     }
-    lab.test('should return data', async () => {
-      sinon.stub(db, 'query').returns(stationTelemetryData)
+    test('should return data', async () => {
+      jest.spyOn(db, 'query').mockReturnValue(stationTelemetryData)
 
       const id = '7333'
       const direction = 'u'
 
       const result = await services.getStationTelemetry(id, direction)
 
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result[0]._).to.equal(0.096)
+      expect(result).toBeArray()
+      expect(result[0]._).toBe(0.096)
     })
-    lab.test('should handle empty results', async () => {
+    test('should handle empty results', async () => {
       const stationTelemetryData = {
         command: 'SELECT',
         rowCount: 1,
         oid: null,
         rows:
-        [{
-          get_telemetry: []
-        }],
+          [{
+            get_telemetry: []
+          }],
         fields: [],
         _parsers: [],
         RowCtor: null,
         rowAsArray: false
       }
 
-      sinon.stub(db, 'query').returns(stationTelemetryData)
+      jest.spyOn(db, 'query').mockReturnValue(stationTelemetryData)
 
       const id = '7333'
       const direction = 'u'
 
       const result = await services.getStationTelemetry(id, direction)
 
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result.length).to.equal(0)
+      expect(result).toBeArray()
+      expect(result.length).toBe(0)
     })
-    lab.test('should handle null results', async () => {
+    test('should handle null results', async () => {
       const stationTelemetryData = {
         command: 'SELECT',
         rowCount: 1,
         oid: null,
         rows:
-        [{}],
+          [{}],
         fields: [],
         _parsers: [],
         RowCtor: null,
         rowAsArray: false
       }
 
-      sinon.stub(db, 'query').returns(stationTelemetryData)
+      jest.spyOn(db, 'query').mockReturnValue(stationTelemetryData)
 
       const id = '7333'
       const direction = 'u'
 
       const result = await services.getStationTelemetry(id, direction)
 
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result.length).to.equal(0)
+      expect(result).toBeArray()
+      expect(result.length).toBe(0)
     })
-    lab.test('should pass query, id and direction', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getStationTelemetry', [123, 'u'])
-        .once()
-        .returns(stationTelemetryData)
+    test('should pass query, id and direction', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue(stationTelemetryData)
       await services.getStationTelemetry(123, 'u')
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getStationTelemetry', [123, 'u'])
     })
   })
 
-  lab.experiment('getstationThreshold', () => {
+  describe('getstationThreshold', () => {
     const stationThresholdData = {
       command: 'SELECT',
       rowCount: 1,
       oid: null,
       rows:
-      [{
-        station_threshold: {}
-      }],
+        [{
+          station_threshold: {}
+        }],
       fields: [],
       _parsers: [],
       RowCtor: null,
       rowAsArray: false
     }
-    lab.test('should return station threshold data', async () => {
-      sinon.stub(db, 'query').returns(stationThresholdData)
+    test('should return station threshold data', async () => {
+      jest.spyOn(db, 'query').mockReturnValue(stationThresholdData)
 
       const result = await services.getStationImtdThresholds(7333, 'u')
 
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result).to.equal([{ station_threshold: {} }])
+      expect(result).toBeArray()
+      expect(result).toEqual([{ station_threshold: {} }])
     })
-    lab.test('should handle null station threshold data', async () => {
+    test('should handle null station threshold data', async () => {
       stationThresholdData.rows = [{}]
-      sinon.stub(db, 'query').returns(stationThresholdData)
+      jest.spyOn(db, 'query').mockReturnValue(stationThresholdData)
 
       const result = await services.getStationImtdThresholds(7333, 'u')
 
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result).to.equal([{}])
+      expect(result).toBeArray()
+      expect(result).toEqual([{}])
     })
-    lab.test('should pass query and id', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getStationImtdThresholds', [123, 'u'])
-        .once()
-        .returns(stationThresholdData)
+    test('should pass query and id', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue(stationThresholdData)
       await services.getStationImtdThresholds(123, 'u')
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getStationImtdThresholds', [123, 'u'])
     })
   })
 
-  lab.experiment('getTargetAreaThresholds', () => {
+  describe('getTargetAreaThresholds', () => {
     const getTargetAreaThresholdsData = () => {
       return {
         rows: [
@@ -523,37 +489,34 @@ lab.experiment('Services tests', () => {
       }
     }
 
-    lab.test('should return target area thresholds with additional fields', async () => {
-      sinon.stub(db, 'query').callsFake(getTargetAreaThresholdsData)
+    test('should return target area thresholds with additional fields', async () => {
+      jest.spyOn(db, 'query').mockImplementation(getTargetAreaThresholdsData)
 
       const result = await services.getTargetAreaThresholds('FWIS001')
 
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result[0].rloi_id).to.equal(5041)
-      await Code.expect(result[0].river_name).to.equal('River Birket')
-      await Code.expect(result[0].agency_name).to.equal('Davis Road')
-      await Code.expect(result[0].latest_level).to.equal('0.474')
-      await Code.expect(result[0].threshold_value).to.equal('3.64')
-      await Code.expect(result[0].direction).to.equal('u')
-      await Code.expect(result[0].threshold_type).to.equal('FW RES FW')
-      await Code.expect(result[0].value_timestamp).to.equal('2024-08-21T13:45:00.000Z')
-      await Code.expect(result[0].post_process).to.equal(false)
-      await Code.expect(result[0].stage_datum).to.equal('0.48')
-      await Code.expect(result[0].subtract).to.equal(null)
+      expect(result).toBeArray()
+      expect(result[0].rloi_id).toBe(5041)
+      expect(result[0].river_name).toBe('River Birket')
+      expect(result[0].agency_name).toBe('Davis Road')
+      expect(result[0].latest_level).toBe('0.474')
+      expect(result[0].threshold_value).toBe('3.64')
+      expect(result[0].direction).toBe('u')
+      expect(result[0].threshold_type).toBe('FW RES FW')
+      expect(result[0].value_timestamp).toBe('2024-08-21T13:45:00.000Z')
+      expect(result[0].post_process).toBe(false)
+      expect(result[0].stage_datum).toBe('0.48')
+      expect(result[0].subtract).toBeNull()
     })
 
-    lab.test('should pass query and id', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getTargetAreaThresholds', ['FWIS001'])
-        .once()
-        .returns(getTargetAreaThresholdsData())
+    test('should pass query and id', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue(getTargetAreaThresholdsData())
       await services.getTargetAreaThresholds('FWIS001')
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getTargetAreaThresholds', ['FWIS001'])
     })
   })
 
-  lab.experiment('isEngland', () => {
+  describe('isEngland', () => {
     const isEnglandData = () => {
       return {
         command: 'SELECT',
@@ -576,25 +539,22 @@ lab.experiment('Services tests', () => {
     }
     const x = '-2.2370500564575195'
     const y = '53.4650993347168'
-    lab.test('should return data', async () => {
-      sinon.stub(db, 'query').callsFake(isEnglandData)
+    test('should return data', async () => {
+      jest.spyOn(db, 'query').mockImplementation(isEnglandData)
 
       const result = await services.isEngland(x, y)
 
-      await Code.expect(result).to.be.an.object()
-      await Code.expect(result.is_england).to.equal(true)
+      expect(result).toBeObject()
+      expect(result.is_england).toBe(true)
     })
-    lab.test('should pass query and coords', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('isEngland', [x, y])
-        .once()
-        .returns(isEnglandData())
+    test('should pass query and coords', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue(isEnglandData())
       await services.isEngland(x, y)
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('isEngland', [x, y])
     })
   })
-  lab.experiment('getImpactData', () => {
+  describe('getImpactData', () => {
     const getImpactDataFake = () => {
       return {
         command: 'SELECT',
@@ -721,34 +681,31 @@ lab.experiment('Services tests', () => {
         rowAsArray: false
       }
     }
-    lab.test('should return data', async () => {
-      sinon.stub(db, 'query').callsFake(getImpactDataFake)
+    test('should return data', async () => {
+      jest.spyOn(db, 'query').mockImplementation(getImpactDataFake)
 
       const id = '7333'
 
       const result = await services.getImpactData(id)
 
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result[0].impactid).to.equal(2614)
+      expect(result).toBeArray()
+      expect(result[0].impactid).toBe(2614)
     })
-    lab.test('erroring works', async () => {
-      sinon.stub(db, 'query').throws(new Error())
+    test('erroring works', async () => {
+      jest.spyOn(db, 'query').mockRejectedValue(new Error())
 
       const id = 7333
 
-      await Code.expect(services.getImpactData(id)).to.reject()
+      await expect(services.getImpactData(id)).rejects.toThrow()
     })
-    lab.test('should pass query and id', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getImpactsByRloiId', [123])
-        .once()
-        .returns(getImpactDataFake())
+    test('should pass query and id', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue(getImpactDataFake())
       await services.getImpactData(123)
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getImpactsByRloiId', [123])
     })
   })
-  lab.experiment('Check getImpactDataWithin service', () => {
+  describe('Check getImpactDataWithin service', () => {
     const getImpactDataWithinFake = () => {
       return {
         command: 'SELECT',
@@ -762,31 +719,28 @@ lab.experiment('Services tests', () => {
       }
     }
     const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
-    lab.test('Check getImpactDataWithin service', async () => {
-      sinon.stub(db, 'query').callsFake(getImpactDataWithinFake)
+    test('Check getImpactDataWithin service', async () => {
+      jest.spyOn(db, 'query').mockImplementation(getImpactDataWithinFake)
 
       const result = await services.getImpactDataWithin(bbox)
 
-      await Code.expect(result).to.be.an.array()
+      expect(result).toBeArray()
     })
-    lab.test('erroring works', async () => {
-      sinon.stub(db, 'query').throws(new Error())
+    test('erroring works', async () => {
+      jest.spyOn(db, 'query').mockRejectedValue(new Error())
 
       const bbox = [-2.5353000164031982, 53.420841217041016, -2.6395580768585205, 53.36753845214844]
 
-      await Code.expect(services.getImpactDataWithin(bbox)).to.reject()
+      await expect(services.getImpactDataWithin(bbox)).rejects.toThrow()
     })
-    lab.test('should pass query and bbox', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getImpactsWithin', bbox)
-        .once()
-        .returns(getImpactDataWithinFake())
+    test('should pass query and bbox', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue(getImpactDataWithinFake())
       await services.getImpactDataWithin(bbox)
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getImpactsWithin', bbox)
     })
   })
-  lab.experiment('getTargetArea', () => {
+  describe('getTargetArea', () => {
     const getTargetArea = () => {
       return {
         rows: [
@@ -797,25 +751,27 @@ lab.experiment('Services tests', () => {
         ]
       }
     }
-    lab.test('Check should return data', async () => {
-      sinon.stub(db, 'query').callsFake(getTargetArea)
+    test('Check should return data', async () => {
+      jest.spyOn(db, 'query').mockImplementation(getTargetArea)
 
       const result = await services.getTargetArea()
-      await Code.expect(result).to.be.an.object()
-      await Code.expect(result.ta_name).to.contain('The River Gipping')
-      await Code.expect(result.fws_tacode).to.equal('054WAFSF4FG')
+      expect(result).toBeObject()
+      expect(result.ta_name).toContain('The River Gipping')
+      expect(result.fws_tacode).toBe('054WAFSF4FG')
     })
-    lab.test('should pass query and code', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getTargetArea', ['A1'])
-        .once()
-        .returns(getTargetArea())
+    test('should pass query and code', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue(getTargetArea())
       await services.getTargetArea('A1')
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getTargetArea', ['A1'])
+    })
+    test('should return an empty object when no target area is found', async () => {
+      jest.spyOn(db, 'query').mockReturnValue({ rows: [] })
+      const result = await services.getTargetArea('A1')
+      expect(result).toEqual({})
     })
   })
-  lab.experiment('getStationsWithinTargetArea', () => {
+  describe('getStationsWithinTargetArea', () => {
     const getStationsWithinTargetArea = () => {
       return {
         rows: [{
@@ -848,21 +804,21 @@ lab.experiment('Services tests', () => {
         }]
       }
     }
-    lab.test('should return data', async () => {
-      sinon.stub(db, 'query').callsFake(getStationsWithinTargetArea)
+    test('should return data', async () => {
+      jest.spyOn(db, 'query').mockImplementation(getStationsWithinTargetArea)
 
       const result = await services.getStationsWithinTargetArea()
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result[0].rloi_id).to.equal(7021)
+      expect(result).toBeArray()
+      expect(result[0].rloi_id).toBe(7021)
     })
-    lab.test('should pass query and code', async () => {
-      const mock = sinon.mock(db)
-      mock.expects('query').withArgs('getStationsWithinTargetArea', 'A1').once().returns({ rows: [] })
+    test('should pass query and code', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue({ rows: [] })
       await services.getStationsWithinTargetArea('A1')
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getStationsWithinTargetArea', 'A1')
     })
   })
-  lab.experiment('getWarningsAlertsWithinStationBuffer', () => {
+  describe('getWarningsAlertsWithinStationBuffer', () => {
     const getWarningsAlertsWithinStationBuffer = () => {
       return {
         rows: [
@@ -875,81 +831,72 @@ lab.experiment('Services tests', () => {
         ]
       }
     }
-    lab.test('should return data', async () => {
-      sinon.stub(db, 'query').callsFake(getWarningsAlertsWithinStationBuffer)
+    test('should return data', async () => {
+      jest.spyOn(db, 'query').mockImplementation(getWarningsAlertsWithinStationBuffer)
 
       const result = await services.getWarningsAlertsWithinStationBuffer()
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result[0].ta_code).to.equal('061WAF06Coln')
+      expect(result).toBeArray()
+      expect(result[0].ta_code).toBe('061WAF06Coln')
     })
-    lab.test('should pass query and coords', async () => {
+    test('should pass query and coords', async () => {
       const rloiId = 1001
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getWarningsAlertsWithinStationBuffer', [rloiId])
-        .once()
-        .returns(getWarningsAlertsWithinStationBuffer())
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue(getWarningsAlertsWithinStationBuffer())
       await services.getWarningsAlertsWithinStationBuffer(rloiId)
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getWarningsAlertsWithinStationBuffer', [rloiId])
     })
   })
-  lab.experiment('getRiverStationsByRiverId', () => {
-    lab.test('should return empty rows array', async () => {
-      sinon.stub(db, 'query').returns({ rows: [] })
+  describe('getRiverStationsByRiverId', () => {
+    test('should return empty rows array', async () => {
+      jest.spyOn(db, 'query').mockReturnValue({ rows: [] })
       const result = await services.getRiverStationsByRiverId()
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result).to.equal([])
+      expect(result).toBeArray()
+      expect(result).toEqual([])
     })
-    lab.test('should return populated rows array', async () => {
-      sinon.stub(db, 'query').returns({ rows: [{ f1: 'v1' }] })
+    test('should return populated rows array', async () => {
+      jest.spyOn(db, 'query').mockReturnValue({ rows: [{ f1: 'v1' }] })
       const result = await services.getRiverStationsByRiverId()
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result).to.equal([{ f1: 'v1' }])
+      expect(result).toBeArray()
+      expect(result).toEqual([{ f1: 'v1' }])
     })
-    lab.test('should pass query and river id', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getRiverStationsByRiverId', [1])
-        .once()
-        .returns({ rows: [] })
+    test('should pass query and river id', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue({ rows: [] })
       await services.getRiverStationsByRiverId(1)
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getRiverStationsByRiverId', [1])
     })
   })
-  lab.experiment('getRainfallStationTelemetry', () => {
-    lab.test('should return empty rows array', async () => {
-      sinon.stub(db, 'query').returns({ rows: [] })
+  describe('getRainfallStationTelemetry', () => {
+    test('should return empty rows array', async () => {
+      jest.spyOn(db, 'query').mockReturnValue({ rows: [] })
       const result = await services.getRainfallStationTelemetry()
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result).to.equal([])
+      expect(result).toBeArray()
+      expect(result).toEqual([])
     })
-    lab.test('should return populated rows array', async () => {
-      sinon.stub(db, 'query').returns({ rows: [{ station: 'E24195', period: '15 min', value: '0.01', value_timestamp: '2022-02-02T09:15:00.000Z' }] })
+    test('should return populated rows array', async () => {
+      jest.spyOn(db, 'query').mockReturnValue({ rows: [{ station: 'E24195', period: '15 min', value: '0.01', value_timestamp: '2022-02-02T09:15:00.000Z' }] })
       const result = await services.getRainfallStationTelemetry()
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result).to.equal([{ station: 'E24195', period: '15 min', value: '0.01', value_timestamp: '2022-02-02T09:15:00.000Z' }])
+      expect(result).toBeArray()
+      expect(result).toEqual([{ station: 'E24195', period: '15 min', value: '0.01', value_timestamp: '2022-02-02T09:15:00.000Z' }])
     })
-    lab.test('should pass query and rainfall gauge id', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getRainfallStationTelemetry', [1])
-        .once()
-        .returns({ rows: [] })
+    test('should pass query and rainfall gauge id', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue({ rows: [] })
       await services.getRainfallStationTelemetry(1)
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getRainfallStationTelemetry', [1])
     })
   })
-  lab.experiment('getRainfallStation', () => {
-    lab.test('should return empty rows array', async () => {
-      sinon.stub(db, 'query').returns({ rows: [] })
+  describe('getRainfallStation', () => {
+    test('should return empty rows array', async () => {
+      jest.spyOn(db, 'query').mockReturnValue({ rows: [] })
       const result = await services.getRainfallStation()
-      await Code.expect(result).to.be.undefined()
+      expect(result).toBeUndefined()
     })
-    lab.test('should return populated rows array', async () => {
-      sinon.stub(db, 'query').returns({ rows: [{ station_reference: 'E24195', region: 'Anglian', station_name: 'LAVENHAM', ngr: 'TL9237348710', period: '15 min', units: 'mm' }] })
+    test('should return populated rows array', async () => {
+      jest.spyOn(db, 'query').mockReturnValue({ rows: [{ station_reference: 'E24195', region: 'Anglian', station_name: 'LAVENHAM', ngr: 'TL9237348710', period: '15 min', units: 'mm' }] })
       const result = await services.getRainfallStation()
-      await Code.expect(result).to.be.an.object()
-      await Code.expect(result).to.equal({
+      expect(result).toBeObject()
+      expect(result).toEqual({
         station_reference: 'E24195',
         region: 'Anglian',
         station_name: 'LAVENHAM',
@@ -958,129 +905,138 @@ lab.experiment('Services tests', () => {
         units: 'mm'
       })
     })
-    lab.test('should pass query and rainfall gauge id', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getRainfallStation', [1])
-        .once()
-        .returns({ rows: [] })
+    test('should pass query and rainfall gauge id', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue({ rows: [] })
       await services.getRainfallStation(1)
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getRainfallStation', [1])
     })
   })
-  lab.experiment('getRiverStationByStationId', () => {
-    lab.test('should return empty object for empty array', async () => {
-      sinon.stub(db, 'query').returns({ rows: [] })
+  describe('getRiverStationByStationId', () => {
+    test('should return empty object for empty array', async () => {
+      jest.spyOn(db, 'query').mockReturnValue({ rows: [] })
       const result = await services.getRiverStationByStationId()
-      await Code.expect(result).to.be.an.object()
-      await Code.expect(result).to.equal({})
+      expect(result).toBeObject()
+      expect(result).toEqual({})
     })
-    lab.test('should return populated object for non-empty results', async () => {
-      sinon.stub(db, 'query').returns({ rows: [{ f1: 'v1' }] })
+    test('should return populated object for non-empty results', async () => {
+      jest.spyOn(db, 'query').mockReturnValue({ rows: [{ f1: 'v1' }] })
       const result = await services.getRiverStationByStationId()
-      await Code.expect(result).to.be.an.object()
-      await Code.expect(result).to.equal({ f1: 'v1' })
+      expect(result).toBeObject()
+      expect(result).toEqual({ f1: 'v1' })
     })
-    lab.test('should pass query and river id', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getRiverStationByStationId', [1, 'u'])
-        .once()
-        .returns({ rows: [{ f1: 'v1' }] })
+    test('should pass query and river id', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue({ rows: [{ f1: 'v1' }] })
       await services.getRiverStationByStationId(1, 'u')
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getRiverStationByStationId', [1, 'u'])
     })
   })
-  lab.experiment('getStationsHealth', () => {
-    lab.test('should return count and timestamp', async () => {
-      sinon.stub(db, 'query').returns([{ rows: [{ count: 123 }] }, { rows: [{ load_timestamp: 1594824684 }] }])
+  describe('getStationsHealth', () => {
+    test('should return count and timestamp', async () => {
+      jest.spyOn(db, 'query').mockReturnValue([{ rows: [{ count: 123 }] }, { rows: [{ load_timestamp: 1594824684 }] }])
       const result = await services.getStationsHealth()
-      await Code.expect(result).to.be.an.object()
-      await Code.expect(result).to.equal({ count: 123, timestamp: 1594824684 })
+      expect(result).toBeObject()
+      expect(result).toEqual({ count: 123, timestamp: 1594824684 })
     })
-    lab.test('should pass query', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getStationsHealth')
-        .once()
-        .returns([{ rows: [{ count: 123 }] }, { rows: [{ load_timestamp: 1594824684 }] }])
+    test('should pass query', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue([{ rows: [{ count: 123 }] }, { rows: [{ load_timestamp: 1594824684 }] }])
       await services.getStationsHealth()
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getStationsHealth')
     })
   })
-  lab.experiment('getTelemetryHealth', () => {
-    lab.test('should return empty rows array', async () => {
-      sinon.stub(db, 'query').returns({ rows: [] })
+  describe('getTelemetryHealth', () => {
+    test('should return empty rows array', async () => {
+      jest.spyOn(db, 'query').mockReturnValue({ rows: [] })
       const result = await services.getTelemetryHealth()
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result).to.equal([])
+      expect(result).toBeArray()
+      expect(result).toEqual([])
     })
-    lab.test('should return populated rows array', async () => {
-      sinon.stub(db, 'query').returns({ rows: [{ f1: 'v1' }] })
+    test('should return populated rows array', async () => {
+      jest.spyOn(db, 'query').mockReturnValue({ rows: [{ f1: 'v1' }] })
       const result = await services.getTelemetryHealth()
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result).to.equal([{ f1: 'v1' }])
+      expect(result).toBeArray()
+      expect(result).toEqual([{ f1: 'v1' }])
     })
-    lab.test('should pass query', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getTelemetryHealth')
-        .once()
-        .returns({ rows: [] })
+    test('should pass query', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue({ rows: [] })
       await services.getTelemetryHealth()
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getTelemetryHealth')
     })
   })
-  lab.experiment('getFfoiHealth', () => {
-    lab.test('should return empty rows array', async () => {
-      sinon.stub(db, 'query').returns({ rows: [] })
+  describe('getFfoiHealth', () => {
+    test('should return empty rows array', async () => {
+      jest.spyOn(db, 'query').mockReturnValue({ rows: [] })
       const result = await services.getFfoiHealth()
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result).to.equal([])
+      expect(result).toBeArray()
+      expect(result).toEqual([])
     })
-    lab.test('should return populated rows array', async () => {
-      sinon.stub(db, 'query').returns({ rows: [{ f1: 'v1' }] })
+    test('should return populated rows array', async () => {
+      jest.spyOn(db, 'query').mockReturnValue({ rows: [{ f1: 'v1' }] })
       const result = await services.getFfoiHealth()
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result).to.equal([{ f1: 'v1' }])
+      expect(result).toBeArray()
+      expect(result).toEqual([{ f1: 'v1' }])
     })
-    lab.test('should pass query', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getFfoiHealth')
-        .once()
-        .returns({ rows: [] })
+    test('should pass query', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue({ rows: [] })
       await services.getFfoiHealth()
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getFfoiHealth')
     })
   })
-  lab.experiment('getStationsOverview', () => {
-    lab.test('should return an overview', async () => {
-      sinon.stub(db, 'query').returns({ rows: [{ get_stations_overview: [{ f1: 'v1' }] }] })
+  describe('getStationsOverview', () => {
+    test('should return an overview', async () => {
+      jest.spyOn(db, 'query').mockReturnValue({ rows: [{ get_stations_overview: [{ f1: 'v1' }] }] })
       const result = await services.getStationsOverview()
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result).to.equal([{ f1: 'v1' }])
+      expect(result).toBeArray()
+      expect(result).toEqual([{ f1: 'v1' }])
     })
-    lab.test('should handle empty results', async () => {
-      sinon.stub(db, 'query').returns({ rows: [{ get_stations_overview: [] }] })
+    test('should handle empty results', async () => {
+      jest.spyOn(db, 'query').mockReturnValue({ rows: [{ get_stations_overview: [] }] })
       const result = await services.getStationsOverview()
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result).to.equal([])
+      expect(result).toBeArray()
+      expect(result).toEqual([])
     })
-    lab.test('should handle null results', async () => {
-      sinon.stub(db, 'query').returns({ rows: [{}] })
+    test('should handle null results', async () => {
+      jest.spyOn(db, 'query').mockReturnValue({ rows: [{}] })
       const result = await services.getStationsOverview()
-      await Code.expect(result).to.be.an.array()
-      await Code.expect(result).to.equal([])
+      expect(result).toBeArray()
+      expect(result).toEqual([])
     })
-    lab.test('should pass query', async () => {
-      const mock = sinon.mock(db)
-        .expects('query')
-        .withArgs('getStationsOverview')
-        .once()
-        .returns({ rows: [{ get_stations_overview: [{ f1: 'v1' }] }] })
+    test('should pass query', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue({ rows: [{ get_stations_overview: [{ f1: 'v1' }] }] })
       await services.getStationsOverview()
-      mock.verify()
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getStationsOverview')
+    })
+  })
+  describe('getForecastFlag', () => {
+    test('should return the first row', async () => {
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue({ rows: [{ id: 1 }, { id: 2 }] })
+      const result = await services.getForecastFlag(123, 'u')
+      expect(result).toEqual({ id: 1 })
+      expect(querySpy).toHaveBeenCalledTimes(1)
+      expect(querySpy).toHaveBeenCalledWith('getForecastFlag', [123, 'u'])
+    })
+  })
+  describe('getRiversByName', () => {
+    test('should return rows and pass the search term with brackets removed', async () => {
+      const rows = [{ id: 1 }]
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue({ rows })
+      const result = await services.getRiversByName('River (Test) [x] {y}')
+      expect(result).toEqual(rows)
+      expect(querySpy).toHaveBeenCalledWith('getRiversByName', ['River (Test) [x] {y}', 'River Test x y'])
+    })
+  })
+  describe('getStationsByRadius', () => {
+    test('should return rows and pass coordinates and radius', async () => {
+      const rows = [{ id: 1 }]
+      const querySpy = jest.spyOn(db, 'query').mockReturnValue({ rows })
+      const result = await services.getStationsByRadius(1, 2, 3)
+      expect(result).toEqual(rows)
+      expect(querySpy).toHaveBeenCalledWith('getStationsByRadius', [1, 2, 3])
     })
   })
 })

@@ -1,14 +1,12 @@
-const Code = require('@hapi/code')
-const Lab = require('@hapi/lab')
-const lab = exports.lab = Lab.script()
 const getQuery = require('../../server/services/getQuery')
 
-lab.experiment('getQuery tests', () => {
-  lab.test('should return query if it exists', () => {
+describe('getQuery tests', () => {
+  test('should return query if it exists', () => {
     const query = getQuery('getFloods')
-    Code.expect(query).to.be.a.string()
+    console.log('query:', query)
+    expect(query).toBeString()
   })
-  lab.test('should throw error if it does not exist', () => {
-    Code.expect(() => getQuery('nosuchquery')).to.throw("query 'nosuchquery' not found")
+  test('should throw error if it does not exist', () => {
+    expect(() => getQuery('nosuchquery')).toThrow("query 'nosuchquery' not found")
   })
 })

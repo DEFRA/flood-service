@@ -1,34 +1,21 @@
 'use strict'
-const Lab = require('@hapi/lab')
-const { expect } = require('@hapi/code')
-const { experiment, test, beforeEach, afterEach } = exports.lab = Lab.script()
-const { stub } = require('sinon')
-const proxyquire = require('proxyquire')
 
-const stubs = {
-  Notifier: stub(),
-  notify: stub(),
-  flush: stub()
-}
+const mockNotify = jest.fn()
+const mockFlush = jest.fn()
 
-const Errbit = proxyquire('../../../server/lib/logging/errbit', {
-  '@airbrake/node': { Notifier: stubs.Notifier }
-})
+jest.mock('@airbrake/node', () => ({
+  Notifier: jest.fn(() => ({
+    notify: mockNotify,
+    flush: mockFlush
+  }))
+}))
 
-experiment('Errbit', () => {
+const Errbit = require('../../../server/lib/logging/errbit')
+
+describe('Errbit', () => {
   beforeEach(() => {
-    stubs.Notifier.callsFake(() => ({
-      notify: stubs.notify,
-      addFilter: stubs.addFilter,
-      flush: stubs.flush
-    }))
-    stubs.flush.callsFake(() => Promise.resolve())
-    stubs.notify.callsFake(() => Promise.resolve())
-  })
-  afterEach(() => {
-    for (const stub of Object.values(stubs)) {
-      stub.reset()
-    }
+    mockNotify.mockReset().mockResolvedValue()
+    mockFlush.mockReset().mockResolvedValue()
   })
 
   test('when enable is false no attempt is made to send notices to airbrake', async () => {
@@ -52,7 +39,7 @@ experiment('Errbit', () => {
       }
     })
 
-    expect(stubs.notify.called).to.equal(false)
+    expect(mockNotify).not.toHaveBeenCalled()
   })
 
   test('when enable is true notices are sent to airbrake', async () => {
@@ -76,7 +63,7 @@ experiment('Errbit', () => {
       }
     })
 
-    expect(stubs.notify.called).to.equal(true)
+    expect(mockNotify).toHaveBeenCalled()
   })
 
   test('when enable is false, and close is called, airbrake remains unflushed', async () => {
@@ -93,7 +80,7 @@ experiment('Errbit', () => {
 
     await errbit.close()
 
-    expect(stubs.flush.called).to.equal(false)
+    expect(mockFlush).not.toHaveBeenCalled()
   })
 
   test('when enable is true, and close is called, airbrake is flushed', async () => {
@@ -110,7 +97,7 @@ experiment('Errbit', () => {
 
     await errbit.close()
 
-    expect(stubs.flush.called).to.equal(true)
+    expect(mockFlush).toHaveBeenCalled()
   })
 
   test('when incoming data contains an err key, the err is properly formatted before sending', async () => {
@@ -134,7 +121,7 @@ experiment('Errbit', () => {
       }
     })
 
-    expect(stubs.notify.lastCall.args[0].error).to.equal({
+    expect(mockNotify.mock.lastCall[0].error).toEqual({
       name: 'some-name',
       message: 'some-message',
       stack: 'some-stack',
@@ -173,9 +160,9 @@ experiment('Errbit', () => {
       }
     })
 
-    expect(stubs.notify.lastCall.args[0].context.httpMethod).to.equal('GET')
-    expect(stubs.notify.lastCall.args[0].context.route).to.equal('/some/path')
-    expect(stubs.notify.lastCall.args[0].params).to.equal({
+    expect(mockNotify.mock.lastCall[0].context.httpMethod).toBe('GET')
+    expect(mockNotify.mock.lastCall[0].context.route).toBe('/some/path')
+    expect(mockNotify.mock.lastCall[0].params).toEqual({
       request: {
         url: '/some/path',
         method: 'GET',
@@ -210,8 +197,8 @@ experiment('Errbit', () => {
       }
     })
 
-    expect(stubs.notify.lastCall.args[0].context.version).to.equal('0.0.0')
-    expect(stubs.notify.lastCall.args[0].context.environment).to.equal('unit-test')
-    expect(stubs.notify.lastCall.args[0].context.severity).to.equal('comical')
+    expect(mockNotify.mock.lastCall[0].context.version).toBe('0.0.0')
+    expect(mockNotify.mock.lastCall[0].context.environment).toBe('unit-test')
+    expect(mockNotify.mock.lastCall[0].context.severity).toBe('comical')
   })
 })

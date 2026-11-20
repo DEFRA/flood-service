@@ -31,6 +31,7 @@ FROM base AS development
 # When developing/debugging within a container locally, --chown=root:root should be replaced with --chown=node:node to provide
 # required write permissions. SonarQube cloud will raise a security issue if analysing these changes.
 COPY --chown=root:root ./test ./test
+COPY --chown=root:root ./jest.config.js .
 
 RUN npm ci --engine-strict --ignore-scripts --include=dev
 
@@ -39,7 +40,7 @@ EXPOSE ${PORT}/tcp
 EXPOSE 9229/tcp
 CMD [ "node", "--inspect=0.0.0.0:9229", "index.js" ]
 
-FROM base AS production 
+FROM base AS production
 
 RUN npm ci --engine-strict --ignore-scripts --omit=dev \
 && chmod -R a-w /home/node

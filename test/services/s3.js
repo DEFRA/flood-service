@@ -1,372 +1,209 @@
 'use strict'
-const Lab = require('@hapi/lab')
-const Code = require('@hapi/code')
-const lab = exports.lab = Lab.script()
-const sinon = require('sinon')
 const { mockClient } = require('aws-sdk-client-mock')
 const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3')
-const proxyquire = require('proxyquire')
 
-lab.experiment('S3 service test', () => {
-  let sandbox
+jest.mock('../../server/config', () => ({
+  s3: {
+    accessKey: 'test-access-key',
+    secretAccessKey: 'test-secret-key',
+    bucket: 'test-bucket',
+    httpTimeoutMs: 5000
+  }
+}))
+
+const s3Service = require('../../server/services/s3')
+
+describe('S3 service test', () => {
   let s3Mock
   let mockResponse
-  let s3Service
 
-  const configMock = {
-    s3: {
-      accessKey: 'test-access-key',
-      secretAccessKey: 'test-secret-key',
-      bucket: 'test-bucket',
-      httpTimeoutMs: 5000
-    }
-  }
-
-  lab.beforeEach(async () => {
-    delete require.cache[require.resolve('../../server/services/s3.js')]
-    sandbox = sinon.createSandbox()
-
+  beforeEach(() => {
     s3Mock = mockClient(S3Client)
     s3Mock.reset()
 
     mockResponse = {
       Body: {
-        transformToString: sinon.stub()
+        transformToString: jest.fn()
       }
     }
-
-    s3Service = proxyquire('../../server/services/s3', {
-      '../config': configMock
-    })
   })
 
-  lab.afterEach(async () => {
-    await sandbox.restore()
+  afterEach(() => {
+    s3Mock.restore()
   })
 
-  lab.test('floodGuidanceStatement should fetch and parse JSON from S3', async () => {
+  test('floodGuidanceStatement should fetch and parse JSON from S3', async () => {
     const expectedJson = { data: 'test-fgs-data' }
-    mockResponse.Body.transformToString.resolves(JSON.stringify(expectedJson))
+    mockResponse.Body.transformToString.mockResolvedValue(JSON.stringify(expectedJson))
     s3Mock.on(GetObjectCommand).resolves(mockResponse)
     const result = await s3Service.floodGuidanceStatement()
 
     const getObjectCalls = s3Mock.commandCalls(GetObjectCommand)
-    Code.expect(getObjectCalls).to.have.length(1)
-    Code.expect(getObjectCalls[0].args[0].input).to.equal({
+    expect(getObjectCalls).toHaveLength(1)
+    expect(getObjectCalls[0].args[0].input).toEqual({
       Key: 'fgs/latest.json',
       Bucket: 'test-bucket'
     })
-    Code.expect(s3Mock.send.calledOnce).to.be.true()
-    Code.expect(mockResponse.Body.transformToString.calledOnce).to.be.true()
-    Code.expect(result).to.equal(expectedJson)
+    expect(s3Mock.calls()).toHaveLength(1)
+    expect(mockResponse.Body.transformToString).toHaveBeenCalledTimes(1)
+    expect(result).toEqual(expectedJson)
   })
 
-  lab.test('floodGuidanceStatement should throw error when S3 request fails', async () => {
-    const expectedError = new Error('S3 error')
-    s3Mock.on(GetObjectCommand).rejects(expectedError)
+  test('floodGuidanceStatement should throw error when S3 request fails', async () => {
+    s3Mock.on(GetObjectCommand).rejects(new Error('S3 error'))
 
-    const err = await Code.expect(s3Service.floodGuidanceStatement()).to.reject()
-    const getObjectCalls = s3Mock.commandCalls(GetObjectCommand)
-    Code.expect(getObjectCalls).to.have.length(1)
-    Code.expect(s3Mock.send.calledOnce).to.be.true()
-    Code.expect(err.message).to.equal('S3 error')
+    await expect(s3Service.floodGuidanceStatement()).rejects.toThrow('S3 error')
+    expect(s3Mock.commandCalls(GetObjectCommand)).toHaveLength(1)
+    expect(s3Mock.calls()).toHaveLength(1)
   })
 
-  lab.test('ffoi should fetch and parse JSON from S3 with correct ID', async () => {
+  test('ffoi should fetch and parse JSON from S3 with correct ID', async () => {
     const stationId = '1234'
     const expectedJson = { data: 'test-ffoi-data' }
-    mockResponse.Body.transformToString.resolves(JSON.stringify(expectedJson))
+    mockResponse.Body.transformToString.mockResolvedValue(JSON.stringify(expectedJson))
     s3Mock.on(GetObjectCommand).resolves(mockResponse)
 
     const result = await s3Service.ffoi(stationId)
 
     const getObjectCalls = s3Mock.commandCalls(GetObjectCommand)
-    Code.expect(getObjectCalls).to.have.length(1)
-    Code.expect(getObjectCalls[0].args[0].input).to.equal({
+    expect(getObjectCalls).toHaveLength(1)
+    expect(getObjectCalls[0].args[0].input).toEqual({
       Key: `ffoi/${stationId}.json`,
       Bucket: 'test-bucket'
     })
-    Code.expect(s3Mock.send.calledOnce).to.be.true()
-    Code.expect(mockResponse.Body.transformToString.calledOnce).to.be.true()
-    Code.expect(result).to.equal(expectedJson)
+    expect(s3Mock.calls()).toHaveLength(1)
+    expect(mockResponse.Body.transformToString).toHaveBeenCalledTimes(1)
+    expect(result).toEqual(expectedJson)
   })
 
-  lab.test('ffoi should throw error when S3 request fails', async () => {
-    const stationId = '1234'
-    const expectedError = new Error('S3 error')
-    s3Mock.on(GetObjectCommand).rejects(expectedError)
+  test('ffoi should throw error when S3 request fails', async () => {
+    s3Mock.on(GetObjectCommand).rejects(new Error('S3 error'))
 
-    const err = await Code.expect(s3Service.ffoi(stationId)).to.reject()
-    const getObjectCalls = s3Mock.commandCalls(GetObjectCommand)
-    Code.expect(getObjectCalls).to.have.length(1)
-    Code.expect(s3Mock.send.calledOnce).to.be.true()
-    Code.expect(err.message).to.equal('S3 error')
+    await expect(s3Service.ffoi('1234')).rejects.toThrow('S3 error')
+    expect(s3Mock.commandCalls(GetObjectCommand)).toHaveLength(1)
+    expect(s3Mock.calls()).toHaveLength(1)
   })
 
-  lab.test('ffoi should handle invalid JSON response', async () => {
-    const stationId = '1234'
-    mockResponse.Body.transformToString.resolves('{invalid-json')
+  test('ffoi should handle invalid JSON response', async () => {
+    mockResponse.Body.transformToString.mockResolvedValue('{invalid-json')
     s3Mock.on(GetObjectCommand).resolves(mockResponse)
 
-    await Code.expect(s3Service.ffoi(stationId)).to.reject(Error)
-    const getObjectCalls = s3Mock.commandCalls(GetObjectCommand)
-    Code.expect(getObjectCalls).to.have.length(1)
-    Code.expect(s3Mock.send.calledOnce).to.be.true()
-    Code.expect(mockResponse.Body.transformToString.calledOnce).to.be.true()
+    await expect(s3Service.ffoi('1234')).rejects.toThrow(Error)
+    expect(s3Mock.commandCalls(GetObjectCommand)).toHaveLength(1)
+    expect(s3Mock.calls()).toHaveLength(1)
+    expect(mockResponse.Body.transformToString).toHaveBeenCalledTimes(1)
   })
 
-  lab.test('S3Client should be initialized with correct config', async () => {
+  test('S3Client should be initialized with correct config', async () => {
     const expectedJson = { data: 'test-data' }
-    mockResponse.Body.transformToString.resolves(JSON.stringify(expectedJson))
+    mockResponse.Body.transformToString.mockResolvedValue(JSON.stringify(expectedJson))
     s3Mock.on(GetObjectCommand).resolves(mockResponse)
 
     const result = await s3Service.floodGuidanceStatement()
-    Code.expect(s3Mock.send.calledOnce).to.be.true()
-    Code.expect(result).to.equal(expectedJson)
+    expect(s3Mock.calls()).toHaveLength(1)
+    expect(result).toEqual(expectedJson)
   })
 
-  lab.experiment('S3 client configuration tests', () => {
-    let S3ClientConstructorStub
+  describe('S3 client configuration tests', () => {
     let s3ConfigCapture
+    const mockS3Client = jest.fn(function (config) {
+      s3ConfigCapture = config
+      return new S3Client(config)
+    })
 
-    lab.beforeEach(() => {
-      delete require.cache[require.resolve('../../server/services/s3.js')]
+    // Loads a fresh copy of the service with the given s3 config and a capturing S3Client
+    const loadModule = (s3Config) => {
+      jest.resetModules()
+      jest.doMock('../../server/config', () => ({ s3: s3Config }))
+      jest.doMock('@aws-sdk/client-s3', () => ({
+        ...jest.requireActual('@aws-sdk/client-s3'),
+        S3Client: mockS3Client
+      }))
+      return require('../../server/services/s3')
+    }
+
+    const baseConfig = {
+      region: 'eu-west-2',
+      bucket: 'test-bucket',
+      httpTimeoutMs: 5000
+    }
+    const missingCredsError = 'AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required when not running in ECS'
+
+    beforeEach(() => {
+      s3ConfigCapture = undefined
       delete process.env.AWS_ENDPOINT_URL
       delete process.env.AWS_EXECUTION_ENV
-
-      S3ClientConstructorStub = sinon.stub().callsFake((config) => {
-        s3ConfigCapture = config
-        return new S3Client(config)
-      })
     })
 
-    lab.afterEach(() => {
+    afterEach(() => {
       delete process.env.AWS_ENDPOINT_URL
       delete process.env.AWS_EXECUTION_ENV
+      jest.dontMock('../../server/config')
+      jest.dontMock('@aws-sdk/client-s3')
     })
 
-    lab.test('should include credentials when accessKey and secretAccessKey are provided', () => {
-      const configWithCreds = {
-        s3: {
-          accessKey: 'test-key',
-          secretAccessKey: 'test-secret',
-          region: 'eu-west-2',
-          bucket: 'test-bucket',
-          httpTimeoutMs: 5000
-        }
-      }
+    test('should include credentials when accessKey and secretAccessKey are provided', () => {
+      loadModule({ ...baseConfig, accessKey: 'test-key', secretAccessKey: 'test-secret' })
 
-      proxyquire('../../server/services/s3', {
-        '../config': configWithCreds,
-        '@aws-sdk/client-s3': {
-          S3Client: S3ClientConstructorStub,
-          GetObjectCommand
-        }
-      })
-
-      Code.expect(s3ConfigCapture).to.exist()
-      Code.expect(s3ConfigCapture.credentials).to.exist()
-      Code.expect(s3ConfigCapture.credentials.accessKeyId).to.equal('test-key')
-      Code.expect(s3ConfigCapture.credentials.secretAccessKey).to.equal('test-secret')
-      Code.expect(s3ConfigCapture.region).to.equal('eu-west-2')
+      expect(s3ConfigCapture).toBeDefined()
+      expect(s3ConfigCapture.credentials).toBeDefined()
+      expect(s3ConfigCapture.credentials.accessKeyId).toBe('test-key')
+      expect(s3ConfigCapture.credentials.secretAccessKey).toBe('test-secret')
+      expect(s3ConfigCapture.region).toBe('eu-west-2')
     })
 
-    lab.test('should NOT include credentials when accessKey is empty in ECS', () => {
+    test('should NOT include credentials when accessKey is empty in ECS', () => {
       process.env.AWS_EXECUTION_ENV = 'AWS_ECS_FARGATE'
 
-      const configWithoutCreds = {
-        s3: {
-          accessKey: '',
-          secretAccessKey: 'test-secret',
-          region: 'eu-west-2',
-          bucket: 'test-bucket',
-          httpTimeoutMs: 5000
-        }
-      }
+      loadModule({ ...baseConfig, accessKey: '', secretAccessKey: 'test-secret' })
 
-      proxyquire('../../server/services/s3', {
-        '../config': configWithoutCreds,
-        '@aws-sdk/client-s3': {
-          S3Client: S3ClientConstructorStub,
-          GetObjectCommand
-        }
-      })
-
-      Code.expect(s3ConfigCapture).to.exist()
-      Code.expect(s3ConfigCapture.credentials).to.not.exist()
-      Code.expect(s3ConfigCapture.region).to.equal('eu-west-2')
+      expect(s3ConfigCapture).toBeDefined()
+      expect(s3ConfigCapture.credentials).toBeUndefined()
+      expect(s3ConfigCapture.region).toBe('eu-west-2')
     })
 
-    lab.test('should NOT include credentials when secretAccessKey is empty in ECS', () => {
+    test('should NOT include credentials when secretAccessKey is empty in ECS', () => {
       process.env.AWS_EXECUTION_ENV = 'AWS_ECS_FARGATE'
 
-      const configWithoutCreds = {
-        s3: {
-          accessKey: 'test-key',
-          secretAccessKey: '',
-          region: 'eu-west-2',
-          bucket: 'test-bucket',
-          httpTimeoutMs: 5000
-        }
-      }
+      loadModule({ ...baseConfig, accessKey: 'test-key', secretAccessKey: '' })
 
-      proxyquire('../../server/services/s3', {
-        '../config': configWithoutCreds,
-        '@aws-sdk/client-s3': {
-          S3Client: S3ClientConstructorStub,
-          GetObjectCommand
-        }
-      })
-
-      Code.expect(s3ConfigCapture).to.exist()
-      Code.expect(s3ConfigCapture.credentials).to.not.exist()
+      expect(s3ConfigCapture).toBeDefined()
+      expect(s3ConfigCapture.credentials).toBeUndefined()
     })
 
-    lab.test('should NOT include credentials when both are undefined in ECS', () => {
+    test('should NOT include credentials when both are undefined in ECS', () => {
       process.env.AWS_EXECUTION_ENV = 'AWS_ECS_FARGATE'
 
-      const configWithoutCreds = {
-        s3: {
-          region: 'eu-west-2',
-          bucket: 'test-bucket',
-          httpTimeoutMs: 5000
-        }
-      }
-
-      const loadModule = () => {
-        return proxyquire('../../server/services/s3', {
-          '../config': configWithoutCreds,
-          '@aws-sdk/client-s3': {
-            S3Client: S3ClientConstructorStub,
-            GetObjectCommand
-          }
-        })
-      }
-
-      Code.expect(loadModule).to.not.throw()
-      Code.expect(s3ConfigCapture).to.exist()
-      Code.expect(s3ConfigCapture.credentials).to.not.exist()
+      expect(() => loadModule(baseConfig)).not.toThrow()
+      expect(s3ConfigCapture).toBeDefined()
+      expect(s3ConfigCapture.credentials).toBeUndefined()
     })
 
-    lab.test('should throw error when credentials are missing and NOT in ECS', () => {
-      const configWithoutCreds = {
-        s3: {
-          region: 'eu-west-2',
-          bucket: 'test-bucket',
-          httpTimeoutMs: 5000
-        }
-      }
-
-      const loadModule = () => {
-        proxyquire('../../server/services/s3', {
-          '../config': configWithoutCreds,
-          '@aws-sdk/client-s3': {
-            S3Client: S3ClientConstructorStub,
-            GetObjectCommand
-          }
-        })
-      }
-
-      Code.expect(loadModule).to.throw(Error, 'AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required when not running in ECS')
+    test('should throw error when credentials are missing and NOT in ECS', () => {
+      expect(() => loadModule(baseConfig)).toThrow(missingCredsError)
     })
 
-    lab.test('should throw error when accessKey is missing and NOT in ECS', () => {
-      const configMissingAccessKey = {
-        s3: {
-          secretAccessKey: 'test-secret',
-          region: 'eu-west-2',
-          bucket: 'test-bucket',
-          httpTimeoutMs: 5000
-        }
-      }
-
-      const loadModule = () => {
-        proxyquire('../../server/services/s3', {
-          '../config': configMissingAccessKey,
-          '@aws-sdk/client-s3': {
-            S3Client: S3ClientConstructorStub,
-            GetObjectCommand
-          }
-        })
-      }
-
-      Code.expect(loadModule).to.throw(Error, 'AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required when not running in ECS')
+    test('should throw error when accessKey is missing and NOT in ECS', () => {
+      expect(() => loadModule({ ...baseConfig, secretAccessKey: 'test-secret' })).toThrow(missingCredsError)
     })
 
-    lab.test('should throw error when secretAccessKey is missing and NOT in ECS', () => {
-      const configMissingSecretKey = {
-        s3: {
-          accessKey: 'test-key',
-          region: 'eu-west-2',
-          bucket: 'test-bucket',
-          httpTimeoutMs: 5000
-        }
-      }
-
-      const loadModule = () => {
-        proxyquire('../../server/services/s3', {
-          '../config': configMissingSecretKey,
-          '@aws-sdk/client-s3': {
-            S3Client: S3ClientConstructorStub,
-            GetObjectCommand
-          }
-        })
-      }
-
-      Code.expect(loadModule).to.throw(Error, 'AWS credentials (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) are required when not running in ECS')
+    test('should throw error when secretAccessKey is missing and NOT in ECS', () => {
+      expect(() => loadModule({ ...baseConfig, accessKey: 'test-key' })).toThrow(missingCredsError)
     })
 
-    lab.test('should NOT throw when in ECS (AWS_ECS_FARGATE) without credentials', () => {
+    test('should NOT throw when in ECS (AWS_ECS_FARGATE) without credentials', () => {
       process.env.AWS_EXECUTION_ENV = 'AWS_ECS_FARGATE'
 
-      const configWithoutCreds = {
-        s3: {
-          region: 'eu-west-2',
-          bucket: 'test-bucket',
-          httpTimeoutMs: 5000
-        }
-      }
-
-      const loadModule = () => {
-        return proxyquire('../../server/services/s3', {
-          '../config': configWithoutCreds,
-          '@aws-sdk/client-s3': {
-            S3Client: S3ClientConstructorStub,
-            GetObjectCommand
-          }
-        })
-      }
-
-      Code.expect(loadModule).to.not.throw()
-      Code.expect(s3ConfigCapture.credentials).to.not.exist()
+      expect(() => loadModule(baseConfig)).not.toThrow()
+      expect(s3ConfigCapture.credentials).toBeUndefined()
     })
 
-    lab.test('should allow credentials when in ECS environment', () => {
+    test('should allow credentials when in ECS environment', () => {
       process.env.AWS_EXECUTION_ENV = 'AWS_ECS_FARGATE'
 
-      const configWithCreds = {
-        s3: {
-          accessKey: 'test-key',
-          secretAccessKey: 'test-secret',
-          region: 'eu-west-2',
-          bucket: 'test-bucket',
-          httpTimeoutMs: 5000
-        }
-      }
-
-      const loadModule = () => {
-        return proxyquire('../../server/services/s3', {
-          '../config': configWithCreds,
-          '@aws-sdk/client-s3': {
-            S3Client: S3ClientConstructorStub,
-            GetObjectCommand
-          }
-        })
-      }
-
-      Code.expect(loadModule).to.not.throw()
-      Code.expect(s3ConfigCapture.credentials).to.exist()
-      Code.expect(s3ConfigCapture.credentials.accessKeyId).to.equal('test-key')
+      expect(() => loadModule({ ...baseConfig, accessKey: 'test-key', secretAccessKey: 'test-secret' })).not.toThrow()
+      expect(s3ConfigCapture.credentials).toBeDefined()
+      expect(s3ConfigCapture.credentials.accessKeyId).toBe('test-key')
     })
   })
 })

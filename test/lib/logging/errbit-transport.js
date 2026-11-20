@@ -1,40 +1,24 @@
 'use strict'
-const Lab = require('@hapi/lab')
-const { expect } = require('@hapi/code')
-const { experiment, test, beforeEach, afterEach, after } = exports.lab = Lab.script()
-const { stub } = require('sinon')
-const proxyquire = require('proxyquire')
 const { once } = require('node:events')
 
-const stubs = {
-  Errbit: stub(),
-  send: stub(),
-  close: stub(),
-  consoleError: stub(console, 'error')
-}
+jest.mock('../../../server/lib/logging/errbit', () => jest.fn())
 
-const errbitTransport = proxyquire('../../../server/lib/logging/errbit-transport', {
-  './errbit': stubs.Errbit
-})
+const Errbit = require('../../../server/lib/logging/errbit')
+const errbitTransport = require('../../../server/lib/logging/errbit-transport')
 
-experiment('errbit transport', () => {
+const mockSend = jest.fn()
+const mockClose = jest.fn()
+
+describe('errbit transport', () => {
+  let consoleError
+
   beforeEach(() => {
-    stubs.Errbit.callsFake(() => ({
-      send: stubs.send,
-      close: stubs.close
+    jest.resetAllMocks()
+    consoleError = jest.spyOn(console, 'error').mockImplementation(() => {})
+    Errbit.mockImplementation(() => ({
+      send: mockSend,
+      close: mockClose
     }))
-  })
-  afterEach(() => {
-    for (const stub of Object.values(stubs)) {
-      stub.reset()
-    }
-  })
-  after(() => {
-    for (const stub of Object.values(stubs)) {
-      if (stub.restore) {
-        stub.restore()
-      }
-    }
   })
 
   test('it sends messages containing an err to errbit', async () => {
@@ -47,8 +31,8 @@ experiment('errbit transport', () => {
       environment: 'unit-test',
       version: '0.0.0'
     })
-    stubs.send.resolves()
-    stubs.close.resolves()
+    mockSend.mockResolvedValue()
+    mockClose.mockResolvedValue()
 
     stream.write(JSON.stringify({
       err: {
@@ -61,8 +45,8 @@ experiment('errbit transport', () => {
     stream.end()
     await once(stream, 'close')
 
-    expect(stubs.send.callCount).to.equal(1)
-    expect(stubs.send.lastCall.args[0]).to.equal({
+    expect(mockSend).toHaveBeenCalledTimes(1)
+    expect(mockSend).toHaveBeenLastCalledWith({
       err: {
         name: 'some-name',
         message: 'some-message',
@@ -81,8 +65,8 @@ experiment('errbit transport', () => {
       environment: 'unit-test',
       version: '0.0.0'
     })
-    stubs.send.rejects(new Error('not sent'))
-    stubs.close.resolves()
+    mockSend.mockRejectedValue(new Error('not sent'))
+    mockClose.mockResolvedValue()
 
     let err
     stream.on('error', (error) => {
@@ -99,8 +83,8 @@ experiment('errbit transport', () => {
     stream.end()
     await once(stream, 'close')
 
-    expect(err).to.equal(undefined)
-    expect(stubs.consoleError.lastCall.args[0]).to.equal(new Error('not sent'))
+    expect(err).toBeUndefined()
+    expect(consoleError).toHaveBeenLastCalledWith(new Error('not sent'))
   })
   test('it skips messages not containing an err key', async () => {
     const stream = errbitTransport({
@@ -112,8 +96,8 @@ experiment('errbit transport', () => {
       environment: 'unit-test',
       version: '0.0.0'
     })
-    stubs.send.resolves()
-    stubs.close.resolves()
+    mockSend.mockResolvedValue()
+    mockClose.mockResolvedValue()
 
     stream.write(JSON.stringify({
       message: 'Hello Worlds'
@@ -121,7 +105,7 @@ experiment('errbit transport', () => {
     stream.end()
     await once(stream, 'close')
 
-    expect(stubs.send.callCount).to.equal(0)
+    expect(mockSend).not.toHaveBeenCalled()
   })
 
   test('it closes errbit on close', async () => {
@@ -134,12 +118,12 @@ experiment('errbit transport', () => {
       environment: 'unit-test',
       version: '0.0.0'
     })
-    stubs.close.resolves()
+    mockClose.mockResolvedValue()
 
     stream.end()
     await once(stream, 'close')
 
-    expect(stubs.close.callCount).to.equal(1)
+    expect(mockClose).toHaveBeenCalledTimes(1)
   })
   test('it handles errors from errbit close', async () => {
     const stream = errbitTransport({
@@ -151,7 +135,7 @@ experiment('errbit transport', () => {
       environment: 'unit-test',
       version: '0.0.0'
     })
-    stubs.close.rejects(new Error('bang!'))
+    mockClose.mockRejectedValue(new Error('bang!'))
 
     let err
     stream.on('error', (error) => {
@@ -160,7 +144,7 @@ experiment('errbit transport', () => {
     stream.end()
     await once(stream, 'close')
 
-    expect(err).to.equal(undefined)
-    expect(stubs.consoleError.lastCall.args[0]).to.equal(new Error('bang!'))
+    expect(err).toBeUndefined()
+    expect(consoleError).toHaveBeenLastCalledWith(new Error('bang!'))
   })
 })

@@ -1,7 +1,9 @@
 'use strict'
 
 module.exports = [
-  ...require('neostandard')({}),
+  ...require('neostandard')({
+    env: ['jest']
+  }),
   {
     languageOptions: {
       parserOptions: {
