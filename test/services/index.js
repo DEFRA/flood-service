@@ -1083,4 +1083,224 @@ lab.experiment('Services tests', () => {
       mock.verify()
     })
   })
+
+  lab.experiment('GeoJSON services', () => {
+    // Tewkesbury, Gloucestershire (EPSG:3857), chosen as a known UK flood-risk area.
+    const tewkesburyBboxEpsg3857 = [-200000, 6600000, -100000, 6700000]
+
+    lab.test('rowsToGeoJsonFeatureCollection returns FeatureCollection without paging', async () => {
+      sinon.stub(db, 'query').returns({
+        rows: [{ geom: '{"type":"Point","coordinates":[1,2]}', code: 'A1' }]
+      })
+
+      const result = await services.rowsToGeoJsonFeatureCollection(
+        'testQuery',
+        ['mockParam'],
+        {
+          getId: row => `feature.${row.code}`,
+          geometryName: 'centroid',
+          getProperties: row => ({ code: row.code })
+        }
+      )
+
+      Code.expect(result.totalFeatures).to.equal(1)
+      Code.expect(result.numberMatched).to.equal(1)
+      Code.expect(result.numberReturned).to.equal(1)
+      Code.expect(result.features[0].id).to.equal('feature.A1')
+      sinon.assert.calledOnceWithExactly(db.query, 'testQuery', ['mockParam'])
+    })
+
+    lab.test('rowsToGeoJsonFeatureCollection applies paging options and count query', async () => {
+      const queryStub = sinon.stub(db, 'query')
+      const mockQueryParams = ['mock-query-param']
+      queryStub.onFirstCall().returns({
+        rows: [
+          { geom: '{"type":"Point","coordinates":[1,2]}', code: 'A1' },
+          { geom: '{"type":"Point","coordinates":[3,4]}', code: 'A2' }
+        ]
+      })
+      queryStub.onSecondCall().returns({ rows: [{ count: '2' }] })
+
+      const result = await services.rowsToGeoJsonFeatureCollection(
+        'pagedQuery',
+        mockQueryParams,
+        {
+          getId: row => `feature.${row.code}`,
+          geometryName: 'centroid',
+          getProperties: row => ({ code: row.code })
+        },
+        { offset: 5, limit: 2 },
+        'countQuery'
+      )
+
+      Code.expect(result.numberMatched).to.equal(2)
+      Code.expect(result.numberReturned).to.equal(2)
+      sinon.assert.calledWithExactly(queryStub.firstCall, 'pagedQuery', [...mockQueryParams, 2, 5])
+      sinon.assert.calledWithExactly(queryStub.secondCall, 'countQuery', mockQueryParams)
+    })
+
+    lab.test('getStationsGeoJson maps station properties and IDs', async () => {
+      const queryStub = sinon.stub(db, 'query')
+      queryStub.onFirstCall().returns({
+        rows: [{
+          rloi_id: '9575/downstream',
+          direction: 'd',
+          type: 'M',
+          iswales: false,
+          atrisk: true,
+          status: 'Active',
+          name: 'Whitleyford Bridge',
+          river: 'Lonco Brook',
+          value: 0.093,
+          value_date: '2026-08-13T11:15:00Z',
+          trend: 'steady',
+          percentile_5: 0.8,
+          percentile_95: 0.085,
+          is_ffoi: false,
+          is_ffoi_at_risk: false,
+          ffoi_max: null,
+          ffoi_date: null,
+          up: null,
+          down: null,
+          river_name: 'Lonco Brook',
+          up_station_type: null,
+          down_station_type: null,
+          base_rloi_id: 9575,
+          geom: '{"type":"Point","coordinates":[-2.37757665,52.81171587]}'
+        }]
+      })
+      queryStub.onSecondCall().returns({ rows: [{ count: '1' }] })
+
+      const result = await services.getStationsGeoJson([], { offset: 0, limit: 1 })
+
+      Code.expect(result.features[0].id).to.equal('stations.9575/downstream')
+      Code.expect(result.features[0].geometry_name).to.equal('centroid')
+      Code.expect(result.features[0].properties.base_rloi_id).to.equal(9575)
+      Code.expect(result.numberMatched).to.equal(1)
+      Code.expect(result.numberReturned).to.equal(1)
+    })
+
+    lab.test('getStationsGeoJson SQL excludes NaN from the is_ffoi_at_risk comparison', () => {
+      // Regression test: Postgres numeric 'NaN' compares greater than any ordinary value, so
+      // without excluding it explicitly a NaN ffoi.value would incorrectly report
+      // is_ffoi_at_risk = true even though ffoi_max maps NaN to null for the same row. A NaN
+      // risk.percentile_5 must also be excluded, since it would otherwise make the comparison
+      // always false regardless of ffoi.value, silently hiding an invalid/unknown threshold.
+      const queries = require('../../server/services/queries')
+
+      Code.expect(queries.getStationsGeoJson).to.contain("ffoi.value != 'NaN' AND risk.percentile_5 != 'NaN' AND ffoi.value >= risk.percentile_5")
+    })
+
+    lab.test('getStationsGeoJson SQL orders NULLS LAST with a deterministic tie-breaker', () => {
+      // Regression test: risk is a LEFT JOIN so at_risk can be null, and Postgres sorts nulls
+      // first for DESC by default - without NULLS LAST that would put no-risk-data stations
+      // ahead of at-risk ones. Without a secondary sort, stations sharing the same at_risk
+      // value have no fixed relative order, so LIMIT/OFFSET paging could return a station on
+      // more than one page, or skip one entirely, between requests.
+      const queries = require('../../server/services/queries')
+
+      Code.expect(queries.getStationsGeoJson).to.contain('ORDER BY risk.at_risk DESC NULLS LAST, ss.rloi_id, risk.direction')
+    })
+
+    lab.test('getStationsGeoJsonCount SQL counts the same feature-id expression as getStationsGeoJson', () => {
+      // Regression test: risk is a LEFT JOIN, so a station with no matching risk row has a
+      // null direction. The previous "rloi_id || ' ' || direction" concatenation becomes null
+      // in that case, and COUNT(DISTINCT ...) ignores nulls, so that station would be missing
+      // from this count even though getStationsGeoJson still returns it as a feature. Using the
+      // same CASE expression as the feature id in getStationsGeoJson guarantees they agree.
+      const queries = require('../../server/services/queries')
+
+      Code.expect(queries.getStationsGeoJsonCount).to.contain(
+        "CASE\n        WHEN risk.direction = 'd' THEN CONCAT(ss.rloi_id, '/downstream')\n        ELSE CAST(ss.rloi_id AS VARCHAR)\n      END"
+      )
+    })
+
+    lab.test('getRainfallStationsGeoJson maps rainfall properties and IDs', async () => {
+      const queryStub = sinon.stub(db, 'query')
+      queryStub.onFirstCall().returns({
+        rows: [{
+          telemetry_station_id: 103,
+          station_name: 'Efford',
+          ngr: 'SZ301939',
+          easting: 430100,
+          northing: 93900,
+          data_type: 'Total',
+          period: '15 min',
+          units: 'mm',
+          telemetry_value_parent_id: 541758011,
+          value: 0,
+          value_timestamp: '2026-08-13T11:30:00Z',
+          day_total: 0,
+          six_hr_total: 0,
+          one_hr_total: 0,
+          type: 'R',
+          region: 'Southern',
+          station_reference: 'E14440',
+          geom: '{"type":"Point","coordinates":[-1.57475224,50.74392203]}'
+        }]
+      })
+      queryStub.onSecondCall().returns({ rows: [{ count: '1' }] })
+
+      const result = await services.getRainfallStationsGeoJson([], { offset: 0, limit: 1 })
+
+      Code.expect(result.features[0].id).to.equal('rainfall_stations.E14440.Southern')
+      Code.expect(result.features[0].geometry_name).to.equal('centroid')
+      Code.expect(result.features[0].properties.telemetry_station_id).to.equal(103)
+      Code.expect(result.numberMatched).to.equal(1)
+      Code.expect(result.numberReturned).to.equal(1)
+    })
+
+    lab.test('getRainfallStationsGeoJson SQL orders by the unique telemetry_station_id', () => {
+      // Regression test: without an ORDER BY, LIMIT/OFFSET paging has no fixed row sequence,
+      // so adjacent pages could overlap or miss stations between requests. telemetry_station_id
+      // is unique per station, so ordering by it gives every page a stable position.
+      const queries = require('../../server/services/queries')
+
+      Code.expect(queries.getRainfallStationsGeoJson).to.contain('ORDER BY telemetry_station_id')
+    })
+
+    lab.test('getFloodWarningAlertsGeoJson maps alert properties and IDs', async () => {
+      const queryStub = sinon.stub(db, 'query')
+      queryStub.onFirstCall().returns({
+        rows: [{
+          id: 33764755,
+          ta_code: '112FWTNOR03',
+          taCode: '112FWTNOR03',
+          ta_name: 'Severn Estuary at Northwick and Aust',
+          severity_value: 4,
+          severity: 'Warning no longer in force',
+          geom: '{"type":"MultiPolygon","coordinates":[[[[-2.6,51.6],[-2.6,51.6],[-2.6,51.6],[-2.6,51.6],[-2.6,51.6]]]]}'
+        }]
+      })
+      queryStub.onSecondCall().returns({ rows: [{ count: '1' }] })
+
+      const result = await services.getFloodWarningAlertsGeoJson(tewkesburyBboxEpsg3857, { offset: 0, limit: 1 })
+
+      Code.expect(result.features[0].id).to.equal('flood_warning_alert.112FWTNOR03')
+      Code.expect(result.features[0].geometry_name).to.equal('geom')
+      Code.expect(result.features[0].properties.taCode).to.equal('112FWTNOR03')
+      Code.expect(result.numberMatched).to.equal(1)
+      Code.expect(result.numberReturned).to.equal(1)
+    })
+
+    lab.test('getFloodWarningAlertsGeoJson SQL quotes the taCode alias', () => {
+      // Regression test: Postgres folds unquoted identifiers to lowercase, so an unquoted
+      // "as taCode" would silently produce a "tacode" column and row.taCode would always be
+      // undefined in the JS mapping above. The fixture row in the previous test can't catch
+      // this because it constructs "taCode" directly rather than going through real Postgres
+      // column-name folding, so this asserts the query text itself uses a quoted alias.
+      const queries = require('../../server/services/queries')
+
+      Code.expect(queries.getFloodWarningAlertsGeoJson).to.contain('ta_code as "taCode"')
+    })
+
+    lab.test('getFloodWarningAlertsGeoJson SQL orders with a deterministic tie-breaker', () => {
+      // Regression test: severity_value is not unique, so alerts sharing a severity have no
+      // fixed relative order on their own - without a tie-breaker, LIMIT/OFFSET paging could
+      // return the same alert on more than one page, or skip one entirely, between requests.
+      const queries = require('../../server/services/queries')
+
+      Code.expect(queries.getFloodWarningAlertsGeoJson).to.contain('ORDER BY severity_value DESC, id')
+    })
+  })
 })
