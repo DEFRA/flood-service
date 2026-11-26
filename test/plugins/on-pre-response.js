@@ -1,22 +1,17 @@
-const Lab = require('@hapi/lab')
-const Code = require('@hapi/code')
-const lab = exports.lab = Lab.script()
-const sinon = require('sinon')
 const hapi = require('@hapi/hapi')
 const config = require('../../server/config')
 const boom = require('@hapi/boom')
 
 const mocks = {
-  debug: sinon.spy(),
-  error: sinon.spy(),
-  info: sinon.spy()
+  debug: jest.fn(),
+  error: jest.fn(),
+  info: jest.fn()
 }
 
-lab.experiment('on-pre-response plugin', () => {
+describe('on-pre-response plugin', () => {
   let server, fakeHandler
 
-  // Create server before each test
-  lab.before(async () => {
+  beforeAll(async () => {
     server = hapi.server({
       port: config.port,
       routes: {
@@ -48,17 +43,17 @@ lab.experiment('on-pre-response plugin', () => {
     })
   })
 
-  lab.afterEach(async () => {
+  afterEach(() => {
     for (const mock of Object.values(mocks)) {
-      mock.resetHistory()
+      mock.mockClear()
     }
   })
-  // Stop server after the tests.
-  lab.after(async () => {
+
+  afterAll(async () => {
     await server.stop()
   })
 
-  lab.test('produces debug log for 200', async () => {
+  test('produces debug log for 200', async () => {
     const options = {
       method: 'GET',
       url: '/some/root'
@@ -67,12 +62,12 @@ lab.experiment('on-pre-response plugin', () => {
 
     await server.inject(options)
 
-    Code.expect(mocks.debug.callCount).to.equal(1)
-    Code.expect(mocks.debug.lastCall.args[0].res).not.to.equal(undefined)
-    Code.expect(mocks.debug.lastCall.args[0].err).to.equal(undefined)
+    expect(mocks.debug).toHaveBeenCalledTimes(1)
+    expect(mocks.debug.mock.lastCall[0].res).toBeDefined()
+    expect(mocks.debug.mock.lastCall[0].err).toBeUndefined()
   })
 
-  lab.test('produces debug log for 404', async () => {
+  test('produces debug log for 404', async () => {
     const options = {
       method: 'GET',
       url: '/some/root'
@@ -82,12 +77,12 @@ lab.experiment('on-pre-response plugin', () => {
 
     await server.inject(options)
 
-    Code.expect(mocks.debug.callCount).to.equal(1)
-    Code.expect(mocks.debug.lastCall.args[0].res).not.to.equal(undefined)
-    Code.expect(mocks.debug.lastCall.args[0].err).not.to.equal(undefined)
+    expect(mocks.debug).toHaveBeenCalledTimes(1)
+    expect(mocks.debug.mock.lastCall[0].res).toBeDefined()
+    expect(mocks.debug.mock.lastCall[0].err).toBeDefined()
   })
 
-  lab.test('produces error log for 403', async () => {
+  test('produces error log for 403', async () => {
     const options = {
       method: 'GET',
       url: '/some/root'
@@ -97,12 +92,12 @@ lab.experiment('on-pre-response plugin', () => {
 
     await server.inject(options)
 
-    Code.expect(mocks.error.callCount).to.equal(1)
-    Code.expect(mocks.error.lastCall.args[0].res).not.to.equal(undefined)
-    Code.expect(mocks.error.lastCall.args[0].err).not.to.equal(undefined)
+    expect(mocks.error).toHaveBeenCalledTimes(1)
+    expect(mocks.error.mock.lastCall[0].res).toBeDefined()
+    expect(mocks.error.mock.lastCall[0].err).toBeDefined()
   })
 
-  lab.test('produces error log for 500', async () => {
+  test('produces error log for 500', async () => {
     const options = {
       method: 'GET',
       url: '/some/root'
@@ -112,8 +107,8 @@ lab.experiment('on-pre-response plugin', () => {
 
     await server.inject(options)
 
-    Code.expect(mocks.error.callCount).to.equal(1)
-    Code.expect(mocks.error.lastCall.args[0].res).not.to.equal(undefined)
-    Code.expect(mocks.error.lastCall.args[0].err).not.to.equal(undefined)
+    expect(mocks.error).toHaveBeenCalledTimes(1)
+    expect(mocks.error.mock.lastCall[0].res).toBeDefined()
+    expect(mocks.error.mock.lastCall[0].err).toBeDefined()
   })
 })
